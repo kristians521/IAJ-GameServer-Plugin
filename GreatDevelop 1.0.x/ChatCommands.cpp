@@ -478,6 +478,12 @@ bool cChat::PostCommand(LPOBJ gObj, char *Msg)
 		return true;
 	}
 
+	if(AddTab[gObj->m_Index].POST_Delay > 0)
+	{
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[ANTI-FLOOD] Wait %d sec until you can post!", AddTab[gObj->m_Index].POST_Delay);
+		return true;
+	}
+
 	TakeCommand(gObj, Config.Commands.PostPriceZen, Config.Commands.PostPricePCPoint, Config.Commands.PostPriceWCoin, "Post"); 
 	switch(Config.Commands.PostColor)
 	{
@@ -492,6 +498,10 @@ bool cChat::PostCommand(LPOBJ gObj, char *Msg)
 		MessageAllLog(2, 0, c_Blue, t_POST, gObj, "~[POST] %s", Msg);	
 		break;
 	} 
+
+	if(!GmSystem.IsAdmin(gObj->Name))
+		AddTab[gObj->m_Index].POST_Delay = Config.Commands.PostDelay;
+
 	return true;
 }
 

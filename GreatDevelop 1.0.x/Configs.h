@@ -734,6 +734,7 @@ public:
 		int PostPricePCPoint;
 		int PostPriceWCoin;
 		int PostColor;  
+		int PostDelay;
 
 		int IsBanPost;
 		int IsBanAcc;

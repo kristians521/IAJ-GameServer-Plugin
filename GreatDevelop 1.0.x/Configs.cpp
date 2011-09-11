@@ -466,6 +466,7 @@ void cConfigs::LoadCommands()
 	Commands.PostPricePCPoint			= GetInt(0, PCPoint.sPoints.MaximumPCPoints,	0,		"Post",			"PostPricePcPoint",				GreatDevelopCmd);	 
 	Commands.PostPriceWCoin				= GetInt(0, PCPoint.sPoints.MaximumWCPoints,	0,		"Post",			"PostPriceWCoin",				GreatDevelopCmd);												
 	Commands.PostColor					= GetInt(1, 3,									1,		"Post",			"PostColor",					GreatDevelopCmd);  
+	Commands.PostDelay					= GetInt(0,	32767,								60,		"Post",			"PostDelay",					GreatDevelopCmd);
 
 	//		add			//
 	Commands.AddPointEnabled			= GetInt(0, 1,									1,		"AddCommand",	"AddPointEnabled",				GreatDevelopCmd);

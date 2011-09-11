@@ -45,7 +45,10 @@ DWORD MainTick()
 				AddTab[Index].PC_OnlineTimer = 0;
 			}
 
-			if(gObj->Connected < PLAYER_PLAYING) continue;	  									  
+			if(gObj->Connected < PLAYER_PLAYING) continue;	
+
+			if(AddTab[Index].POST_Delay > 0)
+				AddTab[Index].POST_Delay--;
 
 			if(Config.AntiAfkConfig.Enabled == 1)
 				AntiAFK.SendInfo(gObj);

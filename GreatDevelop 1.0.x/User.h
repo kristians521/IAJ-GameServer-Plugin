@@ -781,6 +781,9 @@ public:
 
 typedef	struct sAddTab 
 {			
+	//Post Delay
+	int		POST_Delay;
+
 	//Anti AFK
 	int		AFK_Timer;
 	int		AFK_MapNumber;
