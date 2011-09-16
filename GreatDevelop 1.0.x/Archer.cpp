@@ -118,6 +118,7 @@ void cGoldenArcher::GoldenArcherClick(LPOBJ gObj)
 
 			if (UpdateZen > 2000000000)
 				UpdateZen = 2000000000;
+			gObj->Money = UpdateZen;
 			GCMoneySend(gObj->m_Index,UpdateZen);
 			Chat.Message(gObj->m_Index,"[Golden Archer] Zen lucked: Zen:%d", Config.Archer.ZenReward);
 		}

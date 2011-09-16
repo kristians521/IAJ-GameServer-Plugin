@@ -93,6 +93,7 @@ void cConfigs::LoadNotice()
 {	
 	ConnectInfo					= GetInt(0, 1,					1,		"Connect",		"ConnectInfo",					GreatDevelopGS);
 	GetPrivateProfileString("Connect","ConnectNotice","Powered by GreatDevelop 1.0.1",ConnectNotice,sizeof(ConnectNotice),GreatDevelopGS); 
+	Log.CheckProcent(ConnectNotice);	 
 } 
 
 void cConfigs::LoadDuel()
