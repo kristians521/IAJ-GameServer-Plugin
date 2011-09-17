@@ -198,7 +198,6 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 
 		#ifdef _GS_CS
 			Utilits.HookThis((DWORD)&ProtocolCore, 0x00403A17); 
-			Utilits.HookThis((DWORD)&ProtocolCore, 0x00403A17);
 			Utilits.HookThis((DWORD)&ProtocolCoreSend,0x00405AE7); 	 
 			Utilits.HookThis((DWORD)&MyObjCalCharacter,0x004031F7);		   
 			Utilits.HookThis((DWORD)&MonsterDie, 0x0041A1AE);
