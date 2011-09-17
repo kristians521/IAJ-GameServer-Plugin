@@ -236,8 +236,8 @@ void cProtoFunc::CheckRing(LPOBJ gObj, LPBYTE aRecv)
 
 void cProtoFunc::LoginMsg(LPOBJ gObj)
 {		
-	Chat.Message(1, gObj->m_Index, "Powered by GreatDevelop 1.0.1 'http://greatdevelop.ru/'");
-	Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
+	//Chat.Message(1, gObj->m_Index, "Powered by GreatDevelop 1.0.1 'http://greatdevelop.ru/'");
+	//Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
 	if (Config.ConnectInfo == 1)
 	{
 		int totPlayers = Utilits.GetOnlineCount();
@@ -376,16 +376,14 @@ void cProtoFunc::PkClear(LPOBJ gObj, LPOBJ NpcObj)
 	}
 	if (PricePcPoint > 0)
 	{
-//		PointShop.DecreasePoints(gObj->m_Index, PricePcPoint);	  
+		PCPoint.UpdatePoints(gObj,PricePcPoint,PC_DEL,PCPOINT);
 		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[Guard] You pay %d PcPoints", PricePcPoint);
-		//MySQL.Execute("UPDATE Character SET %s = %s - %d WHERE Name= '%s'", Config.PCPointsColumn, Config.PCPointsColumn, PricePcPoint, gObj->Name);
 	}
 
 	if (PriceWCoin > 0)
 	{										
-		gObj->m_wCashPoint -= PriceWCoin;
+		PCPoint.UpdatePoints(gObj,PricePcPoint,PC_DEL,WCOIN);
 		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[Guard] You pay %d WCoin", PriceWCoin);
-		//MySQL.Execute("UPDATE MEMB_INFO SET %s = %s - %d WHERE memb___id = '%s'", Config.WCoinsColumn, Config.WCoinsColumn, PriceWCoin, gObj->AccountID);
 	}
 
 	if (PriceZen > 0)

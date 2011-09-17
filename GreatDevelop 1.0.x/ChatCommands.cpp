@@ -429,7 +429,7 @@ bool cChat::Move(LPOBJ gObj, char *Msg)
 		if(ZenActual < (DWORD)MoveReq.MoveReqInfo[Index].Zen)return true;
 		DWORD ZenDec = ZenActual - (DWORD)MoveReq.MoveReqInfo[Index].Zen;			 
 
-		if(gObj->m_PK_Level > 4)
+		if(gObj->m_PK_Level > 5)
 		{
 			MessageLog(1,  c_Red,  t_COMMANDS, gObj, "[Move] Fonomans can't move");
 			return true;
