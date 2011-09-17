@@ -266,7 +266,7 @@ void GCEquipmentSendHook(int aIndex)
 		|| gObj->pInventory[RING_02].m_Type == 0x1A7A) //Skeleton Ring
 		_beginthread( TradeSystem__Cancel, 0, NULL  );
 }
-#ifdef _GS
+
 BOOL __cdecl gObjGameClose_Func(int aIndex)
 {	 						
 	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);	  
@@ -286,4 +286,3 @@ BOOL __cdecl gObjGameClose_Func(int aIndex)
 	BOOL rValue = gObjGameClose(aIndex);
 	return rValue;		  	
 }
-#endif

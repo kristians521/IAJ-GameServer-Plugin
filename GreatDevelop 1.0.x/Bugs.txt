@@ -18,3 +18,4 @@
 - Пофиксить шопы
 - PcPoint сгорают
 - Лвл вороны и коня
+- 1 reset bk (with cow ring) can kill a 15 reset player

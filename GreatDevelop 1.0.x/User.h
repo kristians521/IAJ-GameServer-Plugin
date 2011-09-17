@@ -812,9 +812,8 @@ typedef	struct sAddTab
 	int		Resets;
 	int		UsedSlot;
 }sAddTab;
-#ifdef _GS
+
 BOOL __cdecl gObjGameClose_Func(int aIndex);
-#endif
 void __stdcall gObjViewportPatchExecute(OBJECTSTRUCT *gObj);
 void __stdcall JGPGetCharInfoEx(int Loop, unsigned char *DSPacket, unsigned char *toClientPacket);		
 void TradeSystem__Cancel(void * lpParam);		 

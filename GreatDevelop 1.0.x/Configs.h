@@ -75,6 +75,7 @@
 #define ShopExcellentMod_Exit1						0x0056F6FF
 #define ShopExcellentMod_Hook2						0x0056EC25
 #define ShopExcellentMod_Exit2						0x0056EC2A
+#define gObjGameClose ((BOOL(*)(int)) 0x0051B3E0)  	
 #define gObjMoveGate ((int(*)(int aIndex, int Gate)) 0x00545170) //duel
 #define gObjTeleport ((void(*) (int,unsigned char,unsigned char,unsigned char)) 0x0040341D)
 #define CloseClient ((void(*)(DWORD))0x0040822E)	
