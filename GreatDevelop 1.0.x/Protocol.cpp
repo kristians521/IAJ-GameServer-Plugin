@@ -382,7 +382,7 @@ void cProtoFunc::PkClear(LPOBJ gObj, LPOBJ NpcObj)
 
 	if (PriceWCoin > 0)
 	{										
-		PCPoint.UpdatePoints(gObj,PricePcPoint,PC_DEL,WCOIN);
+		PCPoint.UpdatePoints(gObj,PriceWCoin,PC_DEL,WCOIN);
 		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[Guard] You pay %d WCoin", PriceWCoin);
 	}
 
