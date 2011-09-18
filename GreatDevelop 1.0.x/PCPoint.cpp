@@ -210,7 +210,7 @@ void cPCPoint::BuyItem(int Index,int Position)
 
 void cPCPoint::InitPCPointForPlayer(LPOBJ gObj)
 {
-	MySQL.Execute("SELECT PCPoint FROM Character WHERE Name = '%s'", gObj->Name);
+	MySQL.Execute("SELECT PCPoint FROM [%s].[dbo].[Character] WHERE Name = '%s'", MySQL.szDatabase, gObj->Name);
 	int AmountPoints = MySQL.GetInt();
 	if (AmountPoints > sPoints.MaximumPCPoints) AmountPoints = sPoints.MaximumPCPoints;
 	AddTab[gObj->m_Index].PC_PlayerPoints = AmountPoints;
@@ -243,7 +243,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 	if (Type == PCPOINT)
 	{
 		AddTab[gObj->m_Index].PC_PlayerPoints = AmountPoints;
-		MySQL.Execute("UPDATE Character SET PCPoint = '%d' WHERE Name = '%s'", AmountPoints, gObj->Name);
+		MySQL.Execute("UPDATE [%s].[dbo].[Character] SET PCPoint = '%d' WHERE Name = '%s'",MySQL.szDatabase, AmountPoints, gObj->Name);
 
 		BYTE Packet[8] = {0xC1, 0x08 , 0xD0 , 0x04 , LOBYTE(AmountPoints), HIBYTE(AmountPoints),
 			LOBYTE(sPoints.MaximumPCPoints), HIBYTE(sPoints.MaximumPCPoints)};
@@ -252,7 +252,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 	if (Type == WCOIN)
 	{
 		gObj->m_wCashPoint = AmountPoints;
-		MySQL.Execute("UPDATE MEMB_INFO SET cspoints = %d WHERE memb___id = '%s'",AmountPoints , gObj->AccountID);
+		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET cspoints = %d WHERE memb___id = '%s'",MySQL.szDatabase,AmountPoints , gObj->AccountID);
 	}
 }
 

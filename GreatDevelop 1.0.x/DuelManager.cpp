@@ -1682,15 +1682,15 @@ void DuelSystem::DuelSetInfo(int aIndex)
 
 void DuelSystem::SaveDuel(char FirstAcc[11], char FirstName[11], char SecondAcc[11], char SecondName[11], int Point1, int Point2)
 {
-	MySQL.Execute("UPDATE Character SET DuelWins=DuelWins+1, DuelLoses=DuelLoses, LastDuel = GETDATE(),DuelsTotal = DuelsTotal+1 WHERE AccountID = '%s' AND Name = '%s'",FirstAcc, FirstName);
-	MySQL.Execute("UPDATE Character SET DuelWins=DuelWins, DuelLoses=DuelLoses+1, LastDuel = GETDATE(),DuelsTotal = DuelsTotal+1 WHERE AccountID = '%s' AND Name = '%s'",SecondAcc, SecondName);
+	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET DuelWins=DuelWins+1, DuelLoses=DuelLoses, LastDuel = GETDATE(),DuelsTotal = DuelsTotal+1 WHERE AccountID = '%s' AND Name = '%s'",MySQL.szDatabase,FirstAcc, FirstName);
+	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET DuelWins=DuelWins, DuelLoses=DuelLoses+1, LastDuel = GETDATE(),DuelsTotal = DuelsTotal+1 WHERE AccountID = '%s' AND Name = '%s'",MySQL.szDatabase,SecondAcc, SecondName);
 }
 
 bool DuelSystem::SetDuelState(int aIndex, char AccountID[11], char Name[11])
-{	
-	MySQL.Execute("SELECT DuelWins FROM Character WHERE AccountID = '%s' AND Name = '%s'", AccountID, Name);
+{		
+	MySQL.Execute("SELECT DuelWins FROM [%s].[dbo].[Character] WHERE AccountID = '%s' AND Name = '%s'", MySQL.szDatabase, AccountID, Name);
 	int Wins = MySQL.GetInt();
-	MySQL.Execute("SELECT DuelLoses FROM Character WHERE AccountID = '%s' AND Name = '%s'", AccountID, Name);
+	MySQL.Execute("SELECT DuelLoses FROM [%s].[dbo].[Character] WHERE AccountID = '%s' AND Name = '%s'", MySQL.szDatabase, AccountID, Name);
 	int Lose = MySQL.GetInt();
 	int All = Wins+Lose;
 	AddTab[aIndex].DUEL_Wins = Wins;
