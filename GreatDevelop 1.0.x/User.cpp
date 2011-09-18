@@ -272,7 +272,7 @@ BOOL __cdecl gObjGameClose_Func(int aIndex)
 	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);	  
 	//
 	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET PCPoint = %d WHERE Name = '%s'", MySQL.szDatabase, AddTab[gObj->m_Index].PC_PlayerPoints, gObj->Name);
-	MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET cspoints = %d WHERE memb___id = '%s'", MySQL.szDatabase,gObj->m_wCashPoint , gObj->AccountID);
+	MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET cspoints = %d WHERE memb___id = '%s'", MySQL.szDatabase, gObj->m_wCashPoint , gObj->AccountID);
 	//
 	switch(GmSystem.IsAdmin(gObj->Name))
 	{																									   

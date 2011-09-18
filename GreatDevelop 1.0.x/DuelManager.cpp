@@ -1682,8 +1682,8 @@ void DuelSystem::DuelSetInfo(int aIndex)
 
 void DuelSystem::SaveDuel(char FirstAcc[11], char FirstName[11], char SecondAcc[11], char SecondName[11], int Point1, int Point2)
 {
-	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET DuelWins=DuelWins+1, DuelLoses=DuelLoses, LastDuel = GETDATE(),DuelsTotal = DuelsTotal+1 WHERE AccountID = '%s' AND Name = '%s'",MySQL.szDatabase,FirstAcc, FirstName);
-	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET DuelWins=DuelWins, DuelLoses=DuelLoses+1, LastDuel = GETDATE(),DuelsTotal = DuelsTotal+1 WHERE AccountID = '%s' AND Name = '%s'",MySQL.szDatabase,SecondAcc, SecondName);
+	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET DuelWins=DuelWins+1, DuelLoses=DuelLoses, LastDuel = GETDATE(),DuelsTotal = DuelsTotal+1 WHERE AccountID = '%s' AND Name = '%s'", MySQL.szDatabase, FirstAcc, FirstName);
+	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET DuelWins=DuelWins, DuelLoses=DuelLoses+1, LastDuel = GETDATE(),DuelsTotal = DuelsTotal+1 WHERE AccountID = '%s' AND Name = '%s'", MySQL.szDatabase, SecondAcc, SecondName);
 }
 
 bool DuelSystem::SetDuelState(int aIndex, char AccountID[11], char Name[11])

@@ -470,7 +470,7 @@ bool cChat::PostCommand(LPOBJ gObj, char *Msg)
 	if(CheckCommand(gObj, Config.Commands.IsPost, GmSystem.NONE, Config.Commands.PostPriceZen, Config.Commands.PostPricePCPoint, Config.Commands.PostPriceWCoin, Config.Commands.PostLvl, 1, 0, "Post", "/post <msg>", Msg))
 		return true;
 
-	MySQL.Execute("SELECT BanPost FROM [%s].[dbo].[Character] WHERE Name = '%s'",MySQL.szDatabase, gObj->Name);		
+	MySQL.Execute("SELECT BanPost FROM [%s].[dbo].[Character] WHERE Name = '%s'", MySQL.szDatabase, gObj->Name);		
 	int Banned = MySQL.GetInt();
 	if(Banned == 1)
 	{
@@ -518,7 +518,7 @@ bool cChat::BanPostCommand(LPOBJ gObj, char *Msg)
 	int Index = Utilits.GetPlayerIndex(Target); 
 	OBJECTSTRUCT *tObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
 
-	MySQL.Execute("SELECT BanPost FROM [%s].[dbo].[Character] WHERE Name = '%s'",MySQL.szDatabase, Target);		
+	MySQL.Execute("SELECT BanPost FROM [%s].[dbo].[Character] WHERE Name = '%s'", MySQL.szDatabase, Target);		
 	int Banned = MySQL.GetInt(); 
 
 	if(Banned)
@@ -530,7 +530,7 @@ bool cChat::BanPostCommand(LPOBJ gObj, char *Msg)
 		MessageLog(1, c_Red, t_BAN, gObj, "[BanPost] %s Added BanPosts", Target);		
 	}
 
-	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET BanPost = '1' WHERE Name = '%s'",MySQL.szDatabase,  Target);
+	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET BanPost = 1 WHERE Name = '%s'", MySQL.szDatabase, Target);
 	return true;	   
 }
 
@@ -545,7 +545,7 @@ bool cChat::UnBanPostCommand(LPOBJ gObj, char *Msg)
 	int Index = Utilits.GetPlayerIndex(Target); 
 	OBJECTSTRUCT *tObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
 
-	MySQL.Execute("SELECT BanPost FROM [%s].[dbo].[Character] WHERE Name = '%s'",MySQL.szDatabase, Target);		
+	MySQL.Execute("SELECT BanPost FROM [%s].[dbo].[Character] WHERE Name = '%s'", MySQL.szDatabase, Target);		
 	int Banned = MySQL.GetInt();
 
 	if(Banned == 0)
@@ -558,7 +558,7 @@ bool cChat::UnBanPostCommand(LPOBJ gObj, char *Msg)
 		MessageLog(1, c_Red, t_BAN, gObj, "[BanPost] %s's post sucsessfuly UnBanned!", Target);
 	} 
 
-	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET  BanPost = '0' WHERE Name = '%s'", MySQL.szDatabase,Target);	
+	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET BanPost = 0 WHERE Name = '%s'", MySQL.szDatabase, Target);	
 	return true;	   
 } 
 
@@ -573,7 +573,7 @@ bool cChat::BanCharCommand(LPOBJ gObj, char *Msg)
 	int Index = Utilits.GetPlayerIndex(Target); 
 	OBJECTSTRUCT *tObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
 
-	MySQL.Execute("SELECT CtlCode FROM [%s].[dbo].[Character] WHERE Name = '%s'",MySQL.szDatabase, Target);		
+	MySQL.Execute("SELECT CtlCode FROM [%s].[dbo].[Character] WHERE Name = '%s'", MySQL.szDatabase, Target);		
 	int Banned = MySQL.GetInt();
 
 	if(Banned == 1)
@@ -583,7 +583,7 @@ bool cChat::BanCharCommand(LPOBJ gObj, char *Msg)
 	}
 	else   
 	{																				 
-		MySQL.Execute("UPDATE [%s].[dbo].[Character] SET CtlCode='1' WHERE Name='%s'",MySQL.szDatabase,Target);		
+		MySQL.Execute("UPDATE [%s].[dbo].[Character] SET CtlCode = 1 WHERE Name = '%s'", MySQL.szDatabase, Target);		
 		MessageLog(1, c_Red, t_BAN, gObj, "[BanChar] %s banned", Target);		
 	}
 
@@ -608,10 +608,10 @@ bool cChat::BanAccCommand(LPOBJ gObj, char *Msg)
 	{
 		CloseClient(Index);									   
 		MessageLog(1, c_Red, t_BAN, gObj, "[BanAcc] %s banned, character %s disconnected.", Target, Target2);		
-		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code='1' WHERE memb___id = '%s'",MySQL.szDatabase,Target);	
+		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code = 1 WHERE memb___id = '%s'", MySQL.szDatabase, Target);	
 	}
 	else 
-		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code='1' WHERE memb___id = '%s'",MySQL.szDatabase,Target);	   
+		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code = 1 WHERE memb___id = '%s'", MySQL.szDatabase, Target);	   
 
 	return true;	 
 }
@@ -625,7 +625,7 @@ bool cChat::UnBanCharCommand(LPOBJ gObj, char *Msg)
 
 	sscanf(Msg, "%s", &Target);
 
-	MySQL.Execute("SELECT CtlCode FROM [%s].[dbo].[Character] WHERE Name = '%s'",MySQL.szDatabase, Target);
+	MySQL.Execute("SELECT CtlCode FROM [%s].[dbo].[Character] WHERE Name = '%s'", MySQL.szDatabase, Target);
 	int Banned = MySQL.GetInt();
 
 	if(Banned == 0)
@@ -635,7 +635,7 @@ bool cChat::UnBanCharCommand(LPOBJ gObj, char *Msg)
 	}
 	else   
 	{		 
-		MySQL.Execute("UPDATE [%s].[dbo].[Character] SET CtlCode='0' WHERE Name='%s'",MySQL.szDatabase,Target);
+		MySQL.Execute("UPDATE [%s].[dbo].[Character] SET CtlCode = 0 WHERE Name = '%s'", MySQL.szDatabase, Target);
 		MessageLog(1, c_Red, t_BAN, gObj, "[UnBanChar] %s UnBaned", Target);		
 	}
 	return true;	 
@@ -660,7 +660,7 @@ bool cChat::UnBanAccCommand(LPOBJ gObj, char *Msg)
 	}
 	else   
 	{		 																	  
-		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code='0' WHERE memb___id = '%s'",MySQL.szDatabase,Target);  
+		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code = 0 WHERE memb___id = '%s'", MySQL.szDatabase, Target);  
 		MessageLog(1, c_Red, t_BAN, gObj, "[UnBanAcc] %s UnBaned", Target);		
 	} 
 
@@ -1347,13 +1347,13 @@ bool cChat::WareCommand(LPOBJ gObj, char *Msg)
 	int WantSlot;
 	sscanf(Msg, "%d", &WantSlot);
 	 
-	MySQL.Execute("SELECT UsedSlot FROM [%s].[dbo].[warehouse] WHERE AccountID = '%s'",MySQL.szDatabase, gObj->AccountID);
+	MySQL.Execute("SELECT UsedSlot FROM [%s].[dbo].[warehouse] WHERE AccountID = '%s'", MySQL.szDatabase, gObj->AccountID);
 	int UsedSlot = MySQL.GetInt();
 	 
 	if(UsedSlot == NULL || UsedSlot == 0)
 	{			   
-		MySQL.Execute("UPDATE [%s].[dbo].[warehouse] SET Items01 = Items WHERE AccountID = '%s'",MySQL.szDatabase, gObj->AccountID); 
-		MySQL.Execute("UPDATE [%s].[dbo].[warehouse] SET UsedSlot = 1 WHERE AccountID = '%s'",MySQL.szDatabase, gObj->AccountID); 
+		MySQL.Execute("UPDATE [%s].[dbo].[warehouse] SET Items01 = Items WHERE AccountID = '%s'", MySQL.szDatabase, gObj->AccountID); 
+		MySQL.Execute("UPDATE [%s].[dbo].[warehouse] SET UsedSlot = 1 WHERE AccountID = '%s'", MySQL.szDatabase, gObj->AccountID); 
 	}
 	 
 	if(WantSlot < 1 || WantSlot > Config.Commands.NumberOfVaults)
@@ -1368,9 +1368,9 @@ bool cChat::WareCommand(LPOBJ gObj, char *Msg)
 	} 
 	TakeCommand(gObj, Config.Commands.ZenForChange, Config.Commands.PcPointForChange, Config.Commands.WCoinForChange, "Ware");	
 
-	MySQL.Execute("UPDATE [%s].[dbo].[warehouse] SET Items%02d = Items WHERE AccountID = '%s'",MySQL.szDatabase, UsedSlot, gObj->AccountID);
-	MySQL.Execute("UPDATE [%s].[dbo].[warehouse] SET Items = Items%02d WHERE AccountID = '%s'",MySQL.szDatabase, WantSlot, gObj->AccountID);
-	MySQL.Execute("UPDATE [%s].[dbo].[warehouse] SET UsedSlot = %d WHERE AccountID = '%s'",MySQL.szDatabase, WantSlot, gObj->AccountID);
+	MySQL.Execute("UPDATE [%s].[dbo].[warehouse] SET Items%02d = Items WHERE AccountID = '%s'", MySQL.szDatabase, UsedSlot, gObj->AccountID);
+	MySQL.Execute("UPDATE [%s].[dbo].[warehouse] SET Items = Items%02d WHERE AccountID = '%s'", MySQL.szDatabase, WantSlot, gObj->AccountID);
+	MySQL.Execute("UPDATE [%s].[dbo].[warehouse] SET UsedSlot = %d WHERE AccountID = '%s'", MySQL.szDatabase, WantSlot, gObj->AccountID);
 
 	MessageLog(1, c_Red, t_COMMANDS, gObj, "[Ware] You successfully change vault from %d to %d!", UsedSlot, WantSlot);
 	return true;
