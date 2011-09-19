@@ -76,16 +76,9 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 	//ZenFixes
 	if(Config.Zen.Enabled)
 	{
-		if(pObj->DbClass == 3 || pObj->DbClass == 19 || pObj->DbClass == 35 || pObj->DbClass == 51 || pObj->DbClass == 66 || pObj->DbClass == 83 || pObj->DbClass == 98)
-		{
-			int NewMoneyML = Utilits.gObjZenSingle(pObj,mObj,500,700);
-			mObj->Money = (NewMoneyML/Config.Zen.MasterDivisor) * Config.Zen.MasterZen; 
-		}
-		else
-		{
-			int NewMoneyNormal = Utilits.gObjZenSingle(pObj,mObj,500,700);
-			mObj->Money = (NewMoneyNormal/Config.Zen.NormalDivisor) * Config.Zen.NormalZen;
-		}
+		int NewMoney = Utilits.gObjZenSingle(pObj,mObj,500,700);
+		if(pObj->ChangeUP2)mObj->Money = (NewMoney/1000) * Config.Zen.MasterZen; 
+		else mObj->Money = (NewMoney/1000) * Config.Zen.NormalZen;
 	}
 	//PartyZenFixes
 	if(Config.PartyZen.Enabled)
@@ -109,11 +102,11 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 				}
 			} 
 			//Master Party
-			if(pObj->DbClass == 3 || pObj->DbClass == 19 || pObj->DbClass == 35 || pObj->DbClass == 51 || pObj->DbClass == 66 || pObj->DbClass == 83 || pObj->DbClass == 98)
-				mObj->Money = (mObj->Money * Config.PartyZen.MasterZen)*((AllPartyLevel/Count)/(Config.PartyZen.MasterDivisor)); 
+			if(pObj->ChangeUP2)
+				mObj->Money = (mObj->Money * Config.PartyZen.MasterZen)*((AllPartyLevel/Count)/(1000)); 
 			//Normal
 			else  
-				mObj->Money = (mObj->Money* Config.PartyZen.NormalZen)*((AllPartyLevel/Count)/Config.PartyZen.NormalDivisor);
+				mObj->Money = (mObj->Money * Config.PartyZen.NormalZen)*((AllPartyLevel/Count)/1000);
 		}
 	}
 

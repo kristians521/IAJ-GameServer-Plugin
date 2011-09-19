@@ -252,7 +252,7 @@ struct OBJECTSTRUCT
 	/*<thisrel this+0xa4>*/ /*|0x2|*/ unsigned short Class;
 	/*<thisrel this+0xa6>*/ /*|0x1|*/ unsigned char DbClass;
 	/*<thisrel this+0xa7>*/ /*|0x1|*/ unsigned char ChangeUP;
-	/*<thisrel this+0xa8>*/ /*|0x1|*/ unsigned char ChangeUP2;
+	/*<thisrel this+0xa8>*/ /*|0x1|*/ unsigned char ChangeUP2; 
 	/*<thisrel this+0xaa>*/ /*|0x2|*/ short Level;
 	/*<thisrel this+0xac>*/ /*|0x4|*/ int LevelUpPoint;
 	/*<thisrel this+0xb0>*/ /*|0x4|*/ int iFruitPoint;

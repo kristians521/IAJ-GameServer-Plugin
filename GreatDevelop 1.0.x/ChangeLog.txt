@@ -8,6 +8,7 @@ Great Develop 1.0.2
 	[GS] Event.ini Fully Fixed
 	[GS\GSCS] Drop System MobId (-1 config added)
 	[GS\GSCS] Drop System Map (-1 config added)
+	[GS\GSCS] Zen Drop FIXED
 
 Great Develop 1.0.1
 

@@ -25,7 +25,7 @@ P.S. Please respect credits!
 							Contact Information/Контакты:
 
 Forum 
-	http://greatdevelop.ru/forum/		
+	http://greatdevelop.ru/forum	
 
 If you find bugs, please report it on email: 
 	support@greatdevelop.ru
@@ -59,7 +59,7 @@ If you want to know more info about our private develops, write to us on email:
 6. Добавьте SQL скрипты, из папки DataBase
 7. Ваш сервер готов к использованию. Пожалуйста проверяйте обновления каждую неделю.
 
-Если по установке сервера у вас возникли вопросы вы можете обратится на официальный форум http://greatdevelop.ru/forum/
+Если по установке сервера у вас возникли вопросы вы можете обратится на официальный форум http://mu.greatgame.su//
 
 *Внимание: Не изменяйте где либо еще!!!
 **Иногда антивирусные программы ложно принимают компоненты сервера за вирус файлы. Не бойтесь это всего лишь реакция на перестройку PE или Пакеры.

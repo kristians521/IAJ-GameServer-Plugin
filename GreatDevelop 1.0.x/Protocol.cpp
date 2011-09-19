@@ -236,8 +236,8 @@ void cProtoFunc::CheckRing(LPOBJ gObj, LPBYTE aRecv)
 
 void cProtoFunc::LoginMsg(LPOBJ gObj)
 {		
-	//Chat.Message(1, gObj->m_Index, "Powered by GreatDevelop 1.0.1 'http://greatdevelop.ru/'");
-	//Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
+	Chat.Message(1, gObj->m_Index, "Signal %d", gObj->ChangeUP2);
+	Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
 	if (Config.ConnectInfo == 1)
 	{
 		int totPlayers = Utilits.GetOnlineCount();
