@@ -80,7 +80,7 @@ void Moss::LoadItemInfo()
 
 	if (file == NULL)
 	{
-		Log.ConsoleOutPut(0,c_Red,t_NULL,"[Moss The Gambler] Error Open Item(Kor).txt, Moss The Gambler Disabled");
+		Log.ConsoleOutPut(0,c_Red,t_NULL,"[Moss The Gambler] Cant Find Item(kor).txt, Moss The Gambler Disabled");
 		MossConfig.EnableMoss = 0;
 		return;
 	}
@@ -111,7 +111,7 @@ void Moss::LoadItemInfo()
 			OrderItems[group-1] = ++j;
 		}
 	}
-	Log.ConsoleOutPut(1,c_Blue,t_NULL,"[Moss The Gambler] Moss The Gambler Loaded succesfully");
+	Log.ConsoleOutPut(1,c_Blue,t_NULL,"[Moss The Gambler] Loaded successfully");
 	fclose(file);
 }
 
@@ -123,7 +123,7 @@ void Moss::LoadTimeConfig()
 
 	if (file == NULL)
 	{
-		Log.ConsoleOutPut(0,c_Red,t_NULL,"[Moss The Gambler] Error Open EventTime.dat, Timer In Moss The Gambler Disabled");
+		Log.ConsoleOutPut(0,c_Red,t_NULL,"[Moss The Gambler] Cant Find EventTime.dat, Timer in Moss Disabled");
 		MossConfig.EnableTimer = 0;
 		return;
 	}
@@ -187,21 +187,21 @@ void Moss::CheckTime()
 
 				if (hour == BeforeOpenHour && min == BeforeOpenMin)
 				{
-					Chat.MessageAll(0,0,NULL,"[Moss The Gambler] Moss The Gambler is Opened before %d minutes",j);
+					Chat.MessageAll(0,0,NULL,"Moss The Gambler will arrive after %d minute(s)",j);
 					break;
 				}
 			}
 
 			if (hour == MossTimer[i].hour && min == MossTimer[i].minute)
 			{
-				Chat.MessageAll(0,0,NULL,"[Moss The Gambler] Is arrived!");
+				Chat.MessageAll(0,0,NULL,"Moss The Gambler is arrived!");
 				this->SpawnMoss();
 				this->OpenedMoss = TRUE;
 			}
 
 			if (hour == MossTimer[i].closehour && min == MossTimer[i].closemin)
 			{
-				Chat.MessageAll(0,0,NULL,"[Moss The Gambler] Closed!");
+				Chat.MessageAll(0,0,NULL,"Moss The Gambler is closed!");
 				this->DisappearMoss();
 				this->OpenedMoss = FALSE;
 			}
@@ -243,7 +243,7 @@ BOOL Moss::BuyItem(int aIndex, unsigned char * aRecv)
 	
 	if (moss.GetStatusMoss() == FALSE)
 	{
-		Chat.Message(aIndex,"[Moss The Gambler] Moss The Gambler Close");
+		Chat.Message(aIndex,"Moss The Gambler is closed");
 		return TRUE;
 	}
 

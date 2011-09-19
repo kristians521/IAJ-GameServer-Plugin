@@ -142,6 +142,7 @@
     <None Include="Configs\GreatDevelop\EventTimer.dat" />
     <None Include="Configs\GreatDevelop\GoldenArcher.txt" />
     <None Include="Configs\GreatDevelop\Items.ini" />
+    <None Include="Configs\GreatDevelop\MonsterSpawn.ini" />
     <None Include="Configs\GreatDevelop\MossGambler.ini" />
     <None Include="Configs\GreatDevelop\MoveReq.txt" />
     <None Include="Configs\GreatDevelop\PCPoints_WCoins.dat" />

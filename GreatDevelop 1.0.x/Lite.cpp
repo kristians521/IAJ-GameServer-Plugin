@@ -18,7 +18,7 @@
 #include "SQL.h"
 #include "ChatCommands.h"
 #include "MossGambler.h"	 
-#include "Monster.h"
+#include "Monster.h" 
 struct sIps
 {
 	char Ip[16];
@@ -174,6 +174,8 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		MoveReq.MoveReqLoad();
 		
 		#ifdef _GS
+		
+			ReadMonsterAdd();
 			if(Config.Duel.Enabled)
 			{
 				g_DuelSystem.DuelCreateThread();

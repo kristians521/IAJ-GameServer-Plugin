@@ -42,7 +42,7 @@ private:
 	bool SummonCommand(LPOBJ gObj, char *Msg);
 	bool DiskCommand(LPOBJ gObj, char* Msg);  
 	bool Move(LPOBJ gObj, char *Msg);
-	bool PostCommand(LPOBJ gObj, char *Msg);	  
+	bool PostCommand(LPOBJ gObj, char *Msg);	 
 	bool BanPostCommand(LPOBJ gObj, char *Msg); 
 	bool UnBanPostCommand(LPOBJ gObj, char *Msg); 
 	bool BanAccCommand(LPOBJ gObj, char *Msg);  
@@ -63,6 +63,7 @@ private:
 	bool WareCommand(LPOBJ gObj, char *Msg);	 
 	bool AddCommands(LPOBJ gObj, char *Msg, int Type); 	  
 	bool SetZenCommand(LPOBJ gObj, char *Msg);
+	bool AddMobCommand(LPOBJ gObj, char *Msg);
 };
 
 extern cChat Chat;

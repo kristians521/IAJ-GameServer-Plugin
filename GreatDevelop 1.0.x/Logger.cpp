@@ -11,9 +11,9 @@ char Message[1024];
 Logger Log;	   
 DWORD PiD;
 #ifdef _GS
-#define TITTLE "Great Develop Mu 1.0.1 (GS)"
+#define TITTLE "Great Develop Mu 1.0.2 (GS)"
 #else													   
-#define TITTLE "Great Develop Mu 1.0.1 (GS_CS)"
+#define TITTLE "Great Develop Mu 1.0.2 (GS_CS)"
 #endif 
 
 Logger::Logger(){}
@@ -33,7 +33,7 @@ void Logger::LoggerInit()
 {
 	CreateThread( 0 , 0 , (LPTHREAD_START_ROUTINE) LoggerCore , 0 , 0 , &PiD );
 	Sleep(100);
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Great Develop Mu 1.0.1 Season 4.6", dVersion);
+	Log.ConsoleOutPut(0, c_Green,t_NULL,"Great Develop Mu 1.0.2 Season 4.6");
 	Log.ConsoleOutPut(0, c_Green,t_NULL,"Official Website: http://greatdevelop.ru/");
 	Log.ConsoleOutPut(0, c_Green,t_NULL,"Compile Date: %s %s", __DATE__, __TIME__);
 	Log.ConsoleOutPut(0, c_Green,t_NULL,"Credits: Mu Community, GreatDevelop & Simp1e");

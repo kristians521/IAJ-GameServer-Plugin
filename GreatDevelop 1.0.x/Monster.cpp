@@ -10,6 +10,9 @@
 #include "PCPoint.h"
 #include "Configs.h"
 
+
+
+
 // Monster die Handler (hooked replacement for gObjMonsterDieGiveItem)
 void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
 {
@@ -52,8 +55,38 @@ int MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y)
 		return -1;
 	}
 }
-#endif
 
+void ReadMonsterAdd()
+{ 
+		FILE* MonsterFile;
+		if((MonsterFile = fopen( GreatDevelopMobAdd, "r")) == NULL)
+		{						   
+			MessageBox(NULL, "Cant Find MonsterSpawn.ini", "Error", 0);
+			return;
+		}
+								
+		rewind(MonsterFile);
+		char Buff[255];	
+		while(!feof(MonsterFile))
+		{							
+			Buff[0] = 0;
+			fgets (Buff, 255, MonsterFile);	 
+			if(Buff[0] == '/' || Buff[0] == '#' || Buff[0] == ' ' || strlen(Buff) < 9)
+				continue;			
+
+			int Mob = -1, Cnt = -1, Map = -1, Speed = -1, X = -1, Y = -1;
+			sscanf(Buff, "%d %d %d %d %d %d", &Mob, &Cnt, &Speed, &Map, &X, &Y);
+
+			if(Mob == -1 || Cnt == -1 || Map == -1 || X == -1 || Y == -1)
+				continue;
+								  
+			for(int i = 0; i < Cnt; i++)
+				MonsterAddAndSpawn(Mob,Speed,Map,X,Y);
+		}	 
+		rewind(MonsterFile);
+		fclose(MonsterFile); 
+}
+#endif
 //Monster Death Control
 int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 {

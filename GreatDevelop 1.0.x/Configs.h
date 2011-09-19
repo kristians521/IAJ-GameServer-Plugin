@@ -122,7 +122,7 @@
 #define GreatDevelopPets			"..\\GreatDevelop\\Pets.ini"
 #define GreatDevelopPkClear			"..\\GreatDevelop\\PkClearGuard.ini"
 #define GreatDevelopSkills			"..\\GreatDevelop\\Skills.ini"  
-
+#define GreatDevelopMobAdd			"..\\GreatDevelop\\MonsterSpawn.ini"  
 #define GS_CONFIG_FILE				".\\Data\\ServerInfo.dat" 
 
 #define GreatDevelopNews			".\\News.txt"

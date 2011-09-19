@@ -236,7 +236,6 @@ void cProtoFunc::CheckRing(LPOBJ gObj, LPBYTE aRecv)
 
 void cProtoFunc::LoginMsg(LPOBJ gObj)
 {		
-	Chat.Message(1, gObj->m_Index, "Signal %d", gObj->ChangeUP2);
 	Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
 	if (Config.ConnectInfo == 1)
 	{

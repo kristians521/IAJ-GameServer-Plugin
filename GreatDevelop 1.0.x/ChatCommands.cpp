@@ -13,6 +13,7 @@
 #include "MoveReq.h"
 #include "IpBlock.h"
 #include "DropSystem.h"
+#include "Monster.h"
 cChat Chat;
 						 
 cChat::cChat()
@@ -128,7 +129,8 @@ bool cChat::ChatDataSend(LPOBJ gObj,LPBYTE aRecv)
 		bResult = WareCommand(gObj,(char*)aRecv+13+strlen("/ware"));	
 	if (!memcmp(&aRecv[13],"/setzen",strlen("/setzen")))
 		bResult = SetZenCommand(gObj,(char*)aRecv+13+strlen("/setzen"));	   
-				
+	if (!memcmp(&aRecv[13],"/mobadd",strlen("/mobadd")))
+		bResult = AddMobCommand(gObj,(char*)aRecv+13+strlen("/mobadd"));		 
 	return bResult;												
 }
 
@@ -474,7 +476,7 @@ bool cChat::PostCommand(LPOBJ gObj, char *Msg)
 	int Banned = MySQL.GetInt();
 	if(Banned == 1)
 	{
-		MessageLog(1, c_Red, t_COMMANDS, gObj, "[POST] You can't post.");
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[ANTI-FLOOD] You post is banned!");
 		return true;
 	}
 
@@ -482,7 +484,7 @@ bool cChat::PostCommand(LPOBJ gObj, char *Msg)
 	{
 		MessageLog(1, c_Red, t_COMMANDS, gObj, "[ANTI-FLOOD] Wait %d sec until you can post!", AddTab[gObj->m_Index].POST_Delay);
 		return true;
-	}
+	} 
 
 	TakeCommand(gObj, Config.Commands.PostPriceZen, Config.Commands.PostPricePCPoint, Config.Commands.PostPriceWCoin, "Post"); 
 	switch(Config.Commands.PostColor)
@@ -924,6 +926,9 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 		case 1:
 			{
 				GameMonsterAllCloseAndReload(); 
+#ifdef _GS
+				ReadMonsterAdd();
+#endif
 				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] Monsters Reloaded.");
 				break;
 			}
@@ -965,6 +970,9 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 				IpBlock.LoadIpBlock();
 				if (Config.GmSystemConfig.IsGMSystem)GmSystem.Load();
 				DropSystem.LoadDropItems();
+				#ifdef _GS
+				ReadMonsterAdd();
+				#endif
 				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] All Options Reloaded.");
 				break;
 			}
@@ -1399,5 +1407,34 @@ bool cChat::SetZenCommand(LPOBJ gObj, char *Msg)
 
 	MessageLog(1, c_Red, t_GM, gObj, "[SetZen] You sucsessfully changed %s zen.", tObj->Name);
 	MessageLog(1, c_Red, t_GM, tObj, "[SetZen] Your zen was changed to %d by %s.", Value, gObj->Name);
+	return true;
+}
+
+bool cChat::AddMobCommand(LPOBJ gObj, char *Msg)
+{
+#ifdef _GS
+	if(CheckCommand(gObj, 1, GmSystem.cSetZen, 0, 0, 0, 0, 1, 0, "AddMob", "/mobadd <mobid> <count> <speed> <map> <x> <y>", Msg))
+			return true;
+
+		int Mob, Cnt = 1, Map = gObj->MapNumber, Speed = 30, X = (int)gObj->X, Y = (int)gObj->Y;
+		sscanf(Msg, "%d %d %d %d %d %d", &Mob, &Cnt, &Speed, &Map, &X, &Y);
+
+		FILE* AddMobFile;  
+							 
+		if((AddMobFile = fopen( GreatDevelopMobAdd, "a+")) == NULL)
+		{						   
+			MessageBox(NULL, "Cant Find MonsterSpawn.ini", "Error", 0);
+		}
+		else
+		{				
+			fprintf(AddMobFile, "\n%d %d %d %d %d %d", Mob, Cnt, Speed, Map, X, Y); 	 
+			fclose(AddMobFile);
+		}		 
+		for(int i = 0; i < Cnt; i++)
+		{
+			MonsterAddAndSpawn(Mob,Speed,Map,X,Y);
+		}
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[AddMob] %d Mob Successfully spawned (Map: %d, X: %d, Y: %d, MobID: %d)", Cnt,Map,X,Y, Mob);
+#endif
 	return true;
 }
