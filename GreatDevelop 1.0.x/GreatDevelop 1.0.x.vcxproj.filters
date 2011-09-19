@@ -85,7 +85,7 @@
     <Filter Include="Source\MoveReq">
       <UniqueIdentifier>{eb7e0432-e3e5-4203-9a15-136648b86545}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Fixes\GMSystem">
+    <Filter Include="Source\GMSystem">
       <UniqueIdentifier>{2bdf5bc8-a5b8-4a12-85c0-4f09864e84a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -118,7 +118,7 @@
       <Filter>Source\Chat</Filter>
     </ClCompile>
     <ClCompile Include="GMSystem.cpp">
-      <Filter>Source\Fixes\GMSystem</Filter>
+      <Filter>Source\GMSystem</Filter>
     </ClCompile>
     <ClCompile Include="SQL.cpp">
       <Filter>Source\SQL</Filter>
@@ -192,7 +192,7 @@
       <Filter>Source\Chat</Filter>
     </ClInclude>
     <ClInclude Include="GMSystem.h">
-      <Filter>Source\Fixes\GMSystem</Filter>
+      <Filter>Source\GMSystem</Filter>
     </ClInclude>
     <ClInclude Include="SQL.h">
       <Filter>Source\SQL</Filter>
