@@ -1,7 +1,7 @@
 // ========================================================= //
 // # GameServer 1.00.90 : AntiAFK.txt			   # //
 // # GreatDevelop 1.0.1 2011		       	    	   # //
-// # http://greatdevelop.ru, http://mu.greatgame.su/  # //
+// # http://greatdevelop.ru, http://mu.greatgame.su/	   # //
 // ========================================================= //
 
 [AntiAFK]
