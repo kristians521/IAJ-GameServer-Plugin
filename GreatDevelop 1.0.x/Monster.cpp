@@ -23,9 +23,9 @@ void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
 	gObjMonsterDieGiveItem(lpObj, lpTargetObj);
 
 	//MapSystem Module Drop
-	if(MapSystem.Config[lpTargetObj->MapNumber].Drop != 0)
+	if(MapSystem.Maps[lpTargetObj->MapNumber].Drop != 0)
 	{
-		lpObj->m_wItemDropRate += MapSystem.Config[lpObj->MapNumber].Drop;
+		lpObj->m_wItemDropRate += MapSystem.Maps[lpObj->MapNumber].Drop;
 	}
 }
 
@@ -150,9 +150,9 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 		}
 	}
 	//MapSystem Module Zen
-	if(MapSystem.Enabled && MapSystem.Config[pObj->MapNumber].Zen != 0)
+	if(MapSystem.Enabled && MapSystem.Maps[pObj->MapNumber].Zen != 0)
 	{
-		mObj->Money += MapSystem.Config[mObj->MapNumber].Zen;
+		mObj->Money += MapSystem.Maps[mObj->MapNumber].Zen;
 	}  
 
 	// Drop System

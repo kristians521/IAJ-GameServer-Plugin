@@ -182,10 +182,10 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
           lpObj->MLExp          += pBonusExpML;
      }
 	//MapSystem Module Exp
-   if(MapSystem.Enabled && MapSystem.Config[lpObj->MapNumber].Exp > 0)
+   if(MapSystem.Enabled && MapSystem.Maps[lpObj->MapNumber].Exp != 0)
 	{
-		  pBonusExp               = ((exp * MapSystem.Config[lpObj->MapNumber].Exp) / 100);
-          pBonusExpML               = ((exp * MapSystem.Config[lpObj->MapNumber].Exp) / 100);
+		  pBonusExp               = ((exp * MapSystem.Maps[lpObj->MapNumber].Exp) / 100);
+          pBonusExpML               = ((exp * MapSystem.Maps[lpObj->MapNumber].Exp) / 100);
           // ----
           pNewExperience          += pBonusExp;
           pNewExperenceML          += pBonusExpML;

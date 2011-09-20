@@ -15,12 +15,11 @@ public:
 	int Enabled;
 	struct Conf	  
 	{
-		int MapID;
 		int Zen;
 		int Drop;
 		int Exp;
 		int PVP;		
-	} Config[255];
+	} Maps[255];
 
 };
 

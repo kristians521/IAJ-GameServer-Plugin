@@ -40,14 +40,14 @@ BYTE RecvTable[256] = {
 
 void gObjPlayerKiller(LPOBJ lpObj, LPOBJ lpTargetObj)
 {												
-	if(MapSystem.Config[lpObj->MapNumber].PVP == 3 && lpTargetObj->Type == OBJECT_USER && lpObj->Type == OBJECT_USER)
+	if(MapSystem.Maps[lpObj->MapNumber].PVP == 3 && lpTargetObj->Type == OBJECT_USER && lpObj->Type == OBJECT_USER)
 		return;
 	GCgObjPlayerKiller(lpObj, lpTargetObj);
 }
 
 BOOL gObjAttack(LPOBJ lpObj, LPOBJ lpTargetObj, class CMagicInf* lpMagic, int magicsend, unsigned char MSBFlag, int AttackDamage, BOOL bCombo)
 {		
-	if(MapSystem.Config[lpObj->MapNumber].PVP == 1 && lpTargetObj->Type == OBJECT_USER && lpObj->Type == OBJECT_USER)
+	if(MapSystem.Maps[lpObj->MapNumber].PVP == 1 && lpTargetObj->Type == OBJECT_USER && lpObj->Type == OBJECT_USER)
 		return FALSE;
 	GCgObjAttack(lpObj, lpTargetObj, lpMagic, magicsend, MSBFlag, AttackDamage, bCombo);
 }
