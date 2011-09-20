@@ -61,9 +61,9 @@ private:
 	bool LevelCommand(LPOBJ gObj, char *Msg);	
 	bool PKClearCommand(LPOBJ gObj, char *Msg);	 
 	bool WareCommand(LPOBJ gObj, char *Msg);	 
-	bool AddCommands(LPOBJ gObj, char *Msg, int Type); 	  
-	bool SetZenCommand(LPOBJ gObj, char *Msg);
+	bool AddCommands(LPOBJ gObj, char *Msg, int Type); 	   
 	bool AddMobCommand(LPOBJ gObj, char *Msg);
+	bool SetDropCommand(LPOBJ gObj, char *Msg);	
 };
 
 extern cChat Chat;

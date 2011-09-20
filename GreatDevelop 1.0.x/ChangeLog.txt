@@ -9,6 +9,11 @@ Great Develop 1.0.2
 	[GS\GSCS] Drop System MobId (-1 config added)
 	[GS\GSCS] Drop System Map (-1 config added)
 	[GS\GSCS] Zen Drop FIXED
+	[GS\GSCS] SetZen DELETED (use SetChar) 
+PRIVATE:
+	[GS] MobAdd Command ADDED
+	[GS\GSCS] Monster Speak ADDED
+	[GS\GSCS] SetDrop Command ADDED
 
 Great Develop 1.0.1
 

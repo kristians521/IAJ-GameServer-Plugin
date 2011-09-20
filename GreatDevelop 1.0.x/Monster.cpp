@@ -9,7 +9,8 @@
 #include "Utilits.h"
 #include "PCPoint.h"
 #include "Configs.h"
-
+#include "Logger.h"
+#include "ChatCommands.h"
 
 
 
@@ -155,4 +156,48 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 	}
 
 	return 1;
+}
+ 
+char Messages1[1024];
+
+void NPCMessage(int IndexPlayer, LPOBJ mObj, char* Msg,...)
+{						 
+	Messages1[0] = 0;
+	va_list pArguments1;
+	va_start(pArguments1, Msg);
+	vsprintf_s(Messages1, Msg, pArguments1);
+	va_end(pArguments1);
+
+	ChatTargetSend(mObj, Messages1, IndexPlayer);
+}
+
+void NPCMessageLog(sColor LogColor, sLogType LogType, LPOBJ gObj, LPOBJ mObj, char* Msg,...)
+{						  
+	Messages1[0] = 0;
+	va_list pArguments1;
+	va_start(pArguments1, Msg);
+	vsprintf_s(Messages1, Msg, pArguments1);
+	va_end(pArguments1);
+
+	ChatTargetSend(mObj, Messages1, gObj->m_Index); 
+	Log.ConsoleOutPut(1, LogColor, LogType, "[%s]: %s", gObj->Name, Messages1);
+}
+
+void NPCMessageNear(LPOBJ mObj, char* Msg,...)
+{						   
+	Messages1[0] = 0;
+	va_list pArguments1;
+	va_start(pArguments1, Msg);
+	vsprintf_s(Messages1, Msg, pArguments1);
+	va_end(pArguments1);
+
+	for(int i = OBJECT_MIN; i <= OBJECT_MAX; i++)
+	{						   
+		OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(i);	   
+		if(gObj->Connected < 3) continue; 	   
+		if(mObj->MapNumber != gObj->MapNumber) continue;	 		 
+		if(mObj->X <= gObj->X-10 || mObj->X >= gObj->X+10) continue;
+		if(mObj->Y <= gObj->Y-10 || mObj->Y >= gObj->Y+10) continue;
+		ChatTargetSend(mObj, Messages1, i);
+	}
 }

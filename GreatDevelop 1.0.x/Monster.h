@@ -12,6 +12,10 @@ int MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y);
 void ReadMonsterAdd();
 int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr);		   
 void __cdecl MonsterDie(LPOBJ lpObjOfMonster, LPOBJ lpObjOfPlayer);	 
-
+//Monster Speak																												  
+void NPCMessage(int IndexPlayer, LPOBJ mObj, char* Msg,...);	
+void NPCMessageLog(sColor LogColor, sLogType LogType, LPOBJ gObj, LPOBJ mObj, char* Msg,...);
+void NPCMessageNear(LPOBJ mObj, char* Msg,...);	
+//						 	
 #define OBJ_MAXMONSTER 7400
 #endif

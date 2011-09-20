@@ -126,11 +126,11 @@ bool cChat::ChatDataSend(LPOBJ gObj,LPBYTE aRecv)
 	if (!memcmp(&aRecv[13],"/addcmd",strlen("/addcmd")))
 		bResult = AddCommands(gObj,(char*)aRecv+13+strlen("/addcmd"),4);		
 	if (!memcmp(&aRecv[13],"/ware",strlen("/ware")))
-		bResult = WareCommand(gObj,(char*)aRecv+13+strlen("/ware"));	
-	if (!memcmp(&aRecv[13],"/setzen",strlen("/setzen")))
-		bResult = SetZenCommand(gObj,(char*)aRecv+13+strlen("/setzen"));	   
+		bResult = WareCommand(gObj,(char*)aRecv+13+strlen("/ware"));	 
 	if (!memcmp(&aRecv[13],"/mobadd",strlen("/mobadd")))
-		bResult = AddMobCommand(gObj,(char*)aRecv+13+strlen("/mobadd"));		 
+		bResult = AddMobCommand(gObj,(char*)aRecv+13+strlen("/mobadd"));	
+		if (!memcmp(&aRecv[13],"/setdrop",strlen("/setdrop")))
+			bResult = SetDropCommand(gObj,(char*)aRecv+13+strlen("/setdrop"));	 
 	return bResult;												
 }
 
@@ -862,8 +862,10 @@ bool cChat::SetChar(LPOBJ gObj, char *Msg)
 		}
 	}
 	MessageLog(1, c_Red, t_GM, gObj, "[SetChar] You successfully changed %s character.", tObj->Name);
+	if(AddPnt > 0 || Prof > 0 || Lvl > 0)
 	MessageLog(1, c_Red, t_GM, tObj, "[SetChar] Your character was edited by %s, you must relogin!", gObj->Name);
-
+	else
+	MessageLog(1, c_Red, t_GM, tObj, "[SetChar] Your character was edited by %s!", gObj->Name);
 	return true;
 }			
 
@@ -1382,34 +1384,7 @@ bool cChat::WareCommand(LPOBJ gObj, char *Msg)
 
 	MessageLog(1, c_Red, t_COMMANDS, gObj, "[Ware] You successfully change vault from %d to %d!", UsedSlot, WantSlot);
 	return true;
-}
-
-bool cChat::SetZenCommand(LPOBJ gObj, char *Msg)
-{
-	if(CheckCommand(gObj, Config.Commands.IsSetZen, GmSystem.cSetZen, 0, 0, 0, 0, 2, 1, "SetZen", "/setzen <nick> <value>", Msg))
-		return true;
-
-	int Value;
-	char Target[11]; 	 
-	sscanf(Msg, "%s %d", &Target, &Value);	 	
-
-	if(Value < 0 || Value > 2000000000)
-	{
-		MessageLog(1, c_Red, t_GM, gObj, "[SetZen] Value can't be less than 0 and more than 2000000000!");
-		return true;
-	}			 
-
-	int Index = Utilits.GetPlayerIndex(Target); 
-	OBJECTSTRUCT *tObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
-
-	tObj->Money = Value;
-	GCMoneySend (tObj->m_Index, Value);		
-
-	MessageLog(1, c_Red, t_GM, gObj, "[SetZen] You sucsessfully changed %s zen.", tObj->Name);
-	MessageLog(1, c_Red, t_GM, tObj, "[SetZen] Your zen was changed to %d by %s.", Value, gObj->Name);
-	return true;
-}
-
+} 
 bool cChat::AddMobCommand(LPOBJ gObj, char *Msg)
 {
 #ifdef _GS
@@ -1436,5 +1411,71 @@ bool cChat::AddMobCommand(LPOBJ gObj, char *Msg)
 		}
 		MessageLog(1, c_Red, t_COMMANDS, gObj, "[AddMob] %d Mob Successfully spawned (Map: %d, X: %d, Y: %d, MobID: %d)", Cnt,Map,X,Y, Mob);
 #endif
+	return true;
+}
+
+bool cChat::SetDropCommand(LPOBJ gObj, char *Msg)
+{					
+	if(CheckCommand(gObj, Config.Commands.IsDrop, GmSystem.cDrop, 0, 0, 0, 0, 1 , 0, "SetDrop", "/setdrop  <ItemIndex> <ItemLvl> <ItemLuck> <ItemOpt> <ItemExc> <ItemAnc>", Msg))
+		return true;
+
+	int ItemIndex = 0;
+	int ItemLevel = 0;
+	int ItemLuck = 0;
+	int ItemOpt = 0;
+	int ItemExc = 0;
+	int ItemAncient = 0;
+	int ItemMin = 7;
+	//MG Set Season 4.6
+	if(ItemIndex == 15 ||ItemIndex == 20 ||ItemIndex == 23 ||ItemIndex == 32 ||ItemIndex == 37 ||ItemIndex == 47 ||ItemIndex == 48)ItemMin = 8;
+	//
+	char Target[11];
+	int Index = 0;
+	sscanf(Msg,"%s",&Target);
+	Index = Utilits.GetPlayerIndex(Target);
+	if(Index == -1)
+	{	
+		sscanf(Msg, "%d %d %d %d %d %d", &ItemIndex, &ItemLevel, &ItemLuck, &ItemOpt, &ItemExc, &ItemAncient);
+		
+		if(ItemIndex < 0 ||   (ItemLevel<0 || ItemLevel > 13) || (ItemOpt < 0 || ItemOpt > 7) || (ItemLuck < 0 || ItemLuck > 1) || (ItemExc < 0 || ItemExc > 63) || (ItemAncient < 0 || ItemAncient > 40))
+		{
+			MessageLog(1, c_Red, t_GM, gObj, "[SetDrop] Usage: /setdrop <ItemIndex> <ItemLvl> <ItemLuck> <ItemOpt> <ItemExc> <ItemAnc>");
+			return true;
+		}
+		else
+		{
+			for(int i = ItemMin; i < 12; i++)
+			{
+				int Item = i * 512 + ItemIndex;
+				int Rand1 = rand() % 3;
+				int Rand2 = rand() % 3;
+				ItemSerialCreateSend (gObj->m_Index, gObj->MapNumber, (int)gObj->X + Rand1, (int)gObj->Y + Rand2, Item, ItemLevel, 0, 0, ItemLuck, ItemOpt, gObj->m_Index, ItemExc, ItemAncient);
+			}
+			MessageLog(1, c_Red, t_GM, gObj, "[SetDrop] Item Created %d %d %d %d %d %d - Success", ItemIndex, ItemLevel, ItemLuck, ItemOpt, ItemExc, ItemAncient);
+		}
+	}
+	else
+	{	  
+		sscanf(Msg, "%s %d %d %d %d %d %d", &Target, &ItemIndex, &ItemLevel, &ItemLuck, &ItemOpt, &ItemExc, &ItemAncient);
+	
+		if(ItemIndex < 0 || (ItemLevel<0 || ItemLevel > 13) || (ItemOpt < 0 || ItemOpt > 7) || (ItemLuck < 0 || ItemLuck > 1) || (ItemExc < 0 || ItemExc > 63) || (ItemAncient < 0 || ItemAncient > 40))
+		{
+			MessageLog(1, c_Red, t_GM, gObj, "[SetDrop] Usage: /setdrop <Name> <ItemIndex> <ItemLvl> <ItemLuck> <ItemOpt> <ItemExc> <ItemAnc>");
+			return true;
+		}
+		else
+		{			  
+			OBJECTSTRUCT *gUbj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
+			for(int i = ItemMin; i < 12; i++)
+			{
+				int Item = i * 512 + ItemIndex;	 
+				int Rand1 = rand() % 2;
+				int Rand2 = rand() % 2;
+				ItemSerialCreateSend (gUbj->m_Index, gUbj->MapNumber, (int)gUbj->X + Rand1, (int)gUbj->Y + Rand2, Item, ItemLevel, 0, 0, ItemLuck, ItemOpt, gUbj->m_Index, ItemExc, ItemAncient);
+			}
+			MessageLog(1, c_Red, t_GM, gObj,  "[SetDrop] Items Created to %s %d %d %d %d %d %d - Success", gUbj->Name, ItemIndex, ItemLevel, ItemLuck, ItemOpt, ItemExc, ItemAncient);
+			Message(1, gUbj->m_Index, "[SetDrop] You lucked by %s with items! Take them faster!", gObj->Name);
+		}
+	} 
 	return true;
 }

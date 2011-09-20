@@ -20,6 +20,7 @@
 #define ShopExcellentMod_Exit2						0x0055BC0A
 #define MonsterCount 0x7D95B94
 #define MonsterReads 0x7D800B6
+#define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD))0x00439260)
 #define GSCheckInventoryEmptySpace ((int(*) (LPOBJ lpObj, int iItemHeight, int iItemWidth)) 0x0051C770 ) 
 #define GSItemGetSize		((void(*) (int index, int & width, int & height)) 0x00558AE0 )
 #define gObjDel				((void(*) (int)) 0x00403AE4)
@@ -76,6 +77,7 @@
 #define ShopExcellentMod_Hook2						0x0056EC25
 #define ShopExcellentMod_Exit2						0x0056EC2A
 #define gObjGameClose ((BOOL(*)(int)) 0x0051B3E0)  	
+#define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD))0x0043C2A0);
 #define gObjMoveGate ((int(*)(int aIndex, int Gate)) 0x00545170) //duel
 #define gObjTeleport ((void(*) (int,unsigned char,unsigned char,unsigned char)) 0x0040341D)
 #define CloseClient ((void(*)(DWORD))0x0040822E)	

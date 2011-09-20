@@ -16,6 +16,7 @@
 #include "Archer.h"
 #include "SQL.h"
 #include "MossGambler.h"
+#include "Monster.h"
 BYTE RecvTable[256] = {
 
 		0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,
@@ -48,17 +49,6 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 			return true;
 		}
 		break; 
-
-		case 0x1D:
-			{
-				//Chat.Message(gObj->m_Index,"[Skill] left button");
-			}
-			break;
-		case 0x1E:
-			{
-				//Chat.Message(gObj->m_Index,"[Skill] rigth button");
-			}
-			break;
 		case 0x03: // Player Connected Protocol
 		{
 			Protocol.PlayerConnect(gObj);
@@ -130,11 +120,6 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 			}
 			break;	
 #endif
-	/*	case 0x95:
-			{
-				Golden Archer
-			}
-			break;*/
 
 		case 0xF1: // IP Connect Protocol
 		{
@@ -214,7 +199,6 @@ void cProtoFunc::RingSkin(LPOBJ gObj)
 void cProtoFunc::CheckRingSend(LPOBJ gObj, unsigned char* aSend)
 {
     if(aSend[4] == RING_01 || aSend[4] == RING_02) 
-        //фикс если одиваешь панда ринг меняется скин на 503
         if(gObj->pInventory[RING_01].m_Type == 0x1A4C && gObj->m_Change != 503 ||
             gObj->pInventory[RING_02].m_Type == 0x1A4C && gObj->m_Change != 503)
 		{
@@ -227,7 +211,7 @@ void cProtoFunc::CheckRing(LPOBJ gObj, LPBYTE aRecv)
 {
 	if((aRecv[4] == RING_01 && gObj->pInventory[RING_02].m_Type != 0x1A4C) 
 		|| (aRecv[4] == RING_02 && gObj->pInventory[RING_01].m_Type != 0x1A4C))
-		if(gObj->m_Change == 503) //заменяем номер скина на -1 если снимаем ринг
+		if(gObj->m_Change == 503)
 		{
 			gObj->m_Change = -1;	
 			gObjViewportListProtocolCreate(gObj);	
@@ -235,7 +219,8 @@ void cProtoFunc::CheckRing(LPOBJ gObj, LPBYTE aRecv)
 }		
 
 void cProtoFunc::LoginMsg(LPOBJ gObj)
-{		
+{	
+	Chat.Message(1, gObj->m_Index, "Powered by IA-Anubis http://mu.greatgame.su/");
 	Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
 	if (Config.ConnectInfo == 1)
 	{
@@ -332,13 +317,11 @@ void cProtoFunc::PkClear(LPOBJ gObj, LPOBJ NpcObj)
 {							   			
 	if (gObj->m_PK_Level < 4)
 	{										 
-		Chat.MessageLog(1, c_Blue ,t_COMMANDS, gObj, "[Guard] You are good player. God bless your soul.");
+		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You are good player. God bless your soul.");
 		return;
 	}	
 
-	int PriceZen;
-	int PricePcPoint;
-	int PriceWCoin;
+	int PriceZen, PricePcPoint, PriceWCoin;
 	switch(Config.ClearNpc.Type)
 	{	   
 	case 1:	
@@ -360,17 +343,17 @@ void cProtoFunc::PkClear(LPOBJ gObj, LPOBJ NpcObj)
 
 	if(gObj->Money < PriceZen)
 	{
-		Chat.MessageLog(1, c_Blue ,t_COMMANDS, gObj, "[Guard] You don't have enough Zen, you need %d more!", PriceZen - gObj->Money);
+		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You don't have enough Zen, you need %d more!", PriceZen - gObj->Money);
 		return;
 	}	   
 	if(gObj->m_wCashPoint < PriceWCoin)
 	{	 
-		Chat.MessageLog(1, c_Blue ,t_COMMANDS, gObj, "[Guard] You don't have enough WCoin, you need %d more!", PriceWCoin - gObj->m_wCashPoint);
+		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You don't have enough WCoin, you need %d more!", PriceWCoin - gObj->m_wCashPoint);
 		return;
 	}
 	if(AddTab[gObj->m_Index].PC_PlayerPoints < PricePcPoint)
 	{	 
-		Chat.MessageLog(1, c_Blue ,t_COMMANDS, gObj, "[Guard] You don't have enough PcPoint, you need %d more!", PricePcPoint - AddTab[gObj->m_Index].PC_PlayerPoints);
+		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You don't have enough PcPoint, you need %d more!", PricePcPoint - AddTab[gObj->m_Index].PC_PlayerPoints);
 		return;
 	}
 	if (PricePcPoint > 0)
@@ -392,7 +375,7 @@ void cProtoFunc::PkClear(LPOBJ gObj, LPOBJ NpcObj)
 		Chat.MessageLog(1, c_Blue ,t_PCPOINT, gObj, "[Guard] You pay %d Zen", PriceZen);
 	}
 
-	Chat.MessageLog(1, c_Blue ,t_COMMANDS, gObj, "[Guard] Cleaned %d kills. Don't tell anyone!", gObj->m_PK_Count); 
+	NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj,"Cleaned %d kills. Don't tell anyone!", gObj->m_PK_Count); 
 
 	gObj->m_PK_Level = 3;
 	gObj->m_PK_Count = 0;
