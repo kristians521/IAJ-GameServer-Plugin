@@ -11,7 +11,7 @@
 #define MAX_PCSHOPITEM	120
 #define MAX_PCMOB		100
 
-enum eModeUpdate {PC_ADD,PC_DEL};
+enum eModeUpdate {PLUS,MINUS};
 enum eTypePoint  {PCPOINT,WCOIN};
 
 class cPCPoint

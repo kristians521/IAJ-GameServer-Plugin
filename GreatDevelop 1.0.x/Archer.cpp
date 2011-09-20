@@ -124,12 +124,12 @@ void cGoldenArcher::GoldenArcherClick(LPOBJ gObj)
 		}
 		if (Config.Archer.WCoinsReward > 0)
 		{
-			PCPoint.UpdatePoints(gObj,Config.Archer.WCoinsReward,PC_ADD,WCOIN);
+			PCPoint.UpdatePoints(gObj,Config.Archer.WCoinsReward,PLUS,WCOIN);
 			Chat.Message(gObj->m_Index,"[Golden Archer] Added Coins:%d", Config.Archer.WCoinsReward);
 		}
 		if (Config.Archer.PCPointsReward > 0)
 		{
-			PCPoint.UpdatePoints(gObj,Config.Archer.PCPointsReward,PC_ADD,PCPOINT);
+			PCPoint.UpdatePoints(gObj,Config.Archer.PCPointsReward,PLUS,PCPOINT);
 			Chat.Message(gObj->m_Index,"[Golden Archer] Added PCPoints:%d", Config.Archer.PCPointsReward);
 		}
 	}

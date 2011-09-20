@@ -395,12 +395,12 @@ void cChat::TakeCommand(LPOBJ gObj, int NeedZen, int NeedPcPoint, int NeedWCoin,
 	}
 	if(NeedPcPoint > 0)
 	{
-		PCPoint.UpdatePoints(gObj,NeedPcPoint,PC_DEL,PCPOINT);
+		PCPoint.UpdatePoints(gObj,NeedPcPoint,MINUS,PCPOINT);
 		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[%s] You payed %d PcPoints", CommandName, NeedPcPoint);
 	}	
 	if(NeedWCoin > 0)
 	{
-		PCPoint.UpdatePoints(gObj,NeedWCoin,PC_DEL,WCOIN);
+		PCPoint.UpdatePoints(gObj,NeedWCoin,MINUS,WCOIN);
 		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[%s] You payed %d WCoin", CommandName, NeedWCoin);
 	}
 }			  
@@ -870,12 +870,12 @@ bool cChat::SetChar(LPOBJ gObj, char *Msg)
 
 	if(PCPnt > 0 )
 	{
-		PCPoint.UpdatePoints(tObj,PCPnt,PC_ADD,PCPOINT);
+		PCPoint.UpdatePoints(tObj,PCPnt,PLUS,PCPOINT);
 	}
 
 	if(WCoin > 0)
 	{
-		PCPoint.UpdatePoints(tObj,WCoin,PC_ADD,WCOIN);
+		PCPoint.UpdatePoints(tObj,WCoin,PLUS,WCOIN);
 	}
 
 	if(AddPnt > 0)

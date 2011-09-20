@@ -73,6 +73,13 @@ struct PMSG_DEFAULT2
 	BYTE subcode;
 };
 
+struct PMSG_PARTYREQUEST
+{
+	PBMSG_HEAD h;
+	BYTE NumberH;	// 3
+	BYTE NumberL;	// 4
+};			 
+
 struct PWMSG_HEAD	// Packet - Word Type
 {
 public:

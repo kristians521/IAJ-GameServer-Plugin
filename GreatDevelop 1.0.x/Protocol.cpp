@@ -91,7 +91,13 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 			if(bResult) return true;
 		}
 		break;
-
+		case 0x40:
+		{							 
+			if(Config.IsPartyGap)
+				if(Protocol.CGPartyRequestRecv((PMSG_PARTYREQUEST*) aRecv,aIndex))
+					return true;
+		}
+		break;
 
 		case 0xAA:	
 			{  		
@@ -216,11 +222,32 @@ void cProtoFunc::CheckRing(LPOBJ gObj, LPBYTE aRecv)
 			gObj->m_Change = -1;	
 			gObjViewportListProtocolCreate(gObj);	
 		}	
-}		
+}	
+
+bool cProtoFunc::CGPartyRequestRecv(PMSG_PARTYREQUEST * lpMsg, int aIndex)
+{	
+	int number =  MAKE_NUMBERW(lpMsg->NumberH, lpMsg->NumberL);
+
+	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);	 
+	OBJECTSTRUCT *pObj = (OBJECTSTRUCT*)OBJECT_POINTER(number);
+																			 
+	if(gObj->Level > pObj->Level && gObj->Level - pObj->Level >= Config.PartyGapLvl)
+	{	
+		Chat.MessageLog(1, c_Red, t_Default, gObj, "[Party] You can't stay with %s in party! %s needs %d more lvl.", pObj->Name, pObj->Name, gObj->Level-Config.PartyGapLvl - pObj->Level);
+		return true;
+	}
+
+	if(gObj->Level < pObj->Level && pObj->Level - gObj->Level >= Config.PartyGapLvl)
+	{																													
+		Chat.MessageLog(1, c_Red, t_Default, gObj, "[Party] You can't stay with %s in party! You need %d more lvl.", pObj->Name, pObj->Level - Config.PartyGapLvl - gObj->Level);
+		return true;
+	}	   
+	return false;
+}
 
 void cProtoFunc::LoginMsg(LPOBJ gObj)
 {	
-	Chat.Message(1, gObj->m_Index, "Powered by IA-Anubis http://mu.greatgame.su/");
+	Chat.Message(1, gObj->m_Index, "http://mu.greatgame.su/");
 	Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
 	if (Config.ConnectInfo == 1)
 	{
@@ -358,13 +385,13 @@ void cProtoFunc::PkClear(LPOBJ gObj, LPOBJ NpcObj)
 	}
 	if (PricePcPoint > 0)
 	{
-		PCPoint.UpdatePoints(gObj,PricePcPoint,PC_DEL,PCPOINT);
+		PCPoint.UpdatePoints(gObj,PricePcPoint,MINUS,PCPOINT);
 		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[Guard] You pay %d PcPoints", PricePcPoint);
 	}
 
 	if (PriceWCoin > 0)
 	{										
-		PCPoint.UpdatePoints(gObj,PriceWCoin,PC_DEL,WCOIN);
+		PCPoint.UpdatePoints(gObj,PriceWCoin,MINUS,WCOIN);
 		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[Guard] You pay %d WCoin", PriceWCoin);
 	}
 

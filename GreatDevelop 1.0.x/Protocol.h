@@ -4,7 +4,7 @@
 // ================================================== //
 
 #include "User.h"
-
+#include "Prodef.h"
 #ifndef PROTOC_H
 #define PROTOC_H	   								
 
@@ -18,6 +18,7 @@ public:
 	void PlayerConnect(LPOBJ gObj); 
 	void CheckRingSend(LPOBJ gObj, LPBYTE aRecv);	
 	void CheckRing(LPOBJ gObj, LPBYTE aRecv);
+	bool CGPartyRequestRecv(PMSG_PARTYREQUEST * lpMsg, int aIndex);
 private:			
 	void LoginMsg(LPOBJ gObj);
 	void RingSkin(LPOBJ gObj);

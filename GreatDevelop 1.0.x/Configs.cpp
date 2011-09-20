@@ -46,8 +46,6 @@ void cConfigs::ZenFixes()
 	if(!Zen.Enabled)return;
 	Zen.MasterZen					= GetInt(0, 65535,				20,		"ZenSettings",	"AddZen_ML",			GreatDevelopCommon);
 	Zen.NormalZen					= GetInt(0, 65535,				20,		"ZenSettings",	"AddZen_Normal",		GreatDevelopCommon);
-	Zen.MasterDivisor				= GetInt(0, 65535,				20,		"ZenSettings",	"Zen_MasterDivisor",	GreatDevelopCommon);
-	Zen.NormalDivisor				= GetInt(0, 65535,				20,		"ZenSettings",	"Zen_NormalDivisor",	GreatDevelopCommon);
 }
 
 void cConfigs::PartyZenFixes()
@@ -56,8 +54,6 @@ void cConfigs::PartyZenFixes()
 	if(!PartyZen.Enabled)return;
 	PartyZen.MasterZen					= GetInt(0, 65535,				20,		"PartyZenSettings",	"AddZen_ML",			GreatDevelopCommon);
 	PartyZen.NormalZen					= GetInt(0, 65535,				20,		"PartyZenSettings",	"AddZen_Normal",		GreatDevelopCommon);
-	PartyZen.MasterDivisor				= GetInt(0, 65535,				20,		"PartyZenSettings",	"Zen_MasterDivisor",	GreatDevelopCommon);
-	PartyZen.NormalDivisor				= GetInt(0, 65535,				20,		"PartyZenSettings",	"Zen_NormalDivisor",	GreatDevelopCommon);
 }
 
 void cConfigs::LoadPets()
@@ -92,7 +88,7 @@ void cConfigs::LoadPets()
 void cConfigs::LoadNotice()
 {	
 	ConnectInfo					= GetInt(0, 1,					1,		"Connect",		"ConnectInfo",					GreatDevelopGS);
-	GetPrivateProfileString("Connect","ConnectNotice","Powered by GreatDevelop 1.0.1",ConnectNotice,sizeof(ConnectNotice),GreatDevelopGS); 
+	GetPrivateProfileString("Connect","ConnectNotice","Powered by GreatDevelop 1.0.2",ConnectNotice,sizeof(ConnectNotice),GreatDevelopGS); 
 	Log.CheckProcent(ConnectNotice);	 
 } 
 
@@ -164,14 +160,13 @@ void cConfigs::LoadConfigsInGS()
 	*(unsigned char*) GS_KUNDUN_ITEM_NUMB = GetChar(0,20,3,"Kundun","KundunDropItemCount",GreatDevelopItems);
 
 	*(unsigned char*) GS_CCPLAYER = GetChar(0,20,2,"ChaosCastle","ChaosCastleMinPlayers",GreatDevelopEvents); 
-
+	*(unsigned char*) GS_ITPLAYER = GetChar(0,20,4,"IllusionTemple","ItMinPlayers",GreatDevelopEvents); 
+	/*
 	*(unsigned char*) GS_CCREWARD1 = GetChar(0,15,14,"ChaosCastle","ChaosCastleRewardType1GroupID",GreatDevelopEvents) * 512 + GetChar(0,255,16,"ChaosCastle","ChaosCastleRewardType1IndexID",GreatDevelopEvents);
 	*(unsigned char*) GS_CCREWARD2 = GetChar(0,15,14,"ChaosCastle","ChaosCastleRewardType2GroupID",GreatDevelopEvents) * 512 + GetChar(0,255,13,"ChaosCastle","ChaosCastleRewardType2IndexID",GreatDevelopEvents);
 	*(unsigned char*) GS_CCREWARD3 = GetChar(0,15,14,"ChaosCastle","ChaosCastleRewardType3GroupID",GreatDevelopEvents) * 512 + GetChar(0,255,22,"ChaosCastle","ChaosCastleRewardType3IndexID",GreatDevelopEvents);
 	*(unsigned char*) GS_CCREWARD4 = GetChar(0,15,14,"ChaosCastle","ChaosCastleRewardType4GroupID",GreatDevelopEvents) * 512 + GetChar(0,255,14,"ChaosCastle","ChaosCastleRewardType4IndexID",GreatDevelopEvents); 
-
-
-	*(unsigned char*) GS_ITPLAYER = GetChar(0,20,4,"IllusionTemple","ItMinPlayers",GreatDevelopEvents); 
+	
 	*(unsigned char*) GS_IT_GROUP_ID = GetChar(0,15,15,"IllusionTemple","ItDropGroup",GreatDevelopEvents);
 	*(unsigned char*) GS_IT_DROP_ID = GetChar(0,255,12,"IllusionTemple","ItDropID",GreatDevelopEvents); 
 	*(unsigned char*) GS_IT_ITEM_LVL = GetChar(0,15,0,"IllusionTemple","ItDropLevel",GreatDevelopEvents);
@@ -198,7 +193,7 @@ void cConfigs::LoadConfigsInGS()
 	*(unsigned char *) GS_WW_ITEM_LIF = GetChar(0,7,0,"WhiteWizard","WizardDropLifeAdd",GreatDevelopEvents);
 	*(unsigned char *) GS_WW_ITEM_EXC = GetChar(0,63,0,"WhiteWizard","WizardDropExcOpt",GreatDevelopEvents);
 	*(unsigned char *) GS_WW_ITEM_ANC = GetChar(0,255,0,"WhiteWizard","WizardDropAncOpt",GreatDevelopEvents);
-	
+	*/
 #endif
 	*(unsigned char*) GS_GUILDALLIANCE = GetChar(0,50,20,"Guild","GuildAllianceMinPlayers",GreatDevelopCommon);
 
@@ -249,7 +244,10 @@ void cConfigs::LoadConfigsInGS()
    	*(unsigned int*) GS_DARK_SPIRIT = GetInt(0, 100, 60,"DLPets","DarkSpiritMixSuccessRate",GreatDevelopItems);
 	*(unsigned int*) GS_DARK_SPIRIT_PRICE = GetInt(0, 2000000000, 1000000,"DLPets","DarkSpiritMixPrice",GreatDevelopItems);
 
-	*(unsigned int*) GS_EXC_DROP_RATE = GetInt(0, 2000, 2000,"ItemDropRates","ExcDropRate",GreatDevelopItems);
+	//Percentage for EXERate 0 - 100%
+	int EXERate = GetInt(0, 100, 10,"ItemDropRates","ExcDropRate",GreatDevelopItems);
+	*(unsigned int*) GS_EXC_DROP_RATE = 2000 - (20 * EXERate);
+	//
 	*(unsigned int*) GS_EXC_SKILL_RATE = GetInt(0, 100, 100,"ItemDropRates","ExcSkillDropRate",GreatDevelopItems);
 	*(unsigned int*) GS_EXC_LUCK_RATE = GetInt(0, 100, 1,"ItemDropRates","ExcLuckDropRate",GreatDevelopItems);
 	*(unsigned int*) GS_SKILL_RATE = GetInt(0, 100, 6,"ItemDropRates","NormalSkillDropRate",GreatDevelopItems);
@@ -429,9 +427,6 @@ void cConfigs::LoadCommands()
 
 	//		setpk
 	Commands.IsSetPK					= GetInt(0, 1,					1,		"SetPK",		"SetPKEnabled",					GreatDevelopCmd);  
-	
-	//		setzen
-	Commands.IsSetZen					= GetInt(0, 1,					1,		"SetZen",		"SetZenEnabled",				GreatDevelopCmd); 
 
 	//		gg			//																	 	
 	Commands.IsGg						= GetInt(0, 1,					1,		"GPost",		"GgEnabled",					GreatDevelopCmd);	
@@ -513,7 +508,15 @@ void cConfigs::LoadPkClearGuard()
 	ClearNpc.PriceWCoinsForAll		= GetInt(0, PCPoint.sPoints.MaximumWCPoints,	20,		"PkClearGuard",		"PkClearGuardPriceWCoinsForAll",	GreatDevelopPkClear);	   
 	ClearNpc.LevelReq				= GetInt(0, 400,								100,	"PkClearGuard",		"PkClearGuardLevelReq",				GreatDevelopPkClear);
 }	   
-
+void cConfigs::Misc()
+{
+	//
+	IsPartyGap				= GetInt(0, 1, 1,"PartyGap", "IsPartyGap", GreatDevelopCommon);	
+	PartyGapLvl				= GetInt(0, 400, 120,"PartyGap", "PartyGapLvl", GreatDevelopCommon);
+	GuildRes				= GetInt(0, 32767, 5,"GuildMaster", "GuildCreateReset", GreatDevelopCommon);
+	GuildLevel				= GetInt(0, 400, 320,"GameServerInfo", "GuildCreateLevel", "..\\Data\\CommonServer.cfg"); 
+	//
+}
 void cConfigs::LoadAll()
 {
 	PCPoint.LoadIniConfigs();
@@ -528,14 +531,12 @@ void cConfigs::LoadAll()
 	LoadCommands();
 	LoadPkClearGuard();
 	DropSystem.LoadDropItems();
+	Misc();
 #ifdef _GS
 	moss.LoadMoss();
 #endif
 		
-	//
-	GuildRes				= GetInt(0, 32767, 5,"GuildMaster", "GuildCreateReset", GreatDevelopCommon);
-	GuildLevel				= GetInt(0, 400, 320,"GameServerInfo", "GuildCreateLevel", "..\\Data\\CommonServer.cfg");
-	//
+
 }
 
 long cConfigs::GetInt(long Min, long Max, long Default, LPCSTR BlockName, LPCSTR ConfigName, LPCSTR FolderName)

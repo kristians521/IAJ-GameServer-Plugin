@@ -15,7 +15,7 @@ PRIVATE:
 	[GS\GSCS] Monster Speak ADDED
 	[GS\GSCS] SetDrop Command ADDED
 	[GS\GSCS] MassLog ADDED
-
+	[GS\GSCS] PartyGap ADDED
 Great Develop 1.0.1
 
 	[Configs] All configs updated

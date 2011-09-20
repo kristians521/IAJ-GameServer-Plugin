@@ -307,8 +307,8 @@ BOOL Moss::BuyItem(int aIndex, unsigned char * aRecv)
 
 	gObj->Money -= MossConfig.PriceZen;
 	GCMoneySend(gObj->m_Index,gObj->Money);
-	if(MossConfig.PricePCPoint > 0) PCPoint.UpdatePoints(gObj,MossConfig.PricePCPoint,PC_DEL,PCPOINT);
-	if(MossConfig.PriceWCoin > 0)   PCPoint.UpdatePoints(gObj,MossConfig.PriceWCoin  ,PC_DEL,WCOIN);
+	if(MossConfig.PricePCPoint > 0) PCPoint.UpdatePoints(gObj,MossConfig.PricePCPoint,MINUS,PCPOINT);
+	if(MossConfig.PriceWCoin > 0)   PCPoint.UpdatePoints(gObj,MossConfig.PriceWCoin  ,MINUS,WCOIN);
 
 	_beginthread(MossBuyDelay,0,0);
 	return TRUE;

@@ -198,13 +198,13 @@ void cPCPoint::BuyItem(int Index,int Position)
 
 				Log.ConsoleOutPut(1,c_Cyan,t_PCPOINT,"[PointShop] Character [%s] Buy Item [%d %d] Cost [%d]",
 					gObj->Name,PCShop[IndexItem].Index,PCShop[IndexItem].ID,PCShop[IndexItem].Cost);
-				this->UpdatePoints(gObj,PCShop[IndexItem].Cost,PC_DEL,PCPOINT);
+				this->UpdatePoints(gObj,PCShop[IndexItem].Cost,MINUS,PCPOINT);
 			}
 			else
-				Chat.Message(gObj->m_Index,"[PointShop] You inventory is full !");
+				Chat.Message(gObj->m_Index,"[PointShop] Your inventory is full !");
 		}
 		else
-			Chat.Message(gObj->m_Index,"[PointShop] Can`t enough PC Points !");
+			Chat.Message(gObj->m_Index,"[PointShop] Can`t buy, need %d more PCPoints!", PCShop[IndexItem].Cost - AddTab[gObj->m_Index].PC_PlayerPoints);
 	}
 }
 
@@ -230,11 +230,11 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 
 	switch(Mode)
 	{
-	case PC_ADD:
+	case PLUS:
 		AmountPoints += CountPoints;
 		if (AmountPoints >= sPoints.MaximumPCPoints)	AmountPoints = sPoints.MaximumPCPoints;
 		break;
-	case PC_DEL:
+	case MINUS:
 		AmountPoints -= CountPoints;
 		if (AmountPoints < 0 ) AmountPoints = 0;
 		break;
@@ -265,7 +265,7 @@ void cPCPoint::RewardsPointsKillMob(LPOBJ gObj,LPOBJ mObj,eTypePoint Type)
 			for (int i = 0; i < AmountRecords[1]; i++)
 				if ( PCMonsters[i].MobID == mObj->Class )
 				{
-					this->UpdatePoints(gObj,PCMonsters[i].PCPoints,PC_ADD,Type);
+					this->UpdatePoints(gObj,PCMonsters[i].PCPoints,PLUS,Type);
 					if (AddTab[gObj->m_Index].PC_PlayerPoints >= sPoints.MaximumPCPoints)
 						Chat.Message(gObj->m_Index,"[PCPoint] You have maximum PCPoints");
 					else
@@ -279,7 +279,7 @@ void cPCPoint::RewardsPointsKillMob(LPOBJ gObj,LPOBJ mObj,eTypePoint Type)
 			for (int i = 0; i < AmountRecords[2]; i++)
 				if ( WCoinMonsters[i].MobID == mObj->Class )
 				{
-					this->UpdatePoints(gObj,WCoinMonsters[i].WCoins,PC_ADD,Type);
+					this->UpdatePoints(gObj,WCoinMonsters[i].WCoins,MINUS,Type);
 					if (gObj->m_wCashPoint >= sPoints.MaximumWCPoints)
 						Chat.Message(gObj->m_Index,"[WCoin] You have maximum WCoins");
 					else

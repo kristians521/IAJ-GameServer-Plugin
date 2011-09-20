@@ -58,7 +58,7 @@ DWORD MainTick()
 			{
 				AddTab[Index].ON_Sek = 0;
 				AddTab[Index].ON_Min++;
-				PCPoint.UpdatePoints(gObj,0,PC_ADD,PCPOINT);
+				PCPoint.UpdatePoints(gObj,0,PLUS,PCPOINT);
 			}
 			if(AddTab[Index].ON_Min >= 60)
 			{
@@ -73,7 +73,7 @@ DWORD MainTick()
 				if (AddTab[Index].PC_OnlineTimer == PCPoint.sPoints.AddPCPointsSec)
 				{
 					AddTab[Index].PC_OnlineTimer = 0;
-					PCPoint.UpdatePoints(gObj,PCPoint.sPoints.AddPCPointsCount,PC_ADD,PCPOINT);
+					PCPoint.UpdatePoints(gObj,PCPoint.sPoints.AddPCPointsCount,PLUS,PCPOINT);
 
 					if (AddTab[Index].PC_PlayerPoints < PCPoint.sPoints.MaximumPCPoints)
 					{
@@ -224,4 +224,4 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 
 		CloseHandle(hThread);
 	}
-}
+} 

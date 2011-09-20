@@ -242,6 +242,7 @@
 //Illusion Temple								  //
 //================================================//
 #define GS_ITPLAYER			(0x005DE535+6)
+/*
 #define GS_IT_DROP_ID       (0x005E6713+1)
 #define GS_IT_GROUP_ID      (0x005E6715+1)
 #define GS_IT_ITEM_LVL      (0x005E6732+1)
@@ -251,7 +252,7 @@
 #define GS_IT_ITEM_LIF      (0x005E672A+1)
 #define GS_IT_ITEM_EXC      (0x005E6724+1)
 #define GS_IT_ITEM_ANC      (0x005E6722+1)
-
+*/
 //================================================//
 //Item Looting Time								  //
 //================================================//
@@ -280,6 +281,7 @@
 //================================================//
 //Blood Castle Reward                             //
 //================================================//
+/*
 #define GS_BC_DROP_ID			(0x0058810B+1)
 #define GS_BC_DROP_GROUP		(0x0058810D+1)
 #define GS_BC_ITEM_LVL			(0x005881B2+1)
@@ -289,6 +291,7 @@
 #define GS_BC_ITEM_LIF			(0x005881AA+1)
 #define GS_BC_ITEM_EXC			(0x005881A4+1)
 #define GS_BC_ITEM_ANC			(0x005881A2+1)
+*/
 
 //================================================//
 //Chaos Machine Rates						      //
@@ -351,6 +354,7 @@
 //================================================//
 //White Wizard Event Reward						  //
 //================================================//
+/*
 #define GS_WW_DROP_ID       (0x004834D6+1)
 #define GS_WW_GROUP_ID      (0x004834D8+1)
 #define GS_WW_ITEM_LVL      (0x004834F5+1)
@@ -360,7 +364,7 @@
 #define GS_WW_ITEM_LIF      (0x004834ED+1)
 #define GS_WW_ITEM_EXC      (0x004834E7+1)
 #define GS_WW_ITEM_ANC      (0x004834E5+1)
-
+*/
 //================================================//
 //Chaos Machine Mixes							  //
 //================================================//
@@ -690,6 +694,7 @@ private:
 	void ZenFixes();
 	void PartyZenFixes();
 	void LoadNews();
+	void Misc();
 public:			 
 	cConfigs();
 	~cConfigs();
@@ -751,7 +756,6 @@ public:
 		int IsZenDrop;
 		int IsStatus;
 		int IsSetChar; 
-		int IsSetZen;
 
 		int SkinEnabled;
 		int SkinOnlyForGm;
@@ -824,19 +828,17 @@ public:
 	struct cZen
 	{
 		int	Enabled;
-		int MasterDivisor;
-		int NormalDivisor;
 		int	MasterZen;
 		int NormalZen;
 
 	};
-
 	cZen Zen;			 
 	cZen PartyZen; 
 
 	int GuildRes;
 	int GuildLevel;
-
+	int IsPartyGap;
+	int PartyGapLvl;
 	struct sPanda
 	{
 		int PetPandaDefense;

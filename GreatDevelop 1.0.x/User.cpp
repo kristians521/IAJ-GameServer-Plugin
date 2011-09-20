@@ -282,7 +282,8 @@ BOOL __cdecl gObjGameClose_Func(int aIndex)
 	case 2:
 		Chat.MessageAllLog(0, 0, c_Green, t_GM, gObj, "[GM] %s exit the game!", gObj->Name);
 		break;
-	} 
+	}  
+	Log.ConsoleOutPut(1, c_Red, t_Default, "[GameClose] %d exit game.", gObj->Name);
 	BOOL rValue = gObjGameClose(aIndex);
 	return rValue;		  	
 }
