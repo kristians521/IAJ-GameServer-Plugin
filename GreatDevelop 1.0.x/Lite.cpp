@@ -158,6 +158,7 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 	{	
 		//Create Log folder in GameServer
 		CreateDirectory(GreatDevelopConsoleLogs,NULL);	
+		CreateDirectory(GreatDevelopChatLogs,NULL);
 		CreateDirectory(GreatDevelopLog,NULL);	
 		//
 		Sleep(500);

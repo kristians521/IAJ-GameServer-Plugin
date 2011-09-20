@@ -129,8 +129,11 @@ bool cChat::ChatDataSend(LPOBJ gObj,LPBYTE aRecv)
 		bResult = WareCommand(gObj,(char*)aRecv+13+strlen("/ware"));	 
 	if (!memcmp(&aRecv[13],"/mobadd",strlen("/mobadd")))
 		bResult = AddMobCommand(gObj,(char*)aRecv+13+strlen("/mobadd"));	
-		if (!memcmp(&aRecv[13],"/setdrop",strlen("/setdrop")))
+	if (!memcmp(&aRecv[13],"/setdrop",strlen("/setdrop")))
 			bResult = SetDropCommand(gObj,(char*)aRecv+13+strlen("/setdrop"));	 
+
+	MassLog(gObj, aRecv);
+
 	return bResult;												
 }
 
@@ -150,6 +153,63 @@ void cChat::MsgSrv(char *Sender,char *Message, int Type)
 	*(Packet+1) = Len;
 	DataSendAll(Packet, Len);
 	free (Packet);
+}
+
+
+void cChat::MassLog(LPOBJ gObj, LPBYTE Message)
+{		
+	char Type[20];	
+	char Msg2[512];			
+	if (!memcmp(&Message[13],"@@",strlen("@@")))
+	{
+		strcpy(Type, "Guild Aliance");	   
+		strcpy(Msg2, (char*)Message+13+strlen("@@"));
+	}	 
+	else if (!memcmp(&Message[13],"@",strlen("@")))
+	{
+		strcpy(Type, "Guild");
+		strcpy(Msg2, (char*)Message+13+strlen("@"));
+	}
+	else if (!memcmp(&Message[13],"/post",strlen("/post")))
+	{
+		strcpy(Type, "Post");
+		strcpy(Msg2, (char*)Message+13+strlen("/post"));
+	}
+	else if (!memcmp(&Message[13],"~",strlen("~")))
+	{
+		strcpy(Type, "Party");	
+		strcpy(Msg2, (char*)Message+13+strlen("~"));
+	}	
+	else if (!memcmp(&Message[13],"/move",strlen("/move")))
+	{
+		strcpy(Type, "Move");	
+		strcpy(Msg2, (char*)Message+13+strlen("/move"));
+	}	
+	else if (!memcmp(&Message[13],"/warp",strlen("/warp")))
+	{
+		strcpy(Type, "Move");	
+		strcpy(Msg2, (char*)Message+13+strlen("/warp"));
+	}	
+	else
+	{
+		strcpy(Type, "Chat");
+		strcpy(Msg2, (char*)Message+13);
+	}						  
+
+	SYSTEMTIME t;
+	GetLocalTime(&t);
+	char currdate[11] = {0};
+	sprintf(currdate, "%02d:%02d:%02d", t.wHour, t.wMinute, t.wSecond);
+	char Msg[512];
+	sprintf(Msg,"[%s] [%s:%s] [%s]: %s\n", currdate, gObj->AccountID, gObj->Name, Type,  Msg2);	
+
+	char Date[55];
+	sprintf(Date, "..\\GreatDevelop\\ChatLogs\\%02d-%02d-%02d\\", t.wDay, t.wMonth, t.wYear); 
+	CreateDirectory(Date,NULL);
+
+	char ChatLog[55];		  		
+	sprintf(ChatLog, "..\\GreatDevelop\\ChatLogs\\%02d-%02d-%02d\\ChatLogs.log", t.wDay, t.wMonth, t.wYear);
+	Log.SaveFile(ChatLog, Msg);  
 }
 
 void cChat::MessageLog(int Type, sColor LogColor, sLogType LogType, LPOBJ gObj, char *Msg,...)

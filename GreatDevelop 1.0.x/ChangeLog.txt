@@ -14,6 +14,7 @@ PRIVATE:
 	[GS] MobAdd Command ADDED
 	[GS\GSCS] Monster Speak ADDED
 	[GS\GSCS] SetDrop Command ADDED
+	[GS\GSCS] MassLog ADDED
 
 Great Develop 1.0.1
 

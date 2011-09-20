@@ -22,8 +22,6 @@ public:
 	void Message(int Index, char* Msg,...);		  
 	void MessageAllLog(int Type, int Type2, sColor LogColor, sLogType LogType, LPOBJ gObj, char* Msg,...);
 	void MessageAll(int Type, int Type2, char *Sender, char* Msg,...);		
-	
-	//void MassLog(LPOBJ gObj, LPBYTE Message);
 
 private:			
 	void AntiInject(char* message); 											  
@@ -34,8 +32,8 @@ private:
 						int CheckPlayer, char *CommandName,
 						char *CommandUsage, char *Msg);
 	void TakeCommand(LPOBJ gObj, int NeedZen, int NeedPcPoint, int NeedWCoin, char *CommandName);
-	void MsgSrv(char *Sender,char* Message, int Type2);	 
-
+	void MassLog(LPOBJ gObj, LPBYTE Message);
+	void MsgSrv(char *Sender,char* Message, int Type2);	  
 	bool GgCommand(LPOBJ gObj, char* Msg);		 
 	bool VosklCommand(LPOBJ gObj, char* Msg);
 	bool TraceCommand(LPOBJ gObj, char *Msg);
