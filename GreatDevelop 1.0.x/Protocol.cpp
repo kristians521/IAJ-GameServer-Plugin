@@ -17,6 +17,7 @@
 #include "SQL.h"
 #include "MossGambler.h"
 #include "Monster.h"
+#include "MapSystem.h"
 BYTE RecvTable[256] = {
 
 		0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,
@@ -36,6 +37,20 @@ BYTE RecvTable[256] = {
 		0xE0,0xE1,0xE2,0xE3,0xE4,0xE5,0xE6,0xE7,0xE8,0xE9,0xEA,0xEB,0xEC,0xED,0xEE,0xEF,
 		0xF0,0xF1,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7,0xF8,0xF9,0xFA,0xFB,0xFC,0xFD,0xFE,0xFF 
 };	
+
+void gObjPlayerKiller(LPOBJ lpObj, LPOBJ lpTargetObj)
+{												
+	if(MapSystem.Config[lpObj->MapNumber].PVP == 3 && lpTargetObj->Type == OBJECT_USER && lpObj->Type == OBJECT_USER)
+		return;
+	GCgObjPlayerKiller(lpObj, lpTargetObj);
+}
+
+BOOL gObjAttack(LPOBJ lpObj, LPOBJ lpTargetObj, class CMagicInf* lpMagic, int magicsend, unsigned char MSBFlag, int AttackDamage, BOOL bCombo)
+{		
+	if(MapSystem.Config[lpObj->MapNumber].PVP == 1 && lpTargetObj->Type == OBJECT_USER && lpObj->Type == OBJECT_USER)
+		return FALSE;
+	GCgObjAttack(lpObj, lpTargetObj, lpMagic, magicsend, MSBFlag, AttackDamage, bCombo);
+}
 
 bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD Encrypt, int Serial)
 {

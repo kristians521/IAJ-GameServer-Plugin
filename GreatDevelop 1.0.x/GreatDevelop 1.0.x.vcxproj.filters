@@ -64,9 +64,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source\MossTheGambler">
-      <UniqueIdentifier>{d9bb517a-11fe-4e81-82e5-8584f8b89069}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Console">
       <UniqueIdentifier>{f8e32c90-07d5-41d3-ac8a-f54bb5e930f8}</UniqueIdentifier>
     </Filter>
@@ -87,6 +84,12 @@
     </Filter>
     <Filter Include="Source\GMSystem">
       <UniqueIdentifier>{2bdf5bc8-a5b8-4a12-85c0-4f09864e84a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MapSystem">
+      <UniqueIdentifier>{b6958588-50ba-4156-82e5-d276f2a7da59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MossTheGambler">
+      <UniqueIdentifier>{d9bb517a-11fe-4e81-82e5-8584f8b89069}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="PCPoint.cpp">
       <Filter>Source\PCPointSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="MapSystem.cpp">
+      <Filter>Source\MapSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -233,6 +239,9 @@
     <ClInclude Include="PCPoint.h">
       <Filter>Source\PCPointSystem</Filter>
     </ClInclude>
+    <ClInclude Include="MapSystem.h">
+      <Filter>Source\MapSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Configs\GameServerCS\GameServerCS.ini">
@@ -306,6 +315,9 @@
     </None>
     <None Include="Great Develop 1.0.x ReadMe.txt" />
     <None Include="Configs\GreatDevelop\MonsterSpawn.ini">
+      <Filter>Configs\GreatDevelop</Filter>
+    </None>
+    <None Include="Configs\GreatDevelop\MapSystem.ini">
       <Filter>Configs\GreatDevelop</Filter>
     </None>
   </ItemGroup>

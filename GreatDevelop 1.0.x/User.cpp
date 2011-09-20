@@ -9,7 +9,7 @@
 #include "GMSystem.h"
 #include "ChatCommands.h"
 #include "Logger.h"
-
+#include "MapSystem.h"
 #include "SQL.h"
 sAddTab AddTab[OBJECT_MAX]; 
 
@@ -181,6 +181,18 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
           lpObj->Experience     += pBonusExp;
           lpObj->MLExp          += pBonusExpML;
      }
+	//MapSystem Module Exp
+   if(MapSystem.Enabled && MapSystem.Config[lpObj->MapNumber].Exp > 0)
+	{
+		  pBonusExp               = ((exp * MapSystem.Config[lpObj->MapNumber].Exp) / 100);
+          pBonusExpML               = ((exp * MapSystem.Config[lpObj->MapNumber].Exp) / 100);
+          // ----
+          pNewExperience          += pBonusExp;
+          pNewExperenceML          += pBonusExpML;
+          // ----
+          lpObj->Experience     += pBonusExp;
+          lpObj->MLExp          += pBonusExpML;
+	}
      GCKillPlayerExpSend(aIndex , TargetIndex , pNewExperience , AttackDamage , MSBFlag);
 }
 

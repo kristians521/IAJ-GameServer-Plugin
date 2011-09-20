@@ -65,6 +65,10 @@
 #define CGLevelUpPointAdd ((int(*)(BYTE * Arg1,DWORD PlayerID)) 0x004073DD)
 #define GCLevelUpMsgSend ((void(*)(int, unsigned char)) 0x0043BDC0)
 #define gObjLevelUpPointAdd ((bool(*)(BYTE type, OBJECTSTRUCT* lpObj)) 0x0050D990) 	 
+//
+#define GCgObjAttack ((int(*)(LPOBJ lpObj, LPOBJ lpTargetObj, class CMagicInf* lpMagic, int magicsend, unsigned char MSBFlag, int AttackDamage, BOOL bCombo)) 0x005165A0)
+#define GCgObjPlayerKiller ((void(*)(LPOBJ lpObj, LPOBJ lpTargetObj))	0x0050EF80)
+//
 #endif
 
 #ifdef _GS_CS
@@ -107,6 +111,8 @@
 #define ItemGetDurability ((int(*)(short index, int itemLevel, int ExellentItem, int SetItem)) 0x0056BBA0) //moss
 #define GSItemGetSize		((void(*) (int index, int & width, int & height)) 0x0056BB00 )
 #define GSCheckInventoryEmptySpace ((int(*) (LPOBJ lpObj, int iItemHeight, int iItemWidth)) 0x0052EE50 )
+#define GCgObjAttack ((int(*)(LPOBJ lpObj, LPOBJ lpTargetObj, class CMagicInf* lpMagic, int magicsend, unsigned char MSBFlag, int AttackDamage, BOOL bCombo)) 0x00528790)
+#define GCgObjPlayerKiller ((void(*)(LPOBJ lpObj, LPOBJ lpTargetObj))	0x00521040)
 #endif
 
 
@@ -125,6 +131,8 @@
 #define GreatDevelopPkClear			"..\\GreatDevelop\\PkClearGuard.ini"
 #define GreatDevelopSkills			"..\\GreatDevelop\\Skills.ini"  
 #define GreatDevelopMobAdd			"..\\GreatDevelop\\MonsterSpawn.ini"  
+#define GreatDevelopMapSystem		"..\\GreatDevelop\\MapSystem.ini"
+
 #define GS_CONFIG_FILE				".\\Data\\ServerInfo.dat" 
 
 #define GreatDevelopNews			".\\News.txt"
@@ -694,7 +702,8 @@ private:
 	void ZenFixes();
 	void PartyZenFixes();
 	void LoadNews();
-	void Misc();
+	void Misc(); 
+	void MapSys();
 public:			 
 	cConfigs();
 	~cConfigs();

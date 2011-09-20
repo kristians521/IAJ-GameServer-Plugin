@@ -18,7 +18,7 @@
 #include "SQL.h"
 #include "ChatCommands.h"
 #include "MossGambler.h"	 
-#include "Monster.h" 
+#include "Monster.h"   
 struct sIps
 {
 	char Ip[16];
@@ -197,6 +197,8 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 			Utilits.HookThis((DWORD)&MygEventMonsterItemDrop, 0x00402AD1);
 			Utilits.HookThis((DWORD)&GOBJGetIndex,0x00404D18);	
 			Utilits.HookThis((DWORD)&gObjLevelUpPointAddEx,0x00406D7F);
+			Utilits.HookThis((DWORD)&gObjPlayerKiller, 0x0040655F); 
+			Utilits.HookThis((DWORD)&gObjAttack, 0x00403CA6);
 		#endif
 
 		#ifdef _GS_CS
@@ -210,7 +212,8 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 			Utilits.HookThis((DWORD)&MygEventMonsterItemDrop, 0x004029F0);
 			Utilits.HookThis((DWORD)&GOBJGetIndex,0x00405114);	
 			Utilits.HookThis((DWORD)&gObjLevelUpPointAddEx,0x004075B3);
-			
+			Utilits.HookThis((DWORD)&gObjPlayerKiller, 0x0040655F); 
+			Utilits.HookThis((DWORD)&gObjAttack, 0x00403CA6); 
 		#endif
 
 		DWORD ThreadID;

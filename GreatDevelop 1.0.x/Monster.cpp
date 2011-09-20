@@ -11,7 +11,7 @@
 #include "Configs.h"
 #include "Logger.h"
 #include "ChatCommands.h"
-
+#include "MapSystem.h"
 
 
 // Monster die Handler (hooked replacement for gObjMonsterDieGiveItem)
@@ -21,6 +21,12 @@ void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
 	PCPoint.RewardsPointsKillMob(lpTargetObj,lpObj,WCOIN);
 	// Original function
 	gObjMonsterDieGiveItem(lpObj, lpTargetObj);
+
+	//MapSystem Module Drop
+	if(MapSystem.Config[lpTargetObj->MapNumber].Drop != 0)
+	{
+		lpObj->m_wItemDropRate += MapSystem.Config[lpObj->MapNumber].Drop;
+	}
 }
 
 #ifdef _GS
@@ -143,6 +149,11 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 				mObj->Money = (mObj->Money * Config.PartyZen.NormalZen)*((AllPartyLevel/Count)/1000);
 		}
 	}
+	//MapSystem Module Zen
+	if(MapSystem.Enabled && MapSystem.Config[pObj->MapNumber].Zen != 0)
+	{
+		mObj->Money += MapSystem.Config[mObj->MapNumber].Zen;
+	}  
 
 	// Drop System
 	if(DropSystem.DropItem(mObj,pObj))

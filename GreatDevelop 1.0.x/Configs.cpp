@@ -13,7 +13,8 @@
 #include "DropSystem.h"
 #include "Archer.h"
 #include "PCPoint.h"
-#include "MossGambler.h"
+#include "MossGambler.h" 
+#include "MapSystem.h"
 cConfigs Config;	  
 
 cConfigs::cConfigs()
@@ -515,7 +516,13 @@ void cConfigs::Misc()
 	PartyGapLvl				= GetInt(0, 400, 120,"PartyGap", "PartyGapLvl", GreatDevelopCommon);
 	GuildRes				= GetInt(0, 32767, 5,"GuildMaster", "GuildCreateReset", GreatDevelopCommon);
 	GuildLevel				= GetInt(0, 400, 320,"GameServerInfo", "GuildCreateLevel", "..\\Data\\CommonServer.cfg"); 
-	//
+	// 
+}
+void cConfigs::MapSys()
+{ 
+	MapSystem.Enabled				= GetInt(0, 1, 1,"MapSystem", "EnableMapSystem", GreatDevelopMapSystem);	
+	if(!MapSystem.Enabled)return; 
+	MapSystem.Load();
 }
 void cConfigs::LoadAll()
 {
@@ -532,11 +539,10 @@ void cConfigs::LoadAll()
 	LoadPkClearGuard();
 	DropSystem.LoadDropItems();
 	Misc();
+	MapSys();
 #ifdef _GS
 	moss.LoadMoss();
-#endif
-		
-
+#endif 
 }
 
 long cConfigs::GetInt(long Min, long Max, long Default, LPCSTR BlockName, LPCSTR ConfigName, LPCSTR FolderName)
