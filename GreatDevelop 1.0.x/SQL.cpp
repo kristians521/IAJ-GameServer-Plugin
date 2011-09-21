@@ -28,6 +28,7 @@ void CSQLEx::Load()
 	GetPrivateProfileStringA("SQL","SQLLogin","sa",szUser,sizeof(szUser),GreatDevelopGS);
 	GetPrivateProfileStringA("SQL","SQLPass","PASS",szPassword,sizeof(szPassword),GreatDevelopGS);
 	GetPrivateProfileStringA("SQL","SQLDB","MuOnline",szDatabase,sizeof(szDatabase),GreatDevelopGS);
+	Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Load settings successfully");
 
 	if(!this->Connect())
 	{
@@ -118,23 +119,27 @@ bool CSQLEx::Connect()
 {
     if(this->m_bConnected == 1)
 	{
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Connect error #1");
         return false;
 	}
 
     if(SQL_SUCCEEDED(SQLAllocHandle(SQL_HANDLE_ENV,SQL_NULL_HANDLE,&this->m_SQLEnvironment)) == 0)
-    {
+	{
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Connect error #2");
 	    return false;
     }
 
     if(SQL_SUCCEEDED(SQLSetEnvAttr(this->m_SQLEnvironment,SQL_ATTR_ODBC_VERSION,(void *)SQL_OV_ODBC3,0)) == 0)
     {
-        this->FreeHandle();	
+		this->FreeHandle();	
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Connect error #3");
         return false;
     }
 
     if(SQL_SUCCEEDED(SQLAllocHandle(SQL_HANDLE_DBC,this->m_SQLEnvironment,&this->m_SQLConnection)) == 0)
     {
-        this->FreeHandle();	 
+		this->FreeHandle();	 
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Connect error #4");
         return false;
     }
 
@@ -149,12 +154,14 @@ bool CSQLEx::Connect()
     SQLRETURN Connect = SQLDriverConnect(this->m_SQLConnection,NULL,szConStrIn,SQL_NTS,szConStrOut,sizeof(szConStrOut),&iConOutSize,SQL_DRIVER_NOPROMPT);
 
     if(SQL_SUCCEEDED(Connect) == 0) 
-    {
+	{
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Connect error #5");
 		this->FreeHandle();	 
         return false;
     }
 
-    this->m_bConnected = 1;
+	this->m_bConnected = 1;
+	Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Connect successfully");
 
     return true;
 }
@@ -162,20 +169,28 @@ bool CSQLEx::Connect()
 bool CSQLEx::ConnectExt()
 {
     if(this->m_bConnected == 1)
+	{
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] ConnectExt error #1");
 		return false;
+	}
 
     if(SQL_SUCCEEDED(SQLAllocHandle(SQL_HANDLE_ENV,SQL_NULL_HANDLE,&this->m_SQLEnvironment)) == 0)
+	{
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] ConnectExt error #2");
 	    return false;
+	}
 
     if(SQL_SUCCEEDED(SQLSetEnvAttr(this->m_SQLEnvironment,SQL_ATTR_ODBC_VERSION,(void *)SQL_OV_ODBC3,0)) == 0)
     {
-        this->FreeHandle();	 
+		this->FreeHandle();	 
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] ConnectExt error #3");
         return false;
     }
 
     if(SQL_SUCCEEDED(SQLAllocHandle(SQL_HANDLE_DBC,this->m_SQLEnvironment,&this->m_SQLConnection)) == 0)
     {
-        this->FreeHandle();	
+		this->FreeHandle();	
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] ConnectExt error #4");
         return false;
     }
 
@@ -192,10 +207,12 @@ bool CSQLEx::ConnectExt()
     if(SQL_SUCCEEDED(Connect) == 0) 
     {
 		this->FreeHandle();	   
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] ConnectExt error #5");
         return false;
     }
 
-    this->m_bConnected = 1;
+	this->m_bConnected = 1;
+	Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] ConnectExt successfully");
 
     return true;
 }
@@ -204,14 +221,15 @@ void CSQLEx::Disconnect()
 {
     if(this->m_bConnected == 1)
     {
-        SQLDisconnect(this->m_SQLConnection); 
+		SQLDisconnect(this->m_SQLConnection); 
 		this->FreeHandle();
     }
 
     this->m_SQLConnection = NULL;
     this->m_SQLEnvironment = NULL;
 
-    this->m_bConnected = 0;
+	this->m_bConnected = 0;
+	Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Disconnect successfully");
 }
 
 void CSQLEx::FreeHandle()
@@ -227,12 +245,14 @@ bool CSQLEx::Execute(char* szQuery,...)
 {
 	if(this->m_bConnected == 0)
 	{
-        return false;
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute error #1");
+		return false;
 	}
 
     if(SQL_SUCCEEDED(SQLAllocHandle(SQL_HANDLE_STMT,this->m_SQLConnection,&this->m_STMT)) == 0)
-    {
-	    return false;
+	{
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute error #2");
+		return false;
 	}
 
 	char szTemp[1024];
@@ -244,8 +264,9 @@ bool CSQLEx::Execute(char* szQuery,...)
 	va_end(pArguments);
 
     if(SQL_SUCCEEDED(SQLPrepare(this->m_STMT,(unsigned char*)szTemp,strlen(szTemp))) == 0)
-    {
-	    return false;
+	{
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute [%s] error #1", szQuery);
+		return false;
 	}
 			
 	SQLRETURN Execute = SQLExecute(this->m_STMT);
@@ -262,9 +283,11 @@ bool CSQLEx::Execute(char* szQuery,...)
 		    this->m_ColCount = 0;
 		}
 
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute [%s] successfully", szQuery);
 		return true;
 	}
 
+	Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute [%s] error #2", szQuery);
 	return false;
 }
 
@@ -303,10 +326,12 @@ int CSQLEx::GetInt()
 		
 		if(SQL_SUCCEEDED(SQLGetData(this->m_STMT,1,SQL_C_LONG,&lResult,sizeof(long),&lSize)) == 0)
 		    break;
-		
+
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] GetInt = %d", lResult);
 		return lResult;
 	}
 
+	Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] GetInt error");
 	return 0;
 }
 
@@ -328,8 +353,11 @@ void CSQLEx::GetString(char *msg)
 		{
 			memcpy(msg,lResult,lSize);
 			msg[lSize] = '\0';
+			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] GetString = %s", lResult);
+			return;
 		}
 	}
+	Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] GetString error");
 }
 
 bool CSQLEx::FetchRow(char* out,int len)

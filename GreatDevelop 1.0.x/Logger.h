@@ -32,7 +32,8 @@ enum sLogType
 	t_GPOST,
 	t_PCPOINT,
 	t_IPBLOCK,
-	t_Duel
+	t_Duel,
+	t_SQL
 };
 
 class Logger
