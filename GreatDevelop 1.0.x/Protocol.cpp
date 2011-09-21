@@ -49,7 +49,7 @@ BOOL gObjAttack(LPOBJ lpObj, LPOBJ lpTargetObj, class CMagicInf* lpMagic, int ma
 {		
 	if(MapSystem.Maps[lpObj->MapNumber].PVP == 1 && lpTargetObj->Type == OBJECT_USER && lpObj->Type == OBJECT_USER)
 		return FALSE;
-	GCgObjAttack(lpObj, lpTargetObj, lpMagic, magicsend, MSBFlag, AttackDamage, bCombo);
+	return GCgObjAttack(lpObj, lpTargetObj, lpMagic, magicsend, MSBFlag, AttackDamage, bCombo);
 }
 
 bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD Encrypt, int Serial)
