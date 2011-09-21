@@ -10,12 +10,15 @@ Great Develop 1.0.2
 	[GS\GSCS] Drop System Map (-1 config added)
 	[GS\GSCS] Zen Drop FIXED
 	[GS\GSCS] SetZen DELETED (use SetChar) 
-PRIVATE:
-	[GS] MobAdd Command ADDED
-	[GS\GSCS] Monster Speak ADDED
-	[GS\GSCS] SetDrop Command ADDED
-	[GS\GSCS] MassLog ADDED
-	[GS\GSCS] PartyGap ADDED
+	[GS] MobAdd Command 
+	[GS\GSCS] Monster Speak 
+	[GS\GSCS] SetDrop Command 
+	[GS\GSCS] Guild Master Creator NPC Min Lvl\Res
+	[GS\GSCS] MassLog 
+	[GS\GSCS] PartyGap
+	[GS\GSCS] MapSystem
+	[GS\GSCS] Symbols check in Name/GuildName when creating Name/GuildName
+
 Great Develop 1.0.1
 
 	[Configs] All configs updated
