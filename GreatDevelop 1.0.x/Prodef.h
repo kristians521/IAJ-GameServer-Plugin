@@ -129,5 +129,28 @@ struct PMSG_CLIENTCLOSE
 	BYTE SubCode;	// 3
 	BYTE Flag;	// 4
 };			
+
+struct PMSG_CHARCREATE
+{
+	PBMSG_HEAD h;
+	BYTE subcode;	// 3
+	char Name[10];	// 4
+	BYTE ClassSkin;	// E
+};
+
+struct PMSG_GUILDINFOSAVE
+{
+	PBMSG_HEAD h;
+	BYTE btGuildType;	// 3
+	char GuildName[8];	// 4
+	BYTE Mark[32];	// C
+};
+
+struct PMSG_GUILDCREATED_RESULT
+{
+	PBMSG_HEAD h;	// C1:56
+	BYTE Result;	// 3
+	BYTE btGuildType;	// 4
+};
 						
 #endif

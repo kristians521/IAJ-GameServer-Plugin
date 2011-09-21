@@ -32,6 +32,7 @@
 #define gObjInventoryDeleteItem ((void(*)(int,int)) 0x00402464)				   
 #define gObjMonsterDieGiveItem ((int(*) ( LPOBJ , LPOBJ )) 0x004050DD)
 #define GCInventoryItemDeleteSend ((void(*)(int,int,unsigned char)) 0x00403AE9)
+#define JGCharacterCreateFailSend ((void(*)(int aIndex, char* id)) 0x0042D990)
 #define GCServerMsgStringSend ((void(*) (char * Texto,DWORD PlayerID,int Type)) 0x004066B3)
 #define GCStateInfoSendg ((void(*)(OBJECTSTRUCT *lpObj, BYTE State, BYTE ViewSkillState)) 0x004040A2) //duel
 #define gObjViewportListProtocolDestroy ((void(*)(OBJECTSTRUCT* lpObj)) 0x00402F5E)	//duel
@@ -86,6 +87,7 @@
 #define gObjTeleport ((void(*) (int,unsigned char,unsigned char,unsigned char)) 0x0040341D)
 #define CloseClient ((void(*)(DWORD))0x0040822E)	
 #define DataRecv ((void(*) (BYTE,PBYTE,DWORD,DWORD,...)) 0x00439900)
+#define JGCharacterCreateFailSend ((void(*)(int aIndex, char* id)) 0x0042F2F0)
 #define GCServerMsgStringSend ((void(*) (char * Texto,DWORD PlayerID,int Type)) 0x00406E0B)
 #define ItemSerialCreateSend ((int(*)(DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,DWORD,DWORD)) 0x00407897)
 #define gObjViewportListProtocolCreate ((void(*)(OBJECTSTRUCT* tObj))0x00542310) // Skin

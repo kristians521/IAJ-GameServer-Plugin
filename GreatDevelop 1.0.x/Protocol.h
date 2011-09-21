@@ -20,6 +20,8 @@ public:
 	void PlayerConnect(LPOBJ gObj); 
 	void CheckRingSend(LPOBJ gObj, LPBYTE aRecv);	
 	void CheckRing(LPOBJ gObj, LPBYTE aRecv);
+	bool CharacterCreate(PMSG_CHARCREATE* lpMsg, int aIndex);
+	bool GuildMasterInfoSave(int aIndex,PMSG_GUILDINFOSAVE* lpMsg);
 	bool CGPartyRequestRecv(PMSG_PARTYREQUEST * lpMsg, int aIndex);
 private:			
 	void LoginMsg(LPOBJ gObj);

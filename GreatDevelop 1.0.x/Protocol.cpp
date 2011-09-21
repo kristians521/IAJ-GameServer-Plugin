@@ -18,6 +18,9 @@
 #include "MossGambler.h"
 #include "Monster.h"
 #include "MapSystem.h"
+
+cProtoFunc Protocol;
+
 BYTE RecvTable[256] = {
 
 		0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0x0E,0x0F,
@@ -55,6 +58,21 @@ BOOL gObjAttack(LPOBJ lpObj, LPOBJ lpTargetObj, class CMagicInf* lpMagic, int ma
 bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD Encrypt, int Serial)
 {
 	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);
+	if(protoNum == 0xF3)
+	{	 													   
+		PMSG_DEFAULT2 * lpDef = (PMSG_DEFAULT2 *)aRecv;
+		switch ( lpDef->subcode )
+		{
+		case 0x01:
+			{		  
+				if(Protocol.CharacterCreate((PMSG_CHARCREATE *)aRecv, aIndex))
+				{
+					JGCharacterCreateFailSend(aIndex, gObj->Name);
+					return true;
+				}
+			}
+		}
+	}
 
 	switch(BYTE(protoNum))
 	{
@@ -113,6 +131,12 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 					return true;
 		}
 		break;
+		case 0x55:
+			{
+				if(Protocol.GuildMasterInfoSave(aIndex, (PMSG_GUILDINFOSAVE *)aRecv))
+					return true;
+			}
+			break;
 
 		case 0xAA:	
 			{  		
@@ -179,8 +203,6 @@ void ProtocolCoreSend(int aIndex, PBYTE aSend, int aLen)
 
 	DataSend(aIndex,aSend,aLen);
 }
-
-cProtoFunc Protocol;
 
 void cProtoFunc::PlayerConnect(LPOBJ gObj)
 {	
@@ -423,4 +445,40 @@ void cProtoFunc::PkClear(LPOBJ gObj, LPOBJ NpcObj)
 	gObj->m_PK_Count = 0;
 
 	GCPkLevelSend (gObj->m_Index,3);
+}
+
+bool cProtoFunc::CharacterCreate(PMSG_CHARCREATE* lpMsg, int aIndex)
+{
+	bool bResult = false;
+	for(int i = 0; i < sizeof(lpMsg->Name); i++)
+	{
+		if(!isalnum(lpMsg->Name[i]) && lpMsg->Name[i] != ' ' && lpMsg->Name[i] != NULL)
+		{						
+			bResult = true;
+		}
+	}
+	return bResult;
+}
+
+bool cProtoFunc::GuildMasterInfoSave(int aIndex,PMSG_GUILDINFOSAVE* lpMsg)
+{
+	bool bResult = false;
+	for(int i = 0; i < sizeof(lpMsg->GuildName); i++)
+	{
+		if(!isalnum(lpMsg->GuildName[i]) && lpMsg->GuildName[i] != ' ' && lpMsg->GuildName[i] != NULL)
+		{						
+			bResult = true;
+
+		}
+	}		
+	if(bResult)
+	{
+		PMSG_GUILDCREATED_RESULT pMsg;
+
+		PHeadSetB((LPBYTE)&pMsg, 0x56, sizeof(pMsg));
+		pMsg.Result = 5;
+
+		DataSend(aIndex, (LPBYTE)&pMsg, pMsg.h.size);
+	}	   
+	return bResult;
 }
