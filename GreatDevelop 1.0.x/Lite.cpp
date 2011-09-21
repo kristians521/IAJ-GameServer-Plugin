@@ -173,7 +173,7 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		Config.LoadAll();
 		IpBlock.LoadIpBlock();
 		MoveReq.MoveReqLoad();
-		
+		Config.LoadNews();
 		#ifdef _GS
 		
 			ReadMonsterAdd();

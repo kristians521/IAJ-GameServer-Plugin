@@ -534,7 +534,7 @@ void cConfigs::LoadAll()
 	LoadDuel();
 	LoadNotice();
 	LoadArcher();
-	LoadNews(); 
+	//LoadNews(); 
 	LoadCommands();
 	LoadPkClearGuard();
 	DropSystem.LoadDropItems();

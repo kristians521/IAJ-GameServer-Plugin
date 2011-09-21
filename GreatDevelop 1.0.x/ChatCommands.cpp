@@ -14,6 +14,7 @@
 #include "IpBlock.h"
 #include "DropSystem.h"
 #include "Monster.h"
+#include "MapSystem.h"
 cChat Chat;
 						 
 cChat::cChat()
@@ -131,7 +132,8 @@ bool cChat::ChatDataSend(LPOBJ gObj,LPBYTE aRecv)
 		bResult = AddMobCommand(gObj,(char*)aRecv+13+strlen("/mobadd"));	
 	if (!memcmp(&aRecv[13],"/setdrop",strlen("/setdrop")))
 			bResult = SetDropCommand(gObj,(char*)aRecv+13+strlen("/setdrop"));	 
-
+	if (!memcmp(&aRecv[13],"/check",strlen("/check")))
+			bResult = CheckDropCommand(gObj,(char*)aRecv+13+strlen("/check"));	 
 	MassLog(gObj, aRecv);
 
 	return bResult;												
@@ -1538,4 +1540,9 @@ bool cChat::SetDropCommand(LPOBJ gObj, char *Msg)
 		}
 	} 
 	return true;
+}
+bool cChat::CheckDropCommand(LPOBJ gObj, char *Msg)
+{
+	MessageLog(1, c_Red, t_GM, gObj, "[Check] PCPoints: %d, WCoins %d ", AddTab[gObj->m_Index].PC_PlayerPoints, gObj->m_wCashPoint);
+		return true;
 }

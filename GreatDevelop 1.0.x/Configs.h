@@ -700,8 +700,7 @@ private:
 	void LoadCommands();
 	void LoadPkClearGuard();
 	void ZenFixes();
-	void PartyZenFixes();
-	void LoadNews();
+	void PartyZenFixes(); 
 	void Misc(); 
 	void MapSys();
 public:			 
@@ -710,6 +709,7 @@ public:
 	void LoadFixes();	
 	void LoadConfigsInGS();
 	void LoadAll();
+	void LoadNews();
 	long GetInt(long Min, long Max, long Default, LPCSTR BlockName, LPCSTR ConfigName, LPCSTR FolderName);
 	char GetChar(long Min, long Max, unsigned char Default, LPCSTR BlockName, LPCSTR ConfigName, LPCSTR FolderName);
 

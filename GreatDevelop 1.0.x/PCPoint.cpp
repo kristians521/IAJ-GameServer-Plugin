@@ -279,10 +279,10 @@ void cPCPoint::RewardsPointsKillMob(LPOBJ gObj,LPOBJ mObj,eTypePoint Type)
 			for (int i = 0; i < AmountRecords[2]; i++)
 				if ( WCoinMonsters[i].MobID == mObj->Class )
 				{
-					this->UpdatePoints(gObj,WCoinMonsters[i].WCoins,MINUS,Type);
-					if (gObj->m_wCashPoint >= sPoints.MaximumWCPoints)
-						Chat.Message(gObj->m_Index,"[WCoin] You have maximum WCoins");
-					else
+					this->UpdatePoints(gObj,WCoinMonsters[i].WCoins,PLUS,Type);
+				//	if (gObj->m_wCashPoint >= sPoints.MaximumWCPoints)
+				//		Chat.Message(gObj->m_Index,"[WCoin] You have maximum WCoins");
+				//	else
 						Chat.Message(gObj->m_Index,"[WCoin] You earned %d WCoins",WCoinMonsters[i].WCoins);
 					return;
 				}
