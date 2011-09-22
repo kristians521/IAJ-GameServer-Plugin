@@ -242,6 +242,11 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 
 	if (Type == PCPOINT)
 	{
+		if(gObj->Name == NULL)
+		{
+			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Name = null)!");
+			return;
+		}
 		AddTab[gObj->m_Index].PC_PlayerPoints = AmountPoints;
 		MySQL.Execute("UPDATE [%s].[dbo].[Character] SET PCPoint = %d WHERE Name = '%s'", MySQL.szDatabase, AmountPoints, gObj->Name);
 
@@ -251,6 +256,11 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 	}
 	if (Type == WCOIN)
 	{
+		if(gObj->AccountID == NULL)
+		{
+			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] WCoin UPDATE Error (AccountID = null)!");
+			return;
+		}
 		gObj->m_wCashPoint = AmountPoints;
 		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET cspoints = %d WHERE memb___id = '%s'", MySQL.szDatabase, AmountPoints , gObj->AccountID);
 	}
