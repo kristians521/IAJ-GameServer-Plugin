@@ -209,7 +209,7 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 	LoginMsg(gObj);
 	RingSkin(gObj);
 	PCPoint.InitPCPointForPlayer(gObj); 
-	MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name = '%s'", MySQL.szDatabase, Config.ResetColumn, gObj->Name);	 
+	MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name = '%s'", Config.ResetColumn, MySQL.szDatabase, gObj->Name);	 
 	AddTab[gObj->m_Index].Resets = MySQL.GetInt();
 	#ifdef _GS 
 	if(Config.Duel.Enabled)

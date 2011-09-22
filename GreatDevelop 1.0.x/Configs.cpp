@@ -512,6 +512,7 @@ void cConfigs::LoadPkClearGuard()
 void cConfigs::Misc()
 {
 	//
+	GetPrivateProfileString("Reset","ResetColumn","Resets", Config.ResetColumn, sizeof(Config.ResetColumn), GreatDevelopCommon); 
 	IsPartyGap				= GetInt(0, 1, 1,"PartyGap", "IsPartyGap", GreatDevelopCommon);	
 	PartyGapLvl				= GetInt(0, 400, 120,"PartyGap", "PartyGapLvl", GreatDevelopCommon);
 	GuildRes				= GetInt(0, 32767, 5,"GuildMaster", "GuildCreateReset", GreatDevelopCommon);
