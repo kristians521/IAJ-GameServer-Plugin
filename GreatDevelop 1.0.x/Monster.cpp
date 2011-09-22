@@ -151,8 +151,15 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 	//MapSystem Module Zen
 	if(MapSystem.Enabled && MapSystem.Maps[pObj->MapNumber].Zen != 0)
 	{
-		mObj->Money += MapSystem.Maps[mObj->MapNumber].Zen;
-	}  
+		mObj->Money += ((mObj->Money/ 100) * MapSystem.Maps[mObj->MapNumber].Zen);
+	} 
+
+	//VIP System 
+	if(Config.VIP.Enabled && AddTab[pObj->m_Index].VIP_Type > 0)
+	{
+		int VIPInfo = AddTab[pObj->m_Index].VIP_Type;
+		mObj->Money += ((mObj->Money/ 100) * Config.VIP.VIPState[VIPInfo].BonusZen);
+	} 
 
 	// Drop System
 	if(DropSystem.DropItem(mObj,pObj))
