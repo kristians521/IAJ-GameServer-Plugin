@@ -20,6 +20,7 @@
 #define ShopExcellentMod_Exit2						0x0055BC0A
 #define MonsterCount 0x7D95B94
 #define MonsterReads 0x7D800B6
+#define GetPartyMemberCount ((int(*)(LPOBJ lpObj))0x004D8110)
 #define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD))0x00439260)
 #define GSCheckInventoryEmptySpace ((int(*) (LPOBJ lpObj, int iItemHeight, int iItemWidth)) 0x0051C770 ) 
 #define GSItemGetSize		((void(*) (int index, int & width, int & height)) 0x00558AE0 )
