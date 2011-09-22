@@ -218,7 +218,7 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 	AddTab[gObj->m_Index].ON_Hour			= 0;
 	AddTab[gObj->m_Index].PC_OnlineTimer	= 0;
 
-	#ifdef _GS 
+#ifdef _GS 
 	if(Config.Duel.Enabled)
 	{
 		if(Config.Duel.Ranking)
@@ -233,7 +233,12 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 		}
 		g_DuelSystem.UserDuelInfoReset(gObj);
 	}
-	#endif
+#endif
+
+#ifdef _GS_CS
+	MySQL.Execute("SELECT cspoints FROM [%s].[dbo].[MEMB_INFO] WHERE memb___id = '%s'", MySQL.szDatabase2, gObj->AccountID);	
+	gObj->m_wCashPoint = MySQL.GetInt();
+#endif
 }
 
 void cProtoFunc::RingSkin(LPOBJ gObj)
