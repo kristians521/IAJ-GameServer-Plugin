@@ -140,6 +140,7 @@
 #define GreatDevelopNews			".\\News.txt"
 #define GreatDevelopGM				".\\GMSystem.txt"
 #define GreatDevelopIPBlock			".\\IPBlock.txt" 
+#define GreatDevelopVIP			".\\VIPSystem.ini" 
 
 #define GreatDevelopChatLogs		"..\\GreatDevelop\\ChatLogs"
 #define GreatDevelopConsoleLogs		"..\\GreatDevelop\\ConsoleLogs" 
@@ -699,6 +700,7 @@ private:
 	void LoadNotice();
 	void LoadPets();
 	void LoadArcher();
+	void VIPSystem();
 	void LoadCommands();
 	void LoadPkClearGuard();
 	void ZenFixes();
@@ -841,6 +843,29 @@ public:
 		int ZenInParty;
 
 	}Zen;
+
+	struct VIP
+	{
+		int NumStates;
+		int Enabled;
+		char Column[25];
+		char ColumnDate[25];
+
+		struct VIPConfig
+		{ 
+			char VIPName[8];
+			int EnabledCmd;
+			DWORD CostZen;
+			int CostPCPoints;
+
+			int CostWCoins;
+			int BonusExp;
+			int BonusZen;
+			int BonusDrop; 
+		};
+		VIPConfig VIPState[20]; 
+
+	}VIP;
 
 	int GuildRes;
 	int GuildLevel;

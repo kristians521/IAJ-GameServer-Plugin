@@ -320,6 +320,12 @@
     <None Include="Configs\GreatDevelop\MapSystem.ini">
       <Filter>Configs\GreatDevelop</Filter>
     </None>
+    <None Include="Configs\GameServerCS\VIPSystem.ini">
+      <Filter>Configs\GameServerCS</Filter>
+    </None>
+    <None Include="Configs\GameServer\VIPSystem.ini">
+      <Filter>Configs\GameServer</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

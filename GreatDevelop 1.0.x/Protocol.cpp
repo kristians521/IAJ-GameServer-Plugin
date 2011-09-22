@@ -234,7 +234,19 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 		g_DuelSystem.UserDuelInfoReset(gObj);
 	}
 #endif
+		if(Config.VIP.Enabled)
+		{												 
+			MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name='%s'",VIP.Column,MySQL.szDatabase,gObj->Name);
+			AddTab[gObj->m_Index].VIP_Type = MySQL.GetInt();
 
+			MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name='%s'",VIP.ColumnDate,MySQL.szDatabase,gObj->Name);
+			AddTab[gObj->m_Index].VIP_Min = MySQL.GetInt();
+
+			if(AddTab[gObj->m_Index].VIP_Min > 0)
+			{											 
+				Chat.MessageLog(1, c_Red, /*VIP System*/ t_Default, gObj, "[VIP] Left %d minutes of VIP.", AddTab[gObj->m_Index].VIP_Min);
+			} 
+		}
 #ifdef _GS_CS
 	MySQL.Execute("SELECT cspoints FROM [%s].[dbo].[MEMB_INFO] WHERE memb___id = '%s'", MySQL.szDatabase2, gObj->AccountID);	
 	gObj->m_wCashPoint = MySQL.GetInt();

@@ -790,6 +790,10 @@ typedef	struct sAddTab
 	int		AFK_Y;
 	DWORD	AFK_Temp;	
 
+	//VIP System
+	int		VIP_Type;
+	int		VIP_Min;
+
 	//Duel System
 	BYTE	DUEL_Room;
 	int		DUEL_Wins;

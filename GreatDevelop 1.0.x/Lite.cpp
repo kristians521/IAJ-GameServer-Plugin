@@ -80,6 +80,20 @@ DWORD MainTick()
 					}
 				}
 			}
+			/*VIP System*/
+			if(AddTab[gObj->m_Index].VIP_Type > 0)
+			{
+				AddTab[gObj->m_Index].VIP_Min --;
+				MySQL.Execute("UPDATE [%s].[dbo].[Character] SET %s=%d WHERE Name='%s'",MySQL.szDatabase,Config.VIP.ColumnDate, AddTab[gObj->m_Index].VIP_Min, gObj->Name);
+			}
+			else
+			{
+				Chat.MessageLog(1, c_Red, /*VIP System*/ t_Default, gObj, "[VIP] Your vip time is over! You are normal player again."); 
+				AddTab[gObj->m_Index].VIP_Type = 0;
+				AddTab[gObj->m_Index].VIP_Min = 0;
+				MySQL.Execute("UPDATE [%s].[dbo].[Character] SET %s=0 WHERE Name='%s'",MySQL.szDatabase,Config.VIP.Column, gObj->Name);
+			}
+			//
 		}				
 														
 		for(UINT x = 0; x < NumIps; x++)

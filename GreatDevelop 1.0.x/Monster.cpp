@@ -25,7 +25,13 @@ void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
 	//MapSystem Module Drop
 	if(MapSystem.Maps[lpTargetObj->MapNumber].Drop != 0)
 	{
-		lpObj->m_wItemDropRate += MapSystem.Maps[lpObj->MapNumber].Drop;
+		lpObj->m_wItemDropRate += ((lpObj->Money/ 100) * MapSystem.Maps[lpObj->MapNumber].Drop);
+	}
+	//VIP System
+	if(Config.VIP.Enabled && AddTab[lpTargetObj->m_Index].VIP_Type > 0)
+	{
+		int VIPInfo = AddTab[lpTargetObj->m_Index].VIP_Type;
+		lpObj->m_wItemDropRate += ((lpObj->Money/ 100) * Config.VIP.VIPState[VIPInfo].BonusDrop);
 	}
 }
 
@@ -149,8 +155,15 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 	//MapSystem Module Zen
 	if(MapSystem.Enabled && MapSystem.Maps[pObj->MapNumber].Zen != 0)
 	{
-		mObj->Money += MapSystem.Maps[mObj->MapNumber].Zen;
-	}  
+		mObj->Money += ((mObj->Money/ 100) * MapSystem.Maps[mObj->MapNumber].Zen);
+	} 
+
+	//VIP System 
+	if(Config.VIP.Enabled && AddTab[pObj->m_Index].VIP_Type > 0)
+	{
+		int VIPInfo = AddTab[pObj->m_Index].VIP_Type;
+		mObj->Money += ((mObj->Money/ 100) * Config.VIP.VIPState[VIPInfo].BonusZen);
+	} 
 
 	// Drop System
 	if(DropSystem.DropItem(mObj,pObj))

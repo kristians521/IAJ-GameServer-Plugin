@@ -403,6 +403,33 @@ void cConfigs::LoadArcher()
 	}
 }
 
+void cConfigs::VIPSystem()
+{
+	VIP.Enabled = Config.GetInt(0, 1,				1,		"VipSystem",			"EnableVip",			GreatDevelopVIP); 
+	if(!VIP.Enabled)return;
+
+	GetPrivateProfileString("VipSystem","VIPColumn","VIP",VIP.Column,sizeof(VIP.Column), GreatDevelopVIP);
+	GetPrivateProfileString("VipSystem","VIPColumnDate","VIP_DATE",VIP.ColumnDate,sizeof(VIP.ColumnDate), GreatDevelopVIP);	 				 
+							 	
+	VIP.NumStates = Config.GetInt(0, 10, 3, "VipSystem", "NumStates", GreatDevelopVIP);	
+		
+	char PState[10]; 
+	for(int i = 1; i <= VIP.NumStates; i++)
+	{
+		wsprintf(PState, "State%d", i);
+
+		GetPrivateProfileString(PState,"VIPStateName","bronze",VIP.VIPState[i].VIPName,sizeof(VIP.VIPState[i].VIPName), GreatDevelopVIP);	  
+		VIP.VIPState[i].EnabledCmd		= Config.GetInt(0, 1,									1,		PState,			"AllowAutoBuy",		GreatDevelopVIP); 
+		VIP.VIPState[i].CostPCPoints	= Config.GetInt(0, PCPoint.sPoints.MaximumPCPoints,				5,		PState,	"CostPCPoints",		GreatDevelopVIP);
+		VIP.VIPState[i].CostWCoins		= Config.GetInt(0, PCPoint.sPoints.MaximumWCPoints,				5,		PState,	"CostWCoins",		GreatDevelopVIP);
+		VIP.VIPState[i].CostZen			= Config.GetInt(0, 2000000000,							5000,	PState,			"CostZen",			GreatDevelopVIP);
+
+		VIP.VIPState[i].BonusExp		= Config.GetInt(0, 9999,								5,		PState,			"BonusExp",			GreatDevelopVIP);
+		VIP.VIPState[i].BonusZen		= Config.GetInt(0, 9999,								5,		PState,			"BonusZen",			GreatDevelopVIP);
+		VIP.VIPState[i].BonusDrop		= Config.GetInt(0, 9999,								5,		PState,			"BonusDrop",		GreatDevelopVIP);
+	}
+}
+
 void cConfigs::LoadCommands()
 {	
 	Commands.MaxLvl						= GetInt(300, 1000, 400,"LevelSettings", "MaxLevel", GreatDevelopCommon);
@@ -518,13 +545,12 @@ void cConfigs::LoadAll()
 {
 	PCPoint.LoadIniConfigs();
 	ZenFixes();
-	PartyZenFixes();
 	LoadGmSystem();
 	LoadAntiAfk();
 	LoadDuel();
 	LoadNotice();
 	LoadArcher();
-	//LoadNews(); 
+	VIPSystem();
 	LoadCommands();
 	LoadPkClearGuard();
 	DropSystem.LoadDropItems();

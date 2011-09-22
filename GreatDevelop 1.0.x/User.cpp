@@ -182,8 +182,22 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
           lpObj->Experience     += pBonusExp;
           lpObj->MLExp          += pBonusExpML;
      }
+	//VIPSystem	
+	if(Config.VIP.Enabled && AddTab[lpObj->m_Index].VIP_Type > 0)
+	{
+		  int VIPInfo = AddTab[lpObj->m_Index].VIP_Type;
+		  pBonusExp               = ((exp * Config.VIP.VIPState[VIPInfo].BonusExp) / 100);
+          pBonusExpML               = ((exp * Config.VIP.VIPState[VIPInfo].BonusExp) / 100);
+          // ----
+          pNewExperience          += pBonusExp;
+          pNewExperenceML          += pBonusExpML;
+          // ----
+          lpObj->Experience     += pBonusExp;
+          lpObj->MLExp          += pBonusExpML;
+	}
+
 	//MapSystem Module Exp
-   if(MapSystem.Enabled && MapSystem.Maps[lpObj->MapNumber].Exp != 0)
+	if(MapSystem.Enabled && MapSystem.Maps[lpObj->MapNumber].Exp != 0)
 	{
 		  pBonusExp               = ((exp * MapSystem.Maps[lpObj->MapNumber].Exp) / 100);
           pBonusExpML               = ((exp * MapSystem.Maps[lpObj->MapNumber].Exp) / 100);
@@ -194,7 +208,7 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
           lpObj->Experience     += pBonusExp;
           lpObj->MLExp          += pBonusExpML;
 	}
-     GCKillPlayerExpSend(aIndex , TargetIndex , pNewExperience , AttackDamage , MSBFlag);
+    GCKillPlayerExpSend(aIndex , TargetIndex , pNewExperience , AttackDamage , MSBFlag);
 }
 
 void MyObjCalCharacter(int aIndex)
