@@ -211,6 +211,12 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 	PCPoint.InitPCPointForPlayer(gObj); 
 	MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name = '%s'", Config.ResetColumn, MySQL.szDatabase, gObj->Name);	 
 	AddTab[gObj->m_Index].Resets = MySQL.GetInt();
+
+	AddTab[gObj->m_Index].ON_Min			= 0;   
+	AddTab[gObj->m_Index].ON_Sek			= 0;
+	AddTab[gObj->m_Index].ON_Hour			= 0;
+	AddTab[gObj->m_Index].PC_OnlineTimer	= 0;
+
 	#ifdef _GS 
 	if(Config.Duel.Enabled)
 	{

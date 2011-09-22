@@ -36,16 +36,10 @@ DWORD MainTick()
 		for(int i=OBJECT_MIN; i<=OBJECT_MAX; i++)
 		{
 			OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(i);	
-			int Index = gObj->m_Index;  
-			if(gObj->Connected == PLAYER_LOGGED)
-			{ 
-				AddTab[Index].ON_Min = 0;   
-				AddTab[Index].ON_Sek = 0;
-				AddTab[Index].ON_Hour = 0;
-				AddTab[Index].PC_OnlineTimer = 0;
-			}
 
 			if(gObj->Connected < PLAYER_PLAYING) continue;	
+
+			int Index = gObj->m_Index;  
 
 			if(AddTab[Index].POST_Delay > 0)
 				AddTab[Index].POST_Delay--;
