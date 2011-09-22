@@ -236,10 +236,10 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 #endif
 		if(Config.VIP.Enabled)
 		{												 
-			MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name='%s'",VIP.Column,MySQL.szDatabase,gObj->Name);
+			MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name='%s'",Config.VIP.Column,MySQL.szDatabase,gObj->Name);
 			AddTab[gObj->m_Index].VIP_Type = MySQL.GetInt();
 
-			MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name='%s'",VIP.ColumnDate,MySQL.szDatabase,gObj->Name);
+			MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name='%s'",Config.VIP.ColumnDate,MySQL.szDatabase,gObj->Name);
 			AddTab[gObj->m_Index].VIP_Min = MySQL.GetInt();
 
 			if(AddTab[gObj->m_Index].VIP_Min > 0)
