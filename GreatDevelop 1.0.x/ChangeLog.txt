@@ -18,6 +18,7 @@ Great Develop 1.0.2
 	[GS\GSCS] PartyGap
 	[GS\GSCS] MapSystem
 	[GS\GSCS] Symbols check in Name/GuildName when creating Name/GuildName
+	[GS\GSCS] Me_MuOnline support
 
 Great Develop 1.0.1
 
