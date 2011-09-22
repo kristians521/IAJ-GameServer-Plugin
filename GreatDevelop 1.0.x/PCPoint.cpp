@@ -268,7 +268,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 	if (Type == WCOIN)
 	{
 		gObj->m_wCashPoint = AmountPoints;
-		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET cspoints = %d WHERE memb___id = '%s'", MySQL.szDatabase, AmountPoints , gObj->AccountID);
+		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET cspoints = %d WHERE memb___id = '%s'", MySQL.szDatabase2, AmountPoints , gObj->AccountID);
 	}
 }
 

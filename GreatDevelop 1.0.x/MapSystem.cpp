@@ -59,7 +59,6 @@ void cMapSystem::Load()
 				continue;
 			}
 
-//#TODO Неведома хрень переписать
 			int temp[5];
 			sscanf(fpLine, "%d %d %d %d %d", &temp[0], &temp[1], &temp[2], &temp[3], &temp[4]);
 			Maps[temp[0]].Zen		= temp[1];

@@ -672,10 +672,10 @@ bool cChat::BanAccCommand(LPOBJ gObj, char *Msg)
 	{
 		CloseClient(Index);									   
 		MessageLog(1, c_Red, t_BAN, gObj, "[BanAcc] %s banned, character %s disconnected.", Target, Target2);		
-		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code = 1 WHERE memb___id = '%s'", MySQL.szDatabase, Target);	
+		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code = 1 WHERE memb___id = '%s'", MySQL.szDatabase2, Target);	
 	}
 	else 
-		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code = 1 WHERE memb___id = '%s'", MySQL.szDatabase, Target);	   
+		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code = 1 WHERE memb___id = '%s'", MySQL.szDatabase2, Target);	   
 
 	return true;	 
 }
@@ -714,7 +714,7 @@ bool cChat::UnBanAccCommand(LPOBJ gObj, char *Msg)
 
 	sscanf(Msg, "%s", &Target);
 
-	MySQL.Execute("SELECT bloc_code FROM [%s].[dbo].[MEMB_INFO] WHERE memb___id = '%s'",MySQL.szDatabase, Target);	
+	MySQL.Execute("SELECT bloc_code FROM [%s].[dbo].[MEMB_INFO] WHERE memb___id = '%s'",MySQL.szDatabase2, Target);	
 	int Banned = MySQL.GetInt();
 
 	if(Banned == 0)
@@ -724,7 +724,7 @@ bool cChat::UnBanAccCommand(LPOBJ gObj, char *Msg)
 	}
 	else   
 	{		 																	  
-		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code = 0 WHERE memb___id = '%s'", MySQL.szDatabase, Target);  
+		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET bloc_code = 0 WHERE memb___id = '%s'", MySQL.szDatabase2, Target);  
 		MessageLog(1, c_Red, t_BAN, gObj, "[UnBanAcc] %s UnBaned", Target);		
 	} 
 

@@ -40,6 +40,7 @@ public:
 	char szUser[50];
 	char szPassword[50];
 	char szDatabase[50];
+	char szDatabase2[50];
 private:
 	bool m_bConnected;
 	HENV m_SQLEnvironment;

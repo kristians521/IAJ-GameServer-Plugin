@@ -28,6 +28,7 @@ void CSQLEx::Load()
 	GetPrivateProfileStringA("SQL","SQLLogin","sa",szUser,sizeof(szUser),GreatDevelopGS);
 	GetPrivateProfileStringA("SQL","SQLPass","PASS",szPassword,sizeof(szPassword),GreatDevelopGS);
 	GetPrivateProfileStringA("SQL","SQLDB","MuOnline",szDatabase,sizeof(szDatabase),GreatDevelopGS);
+	GetPrivateProfileStringA("SQL","SQLDB2","Me_MuOnline",szDatabase2,sizeof(szDatabase2),GreatDevelopGS);
 	Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Load settings successfully");
 
 	if(!this->Connect())

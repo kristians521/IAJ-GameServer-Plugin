@@ -58,7 +58,7 @@ DWORD MainTick()
 			{
 				AddTab[Index].ON_Min = 0;
 				AddTab[Index].ON_Hour++;
-				MySQL.Execute("UPDATE [%s].[dbo].[MEMB_STAT] SET OnlineHours = OnlineHours + 1 WHERE memb___id = '%s'", MySQL.szDatabase, gObj->AccountID);
+				MySQL.Execute("UPDATE [%s].[dbo].[MEMB_STAT] SET OnlineHours = OnlineHours + 1 WHERE memb___id = '%s'", MySQL.szDatabase2, gObj->AccountID);
 			}
 			/*Add PCPoints for Online System*/
 			if (PCPoint.sPoints.Enabled && PCPoint.sPoints.AddPCPointsSec > 0)
