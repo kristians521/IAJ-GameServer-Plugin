@@ -16,9 +16,9 @@ cMapSystem::cMapSystem()
 	for(int i = 0; i < 255; i++)
 	{
 		Maps[i].Drop	= 0;
-		Maps[i].Exp	= 0;
-		Maps[i].PVP	= 0;
-		Maps[i].Zen	= 0;
+		Maps[i].Exp		= 0;
+		Maps[i].PVP		= 0;
+		Maps[i].Zen		= 0;
 	}
 }
 
@@ -62,7 +62,7 @@ void cMapSystem::Load()
 			int temp[5];
 			sscanf(fpLine, "%d %d %d %d %d", &temp[0], &temp[1], &temp[2], &temp[3], &temp[4]);
 			Maps[temp[0]].Zen		= temp[1];
-			Maps[temp[0]].Drop	= temp[2];
+			Maps[temp[0]].Drop		= temp[2];
 			Maps[temp[0]].Exp		= temp[3];
 			Maps[temp[0]].PVP		= temp[4];
 		}
