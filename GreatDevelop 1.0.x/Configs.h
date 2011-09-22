@@ -702,7 +702,6 @@ private:
 	void LoadCommands();
 	void LoadPkClearGuard();
 	void ZenFixes();
-	void PartyZenFixes(); 
 	void Misc(); 
 	void MapSys();
 public:			 
@@ -837,14 +836,11 @@ public:
 	}Archer;
 
 	struct cZen
-	{
-		int	Enabled;
-		int	MasterZen;
-		int NormalZen;
+	{ 
+		int	NormalZen;
+		int ZenInParty;
 
-	};
-	cZen Zen;			 
-	cZen PartyZen; 
+	}Zen;
 
 	int GuildRes;
 	int GuildLevel;
