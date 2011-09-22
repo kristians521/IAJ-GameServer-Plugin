@@ -32,3 +32,5 @@
 	14:05:23 [SKILL DISTANCE CHECK] [PsychoGod][Fantomas] Invalid Skill attacker(81, 43), defender(80, 48), skillnum:22 skilldistance:4
 	14:05:23 [SKILL DISTANCE CHECK] [PsychoGod][Fantomas] Kick Invalid Skill Area User. count(6)
 	WSARecv() failed with error 10038
+
+- падает по 2 рены подряд если убиваешь двух мобов рядом

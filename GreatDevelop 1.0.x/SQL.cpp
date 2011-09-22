@@ -265,7 +265,7 @@ bool CSQLEx::Execute(char* szQuery,...)
 
     if(SQL_SUCCEEDED(SQLPrepare(this->m_STMT,(unsigned char*)szTemp,strlen(szTemp))) == 0)
 	{
-		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute [%s] error #1", szQuery);
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute [%s] error #1", szTemp);
 		return false;
 	}
 			
@@ -283,11 +283,11 @@ bool CSQLEx::Execute(char* szQuery,...)
 		    this->m_ColCount = 0;
 		}
 
-		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute [%s] successfully", szQuery);
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute [%s] successfully", szTemp);
 		return true;
 	}
 
-	Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute [%s] error #2", szQuery);
+	Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] Execute [%s] error #2", szTemp);
 	return false;
 }
 

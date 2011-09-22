@@ -30,13 +30,13 @@ void cMapSystem::Load()
 {
    	FILE *fp;
 	fp = fopen(GreatDevelopMapSystem, "r");
-	rewind(fp);
 
 	if(fp == NULL)
 	{
 		Log.ConsoleOutPut(1, c_Cyan, t_Default, "[Map System] System not active. Config file not found: %s", GreatDevelopMapSystem);
 		return;
 	}
+	rewind(fp);
 
 	int Type = -1;	 
 	char fpLine[255];
