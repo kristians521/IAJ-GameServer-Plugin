@@ -49,7 +49,7 @@ void cMapSystem::Load()
 		if(fpLine[0] == '/' || strcmp(fpLine, "\n") == 0) continue;
 
 		// Config Type
-		if ((strcmp(fpLine, "1") == 0 || strcmp(fpLine, "1\n") == 0) && Type == 0) { Type = 1; continue; }
+		if ((strcmp(fpLine, "1") == 0 || strcmp(fpLine, "1\n") == 0) && Type != 1) { Type = 1; continue; }
 					   
 		if(Type == 1)
 		{				
