@@ -39,3 +39,5 @@
 - mob add bug, find and fix
 - добавить все новый таблицы в автодобавление, дабы небыло ошибок
 - admin ADmiN <- исправить баг при заходе на сервер
+
+- добавить конфиг для symbol checking for name and guild name
