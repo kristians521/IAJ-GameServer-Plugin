@@ -24,8 +24,8 @@ public:
 	bool Execute(char* szQuery,...);
 	char* GetLastError();
 	void FreeHandle();
-	//void CheckColumns();
-	//void CheckColumn(char* Base, char* Column, char* Table, char* AddQuery, ...);
+	void CheckColumns();
+	void CheckColumn(char* Base, char* Column, char* Table, char* AddQuery, ...);
 
 	int GetRow();
 	int GetCol();

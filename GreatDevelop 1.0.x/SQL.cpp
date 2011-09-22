@@ -40,8 +40,9 @@ void CSQLEx::Load()
 #endif
 		::ExitProcess(0);
 	} 
+	CheckColumns();
 }
-/*
+
 void CSQLEx::CheckColumns()
 {								   	
 	struct Temp
@@ -114,7 +115,7 @@ void CSQLEx::CheckColumn(char* Base, char* Column, char* Table, char* AddQuery, 
 	}
 }
 
-*/
+
 bool CSQLEx::Connect()
 {
     if(this->m_bConnected == 1)
