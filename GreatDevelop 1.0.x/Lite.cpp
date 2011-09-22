@@ -169,8 +169,7 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		MoveReq.MoveReqLoad();
 		Config.LoadNews();
 		#ifdef _GS
-		
-			ReadMonsterAdd();
+		ReadMonsterAdd();
 			if(Config.Duel.Enabled)
 			{
 				g_DuelSystem.DuelCreateThread();
@@ -206,8 +205,9 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 			Utilits.HookThis((DWORD)&MygEventMonsterItemDrop, 0x004029F0);
 			Utilits.HookThis((DWORD)&GOBJGetIndex,0x00405114);	
 			Utilits.HookThis((DWORD)&gObjLevelUpPointAddEx,0x004075B3);
-			Utilits.HookThis((DWORD)&gObjPlayerKiller, 0x0040655F); 
-			Utilits.HookThis((DWORD)&gObjAttack, 0x00403CA6); 
+			Utilits.HookThis((DWORD)&gObjPlayerKiller, 0x00406C8A);
+			Utilits.HookThis((DWORD)&gObjAttack, 0x00403E72);
+
 		#endif
 
 		DWORD ThreadID;

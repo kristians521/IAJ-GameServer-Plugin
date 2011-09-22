@@ -113,42 +113,39 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 	OBJECTSTRUCT *mObj = (OBJECTSTRUCT*) OBJECT_POINTER (mIndex);
 	OBJECTSTRUCT *pObj = (OBJECTSTRUCT*) OBJECT_POINTER (aIndex);
 
-	//ZenFixes
-	if(Config.Zen.Enabled)
-	{
-		int NewMoney = Utilits.gObjZenSingle(pObj,mObj,500,700);
-		if(pObj->ChangeUP2)mObj->Money = (NewMoney/1000) * Config.Zen.MasterZen; 
-		else mObj->Money = (NewMoney/1000) * Config.Zen.NormalZen;
-	}
-	//PartyZenFixes
-	if(Config.PartyZen.Enabled)
-	{
-		if(pObj->PartyNumber != -1)
-		{
-			int AllPartyLevel = 0;
-			int Count = 0;
+	
+	int NewMoney = Utilits.gObjZenSingle(pObj,mObj,500,700);
+	mObj->Money = (NewMoney/1000) * Config.Zen.NormalZen; 
 
+	if(pObj->PartyNumber != -1)
+	{
+			//int AllPartyLevel = 0;
+			int Count = 0;
 			for(int i=OBJECT_MIN;i<OBJECT_MAX;i++)
 			{
-				OBJECTSTRUCT *gObj = (OBJECTSTRUCT*) OBJECT_POINTER (i);
-
-				if(gObj->Connected == PLAYER_PLAYING)
-				{
-					if(gObj->PartyNumber == pObj->PartyNumber)
-					{
-						AllPartyLevel += gObj->Level;
-						Count++;
-					}
-				}
+				OBJECTSTRUCT *gObj = (OBJECTSTRUCT*) OBJECT_POINTER (i); 
+				if(gObj->Connected == PLAYER_PLAYING && gObj->PartyNumber == pObj->PartyNumber)Count++;  
 			} 
-			//Master Party
-			if(pObj->ChangeUP2)
-				mObj->Money = (mObj->Money * Config.PartyZen.MasterZen)*((AllPartyLevel/Count)/(1000)); 
-			//Normal
-			else  
-				mObj->Money = (mObj->Money * Config.PartyZen.NormalZen)*((AllPartyLevel/Count)/1000);
-		}
+			switch(Count)
+			{
+				case 1: // 2 чела в пати
+					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 20);
+				break;
+
+				case 2: // 3 чела в пати
+					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 25);
+				break;
+
+				case 3: // 4 чела в пати
+					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 35);
+				break;
+
+				case 4: // 5 чела в пати
+					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 40);
+				break;
+			}
 	}
+	
 	//MapSystem Module Zen
 	if(MapSystem.Enabled && MapSystem.Maps[pObj->MapNumber].Zen != 0)
 	{

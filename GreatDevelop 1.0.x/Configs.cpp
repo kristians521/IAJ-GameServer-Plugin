@@ -43,20 +43,9 @@ void cConfigs::LoadNews()
 
 void cConfigs::ZenFixes()
 {
-	Zen.Enabled						= GetInt(0, 1,					1,		"ZenSettings",	"NewFormulaEnabled",			GreatDevelopCommon);
-	if(!Zen.Enabled)return;
-	Zen.MasterZen					= GetInt(0, 65535,				20,		"ZenSettings",	"AddZen_ML",			GreatDevelopCommon);
-	Zen.NormalZen					= GetInt(0, 65535,				20,		"ZenSettings",	"AddZen_Normal",		GreatDevelopCommon);
+	Zen.NormalZen					= GetInt(0, 65535,				20,		"ZenSettings",	"ZenDrop",			GreatDevelopCommon);
+	Zen.ZenInParty					= GetInt(0, 65535,				20,		"ZenSettings",	"ZenPartyDrop",		GreatDevelopCommon);
 }
-
-void cConfigs::PartyZenFixes()
-{
-	PartyZen.Enabled					= GetInt(0, 1,					1,		"PartyZenSettings",	"NewFormulaEnabled",	GreatDevelopCommon);
-	if(!PartyZen.Enabled)return;
-	PartyZen.MasterZen					= GetInt(0, 65535,				20,		"PartyZenSettings",	"AddZen_ML",			GreatDevelopCommon);
-	PartyZen.NormalZen					= GetInt(0, 65535,				20,		"PartyZenSettings",	"AddZen_Normal",		GreatDevelopCommon);
-}
-
 void cConfigs::LoadPets()
 {		  																									   
 	Panda.PetPandaDefense				= GetInt(0, 1000,			10,		"Panda",		"PetPandaDefense",				GreatDevelopPets);
