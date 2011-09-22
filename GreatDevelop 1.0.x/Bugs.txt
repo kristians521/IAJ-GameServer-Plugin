@@ -21,6 +21,8 @@
 - Warehouse BUG (скорее всего в базе данных)
 - ѕроверить все запросы на правильность и главное на –јЅќ“ќ—ѕќ—ќЅЌќ—“№ !!!
 
+- √ћ „ат команды через приватный чат
+
 - выкидывает с сервера изза использовани€ €кобы неведомого скилла
   Log:
 	14:05:21 [SKILL DISTANCE CHECK] [PsychoGod][Fantomas] Invalid Skill attacker(81, 43), defender(80, 48), skillnum:22 skilldistance:4
