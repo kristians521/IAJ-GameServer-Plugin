@@ -226,7 +226,7 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 			g_DuelSystem.DuelSetInfo(gObj->m_Index);
 		}
 				
-	if((!g_DuelSystem.IsOnDuel(gObj->m_Index)) && gObj->MapNumber == 64)
+		if((!g_DuelSystem.IsOnDuel(gObj->m_Index)) && gObj->MapNumber == 64)
 		{
 			gObjMoveGate(gObj->m_Index, 294);
 			Log.ConsoleOutPut(1, c_Blue ,t_Duel, "[Duel System][%s][%s] Spawn on duel map after duel is not allowed", gObj->AccountID, gObj->Name);
@@ -247,10 +247,8 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 				Chat.MessageLog(1, c_Red, /*VIP System*/ t_Default, gObj, "[VIP] Left %d minutes of VIP.", AddTab[gObj->m_Index].VIP_Min);
 			} 
 		}
-#ifdef _GS_CS
 	MySQL.Execute("SELECT cspoints FROM [%s].[dbo].[MEMB_INFO] WHERE memb___id = '%s'", MySQL.szDatabase2, gObj->AccountID);	
 	gObj->m_wCashPoint = MySQL.GetInt();
-#endif
 }
 
 void cProtoFunc::RingSkin(LPOBJ gObj)

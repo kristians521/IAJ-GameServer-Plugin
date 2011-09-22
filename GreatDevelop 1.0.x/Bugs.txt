@@ -21,6 +21,8 @@
 - Warehouse BUG (скорее всего в базе данных)
 - ѕроверить все запросы на правильность и главное на –јЅќ“ќ—ѕќ—ќЅЌќ—“№ !!!
 
+- √ћ „ат команды через приватный чат
+
 - выкидывает с сервера изза использовани€ €кобы неведомого скилла
   Log:
 	14:05:21 [SKILL DISTANCE CHECK] [PsychoGod][Fantomas] Invalid Skill attacker(81, 43), defender(80, 48), skillnum:22 skilldistance:4
@@ -38,3 +40,6 @@
 - Party Zen bug
 - mob add bug, find and fix
 - добавить все новый таблицы в автодобавление, дабы небыло ошибок
+- admin ADmiN <- исправить баг при заходе на сервер
+
+- добавить конфиг дл€ symbol checking for name and guild name
