@@ -44,12 +44,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GS_CS|Win32'">
     <TargetExt>.dll</TargetExt>
-    <OutDir>C:\MuOnline\GameServerCS\</OutDir>
+    <OutDir>C:\MuServer\GameServerCS\</OutDir>
     <IntDir>$(SolutionDir)$(Configuration)\Temp\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GS|Win32'">
     <TargetExt>.dll</TargetExt>
-    <OutDir>C:\MuOnline\GameServer\</OutDir>
+    <OutDir>C:\MuServer\GameServer\</OutDir>
     <IntDir>$(SolutionDir)$(Configuration)\Temp\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='GS_CS|Win32'">
@@ -153,7 +153,6 @@
     <None Include="Configs\GreatDevelop\PkClearGuard.ini" />
     <None Include="Configs\GreatDevelop\Skills.ini" />
     <None Include="Great Develop 1.0.x ReadMe.txt" />
-    <None Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
