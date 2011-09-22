@@ -35,6 +35,9 @@ private:
 		short Exc;
 	}ItemsDrop[MAX_MONSTER_ID][MAX_ITEM_FOR_MONSTER];
 
+	int LastRandomValue;
+	int LastRandomItem;
+
 	unsigned char ArrayMaxItem[MAX_MONSTER_ID];
 };
 

@@ -97,7 +97,11 @@ bool cDropSystem::DropItem(LPOBJ mObj,LPOBJ pObj)
 
 	srand(GetTickCount());
 
-	int RandomValue = rand() % 1000 + 1;
+	int RandomValue = rand() % 10000 + 1;
+	if(LastRandomValue == RandomValue)
+		return false;
+	else
+		LastRandomValue = RandomValue;
 
 	short RateArrayItem[MAX_ITEM_FOR_MONSTER];
 	short CountRateItem = 0;
@@ -114,6 +118,10 @@ bool cDropSystem::DropItem(LPOBJ mObj,LPOBJ pObj)
 	if(CountRateItem == 0) return false;
 
 	int RandomItem = rand() % CountRateItem;	
+	if(LastRandomItem == RandomItem)
+		return false;
+	else
+		LastRandomItem = RandomItem;
 
 	int Level,Skill,Luck,Opt,Exc,Group,Index;
 
