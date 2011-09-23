@@ -111,13 +111,13 @@ WZAG_API int AGRequestData(int NoneUse,int GetType)
 	CHAR ItemSetType[256];	
 
 	char GameServerIni[] = GreatDevelopGS;
-	GetPrivateProfileString("Data","Item","..\\data\\lang\\Jpn\\item(Jpn).txt",Item,256,GameServerIni);
-	GetPrivateProfileString("Data","Skill","..\\data\\lang\\Jpn\\skill(Jpn).txt",Skill,256,GameServerIni);
-	GetPrivateProfileString("Data","Quest","..\\data\\lang\\Jpn\\quest(Jpn).txt",Quest,256,GameServerIni);
-	GetPrivateProfileString("Data","MoveReq","..\\data\\lang\\Jpn\\movereq(Jpn).txt",MoveReq,256,GameServerIni);
-	GetPrivateProfileString("Data","ItemSetOption","..\\data\\lang\\Jpn\\itemsetoption(Jpn).txt",ItemSetOption,256,GameServerIni);
-	GetPrivateProfileString("Data","ItemSetType","..\\data\\lang\\Jpn\\itemsettype(Jpn).txt",ItemSetType,256,GameServerIni);
-	GetPrivateProfileString("Data","CheckSum","..\\data\\lang\\Jpn\\CheckSum.dat",CheckSum,256,GameServerIni);
+	GetPrivateProfileString("Data","Item","..\\data\\lang\\Kor\\item(Kor).txt",Item,256,GameServerIni);
+	GetPrivateProfileString("Data","Skill","..\\data\\lang\\Kor\\skill(Kor).txt",Skill,256,GameServerIni);
+	GetPrivateProfileString("Data","Quest","..\\data\\lang\\Kor\\quest(Kor).txt",Quest,256,GameServerIni);
+	GetPrivateProfileString("Data","MoveReq","..\\data\\lang\\Kor\\movereq(Kor).txt",MoveReq,256,GameServerIni);
+	GetPrivateProfileString("Data","ItemSetOption","..\\data\\lang\\Kor\\itemsetoption(Kor).txt",ItemSetOption,256,GameServerIni);
+	GetPrivateProfileString("Data","ItemSetType","..\\data\\lang\\Kor\\itemsettype(Kor).txt",ItemSetType,256,GameServerIni);
+	GetPrivateProfileString("Data","CheckSum","..\\data\\lang\\Kor\\CheckSum.dat",CheckSum,256,GameServerIni);
 	GetPrivateProfileString("Data","Monster","..\\data\\Monster.txt",Monster,256,GameServerIni);
 	GetPrivateProfileString("Data","Gate","..\\data\\Gate.txt",Gate,256,GameServerIni);
 #ifdef _GS
@@ -151,22 +151,16 @@ WZAG_API int AGRequestData(int NoneUse,int GetType)
 	{
 		//Item
 	case 0x00:
-		filename="..\\data\\lang\\Kor\\item(Kor).txt";
-		break;
 	case 0x01:
 		filename=Item;
 		break;
 		//Skill
 	case 0x02:
-		filename="..\\data\\lang\\Kor\\skill(Kor).txt";
-		break;
 	case 0x03:
 		filename=Skill;
 		break;
 		//Quest
 	case 0x04:
-		filename="..\\data\\lang\\Kor\\quest(Kor).txt";
-		break;
 	case 0x05:
 		filename=Quest;
 		break;
@@ -230,20 +224,14 @@ WZAG_API int AGRequestData(int NoneUse,int GetType)
 		filename=Shop12;
 		break;
 	case 0x18:
-		filename="..\\data\\lang\\Kor\\movereq(kor).txt";
-		break;
 	case 0x19:
 		filename=MoveReq;
 		break;
 	case 0x1A: 
-		filename="..\\data\\lang\\Kor\\itemsetoption(Kor).txt";
-		break;
 	case 0x1B:
 		filename=ItemSetOption;
 		break;
 	case 0x1C:
-		filename="..\\data\\lang\\Kor\\itemsettype(Kor).txt";
-		break;
 	case 0x1D:
 		filename=ItemSetType;
 		break;

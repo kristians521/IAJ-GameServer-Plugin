@@ -63,6 +63,9 @@ private:
 	bool AddCommands(LPOBJ gObj, char *Msg, int Type); 	   
 	bool AddMobCommand(LPOBJ gObj, char *Msg);
 	bool SetDropCommand(LPOBJ gObj, char *Msg);	
+	bool CheckVIPCommand(LPOBJ gObj, char *Msg);	
+	bool BuyVIPCommand(LPOBJ gObj, char *Msg);	
+	bool GuildPost(LPOBJ gObj, char *Msg);
 };
 
 extern cChat Chat;

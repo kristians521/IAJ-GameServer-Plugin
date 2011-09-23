@@ -117,32 +117,30 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 	mObj->Money = (NewMoney/1000) * Config.Zen.NormalZen; 
 
 	if(pObj->PartyNumber != -1)
-	{
-			//int AllPartyLevel = 0;
+	{    
 			int Count = 0;
-			//for(int i=OBJECT_MIN;i<OBJECT_MAX;i++)
-			//{
-			//	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*) OBJECT_POINTER (i); 
-			//	if(gObj->Connected == PLAYER_PLAYING && gObj->PartyNumber == pObj->PartyNumber)Count++;  
-			//} 
-			Count = GetPartyMemberCount(pObj); // TODO: найти оффсет для ГС_КС
-												// Проверить функцию и исправить баги (если будут), скорее всего 2 чела в пати = 2 под case
-
-			switch(Count)
+			for(int i=OBJECT_MIN;i<OBJECT_MAX;i++)
 			{
-				case 1: // 2 чела в пати
+				OBJECTSTRUCT *gObj = (OBJECTSTRUCT*) OBJECT_POINTER (i); 
+				if(gObj->Connected == PLAYER_PLAYING && gObj->PartyNumber == pObj->PartyNumber)Count++;  
+			} 
+			//Count = GetPartyMemberCount(pObj); //To Psycho: Ты нашел не ту функцию, я нашел правильную все равно крошит. Пока будем юзать старый фикс.
+			
+			switch(Count)
+			{ 
+				case 1: // 2 Persons in Party
 					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 20);
 				break;
 
-				case 2: // 3 чела в пати
+				case 2: // 3 Persons in Party
 					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 25);
 				break;
 
-				case 3: // 4 чела в пати
+				case 3: // 4 Persons in Party
 					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 35);
 				break;
 
-				case 4: // 5 чела в пати
+				case 4: // 5 Persons in Party
 					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 40);
 				break;
 			}

@@ -793,6 +793,7 @@ typedef	struct sAddTab
 	//VIP System
 	int		VIP_Type;
 	int		VIP_Min;
+	int		VIP_Sec; 
 
 	//Duel System
 	BYTE	DUEL_Room;

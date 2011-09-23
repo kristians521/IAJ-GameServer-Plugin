@@ -23,10 +23,11 @@ public:
 	bool CharacterCreate(PMSG_CHARCREATE* lpMsg, int aIndex);
 	bool GuildMasterInfoSave(int aIndex,PMSG_GUILDINFOSAVE* lpMsg);
 	bool CGPartyRequestRecv(PMSG_PARTYREQUEST * lpMsg, int aIndex);
+	void LahapDupeBug(LPOBJ gObj);
 private:			
 	void LoginMsg(LPOBJ gObj);
 	void RingSkin(LPOBJ gObj);
-	void PkClear(LPOBJ gObj, LPOBJ NpcObj);
+	void PkClear(LPOBJ gObj, LPOBJ NpcObj); 
 };
 extern cProtoFunc Protocol;
 #endif

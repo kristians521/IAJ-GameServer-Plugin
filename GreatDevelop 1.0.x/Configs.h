@@ -20,7 +20,7 @@
 #define ShopExcellentMod_Exit2						0x0055BC0A
 #define MonsterCount 0x7D95B94
 #define MonsterReads 0x7D800B6
-#define GetPartyMemberCount ((int(*)(LPOBJ lpObj))0x004D8110)
+#define GetPartyMemberCount ((int(*)(LPOBJ lpObj))0x004D8110) //GS
 #define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD))0x00439260)
 #define GSCheckInventoryEmptySpace ((int(*) (LPOBJ lpObj, int iItemHeight, int iItemWidth)) 0x0051C770 ) 
 #define GSItemGetSize		((void(*) (int index, int & width, int & height)) 0x00558AE0 )
@@ -67,10 +67,9 @@
 #define CGLevelUpPointAdd ((int(*)(BYTE * Arg1,DWORD PlayerID)) 0x004073DD)
 #define GCLevelUpMsgSend ((void(*)(int, unsigned char)) 0x0043BDC0)
 #define gObjLevelUpPointAdd ((bool(*)(BYTE type, OBJECTSTRUCT* lpObj)) 0x0050D990) 	 
-//
 #define GCgObjAttack ((int(*)(LPOBJ lpObj, LPOBJ lpTargetObj, class CMagicInf* lpMagic, int magicsend, unsigned char MSBFlag, int AttackDamage, BOOL bCombo)) 0x005165A0)
 #define GCgObjPlayerKiller ((void(*)(LPOBJ lpObj, LPOBJ lpTargetObj))	0x0050EF80)
-//
+#define GDGuildNoticeSave ((void(*)(char* Name, char* MSG)) 0x0046DBA0)
 #endif
 
 #ifdef _GS_CS
@@ -85,6 +84,7 @@
 #define gObjGameClose ((BOOL(*)(int)) 0x0051B3E0)  	
 #define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD))0x0043C2A0);
 #define gObjMoveGate ((int(*)(int aIndex, int Gate)) 0x00545170) //duel
+#define GetPartyMemberCount ((int(*)(LPOBJ lpObj))0x004E94A0) //GSCS
 #define gObjTeleport ((void(*) (int,unsigned char,unsigned char,unsigned char)) 0x0040341D)
 #define CloseClient ((void(*)(DWORD))0x0040822E)	
 #define DataRecv ((void(*) (BYTE,PBYTE,DWORD,DWORD,...)) 0x00439900)
@@ -116,6 +116,7 @@
 #define GSCheckInventoryEmptySpace ((int(*) (LPOBJ lpObj, int iItemHeight, int iItemWidth)) 0x0052EE50 )
 #define GCgObjAttack ((int(*)(LPOBJ lpObj, LPOBJ lpTargetObj, class CMagicInf* lpMagic, int magicsend, unsigned char MSBFlag, int AttackDamage, BOOL bCombo)) 0x00528790)
 #define GCgObjPlayerKiller ((void(*)(LPOBJ lpObj, LPOBJ lpTargetObj))	0x00521040)
+#define GDGuildNoticeSave ((void(*)(char* Name, char* MSG)) 0x00473860)		
 #endif
 
 
@@ -872,6 +873,8 @@ public:
 	int GuildLevel;
 	int IsPartyGap;
 	int PartyGapLvl;
+	int LahapDupe;
+	int Unicode32;
 	struct sPanda
 	{
 		int PetPandaDefense;

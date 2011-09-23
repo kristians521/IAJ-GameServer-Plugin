@@ -532,6 +532,8 @@ void cConfigs::Misc()
 	IsPartyGap				= GetInt(0, 1, 1,"PartyGap", "IsPartyGap", GreatDevelopCommon);	
 	PartyGapLvl				= GetInt(0, 400, 120,"PartyGap", "PartyGapLvl", GreatDevelopCommon);
 	GuildRes				= GetInt(0, 32767, 5,"GuildMaster", "GuildCreateReset", GreatDevelopCommon);
+	Unicode32				= GetInt(0, 1, 0,"CharacterGuild", "AllowUnicode32", GreatDevelopCommon);
+	LahapDupe				= GetInt(0, 1, 1,"Lahap", "DupeBugFix", GreatDevelopCommon);
 	GuildLevel				= GetInt(0, 400, 320,"GameServerInfo", "GuildCreateLevel", "..\\Data\\CommonServer.cfg"); 
 	// 
 }

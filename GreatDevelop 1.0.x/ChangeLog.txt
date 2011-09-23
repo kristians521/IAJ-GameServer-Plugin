@@ -8,6 +8,8 @@ Great Develop 1.0.2
 	[GS] Event.ini Fully Fixed
 	[GS\GSCS] Drop System MobId (-1 config added)
 	[GS\GSCS] Drop System Map (-1 config added)
+	[GS\GSCS] Drop System randomizer increased 1/10000
+	[GS\GSCS] Teleporn for 2nd warn FIXED
 	[GS\GSCS] Zen Drop FIXED
 	[GS\GSCS] SetZen DELETED (use SetChar) 
 	[GS] MobAdd Command 
@@ -19,7 +21,10 @@ Great Develop 1.0.2
 	[GS\GSCS] MapSystem
 	[GS\GSCS] Symbols check in Name/GuildName when creating Name/GuildName
 	[GS\GSCS] Me_MuOnline support
-
+	[GS\GSCS] WzAG Core Updated
+	[GS\GSCS] InGame VIP System ADDDED
+	[GS\GSCS] Lahap DupeBug FIXED
+	[GS\GSCS] Guild Post for Assistance ADDED
 Great Develop 1.0.1
 
 	[Configs] All configs updated

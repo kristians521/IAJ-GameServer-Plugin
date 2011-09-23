@@ -133,7 +133,13 @@ bool cChat::ChatDataSend(LPOBJ gObj,LPBYTE aRecv)
 	if (!memcmp(&aRecv[13],"/setdrop",strlen("/setdrop")))
 			bResult = SetDropCommand(gObj,(char*)aRecv+13+strlen("/setdrop"));	 
 	if (!memcmp(&aRecv[13],"/check",strlen("/check")))
-			bResult = CheckDropCommand(gObj,(char*)aRecv+13+strlen("/check"));	 
+			bResult = CheckDropCommand(gObj,(char*)aRecv+13+strlen("/check"));	
+	if (!memcmp(&aRecv[13],"/buyvip",strlen("/buyvip")))
+			bResult = BuyVIPCommand(gObj,(char*)aRecv+13+strlen("/buyvip"));	 
+	if (!memcmp(&aRecv[13],"/checkvip",strlen("/checkvip")))
+			bResult = CheckVIPCommand(gObj,(char*)aRecv+13+strlen("/checkvip"));	 
+	if (!memcmp(&aRecv[13],"@>",strlen("@>")))
+			bResult = GuildPost(gObj,(char*)aRecv+13+strlen("@>"));	 
 	MassLog(gObj, aRecv);
 
 	return bResult;												
@@ -1541,8 +1547,81 @@ bool cChat::SetDropCommand(LPOBJ gObj, char *Msg)
 	} 
 	return true;
 }
+
 bool cChat::CheckDropCommand(LPOBJ gObj, char *Msg)
 {
 	MessageLog(1, c_Red, t_GM, gObj, "[Check] PCPoints: %d, WCoins %d ", AddTab[gObj->m_Index].PC_PlayerPoints, gObj->m_wCashPoint);
 		return true;
+}
+
+bool cChat::CheckVIPCommand(LPOBJ gObj, char *Msg)
+{
+	if(CheckCommand(gObj, Config.VIP.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "CheckVip", "/checkvip", Msg))
+	return true;
+
+	if(AddTab[gObj->m_Index].VIP_Type > 0)
+	MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] You have %d min(s) left.",AddTab[gObj->m_Index].VIP_Sec * 60);
+	else
+	MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] You haven't bought VIP yet.");
+	return true;
+} 
+
+bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
+{
+	DWORD Hours = 1;
+	char State[255];
+	sscanf(Msg, "%s %d", &State, &Hours);
+
+	if(AddTab[gObj->m_Index].VIP_Type > 0 || AddTab[gObj->m_Index].VIP_Min > 0)
+	{
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[BuyVIP] You have already bought VIP.");		
+		return true;
+	}
+
+	int RealState = -1;
+	for(int i = 1; i<= Config.VIP.NumStates; i++)
+	{
+		if(!_strcmpi(State, Config.VIP.VIPState[i].VIPName))
+		{
+			RealState = i;
+			break;
+		}
+	}
+
+	if(RealState == -1)
+	{			 
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] There are no such vip status.");
+		return true;
+	}
+	if(!Config.VIP.VIPState[RealState].EnabledCmd)
+	{			 
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] You can't buy %s vip status.", Config.VIP.VIPState[RealState].VIPName);
+		return true;
+	}
+
+	if(CheckCommand(gObj, Config.VIP.VIPState[RealState].EnabledCmd, GmSystem.NONE, Config.VIP.VIPState[RealState].CostZen * Hours, 
+		Config.VIP.VIPState[RealState].CostPCPoints * Hours, Config.VIP.VIPState[RealState].CostWCoins * Hours, 0, 2, 0, "BuyVIP", "/buyvip <state> <hours>", Msg))
+		return true;
+
+	TakeCommand(gObj, Config.VIP.VIPState[RealState].CostZen * Hours, Config.VIP.VIPState[RealState].CostPCPoints * Hours, 
+			Config.VIP.VIPState[RealState].CostWCoins * Hours, "BuyVIP");
+
+	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET %s=%s + %d WHERE Name='%s'",MySQL.szDatabase,Config.VIP.ColumnDate,Config.VIP.ColumnDate, Hours*60, gObj->Name);	
+	MySQL.Execute("UPDATE [%s].[dbo].[Character] SET %s = %d WHERE Name='%s'",MySQL.szDatabase,Config.VIP.Column, RealState, gObj->Name);	
+	AddTab[gObj->m_Index].VIP_Min += Hours*60;
+	AddTab[gObj->m_Index].VIP_Type = RealState;
+
+	MessageLog(1, c_Red, t_COMMANDS, gObj, "[BuyVIP] Successfully bought %s for %d Hour(s)", Config.VIP.VIPState[RealState].VIPName, Hours);
+	MessageLog(1, c_Red, t_COMMANDS, gObj, "[BuyVIP] Your VIP status starts right now!");
+	return true;
+} 
+
+bool cChat::GuildPost(LPOBJ gObj, char *Msg)
+{ 
+	//GuildStatus= GuildMaster 128, GuildMember 0, GuildAsistant 64, GuildBattleMaster 32.
+	if(gObj->GuildStatus == 128 || gObj ->GuildStatus == 64)
+		GDGuildNoticeSave(gObj->GuildName, Msg);
+	else
+		MessageLog(1, c_Red, t_Default, gObj,"You aren't guild master or assistant");	
+	return true;
 }

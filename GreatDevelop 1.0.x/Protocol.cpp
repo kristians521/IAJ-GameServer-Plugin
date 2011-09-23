@@ -58,23 +58,27 @@ BOOL gObjAttack(LPOBJ lpObj, LPOBJ lpTargetObj, class CMagicInf* lpMagic, int ma
 bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD Encrypt, int Serial)
 {
 	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);
-	if(protoNum == 0xF3)
-	{	 													   
-		PMSG_DEFAULT2 * lpDef = (PMSG_DEFAULT2 *)aRecv;
-		switch ( lpDef->subcode )
-		{
-		case 0x01:
-			{		  
-				//# This fix disables JPN, CHNS user names and special chars
-				if(Protocol.CharacterCreate((PMSG_CHARCREATE *)aRecv, aIndex))
-				{
-					JGCharacterCreateFailSend(aIndex, gObj->Name);
-					return true;
+
+	if(!Config.Unicode32)
+	{
+		if(protoNum == 0xF3)
+		{	 													   
+			PMSG_DEFAULT2 * lpDef = (PMSG_DEFAULT2 *)aRecv;
+			switch ( lpDef->subcode )
+			{
+			case 0x01:
+				{		  
+					//# This fix disables JPN, CHNS user names and special chars
+					//# todo Config for FIX
+					if(Protocol.CharacterCreate((PMSG_CHARCREATE *)aRecv, aIndex))
+					{
+						JGCharacterCreateFailSend(aIndex, gObj->Name);
+						return true;
+					}
 				}
 			}
 		}
 	}
-
 	switch(BYTE(protoNum))
 	{
 		case 0x00: // Player Connected Protocol
@@ -118,7 +122,15 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 			}
 		}
 		break;
-
+		if(Config.LahapDupe)
+		{
+			case 0xBC: // Lahap Dupe BUG FIX
+			{
+				//#todo Config for FIX
+				Protocol.LahapDupeBug(gObj);
+			}
+			break;
+		}
 		case 0x30: // Click NPC Protocol	  
 		{
 			bool bResult = Protocol.NPCTalkEx(gObj, (aRecv[4] + aRecv[3] * 256));
@@ -241,7 +253,7 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 
 			MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name='%s'",Config.VIP.ColumnDate,MySQL.szDatabase,gObj->Name);
 			AddTab[gObj->m_Index].VIP_Min = MySQL.GetInt();
-
+			AddTab[gObj->m_Index].VIP_Sec = 0; // Обнуление секунд при входе
 			if(AddTab[gObj->m_Index].VIP_Min > 0)
 			{											 
 				Chat.MessageLog(1, c_Red, /*VIP System*/ t_Default, gObj, "[VIP] Left %d minutes of VIP.", AddTab[gObj->m_Index].VIP_Min);
@@ -302,6 +314,23 @@ bool cProtoFunc::CGPartyRequestRecv(PMSG_PARTYREQUEST * lpMsg, int aIndex)
 		return true;
 	}	   
 	return false;
+}
+
+void cProtoFunc::LahapDupeBug(LPOBJ gObj)
+{
+	int Error = 0; 
+	for(int i = OBJECT_MIN; i<OBJECT_MAX; i++) 
+	{ 
+		OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(i); 
+
+        if((gObj->TargetNumber == i) && (gObj->pTransaction==1))
+		{
+            Error = 1;
+			Chat.MessageLog(1, c_Red, t_Default, gObj, "[AntiHack][%s] Lahap Trade-Dupe Attempt, Trade: %s[%d], Action: %d",gObj->Name,gObj[i].Name,gObj->TargetNumber,gObj->pTransaction);
+		}
+        
+		if(Error == 1) break; 
+    } 
 }
 
 void cProtoFunc::LoginMsg(LPOBJ gObj)
