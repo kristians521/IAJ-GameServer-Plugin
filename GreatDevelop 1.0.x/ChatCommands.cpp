@@ -1562,7 +1562,7 @@ bool cChat::CheckVIPCommand(LPOBJ gObj, char *Msg)
 	return true;
 
 	if(AddTab[gObj->m_Index].VIP_Type > 0)
-	MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] You have %d min(s) left.",AddTab[gObj->m_Index].VIP_Min * 60);
+	MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] You have %d min(s) left.",AddTab[gObj->m_Index].VIP_Min);
 	else
 	MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] You haven't bought VIP yet.");
 	return true;
