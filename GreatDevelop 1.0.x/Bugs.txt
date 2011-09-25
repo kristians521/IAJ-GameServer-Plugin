@@ -22,3 +22,4 @@
 - mob add bug, find and fix
 - добавить все новый таблицы в автодобавление, дабы небыло ошибок
 - admin ADmiN <- исправить баг при заходе на сервер
+- make something like /viplist , so players know the available vip states for sale
