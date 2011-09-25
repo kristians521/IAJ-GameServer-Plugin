@@ -151,7 +151,7 @@ bool CSQLEx::Connect()
 	SQLCHAR szConStrIn[1024],szConStrOut[1024];
     SQLSMALLINT iConOutSize = 0;
 
-	sprintf((char*)szConStrIn,"DRIVER=%s; SERVER=%s; UID=%s; PWD=%s; DATABASE=%s;",szDriver,szServer2,szUser,szPassword,szDatabase);
+	sprintf((char*)szConStrIn,"DRIVER=%s; SERVER=%s; UID=%s; PWD=%s;",szDriver,szServer2,szUser,szPassword);
 
     SQLRETURN Connect = SQLDriverConnect(this->m_SQLConnection,NULL,szConStrIn,SQL_NTS,szConStrOut,sizeof(szConStrOut),&iConOutSize,SQL_DRIVER_NOPROMPT);
 
@@ -202,7 +202,7 @@ bool CSQLEx::ConnectExt()
 	SQLCHAR szConStrIn[1024],szConStrOut[1024];
     SQLSMALLINT iConOutSize = 0;
 
-	sprintf((char*)szConStrIn,"DRIVER=%s; SERVER=%s; UID=%s; PWD=%s; DATABASE=%s;",szDriver,szServer2,szUser,szPassword,szDatabase);
+	sprintf((char*)szConStrIn,"DRIVER=%s; SERVER=%s; UID=%s; PWD=%s;",szDriver,szServer2,szUser,szPassword);
 
     SQLRETURN Connect = SQLDriverConnect(this->m_SQLConnection,NULL,szConStrIn,SQL_NTS,szConStrOut,sizeof(szConStrOut),&iConOutSize,SQL_DRIVER_NOPROMPT);
 
