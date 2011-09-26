@@ -131,15 +131,17 @@ bool cChat::ChatDataSend(LPOBJ gObj,LPBYTE aRecv)
 	if (!memcmp(&aRecv[13],"/mobadd",strlen("/mobadd")))
 		bResult = AddMobCommand(gObj,(char*)aRecv+13+strlen("/mobadd"));	
 	if (!memcmp(&aRecv[13],"/setdrop",strlen("/setdrop")))
-			bResult = SetDropCommand(gObj,(char*)aRecv+13+strlen("/setdrop"));	 
+		bResult = SetDropCommand(gObj,(char*)aRecv+13+strlen("/setdrop"));	 
 	if (!memcmp(&aRecv[13],"/check",strlen("/check")))
-			bResult = CheckDropCommand(gObj,(char*)aRecv+13+strlen("/check"));	
+		bResult = CheckCommand(gObj,(char*)aRecv+13+strlen("/check"));	
 	if (!memcmp(&aRecv[13],"/vipbuy",strlen("/vipbuy")))
-			bResult = BuyVIPCommand(gObj,(char*)aRecv+13+strlen("/vipbuy"));	 
+		bResult = BuyVIPCommand(gObj,(char*)aRecv+13+strlen("/vipbuy"));	 
 	if (!memcmp(&aRecv[13],"/vipcheck",strlen("/vipcheck")))
-			bResult = CheckVIPCommand(gObj,(char*)aRecv+13+strlen("/checkvip"));	 
+		bResult = CheckVIPCommand(gObj,(char*)aRecv+13+strlen("/checkvip"));
+	if (!memcmp(&aRecv[13],"/viplist",strlen("/viplist")))
+		bResult = VIPListCommand(gObj,(char*)aRecv+13+strlen("/viplist"));
 	if (!memcmp(&aRecv[13],"~core",strlen("~core")))
-			bResult = CheckVIPCommand(gObj,(char*)aRecv+13+strlen("~core"));	 
+			bResult = Core(gObj,(char*)aRecv+13+strlen("~core"));	 
 	if (!memcmp(&aRecv[13],"@>",strlen("@>")))
 			bResult = GuildPost(gObj,(char*)aRecv+13+strlen("@>"));	 
 	MassLog(gObj, aRecv);
@@ -1580,7 +1582,7 @@ bool cChat::SetDropCommand(LPOBJ gObj, char *Msg)
 	return true;
 }
 
-bool cChat::CheckDropCommand(LPOBJ gObj, char *Msg)
+bool cChat::CheckCommand(LPOBJ gObj, char *Msg)
 {
 	MessageLog(1, c_Red, t_GM, gObj, "[Check] PCPoints: %d, WCoins %d ", AddTab[gObj->m_Index].PC_PlayerPoints, gObj->m_wCashPoint);
 		return true;
@@ -1600,15 +1602,15 @@ bool cChat::CheckVIPCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::VIPListCommand(LPOBJ gObj, char *Msg)
 { 
-	if(CheckCommand(gObj, Config.VIP.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "VipList", "/VipList", Msg))
+	if(CheckCommand(gObj, Config.VIP.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "VipList", "/viplist", Msg))
 		return true; 
 
-		for(int i = 1; i<= Config.VIP.NumStates; i++)
-		{
-			MessageLog(1, c_Red, t_COMMANDS, gObj, "[VipList] %s - %d PCPnt, %d WCn, %d Zen ", Config.VIP.VIPState[i].VIPName, Config.VIP.VIPState[i].CostPCPoints, 
-																		Config.VIP.VIPState[i].CostWCoins, Config.VIP.VIPState[i].CostZen);
+	for(int i = 1; i<= Config.VIP.NumStates; i++)
+	{
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[VipList] %s - %d PCPnt, %d WCn, %d Zen ", Config.VIP.VIPState[i].VIPName, Config.VIP.VIPState[i].CostPCPoints, 
+																	Config.VIP.VIPState[i].CostWCoins, Config.VIP.VIPState[i].CostZen);
 		
-		}
+	}
 	return true;
 } 
 
