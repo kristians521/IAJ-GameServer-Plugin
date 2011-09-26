@@ -9,12 +9,12 @@
 #include "GMSystem.h"
 #include "AntiAFK.h"
 #include "News.h"
-#include "SQL.h"
 #include "DropSystem.h"
 #include "Archer.h"
 #include "PCPoint.h"
 #include "MossGambler.h" 
 #include "MapSystem.h"
+#include "Query.h"
 cConfigs Config;	  
 
 cConfigs::cConfigs()
@@ -410,7 +410,10 @@ void cConfigs::VIPSystem()
 
 	GetPrivateProfileString("VipSystem","VIPColumn","VIP",VIP.Column,sizeof(VIP.Column), GreatDevelopVIP);
 	GetPrivateProfileString("VipSystem","VIPColumnDate","VIP_DATE",VIP.ColumnDate,sizeof(VIP.ColumnDate), GreatDevelopVIP);	 				 
-							 	
+
+	MuOnlineQuery.CheckColumn(VIP.Column, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", VIP.Column);
+	MuOnlineQuery.CheckColumn(VIP.ColumnDate, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", VIP.ColumnDate);
+
 	VIP.NumStates = Config.GetInt(0, 10, 3, "VipSystem", "NumStates", GreatDevelopVIP);	
 		
 	char PState[10]; 
@@ -529,6 +532,8 @@ void cConfigs::Misc()
 {
 	//
 	GetPrivateProfileString("Reset","ResetColumn","Resets", Config.ResetColumn, sizeof(Config.ResetColumn), GreatDevelopCommon); 
+	MuOnlineQuery.CheckColumn(Config.ResetColumn, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", Config.ResetColumn);
+
 	IsPartyGap				= GetInt(0, 1, 1,"PartyGap", "IsPartyGap", GreatDevelopCommon);	
 	PartyGapLvl				= GetInt(0, 400, 120,"PartyGap", "PartyGapLvl", GreatDevelopCommon);
 	GuildRes				= GetInt(0, 32767, 5,"GuildMaster", "GuildCreateReset", GreatDevelopCommon);

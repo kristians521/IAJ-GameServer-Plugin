@@ -15,10 +15,10 @@
 #include "DuelManager.h" 
 #include "MoveReq.h"
 #include "PCPoint.h"
-#include "SQL.h"
 #include "ChatCommands.h"
 #include "MossGambler.h"	 
-#include "Monster.h"   
+#include "Monster.h"  
+#include "Query.h"
 struct sIps
 {
 	char Ip[16];
@@ -52,13 +52,15 @@ DWORD MainTick()
 			{
 				AddTab[Index].ON_Sek = 0;
 				AddTab[Index].ON_Min++;
-				PCPoint.UpdatePoints(gObj,0,PLUS,PCPOINT);
+				//PCPoint.UpdatePoints(gObj,0,PLUS,PCPOINT);
 			}
 			if(AddTab[Index].ON_Min >= 60)
 			{
 				AddTab[Index].ON_Min = 0;
 				AddTab[Index].ON_Hour++;
-				MySQL.Execute("UPDATE [%s].[dbo].[MEMB_STAT] SET OnlineHours = OnlineHours + 1 WHERE memb___id = '%s'", MySQL.szDatabase2, gObj->AccountID);
+				Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_STAT SET OnlineHours = OnlineHours + 1 WHERE memb___id = '%s'", gObj->AccountID);
+					Me_MuOnlineQuery.Fetch();
+					Me_MuOnlineQuery.Close();
 			}
 			/*Add PCPoints for Online System*/
 			if (PCPoint.sPoints.Enabled && PCPoint.sPoints.AddPCPointsSec > 0)
@@ -89,14 +91,21 @@ DWORD MainTick()
 					AddTab[gObj->m_Index].VIP_Min--;
 					AddTab[gObj->m_Index].VIP_Sec = 0;
 				}
-				MySQL.Execute("UPDATE [%s].[dbo].[Character] SET %s=%d WHERE Name='%s'",MySQL.szDatabase,Config.VIP.ColumnDate, AddTab[gObj->m_Index].VIP_Min, gObj->Name);
+
 				if(AddTab[gObj->m_Index].VIP_Min <= 0)
 				{
 					Chat.MessageLog(1, c_Red, /*VIP System*/ t_Default, gObj, "[VIP] Your vip time is over! You are normal player again."); 
 					AddTab[gObj->m_Index].VIP_Type = 0;
 					AddTab[gObj->m_Index].VIP_Min = 0;
-					MySQL.Execute("UPDATE [%s].[dbo].[Character] SET %s=0 WHERE Name='%s'",MySQL.szDatabase,Config.VIP.Column, gObj->Name); 
-					MySQL.Execute("UPDATE [%s].[dbo].[Character] SET %s=0 WHERE Name='%s'",MySQL.szDatabase,Config.VIP.ColumnDate, gObj->Name); 
+					MuOnlineQuery.ExecQuery("UPDATE Character SET %s = 0, %s = 0 WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
+						MuOnlineQuery.Fetch();
+						MuOnlineQuery.Close();
+				}
+				else
+				{
+					MuOnlineQuery.ExecQuery("UPDATE Character SET %s = %d WHERE Name = '%s'", Config.VIP.ColumnDate, AddTab[gObj->m_Index].VIP_Min, gObj->Name);
+						MuOnlineQuery.Fetch();
+						MuOnlineQuery.Close();
 				}
 			}
 		}				
@@ -178,7 +187,7 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		Log.LoggerInit();
 		Sleep(500);
 		//
-		MySQL.Load();
+		LoadQuery();
 		Maps.MapInit();
 		Config.LoadFixes();
 		Fixes.ASMFixes();

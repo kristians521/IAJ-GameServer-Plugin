@@ -29,9 +29,6 @@
     <Filter Include="Source\Chat">
       <UniqueIdentifier>{85ea56de-2a19-422d-a4a7-04086c0d4ea6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\SQL">
-      <UniqueIdentifier>{9d4becb2-a2c3-4e80-8eb6-f0aeb4fd3df3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\IPBlock">
       <UniqueIdentifier>{67a24861-3577-489b-ac1d-c07cc6f2c06e}</UniqueIdentifier>
     </Filter>
@@ -91,6 +88,9 @@
     <Filter Include="Source\MossTheGambler">
       <UniqueIdentifier>{d9bb517a-11fe-4e81-82e5-8584f8b89069}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Query">
+      <UniqueIdentifier>{55dc83ce-64b6-4d5e-a2e3-a9899d2ecea8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Configs.cpp">
@@ -122,9 +122,6 @@
     </ClCompile>
     <ClCompile Include="GMSystem.cpp">
       <Filter>Source\GMSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="SQL.cpp">
-      <Filter>Source\SQL</Filter>
     </ClCompile>
     <ClCompile Include="IpBlock.cpp">
       <Filter>Source\IPBlock</Filter>
@@ -165,6 +162,9 @@
     <ClCompile Include="MapSystem.cpp">
       <Filter>Source\MapSystem</Filter>
     </ClCompile>
+    <ClCompile Include="Query.cpp">
+      <Filter>Source\Query</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -199,9 +199,6 @@
     </ClInclude>
     <ClInclude Include="GMSystem.h">
       <Filter>Source\GMSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="SQL.h">
-      <Filter>Source\SQL</Filter>
     </ClInclude>
     <ClInclude Include="IpBlock.h">
       <Filter>Source\IPBlock</Filter>
@@ -241,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="MapSystem.h">
       <Filter>Source\MapSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Query.h">
+      <Filter>Source\Query</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

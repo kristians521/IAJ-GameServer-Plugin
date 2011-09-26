@@ -14,10 +14,10 @@
 #include "Prodef.h"
 #include "PCPoint.h"
 #include "Archer.h"
-#include "SQL.h"
 #include "MossGambler.h"
 #include "Monster.h"
 #include "MapSystem.h"
+#include "Query.h"
 
 cProtoFunc Protocol;
 
@@ -222,8 +222,16 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 	LoginMsg(gObj);
 	RingSkin(gObj);
 	PCPoint.InitPCPointForPlayer(gObj); 
-	MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name = '%s'", Config.ResetColumn, MySQL.szDatabase, gObj->Name);	 
-	AddTab[gObj->m_Index].Resets = MySQL.GetInt();
+
+	Me_MuOnlineQuery.ExecQuery("SELECT cspoints FROM MEMB_INFO WHERE memb___id = '%s'", gObj->AccountID);
+		Me_MuOnlineQuery.Fetch();
+		gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger("cspoints");
+		Me_MuOnlineQuery.Close();
+
+	MuOnlineQuery.ExecQuery("SELECT %s FROM Character WHERE Name = '%s'", Config.ResetColumn, gObj->Name);
+		MuOnlineQuery.Fetch();
+		AddTab[gObj->m_Index].Resets = MuOnlineQuery.GetAsInteger(Config.ResetColumn);
+		MuOnlineQuery.Close();
 
 	AddTab[gObj->m_Index].ON_Min			= 0;   
 	AddTab[gObj->m_Index].ON_Sek			= 0;
@@ -247,20 +255,19 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 	}
 #endif
 		if(Config.VIP.Enabled)
-		{												 
-			MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name='%s'",Config.VIP.Column,MySQL.szDatabase,gObj->Name);
-			AddTab[gObj->m_Index].VIP_Type = MySQL.GetInt();
+		{												
+			MuOnlineQuery.ExecQuery("SELECT %s, %s FROM Character WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
+				MuOnlineQuery.Fetch();
+				AddTab[gObj->m_Index].VIP_Type = MuOnlineQuery.GetAsInteger(Config.VIP.Column);
+				AddTab[gObj->m_Index].VIP_Min = MuOnlineQuery.GetAsInteger(Config.VIP.ColumnDate);
+				MuOnlineQuery.Close();
 
-			MySQL.Execute("SELECT %s FROM [%s].[dbo].[Character] WHERE Name='%s'",Config.VIP.ColumnDate,MySQL.szDatabase,gObj->Name);
-			AddTab[gObj->m_Index].VIP_Min = MySQL.GetInt();
 			AddTab[gObj->m_Index].VIP_Sec = 0; // Обнуление секунд при входе
 			if(AddTab[gObj->m_Index].VIP_Min > 0)
 			{											 
 				Chat.MessageLog(1, c_Red, /*VIP System*/ t_Default, gObj, "[VIP] Left %d minutes of VIP.", AddTab[gObj->m_Index].VIP_Min);
 			} 
 		}
-	MySQL.Execute("SELECT cspoints FROM [%s].[dbo].[MEMB_INFO] WHERE memb___id = '%s'", MySQL.szDatabase2, gObj->AccountID);	
-	gObj->m_wCashPoint = MySQL.GetInt();
 }
 
 void cProtoFunc::RingSkin(LPOBJ gObj)

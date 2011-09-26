@@ -10,7 +10,6 @@
 #include "ChatCommands.h"
 #include "Logger.h"
 #include "MapSystem.h"
-#include "SQL.h"
 #include "PCPoint.h"
 sAddTab AddTab[OBJECT_MAX]; 
 

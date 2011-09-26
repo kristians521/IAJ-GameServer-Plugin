@@ -8,7 +8,7 @@
 #include "Configs.h"
 #include <Windows.h>
 #include "ChatCommands.h"
-#include "SQL.h"
+#include "Query.h"
 
 cPCPoint PCPoint;
 
@@ -210,8 +210,11 @@ void cPCPoint::BuyItem(int Index,int Position)
 
 void cPCPoint::InitPCPointForPlayer(LPOBJ gObj)
 {
-	MySQL.Execute("SELECT PCPoint FROM [%s].[dbo].[Character] WHERE Name = '%s'", MySQL.szDatabase, gObj->Name);
-	int AmountPoints = MySQL.GetInt();
+	MuOnlineQuery.ExecQuery("SELECT PCPoint FROM Character WHERE Name = '%s'", gObj->Name);
+		MuOnlineQuery.Fetch();
+		int AmountPoints = MuOnlineQuery.GetAsInteger("PCPoint");
+		MuOnlineQuery.Close();
+
 	if (AmountPoints > sPoints.MaximumPCPoints) AmountPoints = sPoints.MaximumPCPoints;
 	AddTab[gObj->m_Index].PC_PlayerPoints = AmountPoints;
 
@@ -259,7 +262,10 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 	if (Type == PCPOINT)
 	{
 		AddTab[gObj->m_Index].PC_PlayerPoints = AmountPoints;
-		MySQL.Execute("UPDATE [%s].[dbo].[Character] SET PCPoint = %d WHERE Name = '%s'", MySQL.szDatabase, AmountPoints, gObj->Name);
+
+		MuOnlineQuery.ExecQuery("UPDATE Character SET PCPoint = %d WHERE Name = '%s'", AmountPoints, gObj->Name);
+			MuOnlineQuery.Fetch();
+			MuOnlineQuery.Close();
 
 		BYTE Packet[8] = {0xC1, 0x08 , 0xD0 , 0x04 , LOBYTE(AmountPoints), HIBYTE(AmountPoints),
 			LOBYTE(sPoints.MaximumPCPoints), HIBYTE(sPoints.MaximumPCPoints)};
@@ -268,7 +274,10 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 	if (Type == WCOIN)
 	{
 		gObj->m_wCashPoint = AmountPoints;
-		MySQL.Execute("UPDATE [%s].[dbo].[MEMB_INFO] SET cspoints = %d WHERE memb___id = '%s'", MySQL.szDatabase2, AmountPoints , gObj->AccountID);
+
+		Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_INFO SET cspoints = %d WHERE memb___id = '%s'", AmountPoints, gObj->AccountID);
+			Me_MuOnlineQuery.Fetch();
+			Me_MuOnlineQuery.Close();
 	}
 }
 

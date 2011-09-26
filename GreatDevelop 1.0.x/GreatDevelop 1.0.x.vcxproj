@@ -93,7 +93,7 @@
     <ClCompile Include="PCPoint.cpp" />
     <ClCompile Include="Prodef.cpp" />
     <ClCompile Include="Protocol.cpp" />
-    <ClCompile Include="SQL.cpp" />
+    <ClCompile Include="Query.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Utilits.cpp" />
     <ClCompile Include="WzAG.cpp" />
@@ -118,8 +118,8 @@
     <ClInclude Include="PCPoint.h" />
     <ClInclude Include="Prodef.h" />
     <ClInclude Include="Protocol.h" />
+    <ClInclude Include="Query.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SQL.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="Utilits.h" />
