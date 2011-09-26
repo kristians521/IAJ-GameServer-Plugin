@@ -137,7 +137,7 @@ bool cChat::ChatDataSend(LPOBJ gObj,LPBYTE aRecv)
 	if (!memcmp(&aRecv[13],"/vipbuy",strlen("/vipbuy")))
 		bResult = BuyVIPCommand(gObj,(char*)aRecv+13+strlen("/vipbuy"));	 
 	if (!memcmp(&aRecv[13],"/vipcheck",strlen("/vipcheck")))
-		bResult = CheckVIPCommand(gObj,(char*)aRecv+13+strlen("/checkvip"));
+		bResult = CheckVIPCommand(gObj,(char*)aRecv+13+strlen("/vipcheck"));
 	if (!memcmp(&aRecv[13],"/viplist",strlen("/viplist")))
 		bResult = VIPListCommand(gObj,(char*)aRecv+13+strlen("/viplist"));
 	if (!memcmp(&aRecv[13],"~core",strlen("~core")))
