@@ -49,7 +49,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GS|Win32'">
     <TargetExt>.dll</TargetExt>
-    <OutDir>C:\MuOnline\GameServer\</OutDir>
+    <OutDir>C:\MuServer\GameServer\</OutDir>
     <IntDir>$(SolutionDir)$(Configuration)\Temp\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='GS_CS|Win32'">
@@ -126,7 +126,7 @@
     <ClInclude Include="WzAG.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Bugs.txt" />
+    <None Include="TODO.txt" />
     <None Include="ChangeLog.txt" />
     <None Include="Configs\GameServerCS\GameServerCS.ini" />
     <None Include="Configs\GameServerCS\GMSystem.txt" />
