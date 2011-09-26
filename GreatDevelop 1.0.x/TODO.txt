@@ -18,3 +18,5 @@
 [BUG]	- Raven can repaired by hammer (in inventire and shop)					[√]
 [FEAT]	- MobAdd distance
 [FEAT]	- GM Commands throw Private chat
+[FEAT]	- Vip in MapSystem
+[FEAT]	- Vip shops (shop0.txt/VIPshop0.txt)
