@@ -134,9 +134,9 @@ bool cChat::ChatDataSend(LPOBJ gObj,LPBYTE aRecv)
 			bResult = SetDropCommand(gObj,(char*)aRecv+13+strlen("/setdrop"));	 
 	if (!memcmp(&aRecv[13],"/check",strlen("/check")))
 			bResult = CheckDropCommand(gObj,(char*)aRecv+13+strlen("/check"));	
-	if (!memcmp(&aRecv[13],"/buyvip",strlen("/buyvip")))
-			bResult = BuyVIPCommand(gObj,(char*)aRecv+13+strlen("/buyvip"));	 
-	if (!memcmp(&aRecv[13],"/checkvip",strlen("/checkvip")))
+	if (!memcmp(&aRecv[13],"/vipbuy",strlen("/vipbuy")))
+			bResult = BuyVIPCommand(gObj,(char*)aRecv+13+strlen("/vipbuy"));	 
+	if (!memcmp(&aRecv[13],"/vipcheck",strlen("/vipcheck")))
 			bResult = CheckVIPCommand(gObj,(char*)aRecv+13+strlen("/checkvip"));	 
 	if (!memcmp(&aRecv[13],"~core",strlen("~core")))
 			bResult = CheckVIPCommand(gObj,(char*)aRecv+13+strlen("~core"));	 
@@ -1595,6 +1595,20 @@ bool cChat::CheckVIPCommand(LPOBJ gObj, char *Msg)
 	MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] You have %d min(s) left.",AddTab[gObj->m_Index].VIP_Min);
 	else
 	MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] You haven't bought VIP yet.");
+	return true;
+} 
+
+bool cChat::VIPListCommand(LPOBJ gObj, char *Msg)
+{ 
+	if(CheckCommand(gObj, Config.VIP.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "VipList", "/VipList", Msg))
+		return true; 
+
+		for(int i = 1; i<= Config.VIP.NumStates; i++)
+		{
+			MessageLog(1, c_Red, t_COMMANDS, gObj, "[VipList] %s - %d PCPnt, %d WCn, %d Zen ", Config.VIP.VIPState[i].VIPName, Config.VIP.VIPState[i].CostPCPoints, 
+																		Config.VIP.VIPState[i].CostWCoins, Config.VIP.VIPState[i].CostZen);
+		
+		}
 	return true;
 } 
 

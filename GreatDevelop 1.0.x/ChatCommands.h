@@ -65,6 +65,7 @@ private:
 	bool SetDropCommand(LPOBJ gObj, char *Msg);	
 	bool CheckVIPCommand(LPOBJ gObj, char *Msg);	
 	bool BuyVIPCommand(LPOBJ gObj, char *Msg);	
+	bool VIPListCommand(LPOBJ gObj, char *Msg);	
 	bool GuildPost(LPOBJ gObj, char *Msg);
 	bool Core(LPOBJ gObj, char *Msg);
 };
