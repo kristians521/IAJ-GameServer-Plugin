@@ -15,9 +15,10 @@ public:
 	void MoveReqLoad();
 	char* GetMapName(int MapId);
 
+	int n[5];
 	struct sMoveReq
 	{
-		int Index, Zen, Level, Gate;
+		int Index, Zen, Level, Gate, VIP;
 		char MapName1[50], MapName2[50];
 	}MoveReqInfo[255];
 	int Count;

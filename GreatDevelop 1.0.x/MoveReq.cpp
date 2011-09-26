@@ -40,34 +40,11 @@ void cMoveReq::MoveReqLoad()
 	while(fgets(sLineTxt, 255, fp) != NULL)
 	{
 		if(sLineTxt[0] == '/')continue;
-		if(sLineTxt[0] == ';')continue;
+		if(sLineTxt[0] == ';')continue; 
 
-		int n[4];
 		char Name[50], Name2[50];
 
-		sscanf(sLineTxt, "%d \"%50[^\"]\" \"%50[^\"]\" %d %d %d", &n[0], &Name, &Name2, &n[1], &n[2], &n[3]);
-
-		//for(int j=0; j <= strlen(Name); j++)
-		//{
-		//	if(Name[j] == '"')
-		//	{
-		//		for(int k=j; k<=strlen(Name); k++)
-		//		{
-		//			Name[k] = Name[k+1];
-		//		}
-		//	}
-		//}
-
-		//for(int j=0; j <= strlen(Name2); j++)
-		//{
-		//	if(Name2[j] == '"')
-		//	{
-		//		for(int k=j; k<=strlen(Name2); k++)
-		//		{
-		//			Name2[k] = Name2[k+1];
-		//		}
-		//	}
-		//}
+		sscanf(sLineTxt, "%d \"%50[^\"]\" \"%50[^\"]\" %d %d %d %d", &n[0], &Name, &Name2, &n[1], &n[2], &n[3], &n[4]); 
 
 		MoveReqInfo[MoveReqCount].Index	= n[0];				 
 		strcpy(MoveReqInfo[MoveReqCount].MapName1, Name);
@@ -75,6 +52,7 @@ void cMoveReq::MoveReqLoad()
 		MoveReqInfo[MoveReqCount].Zen	= n[1];
 		MoveReqInfo[MoveReqCount].Level	= n[2];
 		MoveReqInfo[MoveReqCount].Gate	= n[3];
+		MoveReqInfo[MoveReqCount].VIP	= n[4];
 		MoveReqCount++;
 	}
 

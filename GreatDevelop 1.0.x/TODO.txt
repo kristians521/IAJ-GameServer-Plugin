@@ -4,7 +4,7 @@
 // ================================================== //
 (tab = 8)
 
-[Type]	- [Description]							[NoTested]	[Tested and not fixed]
+[Type]	- [Description]							[NoTested]	[Tested and not fixed]		[Added or Fixed]	[Added or Fixed and not Tested]
 -------------------------------------------------------------------------------------------------------------------
 [BUG]	- Don't work Green Symbol, Pink symbol, Yellow Symbol		[√]		
 [BUG]	- Don't work Energy Fruit					[√]		
@@ -16,7 +16,7 @@
 [BUG]	- Disconnect by using dk sword skill (wrong distance)					[√]
 [BUG]	- Login by another nick (admin ADmiN)							[√]
 [BUG]	- Raven can repaired by hammer (in inventire and shop)					[√]
-[FEAT]	- MobAdd distance
+[FEAT]	- MobAdd distance			
 [FEAT]	- GM Commands throw Private chat
-[FEAT]	- Vip in MapSystem
+[FEAT]	- Vip in WarpMenu																[√]		
 [FEAT]	- Vip shops (shop0.txt/VIPshop0.txt)
