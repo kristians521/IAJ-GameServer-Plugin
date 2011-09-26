@@ -42,7 +42,7 @@ public:
 									
 	Logger();
 	~Logger();		 
-	void LoggerInit();	  		 
+	void LoggerInit();	
 	void CheckProcent(char* message); 	
 	void SaveFile(char *logString,char *Message);
 	void ConsoleOutPut(int WOL, sColor Color, sLogType Type, const char* Format, ...);

@@ -67,9 +67,7 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 			switch ( lpDef->subcode )
 			{
 			case 0x01:
-				{		  
-					//# This fix disables JPN, CHNS user names and special chars
-					//# todo Config for FIX
+				{		   
 					if(Protocol.CharacterCreate((PMSG_CHARCREATE *)aRecv, aIndex))
 					{
 						JGCharacterCreateFailSend(aIndex, gObj->Name);
@@ -125,8 +123,7 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 		if(Config.LahapDupe)
 		{
 			case 0xBC: // Lahap Dupe BUG FIX
-			{
-				//#todo Config for FIX
+			{ 
 				Protocol.LahapDupeBug(gObj);
 			}
 			break;

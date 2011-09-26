@@ -1,0 +1,17 @@
+// ========================================================= //
+// # GameServer 1.00.90 : EventDropWW.txt		   # //
+// # GreatDevelop 1.0.5 2011		       	    	   # //
+// # http://greatdevelop.ru, http://mu.greatgame.su/	   # //
+// ========================================================= //
+
+[DropCount]
+
+DropCountRate = 0 // 0-100 ; 0 -> drop 1 item ; 60 -> in 60% drop <DropCountItems> items and 40% drop 1 item ; 100 - always drop <DropCountItems> items
+DropCountItems = 1 // 1-10 items count
+
+// ancType -> 0 if Anc = 0 ; 5 or 10, depending on Item Ancient Type (usual 5, if 5 bugged - use 10)
+
+//	[1-10000]	[0-15]	[0-250]	[0-13]	[0-13]	[0-255]	[0-100]	[0-100]	[0-7]	[0-7]	[0-100]	[0-6]	[0-6]	[0-100]	[0/5/10]
+//	%Rate		Type	Idx	minLvl	maxLvl	Dur	%Skill	%Luck	minOpt	maxOpt	%Exc	minExc	maxExc	%Anc	ancType
+
+	10000		13	20	0	0	0	0	0	0	0	0	0	0	0	0	//Wizard Ring

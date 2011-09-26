@@ -8,7 +8,7 @@
 -------------------------------------------------------------------------------------------------------------------
 [BUG]	- Don't work Green Symbol, Pink symbol, Yellow Symbol		[√]		
 [BUG]	- Don't work Energy Fruit					[√]		
-[BUG]	- Don't work config for BC Price				[√]		
+[BUG]	- Don't work config for BC Price														[√]		
 [BUG]	- Transformation Ring of Cow -> SuperMan			[√]
 [BUG]	- DuelSystem Sm can't use magic Teleport						[√]		
 [BUG]	- Drops much rings from White Mage							[√]
@@ -20,3 +20,9 @@
 [FEAT]	- GM Commands throw Private chat
 [FEAT]	- Vip in WarpMenu																[√]		
 [FEAT]	- Vip shops (shop0.txt/VIPshop0.txt)
+[FEAT]	- Auto Create column PCPoint etc.
+[FEAT]	- Syntax System
+[FEAT]	- Private Chat Log
+[FEAT]	- Happy Hour
+[FEAT]	- Jewel System
+[FEAT] -  Reset System

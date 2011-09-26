@@ -97,6 +97,7 @@
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Utilits.cpp" />
     <ClCompile Include="WzAG.cpp" />
+    <ClCompile Include="WZEventDrop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AntiAFK.h" />
@@ -124,8 +125,13 @@
     <ClInclude Include="User.h" />
     <ClInclude Include="Utilits.h" />
     <ClInclude Include="WzAG.h" />
+    <ClInclude Include="WZEventDrop.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Configs\GreatDevelop\WzEvents\EventDropBC.txt" />
+    <None Include="Configs\GreatDevelop\WzEvents\EventDropCC.txt" />
+    <None Include="Configs\GreatDevelop\WzEvents\EventDropIT.txt" />
+    <None Include="Configs\GreatDevelop\WzEvents\EventDropWW.txt" />
     <None Include="TODO.txt" />
     <None Include="ChangeLog.txt" />
     <None Include="Configs\GameServerCS\GameServerCS.ini" />

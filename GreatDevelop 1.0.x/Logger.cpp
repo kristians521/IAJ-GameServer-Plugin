@@ -7,23 +7,31 @@
 #include "Logger.h" 
 #include "Configs.h"
 char Message[1024];
-				   
+
+
 Logger Log;	   
 DWORD PiD;
-#ifdef _GS
-#define TITTLE "Great Develop Mu 1.0.2 (GS)"
-#else													   
-#define TITTLE "Great Develop Mu 1.0.2 (GS_CS)"
-#endif 
+
+char *LoggerTittle()
+{
+	static char Tittle[55];
+	#ifdef _GS
+	#define GType "(GS)"
+	#else													   
+	#define GType "(GS_CS)"
+	#endif  
+	sprintf(Tittle, "[%s] Great Develop Julia 1.0.%d %s", Config.ServerName, dBuild, GType);  
+	return Tittle;
+} 
 
 Logger::Logger(){}
 Logger::~Logger(){} 
 void __stdcall LoggerCore(PVOID pVoid)
-{					
+{		 
 	while (true)
 	{					  
 		AllocConsole();
-		SetConsoleTitleA(TITTLE);	 
+		SetConsoleTitleA(LoggerTittle());
 		Sleep(1000);
 	}
 	_endthread();
@@ -33,13 +41,12 @@ void Logger::LoggerInit()
 {
 	CreateThread( 0 , 0 , (LPTHREAD_START_ROUTINE) LoggerCore , 0 , 0 , &PiD );
 	Sleep(100);
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Great Develop Mu 1.0.2 Season 4.6");
+	Log.ConsoleOutPut(0, c_Green,t_NULL,"Great Develop Mu 1.0.%d Season 4.6", dBuild);
 	Log.ConsoleOutPut(0, c_Green,t_NULL,"Official Website: http://greatdevelop.ru/");
 	Log.ConsoleOutPut(0, c_Green,t_NULL,"Compile Date: %s %s", __DATE__, __TIME__);
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Credits: Mu Community, GreatDevelop & Simp1e");
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Please report any bugs that you found!");
-	//Log.ConsoleOutPut(0, c_Magenta,t_NULL,"We have many PRIVATE modules check up our forum..." );
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Contacts: support@greatdevelop.ru\n-----------------------------------------------------\n");
+	Log.ConsoleOutPut(0, c_Green,t_NULL,"Credits: Mu Community, GreatDevelop");
+	Log.ConsoleOutPut(0, c_Green,t_NULL,"Please report any bugs that you found!"); 
+	Log.ConsoleOutPut(0, c_Green,t_NULL,"Contacts: support@greatdevelop.ru, Official Server: http://mu.greatgame.su/ \n-----------------------------------------------------\n");
 } 		
 
 void Logger::CheckProcent(char* message)

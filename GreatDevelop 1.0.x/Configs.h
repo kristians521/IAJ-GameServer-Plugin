@@ -6,7 +6,7 @@
 #ifndef CONFIGS_H
 #define CONFIGS_H
 
-#define dVersion 2
+#define dBuild 5
 
 //Function Defines //
 #ifdef _GS
@@ -136,18 +136,20 @@
 #define GreatDevelopSkills			"..\\GreatDevelop\\Skills.ini"  
 #define GreatDevelopMobAdd			"..\\GreatDevelop\\MonsterSpawn.ini"  
 #define GreatDevelopMapSystem		"..\\GreatDevelop\\MapSystem.ini"
-
-#define GS_CONFIG_FILE				".\\Data\\ServerInfo.dat" 
-
+#define GreatDevelopEventDropBC		"..\\GreatDevelop\\WzEvents\\EventDropBC.txt"
+#define GreatDevelopEventDropIT		"..\\GreatDevelop\\WzEvents\\EventDropIT.txt"
+#define GreatDevelopEventDropWW		"..\\GreatDevelop\\WzEvents\\EventDropWW.txt"
+#define GreatDevelopEventDropCC		"..\\GreatDevelop\\WzEvents\\EventDropCC.txt"
+#define	GreatDevelopWzEvents		"..\\GreatDevelop\\WzEvents"
 #define GreatDevelopNews			".\\News.txt"
 #define GreatDevelopGM				".\\GMSystem.txt"
 #define GreatDevelopIPBlock			".\\IPBlock.txt" 
-#define GreatDevelopVIP			".\\VIPSystem.ini" 
-
+#define GreatDevelopVIP				".\\VIPSystem.ini" 
 #define GreatDevelopChatLogs		"..\\GreatDevelop\\ChatLogs"
 #define GreatDevelopConsoleLogs		"..\\GreatDevelop\\ConsoleLogs" 
 #define GreatDevelopLog				".\\Log" 
 
+#define GS_CONFIG_FILE				".\\Data\\ServerInfo.dat" 
 
 #ifdef _GS
 //================================================//
@@ -740,7 +742,7 @@ public:
 	int DumpFile;
 
 	char ResetColumn[25];	
-
+	char ServerName[25];
 	int IsNews;
 	char ConnectNotice[100];	
 	int ConnectInfo; 

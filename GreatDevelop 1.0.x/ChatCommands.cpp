@@ -15,6 +15,7 @@
 #include "Monster.h"
 #include "MapSystem.h"
 #include "Query.h"
+#include "WZEventDrop.h"
 cChat Chat;
 						 
 cChat::cChat()
@@ -1031,9 +1032,9 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 		case 1:
 			{
 				GameMonsterAllCloseAndReload(); 
-#ifdef _GS
+				#ifdef _GS
 				ReadMonsterAdd();
-#endif
+				#endif
 				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] Monsters Reloaded.");
 				break;
 			}
@@ -1058,6 +1059,12 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 		case 4:
 			{
 				DropSystem.LoadDropItems();
+				#ifdef _GS
+				DropEvent.updateBC();	// reload BC drop config
+		 		DropEvent.updateIT();	// reload IT drop config
+				DropEvent.updateWW();	// reload WW drop config
+				DropEvent.updateCC();	// reload CC drop config
+				#endif
 				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] Item Drop Settings Reloaded.");
 				break;
 			}
@@ -1077,6 +1084,10 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 				DropSystem.LoadDropItems();
 				#ifdef _GS
 				ReadMonsterAdd();
+		 		DropEvent.updateBC();	// reload BC drop config
+		  		DropEvent.updateIT();	// reload IT drop config
+		 		DropEvent.updateWW();	// reload WW drop config
+		 		DropEvent.updateCC();	// reload CC drop config
 				#endif
 				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] All Options Reloaded.");
 				break;
@@ -1685,6 +1696,6 @@ bool cChat::GuildPost(LPOBJ gObj, char *Msg)
 
 bool cChat::Core(LPOBJ gObj, char *Msg)
 { 
-	MessageLog(1, c_Red, t_Default, gObj,"Julia 1.0.5, Compiled %s %s", __DATE__, __TIME__);	
+	MessageLog(1, c_Red, t_Default, gObj,"Julia 1.0.%d, Compiled %s %s",dBuild, __DATE__, __TIME__);	
 	return true;
 }

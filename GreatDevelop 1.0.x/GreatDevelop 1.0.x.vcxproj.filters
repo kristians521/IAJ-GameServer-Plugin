@@ -64,9 +64,6 @@
     <Filter Include="Source\Console">
       <UniqueIdentifier>{f8e32c90-07d5-41d3-ac8a-f54bb5e930f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\DropSystem">
-      <UniqueIdentifier>{6826c7d3-bcdb-4398-8505-55878038c27b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\PCPointSystem">
       <UniqueIdentifier>{c777ca42-57e6-4958-86af-c08088ecf480}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,15 @@
     </Filter>
     <Filter Include="Source\Query">
       <UniqueIdentifier>{55dc83ce-64b6-4d5e-a2e3-a9899d2ecea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\WZEventDrop">
+      <UniqueIdentifier>{d6f7691c-106f-44ef-b255-0a60860e597b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\DropSystem">
+      <UniqueIdentifier>{6826c7d3-bcdb-4398-8505-55878038c27b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configs\GreatDevelop\WzEvents">
+      <UniqueIdentifier>{2a260854-04f3-45ea-aa89-257ed84b9952}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="Query.cpp">
       <Filter>Source\Query</Filter>
+    </ClCompile>
+    <ClCompile Include="WZEventDrop.cpp">
+      <Filter>Source\WZEventDrop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="Query.h">
       <Filter>Source\Query</Filter>
+    </ClInclude>
+    <ClInclude Include="WZEventDrop.h">
+      <Filter>Source\WZEventDrop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +337,18 @@
       <Filter>Configs\GameServer</Filter>
     </None>
     <None Include="TODO.txt" />
+    <None Include="Configs\GreatDevelop\WzEvents\EventDropBC.txt">
+      <Filter>Configs\GreatDevelop\WzEvents</Filter>
+    </None>
+    <None Include="Configs\GreatDevelop\WzEvents\EventDropCC.txt">
+      <Filter>Configs\GreatDevelop\WzEvents</Filter>
+    </None>
+    <None Include="Configs\GreatDevelop\WzEvents\EventDropIT.txt">
+      <Filter>Configs\GreatDevelop\WzEvents</Filter>
+    </None>
+    <None Include="Configs\GreatDevelop\WzEvents\EventDropWW.txt">
+      <Filter>Configs\GreatDevelop\WzEvents</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

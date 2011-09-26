@@ -15,6 +15,7 @@
 #include "MossGambler.h" 
 #include "MapSystem.h"
 #include "Query.h"
+#include "WZEventDrop.h"
 cConfigs Config;	  
 
 cConfigs::cConfigs()
@@ -533,7 +534,7 @@ void cConfigs::Misc()
 	//
 	GetPrivateProfileString("Reset","ResetColumn","Resets", Config.ResetColumn, sizeof(Config.ResetColumn), GreatDevelopCommon); 
 	MuOnlineQuery.CheckColumn(Config.ResetColumn, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", Config.ResetColumn);
-
+	GetPrivateProfileString("GameServerInfo","ServerName","GS", Config.ServerName, sizeof(Config.ServerName), ".\\Data\\ServerInfo.dat"); 
 	IsPartyGap				= GetInt(0, 1, 1,"PartyGap", "IsPartyGap", GreatDevelopCommon);	
 	PartyGapLvl				= GetInt(0, 400, 120,"PartyGap", "PartyGapLvl", GreatDevelopCommon);
 	GuildRes				= GetInt(0, 32767, 5,"GuildMaster", "GuildCreateReset", GreatDevelopCommon);
@@ -565,6 +566,7 @@ void cConfigs::LoadAll()
 	MapSys();
 #ifdef _GS
 	moss.LoadMoss();
+	DropEvent.Init();
 #endif 
 }
 

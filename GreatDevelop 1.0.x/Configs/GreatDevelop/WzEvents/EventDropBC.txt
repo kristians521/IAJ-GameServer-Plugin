@@ -1,0 +1,51 @@
+// ========================================================= //
+// # GameServer 1.00.90 : EventDropBC.txt		   # //
+// # GreatDevelop 1.0.5 2011		       	    	   # //
+// # http://greatdevelop.ru, http://mu.greatgame.su/	   # //
+// ========================================================= //
+
+[DropCount]
+
+DropCountRate = 0 // 0-100 ; 0 -> drop 1 item ; 60 -> in 60% drop <DropCountItems> items and 40% drop 1 item ; 100 - always drop <DropCountItems> items
+DropCountItems = 1 // 1-10 items count
+
+// ancType -> 0 if Anc = 0 ; 5 or 10, depending on Item Ancient Type (usual 5, if 5 bugged - use 10)
+
+// BC_Number
+//	[1-10000]	[0-15]	[0-250]	[0-13]	[0-13]	[0-255]	[0-100]	[0-100]	[0-7]	[0-7]	[0-100]	[0-6]	[0-6]	[0-100]	[0/5/10]
+//	%Rate		Type	Idx	minLvl	maxLvl	Dur	%Skill	%Luck	minOpt	maxOpt	%Exc	minExc	maxExc	%Anc	ancType
+// end
+
+1
+	10000		12	15	0	0	0	0	0	0	0	0	0	0	0	0	//chaos
+end
+
+2
+	10000		13	14	0	0	0	0	0	0	0	0	0	0	0	0	//loch feather
+end
+
+3
+	10000		14	16	0	0	0	0	0	0	0	0	0	0	0	0	//life
+end
+
+4
+	10000		12	30	0	0	0	0	0	0	0	0	0	0	0	0	//bles10
+end
+
+5
+	10000		12	31	0	0	0	0	0	0	0	0	0	0	0	0	//soul10
+end
+
+6
+	10000		13	64	0	0	0	0	0	0	0	0	0	0	0	0	//demon
+end
+
+7
+	10000		13	65	0	0	0	0	0	0	0	0	0	0	0	0	//guardian
+end
+
+8
+	2000		13	67	0	0	0	0	0	0	0	0	0	0	0	0	//rudolf
+	2000		14	13	0	0	0	0	0	0	0	0	0	0	0	0	//bless
+	6000		14	14	0	0	0	0	0	0	0	0	0	0	0	0	//soul
+end
