@@ -28,3 +28,4 @@
 [FEAT]	- Reset System
 [BUG]	- Dark Raven Durability decrease too fast						[√]
 [BUG]	- MultiVault bug									[√]
+[FEAT]	- VipTick offline
