@@ -12,17 +12,6 @@ char Message[1024];
 Logger Log;	   
 DWORD PiD;
 
-char *LoggerTittle()
-{
-	static char Tittle[55];
-	#ifdef _GS
-	#define GType "(GS)"
-	#else													   
-	#define GType "(GS_CS)"
-	#endif  
-	sprintf(Tittle, "[%s] Great Develop Julia 1.0.%d %s", Config.ServerName, dBuild, GType);  
-	return Tittle;
-} 
 
 Logger::Logger(){}
 Logger::~Logger(){} 
@@ -31,22 +20,36 @@ void __stdcall LoggerCore(PVOID pVoid)
 	while (true)
 	{					  
 		AllocConsole();
-		SetConsoleTitleA(LoggerTittle());
+		SetConsoleTitleA(Log.LoggerTittle());
 		Sleep(1000);
 	}
 	_endthread();
 }			 
 
+char* Logger::LoggerTittle()
+{
+	static char Tittle[55];
+	#ifdef _GS
+	#define GType "(GS)"
+	#else													   
+	#define GType "(GS_CS)"
+	#endif  
+	sprintf(Tittle, "[%s] [%d/%d] Great Develop Julia 1.0.%d %s", Config.ServerName, Online_All, Online_Max, dBuild, GType);  
+	return Tittle;
+} 
+
 void Logger::LoggerInit()
 {
+	Online_Max = GetPrivateProfileInt("GameServerInfo", "NumberOfMaxUser", 0, "..\\Data\\CommonServer.cfg");
+
 	CreateThread( 0 , 0 , (LPTHREAD_START_ROUTINE) LoggerCore , 0 , 0 , &PiD );
 	Sleep(100);
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Great Develop Mu 1.0.%d Season 4.6", dBuild);
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Official Website: http://greatdevelop.ru/");
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Compile Date: %s %s", __DATE__, __TIME__);
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Credits: Mu Community, GreatDevelop");
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Please report any bugs that you found!"); 
-	Log.ConsoleOutPut(0, c_Green,t_NULL,"Contacts: support@greatdevelop.ru, Official Server: http://mu.greatgame.su/ \n-----------------------------------------------------\n");
+	ConsoleOutPut(0, c_Green,t_NULL,"Great Develop Mu 1.0.%d Season 4.6", dBuild);
+	ConsoleOutPut(0, c_Green,t_NULL,"Official Website: http://greatdevelop.ru/");
+	ConsoleOutPut(0, c_Green,t_NULL,"Compile Date: %s %s", __DATE__, __TIME__);
+	ConsoleOutPut(0, c_Green,t_NULL,"Credits: Mu Community, GreatDevelop");
+	ConsoleOutPut(0, c_Green,t_NULL,"Please report any bugs that you found!"); 
+	ConsoleOutPut(0, c_Green,t_NULL,"Contacts: support@greatdevelop.ru, Official Server: http://mu.greatgame.su/ \n-----------------------------------------------------\n");
 } 		
 
 void Logger::CheckProcent(char* message)

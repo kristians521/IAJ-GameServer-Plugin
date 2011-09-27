@@ -343,9 +343,7 @@ void cProtoFunc::LoginMsg(LPOBJ gObj)
 	Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
 	if (Config.ConnectInfo == 1)
 	{
-		int totPlayers = Utilits.GetOnlineCount();
-		int GetMaxOnline = GetPrivateProfileInt("GameServerInfo", "NumberOfMaxUser", 0, "..\\Data\\CommonServer.cfg");
-		Chat.Message(1, gObj->m_Index, "Total Online: %d/%d", totPlayers, GetMaxOnline);
+		Chat.Message(1, gObj->m_Index, "Total Online: %d/%d", Log.Online_All, Log.Online_Max);
 																			  
 		SYSTEMTIME t;
 		GetLocalTime(&t);  

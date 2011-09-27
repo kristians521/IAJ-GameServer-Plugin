@@ -118,6 +118,7 @@ void __declspec(naked) FixNewPetDurabDown()
 
 void cFixes::ASMFixes()
 { 
+	Config.LoadFixes();
 	ShopExeHook();
 #ifdef _GS	
 	/////////////////////////////////////////////////////////

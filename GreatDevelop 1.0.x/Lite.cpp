@@ -35,11 +35,17 @@ DWORD MainTick()
 {
 	while(true)
 	{
+		int Temp_All = 0;
+		int Temp_Gms = 0;
 		for(int i=OBJECT_MIN; i<=OBJECT_MAX; i++)
 		{
 			OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(i);	
 
 			if(gObj->Connected < PLAYER_PLAYING) continue;	
+			
+			if(GmSystem.IsGMBD(gObj->Name))
+				Temp_Gms++;
+			Temp_All++;
 
 			int Index = gObj->m_Index;  
 
@@ -143,6 +149,8 @@ DWORD MainTick()
 		moss.MossConfig.EnableTimer && moss.MossConfig.EnableMoss ? moss.CheckTime() : moss.OpenedMoss = TRUE;	 	
 #endif	
 		Sleep(1000);
+		Log.Online_All = Temp_All;
+		Log.Online_Gms = Temp_Gms;
 	}
 	return 1;	
 } 
@@ -214,7 +222,6 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		//
 		LoadQuery();
 		Maps.MapInit();
-		Config.LoadFixes();
 		Fixes.ASMFixes();
 		Config.LoadConfigsInGS();
 		Config.LoadAll();

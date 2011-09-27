@@ -978,9 +978,7 @@ bool cChat::OnlineCommand(LPOBJ gObj, char *Msg)
 	if(CheckCommand(gObj, Config.Commands.IsOnline, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "Online", "/online", Msg))
 		return true;
 
-	int totGMs = Utilits.GetOnlineGMCount();
-	int totPlayers = Utilits.GetOnlineCount() - totGMs;
-	MessageLog(1, c_Blue, t_COMMANDS, gObj, "[ONLINE]: %d Player(s), %d GM(s)",totPlayers, totGMs);
+	MessageLog(1, c_Blue, t_COMMANDS, gObj, "[ONLINE]: %d Player(s), %d GM(s)", Log.Online_All - Log.Online_Gms, Log.Online_Gms);
 	return true;
 }
 

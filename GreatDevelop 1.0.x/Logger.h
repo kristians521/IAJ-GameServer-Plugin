@@ -49,7 +49,11 @@ public:
 	void ConsoleOutPut(int WOL, sColor Color, sLogType Type, const char* Format, ...);
 	HANDLE Handle(BOOL Input);
 	void CreateLog(sLogType Type,const char* Format, ...);	
-
+	char *LoggerTittle();
+	
+	int Online_Max;
+	int Online_All;
+	int Online_Gms;
 };
 extern Logger Log;		
 

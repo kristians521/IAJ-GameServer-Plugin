@@ -358,7 +358,6 @@ void cConfigs::LoadConfigsInGS()
 }	
 void cConfigs::LoadFixes()
 {
-
 	#ifdef _GS
 	EldaradoEventType	= GetInt(0, 1, 0,"EldaradoEvent", "EldaradoEventType", GreatDevelopEvents);
 	CCAllowingPlayers	= GetInt(0, 2, 0,"ChaosCastle", "ChaosCastleAllowingPlayers", GreatDevelopEvents);

@@ -20,8 +20,6 @@ public:
 	int gObjIsConnected(int Index);
 
 	int GetPlayerIndex(char *Name);
-	int GetOnlineCount();			
-	int GetOnlineGMCount();
 	int GenExcOpt(int amount);	   
 	int gObjZenSingle(LPOBJ gObj,LPOBJ tObj, int dmg, int tot_dmg);
 };

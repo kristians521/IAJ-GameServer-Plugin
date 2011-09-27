@@ -50,30 +50,6 @@ int cUtilits::GetPlayerIndex(char *Name)
 	return -1;
 }
 
-
-int cUtilits::GetOnlineCount()
-{		
-	int online = 0;
-	for(int i = OBJECT_MIN; i <= OBJECT_MAX; i++)
-	{  	 
-		OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(i);	 
-		if(gObj->Connected < PLAYER_PLAYING) continue; 	   
-		online++;
-	}
-	return online;
-}
-int cUtilits::GetOnlineGMCount()
-{		
-	int online = 0;
-	for(int i = OBJECT_MIN; i <= OBJECT_MAX; i++)
-	{  	 
-		OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(i);	 
-		if(gObj->Connected < 3) continue; 	
-		if(!GmSystem.IsGMBD(gObj->Name)) continue;
-		online++;
-	}
-	return online;
-}
 int cUtilits::gObjIsConnected(int Index)
 {
 	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);  
