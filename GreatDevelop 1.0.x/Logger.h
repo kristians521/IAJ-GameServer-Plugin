@@ -33,7 +33,8 @@ enum sLogType
 	t_PCPOINT,
 	t_IPBLOCK,
 	t_Duel,
-	t_SQL
+	t_SQL,
+	t_VIP
 };
 
 class Logger

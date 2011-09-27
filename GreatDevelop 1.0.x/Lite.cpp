@@ -99,7 +99,7 @@ DWORD MainTick()
 					}
 					if(AddTab[gObj->m_Index].VIP_Min <= 0)
 					{
-						Chat.MessageLog(1, c_Red, /*VIP System*/ t_Default, gObj, "[VIP] Your vip time is over! You are normal player again."); 
+						Chat.MessageLog(1, c_Red, t_VIP, gObj, "[VIP] Your vip time is over! You are normal player again."); 
 						AddTab[gObj->m_Index].VIP_Type = 0;
 						AddTab[gObj->m_Index].VIP_Min = 0;
 						MuOnlineQuery.ExecQuery("UPDATE Character SET %s = 0, %s = 0 WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);

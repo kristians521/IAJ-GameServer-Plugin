@@ -262,7 +262,7 @@ void cProtoFunc::PlayerConnect(LPOBJ gObj)
 			AddTab[gObj->m_Index].VIP_Sec = 0; // Обнуление секунд при входе
 			if(AddTab[gObj->m_Index].VIP_Min > 0)
 			{											 
-				Chat.MessageLog(1, c_Red, /*VIP System*/ t_Default, gObj, "[VIP] Left %d minutes of VIP.", AddTab[gObj->m_Index].VIP_Min);
+				Chat.MessageLog(1, c_Red, t_VIP, gObj, "[VIP] Left %d minutes of VIP.", AddTab[gObj->m_Index].VIP_Min);
 			} 
 		}
 }

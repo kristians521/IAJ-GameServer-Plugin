@@ -141,6 +141,7 @@ void Logger::CreateLog(sLogType Type,const char* Format, ...)
 	char ErrorLog[55];
 	char Date[55];
 	char SqlLog[55];
+	char VipLog[55];
 	sprintf(Date, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\", now.wDay, now.wMonth, now.wYear); 
 	CreateDirectory(Date,NULL);
 																													  
@@ -156,6 +157,7 @@ void Logger::CreateLog(sLogType Type,const char* Format, ...)
 	sprintf(IpBlockLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\IpBlock.log", now.wDay, now.wMonth, now.wYear);		
 	sprintf(ErrorLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\Error.log", now.wDay, now.wMonth, now.wYear);
 	sprintf(SqlLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\Sql.log", now.wDay, now.wMonth, now.wYear);
+	sprintf(VipLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\Vip.log", now.wDay, now.wMonth, now.wYear);
 
 	va_list pArguments1;
 	va_start(pArguments1, Format);
@@ -242,6 +244,12 @@ void Logger::CreateLog(sLogType Type,const char* Format, ...)
 		{									   
 			SaveFile(ConsoleLog,Message);
 			SaveFile(SqlLog,Message);
+		}
+		break;
+		case t_VIP:
+		{   
+			SaveFile(ConsoleLog,Message);
+			SaveFile(VipLog,Message);
 		}
 		break;
 	}
