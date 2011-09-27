@@ -5,7 +5,7 @@
 (tab = 8)
 
 [Type]	- [Description]							[NoTested]	[Tested and not fixed]		[Added or Fixed]	[Added or Fixed and not Tested]
--------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 [BUG]	- Don't work Green Symbol, Pink symbol, Yellow Symbol		[√]		
 [BUG]	- Don't work Energy Fruit					[√]		
 [BUG]	- Don't work config for BC Price														[√]		
@@ -25,4 +25,5 @@
 [FEAT]	- Private Chat Log
 [FEAT]	- Happy Hour
 [FEAT]	- Jewel System
-[FEAT] -  Reset System
+[FEAT]	- Reset System
+[BUG]	- Dark Raven Durability decrease too fast						[√]
