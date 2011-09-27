@@ -29,6 +29,8 @@ struct sIps
 UINT NumIps = 0;
 sIps Ips[1000];
 
+bool CheckVipTime(int TimeInMin);
+
 DWORD MainTick()  	
 {
 	while(true)
@@ -91,6 +93,10 @@ DWORD MainTick()
 					AddTab[gObj->m_Index].VIP_Min--;
 					AddTab[gObj->m_Index].VIP_Sec = 0;
 
+					if(CheckVipTime(AddTab[gObj->m_Index].VIP_Min))
+					{			
+						Chat.MessageLog(1, c_Red, t_VIP, gObj, "[VIP] You have %d more vip minutes", AddTab[gObj->m_Index].VIP_Min); 
+					}
 					if(AddTab[gObj->m_Index].VIP_Min <= 0)
 					{
 						Chat.MessageLog(1, c_Red, /*VIP System*/ t_Default, gObj, "[VIP] Your vip time is over! You are normal player again."); 
@@ -140,6 +146,25 @@ DWORD MainTick()
 	}
 	return 1;	
 } 
+
+bool CheckVipTime(int TimeInMin)
+{
+	switch(TimeInMin)
+	{
+	case 1:
+	case 2:
+	case 3:
+	case 5:
+	case 15:
+	case 30:
+	case 60:
+	case 120:
+	case 340:
+	case 680:
+		return true;
+	}
+	return false;
+}
 
 short GOBJGetIndex(SOCKET aSocket, char* ip)
 {																		   
