@@ -255,7 +255,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 		break;
 	case MINUS:
 		AmountPoints -= CountPoints;
-		if (AmountPoints < 0 ) AmountPoints = 0;
+		if (AmountPoints < 0 && Type == PCPOINT) AmountPoints = 0;
 		break;
 	}
 

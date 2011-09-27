@@ -299,8 +299,8 @@ BOOL __cdecl gObjGameClose_Func(int aIndex)
 	//
 	if(gObj->Connected == PLAYER_PLAYING)
 		PCPoint.UpdatePoints(gObj, 0, PLUS, PCPOINT);
-	if(gObj->Connected	>= PLAYER_LOGGED)
-		PCPoint.UpdatePoints(gObj, 0, PLUS, WCOIN);
+	//if(gObj->Connected	>= PLAYER_LOGGED)
+	//	PCPoint.UpdatePoints(gObj, 0, PLUS, WCOIN);
 	//
 	switch(GmSystem.IsAdmin(gObj->Name))
 	{																									   
