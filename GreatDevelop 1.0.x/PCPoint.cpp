@@ -244,7 +244,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not logged!)");
 			return;
 		}
-		AmountPoints = gObj->m_wCashPoint;
+		AmountPoints = 0;
 	}
 
 	switch(Mode)
@@ -273,10 +273,13 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 	}
 	if (Type == WCOIN)
 	{
-		gObj->m_wCashPoint = AmountPoints;
-
-		Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_INFO SET cspoints = %d WHERE memb___id = '%s'", AmountPoints, gObj->AccountID);
+		Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_INFO SET cspoints = cspoints + %d WHERE memb___id = '%s'", AmountPoints, gObj->AccountID);
 			Me_MuOnlineQuery.Fetch();
+			Me_MuOnlineQuery.Close();
+
+		Me_MuOnlineQuery.ExecQuery("SELECT cspoints FROM MEMB_INFO WHERE memb___id = '%s'", gObj->AccountID);
+			Me_MuOnlineQuery.Fetch();
+			gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger("cspoints");
 			Me_MuOnlineQuery.Close();
 	}
 }
