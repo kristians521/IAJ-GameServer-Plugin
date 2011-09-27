@@ -424,13 +424,16 @@ void cConfigs::VIPSystem()
 
 		GetPrivateProfileString(PState,"VIPStateName","bronze",VIP.VIPState[i].VIPName,sizeof(VIP.VIPState[i].VIPName), GreatDevelopVIP);	  
 		VIP.VIPState[i].EnabledCmd		= Config.GetInt(0, 1,									1,		PState,			"AllowAutoBuy",		GreatDevelopVIP); 
-		VIP.VIPState[i].CostPCPoints	= Config.GetInt(0, PCPoint.sPoints.MaximumPCPoints,				5,		PState,	"CostPCPoints",		GreatDevelopVIP);
-		VIP.VIPState[i].CostWCoins		= Config.GetInt(0, PCPoint.sPoints.MaximumWCPoints,				5,		PState,	"CostWCoins",		GreatDevelopVIP);
+		VIP.VIPState[i].CostPCPoints	= Config.GetInt(0, PCPoint.sPoints.MaximumPCPoints,		5,		PState,			"CostPCPoints",		GreatDevelopVIP);
+		VIP.VIPState[i].CostWCoins		= Config.GetInt(0, PCPoint.sPoints.MaximumWCPoints,		5,		PState,			"CostWCoins",		GreatDevelopVIP);
 		VIP.VIPState[i].CostZen			= Config.GetInt(0, 2000000000,							5000,	PState,			"CostZen",			GreatDevelopVIP);
 
 		VIP.VIPState[i].BonusExp		= Config.GetInt(0, 9999,								5,		PState,			"BonusExp",			GreatDevelopVIP);
 		VIP.VIPState[i].BonusZen		= Config.GetInt(0, 9999,								5,		PState,			"BonusZen",			GreatDevelopVIP);
 		VIP.VIPState[i].BonusDrop		= Config.GetInt(0, 9999,								5,		PState,			"BonusDrop",		GreatDevelopVIP);
+		
+		VIP.VIPState[i].MinHours		= Config.GetInt(0, 32000,								1,		PState,			"MinHours",			GreatDevelopVIP);
+		VIP.VIPState[i].MaxHours		= Config.GetInt(VIP.VIPState[i].MinHours, 32000,		200,	PState,			"MaxHours",			GreatDevelopVIP);
 	}
 }
 

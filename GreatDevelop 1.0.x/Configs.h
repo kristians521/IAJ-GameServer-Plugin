@@ -866,6 +866,9 @@ public:
 			int BonusExp;
 			int BonusZen;
 			int BonusDrop; 
+
+			int MinHours;
+			int MaxHours;
 		};
 		VIPConfig VIPState[20]; 
 

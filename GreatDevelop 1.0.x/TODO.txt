@@ -27,3 +27,4 @@
 [FEAT]	- Jewel System
 [FEAT]	- Reset System
 [BUG]	- Dark Raven Durability decrease too fast						[√]
+[BUG]	- MultiVault bug									[√]

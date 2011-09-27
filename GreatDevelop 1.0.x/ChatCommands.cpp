@@ -1605,7 +1605,7 @@ bool cChat::CheckCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::CheckVIPCommand(LPOBJ gObj, char *Msg)
 {
-	if(CheckCommand(gObj, Config.VIP.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "CheckVip", "/checkvip", Msg))
+	if(CheckCommand(gObj, Config.VIP.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "VipCheck", "/vipcheck", Msg))
 	return true;
 
 	if(AddTab[gObj->m_Index].VIP_Type > 0)
@@ -1622,8 +1622,8 @@ bool cChat::VIPListCommand(LPOBJ gObj, char *Msg)
 
 	for(int i = 1; i<= Config.VIP.NumStates; i++)
 	{
-		MessageLog(1, c_Red, t_COMMANDS, gObj, "[VipList] %s - %d PCPnt, %d WCn, %d Zen ", Config.VIP.VIPState[i].VIPName, Config.VIP.VIPState[i].CostPCPoints, 
-																	Config.VIP.VIPState[i].CostWCoins, Config.VIP.VIPState[i].CostZen);
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[VipList] %s - %d PCPnt, %d WCn, %d Zen, %d hours min, %d - max", Config.VIP.VIPState[i].VIPName, Config.VIP.VIPState[i].CostPCPoints, 
+																	Config.VIP.VIPState[i].CostWCoins, Config.VIP.VIPState[i].CostZen, Config.VIP.VIPState[i].MinHours, Config.VIP.VIPState[i].MaxHours);
 		
 	}
 	return true;
@@ -1639,7 +1639,7 @@ bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 
 		if(AddTab[gObj->m_Index].VIP_Type > 0 || AddTab[gObj->m_Index].VIP_Min > 0)
 		{
-			MessageLog(1, c_Red, t_COMMANDS, gObj, "[BuyVIP] You have already bought VIP.");		
+			MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIPBuy] You have already bought VIP.");		
 			return true;
 		}
 
@@ -1663,9 +1663,14 @@ bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 			MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] You can't buy %s vip status.", Config.VIP.VIPState[RealState].VIPName);
 			return true;
 		}
+		if(Hours < Config.VIP.VIPState[RealState].MinHours || Hours > Config.VIP.VIPState[RealState].MaxHours)
+		{
+			MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIP] You can't buy less then %d and more than %d hours.", Config.VIP.VIPState[RealState].MinHours, Config.VIP.VIPState[RealState].MaxHours);
+			return true;
+		}
 
 		if(CheckCommand(gObj, Config.VIP.VIPState[RealState].EnabledCmd, GmSystem.NONE, Config.VIP.VIPState[RealState].CostZen * Hours, 
-			Config.VIP.VIPState[RealState].CostPCPoints * Hours, Config.VIP.VIPState[RealState].CostWCoins * Hours, 0, 2, 0, "BuyVIP", "/buyvip <state> <hours>", Msg))
+			Config.VIP.VIPState[RealState].CostPCPoints * Hours, Config.VIP.VIPState[RealState].CostWCoins * Hours, 0, 2, 0, "VIPBuy", "/vipbuy <state> <hours>", Msg))
 			return true;
 
 		TakeCommand(gObj, Config.VIP.VIPState[RealState].CostZen * Hours, Config.VIP.VIPState[RealState].CostPCPoints * Hours, 
@@ -1678,8 +1683,8 @@ bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 		AddTab[gObj->m_Index].VIP_Min += Hours*60;
 		AddTab[gObj->m_Index].VIP_Type = RealState;
 
-		MessageLog(1, c_Red, t_COMMANDS, gObj, "[BuyVIP] Successfully bought %s for %d Hour(s)", Config.VIP.VIPState[RealState].VIPName, Hours);
-		MessageLog(1, c_Red, t_COMMANDS, gObj, "[BuyVIP] Your VIP status starts right now!");
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIPBuy] Successfully bought %s for %d Hour(s)", Config.VIP.VIPState[RealState].VIPName, Hours);
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[VIPBuy] Your VIP status starts right now!");
 	}
 	return true;
 } 
