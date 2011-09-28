@@ -1,10 +1,10 @@
 // ========================================================= //
 // # GameServer 1.00.90 : ChangeLog.txt		    	   # //
-// # GreatDevelop 1.0.1 2011		       	    	   # //
+// # GreatDevelop 1.0.x 2011		       	    	   # //
 // # http://greatdevelop.ru, http://greatgame.su	   # //
 // ========================================================= //
 
-Great Develop 1.0.5
+Great Develop 1.0.x
 	[GS] Event.ini Fully Fixed
 	[GS\GSCS] Drop System MobId (-1 config added)
 	[GS\GSCS] Drop System Map (-1 config added)
@@ -27,6 +27,7 @@ Great Develop 1.0.5
 	[GS\GSCS] Guild Post for Assistance ADDED
 	[GS\GSCS] SQL Connect via ODBC
 	[GS\GSCS] WZEventDrop System
+
 Great Develop 1.0.1
 
 	[Configs] All configs updated
@@ -44,14 +45,12 @@ Great Develop 1.0.0
 	[GS\GSCS] News % crash fixed
 	[GS\GSCS] CloseClient crash fixed
 	[GS\GSCS] Setzen command added
-
-
+	
 RMST Lite 7.10.Build2
 
 	[GS] ADDED Offlike Moss The Gambler
 	[GS\GSCS] Ware command ADDED
-
-
+	
 RMST Lite 7.10.Build1
 
 	Moss The Gambler and Ware Command coming in Build2

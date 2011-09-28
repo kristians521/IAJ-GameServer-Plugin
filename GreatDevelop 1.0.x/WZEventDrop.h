@@ -1,3 +1,8 @@
+// ================================================== //
+// # GameServer 1.00.90 WzAG.dll					# //
+// # GreatDevelop 1.0.x								# //
+// ================================================== //
+
 #ifdef _GS
 void fHandlerBC(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type, BYTE level, BYTE dur, BYTE Op1, BYTE Op2, BYTE Op3, int LootIndex, BYTE NewOption, BYTE SetOption);
 void fHandlerIT(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type, BYTE level, BYTE dur, BYTE Op1, BYTE Op2, BYTE Op3, int LootIndex, BYTE NewOption, BYTE SetOption);

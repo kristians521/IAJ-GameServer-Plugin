@@ -1,12 +1,12 @@
 // ================================================== //
 // # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.0.1								# //
+// # GreatDevelop 1.0.x								# //
 // ================================================== //
 
 #ifndef CONFIGS_H
 #define CONFIGS_H
 
-#define dBuild 5
+#define dBuild 9
 
 //Function Defines //
 #ifdef _GS

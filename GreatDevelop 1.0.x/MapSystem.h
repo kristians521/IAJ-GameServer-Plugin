@@ -1,6 +1,6 @@
 // ================================================== //
 // # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.0.2								# //
+// # GreatDevelop 1.0.x								# //
 // ================================================== //
 #ifndef MAPSYSTEM_H
 #define MAPSYSTEM_H

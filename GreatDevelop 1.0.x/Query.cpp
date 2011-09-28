@@ -1,15 +1,12 @@
-// Query.cpp: implementation of the CQuery class.
-//
-//////////////////////////////////////////////////////////////////////
+// ================================================== //
+// # GameServer 1.00.90 WzAG.dll					# //
+// # GreatDevelop 1.0.x								# //
+// ================================================== //
 
 #include "stdafx.h"
 #include "Query.h"
 #include "Logger.h"
 #include "Configs.h"
-
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
 
 CQuery MuOnlineQuery;
 CQuery Me_MuOnlineQuery;
