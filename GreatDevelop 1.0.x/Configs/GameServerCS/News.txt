@@ -1,6 +1,6 @@
 // ========================================================= //
 // # GameServer 1.00.90 : News.txt			   # //
-// # GreatDevelop 1.0.x 2011		       	    	   # //
+// # GreatDevelop 1.1.0 beta 2011	       	    	   # //
 // # http://greatdevelop.ru, http://mu.greatgame.su/	   # //
 // ========================================================= //
 
@@ -20,7 +20,7 @@ ShowType 			=	1	//0: Gold Message, 1: Chat Message
 ShowTime			=	3
 News1				=	You can edit this messages
 News2				=	in GameServer\News.txt
-News3				=	GreatDevelop 1.0.1
+News3				=	GreatDevelop 1.1.0 beta
 
 [Section3]
 ShowType 			=	0	//0: Gold Message, 1: Chat Message	

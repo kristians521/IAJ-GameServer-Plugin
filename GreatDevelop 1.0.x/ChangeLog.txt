@@ -1,10 +1,12 @@
 // ========================================================= //
 // # GameServer 1.00.90 : ChangeLog.txt		    	   # //
-// # GreatDevelop 1.0.x 2011		       	    	   # //
+// # GreatDevelop 1.1.0 beta 2011	       	    	   # //
 // # http://greatdevelop.ru, http://greatgame.su	   # //
 // ========================================================= //
 
-Great Develop 1.0.x
+Great Develop 1.1.0
+
+Great Develop 1.0.9
 	[GS] Event.ini Fully Fixed
 	[GS\GSCS] Drop System MobId (-1 config added)
 	[GS\GSCS] Drop System Map (-1 config added)
@@ -27,6 +29,7 @@ Great Develop 1.0.x
 	[GS\GSCS] Guild Post for Assistance ADDED
 	[GS\GSCS] SQL Connect via ODBC
 	[GS\GSCS] WZEventDrop System
+	[GS\GSCS] Much more fixes
 
 Great Develop 1.0.1
 
