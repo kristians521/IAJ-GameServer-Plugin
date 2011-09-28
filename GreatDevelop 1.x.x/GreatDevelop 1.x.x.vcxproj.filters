@@ -323,7 +323,7 @@
     <None Include="Configs\GreatDevelop\Skills.ini">
       <Filter>Configs\GreatDevelop</Filter>
     </None>
-    <None Include="Great Develop 1.0.x ReadMe.txt" />
+    <None Include="Great Develop 1.x.x ReadMe.txt" />
     <None Include="Configs\GreatDevelop\MonsterSpawn.ini">
       <Filter>Configs\GreatDevelop</Filter>
     </None>

@@ -1,13 +1,14 @@
 
-/GreatDevelop 1.0.x.opensdf
-/GreatDevelop 1.0.x.sdf
+/GreatDevelop 1.x.x.opensdf
+/GreatDevelop 1.x.x.sdf
 /Debug
 /ipch
-/GreatDevelop 1.0.x/Log
-/GreatDevelop 1.0.x/Configs/RMST/ConsoleLogs
+/GreatDevelop 1.x.x/Log
+/GreatDevelop 1.x.x/Configs/RMST/ConsoleLogs
 /GS_CS
 /GS
-/GreatDevelop 1.0.x.suo
-/GreatDevelop 1.0.x/Configs/GreatDevelop/ConsoleLogs
+/GreatDevelop 1.x.x.suo
+/GreatDevelop 1.x.x/Configs/GreatDevelop/ConsoleLogs
 /include
-/GreatDevelop 1.0.x/resource.aps
+/GreatDevelop 1.x.x/resource.aps
+/GreatDevelop 1.x.x/GreatDevelop 1.x.x.vcxproj.user

@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3CCD65B4-231D-4529-AD8D-FF169085EE2E}</ProjectGuid>
     <RootNamespace>Tornado_Lite_712</RootNamespace>
-    <ProjectName>GreatDevelop 1.0.x</ProjectName>
+    <ProjectName>GreatDevelop 1.x.x</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GS_CS|Win32'" Label="Configuration">
@@ -160,7 +160,7 @@
     <None Include="Configs\GreatDevelop\Pets.ini" />
     <None Include="Configs\GreatDevelop\PkClearGuard.ini" />
     <None Include="Configs\GreatDevelop\Skills.ini" />
-    <None Include="Great Develop 1.0.x ReadMe.txt" />
+    <None Include="Great Develop 1.x.x ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
