@@ -34,7 +34,7 @@ char* Logger::LoggerTittle()
 	#else													   
 	#define GType "(GS_CS)"
 	#endif  
-	sprintf(Tittle, "[%s] [%d/%d] Great Develop Julia 1.0.%d %s", Config.ServerName, Online_All, Online_Max, dBuild, GType);  
+	sprintf(Tittle, "[%s] [%d/%d] Great Develop Julia 1.1.%d %s", Config.ServerName, Online_All, Online_Max, dBuild, GType);  
 	return Tittle;
 } 
 
@@ -44,7 +44,7 @@ void Logger::LoggerInit()
 
 	CreateThread( 0 , 0 , (LPTHREAD_START_ROUTINE) LoggerCore , 0 , 0 , &PiD );
 	Sleep(100);
-	ConsoleOutPut(0, c_Green,t_NULL,"Great Develop Mu 1.0.%d Season 4.6", dBuild);
+	ConsoleOutPut(0, c_Green,t_NULL,"Great Develop Mu 1.1.%d Season 4.6", dBuild);
 	ConsoleOutPut(0, c_Green,t_NULL,"Official Website: http://greatdevelop.ru/");
 	ConsoleOutPut(0, c_Green,t_NULL,"Compile Date: %s %s", __DATE__, __TIME__);
 	ConsoleOutPut(0, c_Green,t_NULL,"Credits: Mu Community, GreatDevelop");
