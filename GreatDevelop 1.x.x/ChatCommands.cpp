@@ -590,7 +590,7 @@ bool cChat::PostCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::BanPostCommand(LPOBJ gObj, char *Msg)
 {
-	if(CheckCommand(gObj, Config.Commands.IsBanPost, GmSystem.cBanPost, 0, 0, 0, 0, 1, 0, "BanPost", "/banpost <nick>", Msg))
+	if(CheckCommand(gObj, Config.Commands.IsBanPost, GmSystem.cBanPost, 0, 0, 0, 0, 1, 1, "BanPost", "/banpost <nick>", Msg))
 		return true;	
 
 	char Target[11];  
@@ -611,10 +611,11 @@ bool cChat::BanPostCommand(LPOBJ gObj, char *Msg)
 	}
 	else   
 	{
-		MessageLog(1, c_Red, t_BAN, gObj, "[BanPost] %s Added BanPosts", Target);		
+		MessageLog(1, c_Red, t_BAN, gObj, "[BanPost] %s Added BanPosts", Target);	
+		MessageLog(1, c_Red, t_BAN, tObj, "[BanPost] Your post was baned by %s", gObj->Name);		
 	}
 
-	MuOnlineQuery.ExecQuery("UPDATE Character SET BanPost = 1 WHERE Name = '%s", Target);
+	MuOnlineQuery.ExecQuery("UPDATE Character SET BanPost = 1 WHERE Name = '%s'", Target);
 		MuOnlineQuery.Fetch();
 		MuOnlineQuery.Close();
 
@@ -623,7 +624,7 @@ bool cChat::BanPostCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::UnBanPostCommand(LPOBJ gObj, char *Msg)
 {
-	if(CheckCommand(gObj, Config.Commands.IsBanPost, GmSystem.cBanPost, 0, 0, 0, 0, 1, 0, "UnBanPost", "/unbanpost <nick>", Msg))
+	if(CheckCommand(gObj, Config.Commands.IsBanPost, GmSystem.cBanPost, 0, 0, 0, 0, 1, 1, "UnBanPost", "/unbanpost <nick>", Msg))
 		return true;	
 
 	char Target[11];  
@@ -645,9 +646,10 @@ bool cChat::UnBanPostCommand(LPOBJ gObj, char *Msg)
 	else   
 	{
 		MessageLog(1, c_Red, t_BAN, gObj, "[BanPost] %s's post sucsessfuly UnBanned!", Target);
+		MessageLog(1, c_Red, t_BAN, tObj, "[BanPost] Your post sucsessfuly UnBanned by %s!", gObj->Name);
 	} 
 
-	MuOnlineQuery.ExecQuery("UPDATE Character SET BanPost = 0 WHERE Name = '%s", Target);
+	MuOnlineQuery.ExecQuery("UPDATE Character SET BanPost = 0 WHERE Name = '%s'", Target);
 		MuOnlineQuery.Fetch();
 		MuOnlineQuery.Close();
 
@@ -656,7 +658,7 @@ bool cChat::UnBanPostCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::BanCharCommand(LPOBJ gObj, char *Msg)
 {
-	if(CheckCommand(gObj, Config.Commands.IsBanChar, GmSystem.cBanPlayer, 0, 0, 0, 0, 1, 0, "BanChar", "/banchar <nick>", Msg))
+	if(CheckCommand(gObj, Config.Commands.IsBanChar, GmSystem.cBanPlayer, 0, 0, 0, 0, 1, 1, "BanChar", "/banchar <nick>", Msg))
 		return true;	
 
 	char Target[11];  
@@ -677,10 +679,11 @@ bool cChat::BanCharCommand(LPOBJ gObj, char *Msg)
 	}
 	else   
 	{																				 
-		MuOnlineQuery.ExecQuery("UPDATE Character SET CtlCode = 1 WHERE Name = '%s", Target);
+		MuOnlineQuery.ExecQuery("UPDATE Character SET CtlCode = 1 WHERE Name = '%s'", Target);
 			MuOnlineQuery.Fetch();
 			MuOnlineQuery.Close();	
-		MessageLog(1, c_Red, t_BAN, gObj, "[BanChar] %s banned", Target);		
+		MessageLog(1, c_Red, t_BAN, gObj, "[BanChar] %s banned", Target);	
+		MessageLog(1, c_Red, t_BAN, tObj, "[BanChar] Your character was banned by %s", gObj->Name);		
 	}
 
 	CloseClient(Index);
@@ -697,13 +700,14 @@ bool cChat::BanAccCommand(LPOBJ gObj, char *Msg)
 
 	sscanf(Msg, "%s %s", &Target, &Target2);
 	int Index = Utilits.GetPlayerIndex(Target2); 
-	OBJECTSTRUCT *tObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
 
 
 	if(Index != -1)			
 	{
-		CloseClient(Index);									   
-		MessageLog(1, c_Red, t_BAN, gObj, "[BanAcc] %s banned, character %s disconnected.", Target, Target2);		
+		OBJECTSTRUCT *tObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
+		MessageLog(1, c_Red, t_BAN, gObj, "[BanAcc] %s banned, character %s disconnected", Target, Target2);	
+		MessageLog(1, c_Red, t_BAN, gObj, "[BanAcc] Your account was banned by %s", gObj->Name);	
+		CloseClient(Index);									   	
 	}
 
 	Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_INFO SET bloc_code = 1 WHERE memb___id = '%s'", Target);
@@ -737,7 +741,6 @@ bool cChat::UnBanCharCommand(LPOBJ gObj, char *Msg)
 		MuOnlineQuery.ExecQuery("UPDATE Character SET CtlCode = 0 WHERE Name = '%s'", Target);
 			MuOnlineQuery.Fetch();
 			MuOnlineQuery.Close();
-
 		MessageLog(1, c_Red, t_BAN, gObj, "[UnBanChar] %s UnBaned", Target);		
 	}
 	return true;	 
