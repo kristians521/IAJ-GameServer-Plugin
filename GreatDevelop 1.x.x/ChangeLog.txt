@@ -6,6 +6,7 @@
 
 Great Develop 1.1.0
 	[GS\GSCS] Ware query fix
+	[GS\GSCS] Ban commands fixed
 
 Great Develop 1.0.9
 	[GS] Event.ini Fully Fixed
