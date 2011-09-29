@@ -5,6 +5,7 @@
 // ========================================================= //
 
 Great Develop 1.1.0
+	[GS\GSCS] Ware query fix
 
 Great Develop 1.0.9
 	[GS] Event.ini Fully Fixed
