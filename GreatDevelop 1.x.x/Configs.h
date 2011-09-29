@@ -6,7 +6,7 @@
 #ifndef CONFIGS_H
 #define CONFIGS_H
 
-#define dBuild 9
+#define dBuild 0
 
 //Function Defines //
 #ifdef _GS

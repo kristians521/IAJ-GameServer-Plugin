@@ -1476,7 +1476,7 @@ bool cChat::WareCommand(LPOBJ gObj, char *Msg)
 	 
 	if(UsedSlot == NULL || UsedSlot == 0)
 	{			   
-		MuOnlineQuery.ExecQuery("UPDATE warehouse SET Items01 = Items, UseSlot = 1 WHERE AccountID = '%s'", gObj->AccountID);
+		MuOnlineQuery.ExecQuery("UPDATE warehouse SET Items01 = Items, UsedSlot = 1 WHERE AccountID = '%s'", gObj->AccountID);
 			MuOnlineQuery.Fetch();
 			MuOnlineQuery.Close();
 	}
@@ -1493,7 +1493,7 @@ bool cChat::WareCommand(LPOBJ gObj, char *Msg)
 	} 
 	TakeCommand(gObj, Config.Commands.ZenForChange, Config.Commands.PcPointForChange, Config.Commands.WCoinForChange, "Ware");	
 	
-	MuOnlineQuery.ExecQuery("UPDATE warehouse SET Items%02d = Items, Items = Items%02d, UseSlot = %d WHERE AccountID = '%s'", UsedSlot, WantSlot, WantSlot, gObj->AccountID);
+	MuOnlineQuery.ExecQuery("UPDATE warehouse SET Items%02d = Items, Items = Items%02d, UsedSlot = %d WHERE AccountID = '%s'", UsedSlot, WantSlot, WantSlot, gObj->AccountID);
 		MuOnlineQuery.Fetch();
 		MuOnlineQuery.Close();
 
