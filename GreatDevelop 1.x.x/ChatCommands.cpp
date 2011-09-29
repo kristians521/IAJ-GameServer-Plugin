@@ -590,7 +590,7 @@ bool cChat::PostCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::BanPostCommand(LPOBJ gObj, char *Msg)
 {
-	if(CheckCommand(gObj, Config.Commands.IsBanPost, GmSystem.cBanPost, 0, 0, 0, 0, 2, 0, "BanPost", "/banpost <nick>", Msg))
+	if(CheckCommand(gObj, Config.Commands.IsBanPost, GmSystem.cBanPost, 0, 0, 0, 0, 1, 0, "BanPost", "/banpost <nick>", Msg))
 		return true;	
 
 	char Target[11];  
@@ -601,9 +601,9 @@ bool cChat::BanPostCommand(LPOBJ gObj, char *Msg)
 	OBJECTSTRUCT *tObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
 	
 	MuOnlineQuery.ExecQuery("SELECT BanPost FROM Character WHERE Name = '%s'", Target);
-		MuOnlineQuery.Fetch();
-		int Banned = MuOnlineQuery.GetAsInteger("BanPost");
-		MuOnlineQuery.Close();
+	MuOnlineQuery.Fetch();
+	int Banned = MuOnlineQuery.GetAsInteger("BanPost");
+	MuOnlineQuery.Close();
 
 	if(Banned)
 	{																											   
