@@ -258,7 +258,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 	if (Type == PCPOINT)
 	{
 
-		MuOnlineQuery.ExecQuery("UPDATE Character SET PCPoint = PCPoint %c %d WHERE Name = '%s'", ModeType, CountPoints, gObj->Name);
+		MuOnlineQuery.ExecQuery("UPDATE Character SET PCPoint = (PCPoint %c %d) WHERE Name = '%s'", ModeType, CountPoints, gObj->Name);
 			MuOnlineQuery.Fetch();
 			MuOnlineQuery.Close();
 
@@ -273,7 +273,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 	}
 	if (Type == WCOIN)
 	{
-		Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_INFO SET cspoints = cspoints %c %d WHERE memb___id = '%s'", ModeType, CountPoints, gObj->AccountID);
+		Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_INFO SET cspoints = (cspoints %c %d) WHERE memb___id = '%s'", ModeType, CountPoints, gObj->AccountID);
 			Me_MuOnlineQuery.Fetch();
 			Me_MuOnlineQuery.Close();
 
