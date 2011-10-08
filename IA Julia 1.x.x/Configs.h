@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #ifndef CONFIGS_H
@@ -10,7 +14,7 @@
 
 //Function Defines //
 #ifdef _GS
-#define GreatDevelopGS										".\\GameServer.ini"
+#define IAJuliaGS										".\\GameServer.ini"
 #define GSSIZE										4452946
 #define GetToken									0x00402CA2
 #define GetNumber									0x00407257
@@ -73,7 +77,7 @@
 #endif
 
 #ifdef _GS_CS
-#define GreatDevelopGS										".\\GameServerCS.ini"
+#define IAJuliaGS										".\\GameServerCS.ini"
 #define GSSIZE										4689920
 #define GetToken									0x00402C02
 #define GetNumber									0x00407B2B
@@ -121,33 +125,33 @@
 
 
 //Configs Defines //
-#define GreatDevelopAntiAFK			"..\\IA Julia\\AntiAFK.txt"
-#define GreatDevelopCmd				"..\\IA Julia\\Commands.ini"
-#define GreatDevelopCommon			"..\\IA Julia\\Common.ini"
-#define GreatDevelopDropSystem		"..\\IA Julia\\DropSystem.ini"
-#define GreatDevelopEvents			"..\\IA Julia\\Events.ini"
-#define GreatDevelopEventTime		"..\\IA Julia\\EventTimer.dat"
-#define GreatDevelopArcher			"..\\IA Julia\\GoldenArcher.txt"
-#define GreatDevelopItems			"..\\IA Julia\\Items.ini"	
-#define GreatDevelopMossGambler		"..\\IA Julia\\MossGambler.ini"
-#define GreatDevelopPcPoints		"..\\IA Julia\\PCPoints_WCoins.dat"
-#define GreatDevelopPets			"..\\IA Julia\\Pets.ini"
-#define GreatDevelopPkClear			"..\\IA Julia\\PkClearGuard.ini"
-#define GreatDevelopSkills			"..\\IA Julia\\Skills.ini"  
-#define GreatDevelopMobAdd			"..\\IA Julia\\MonsterSpawn.ini"  
-#define GreatDevelopMapSystem		"..\\IA Julia\\MapSystem.ini"
-#define GreatDevelopEventDropBC		"..\\IA Julia\\WzEvents\\EventDropBC.txt"
-#define GreatDevelopEventDropIT		"..\\IA Julia\\WzEvents\\EventDropIT.txt"
-#define GreatDevelopEventDropWW		"..\\IA Julia\\WzEvents\\EventDropWW.txt"
-#define GreatDevelopEventDropCC		"..\\IA Julia\\WzEvents\\EventDropCC.txt"
-#define	GreatDevelopWzEvents		"..\\IA Julia\\WzEvents"
-#define GreatDevelopNews			".\\News.txt"
-#define GreatDevelopGM				".\\GMSystem.txt"
-#define GreatDevelopIPBlock			".\\IPBlock.txt" 
-#define GreatDevelopVIP				".\\VIPSystem.ini" 
-#define GreatDevelopChatLogs		"..\\IA Julia\\ChatLogs"
-#define GreatDevelopConsoleLogs		"..\\IA Julia\\ConsoleLogs" 
-#define GreatDevelopLog				".\\Log" 
+#define IAJuliaAntiAFK			"..\\IA Julia\\AntiAFK.txt"
+#define IAJuliaCmd				"..\\IA Julia\\Commands.ini"
+#define IAJuliaCommon			"..\\IA Julia\\Common.ini"
+#define IAJuliaDropSystem		"..\\IA Julia\\DropSystem.ini"
+#define IAJuliaEvents			"..\\IA Julia\\Events.ini"
+#define IAJuliaEventTime		"..\\IA Julia\\EventTimer.dat"
+#define IAJuliaArcher			"..\\IA Julia\\GoldenArcher.txt"
+#define IAJuliaItems			"..\\IA Julia\\Items.ini"	
+#define IAJuliaMossGambler		"..\\IA Julia\\MossGambler.ini"
+#define IAJuliaPcPoints		"..\\IA Julia\\PCPoints_WCoins.dat"
+#define IAJuliaPets			"..\\IA Julia\\Pets.ini"
+#define IAJuliaPkClear			"..\\IA Julia\\PkClearGuard.ini"
+#define IAJuliaSkills			"..\\IA Julia\\Skills.ini"  
+#define IAJuliaMobAdd			"..\\IA Julia\\MonsterSpawn.ini"  
+#define IAJuliaMapSystem		"..\\IA Julia\\MapSystem.ini"
+#define IAJuliaEventDropBC		"..\\IA Julia\\WzEvents\\EventDropBC.txt"
+#define IAJuliaEventDropIT		"..\\IA Julia\\WzEvents\\EventDropIT.txt"
+#define IAJuliaEventDropWW		"..\\IA Julia\\WzEvents\\EventDropWW.txt"
+#define IAJuliaEventDropCC		"..\\IA Julia\\WzEvents\\EventDropCC.txt"
+#define	IAJuliaWzEvents		"..\\IA Julia\\WzEvents"
+#define IAJuliaNews			".\\News.txt"
+#define IAJuliaGM				".\\GMSystem.txt"
+#define IAJuliaIPBlock			".\\IPBlock.txt" 
+#define IAJuliaVIP				".\\VIPSystem.ini" 
+#define IAJuliaChatLogs		"..\\IA Julia\\ChatLogs"
+#define IAJuliaConsoleLogs		"..\\IA Julia\\ConsoleLogs" 
+#define IAJuliaLog				".\\Log" 
 
 #define GS_CONFIG_FILE				".\\Data\\ServerInfo.dat" 
 

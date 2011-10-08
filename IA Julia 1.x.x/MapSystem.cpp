@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "StdAfx.h"
@@ -29,11 +33,11 @@ cMapSystem::~cMapSystem()
 void cMapSystem::Load()
 {
    	FILE *fp;
-	fp = fopen(GreatDevelopMapSystem, "r");
+	fp = fopen(IAJuliaMapSystem, "r");
 
 	if(fp == NULL)
 	{
-		Log.ConsoleOutPut(1, c_Cyan, t_Default, "[Map System] System not active. Config file not found: %s", GreatDevelopMapSystem);
+		Log.ConsoleOutPut(1, c_Cyan, t_Default, "[Map System] System not active. Config file not found: %s", IAJuliaMapSystem);
 		return;
 	}
 	rewind(fp);

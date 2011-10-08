@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "StdAfx.h"
@@ -1027,7 +1031,7 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 			{
 				Config.LoadAll();
 				MoveReq.MoveReqLoad();
-				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] GreatDevelop Data & MoveReq Reloaded.");
+				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] Data & MoveReq Reloaded.");
 				break;
 			}
 		case 1:
@@ -1514,7 +1518,7 @@ bool cChat::AddMobCommand(LPOBJ gObj, char *Msg)
 
 		FILE* AddMobFile;  
 							 
-		if((AddMobFile = fopen( GreatDevelopMobAdd, "a+")) == NULL)
+		if((AddMobFile = fopen( IAJuliaMobAdd, "a+")) == NULL)
 		{						   
 			MessageBox(NULL, "Cant Find MonsterSpawn.ini", "Error", 0);
 		}

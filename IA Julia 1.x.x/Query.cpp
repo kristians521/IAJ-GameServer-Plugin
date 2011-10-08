@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "stdafx.h"
@@ -118,7 +122,7 @@ void CQuery::CheckColumn(char* Column, char* Table, char* AddQuery, ...)
 		ExecQuery(Temp);
 			Fetch();
 			Close();
-		Log.ConsoleOutPut(0, c_Red, t_Error, "GreatDevelop SQL Error!! \n Can't find %s column in %s table.\nSucsessfully added %s column in %s table \n \n", Column, Table, Column, Table);
+		Log.ConsoleOutPut(0, c_Red, t_Error, "IAJulia SQL Error!! \n Can't find %s column in %s table.\nSucsessfully added %s column in %s table \n \n", Column, Table, Column, Table);
 	}
 }
 
@@ -129,10 +133,10 @@ void LoadQuery()
 	char szDatabase[50];
 	char szDatabase2[50];
 
-	GetPrivateProfileStringA("SQL","SQLLogin","sa",szUser,sizeof(szUser),GreatDevelopGS);
-	GetPrivateProfileStringA("SQL","SQLPass","PASS",szPassword,sizeof(szPassword),GreatDevelopGS);
-	GetPrivateProfileStringA("SQL","SQLDB","MuOnline",szDatabase,sizeof(szDatabase),GreatDevelopGS);
-	GetPrivateProfileStringA("SQL","SQLDB2","Me_MuOnline",szDatabase2,sizeof(szDatabase2),GreatDevelopGS);
+	GetPrivateProfileStringA("SQL","SQLLogin","sa",szUser,sizeof(szUser),IAJuliaGS);
+	GetPrivateProfileStringA("SQL","SQLPass","PASS",szPassword,sizeof(szPassword),IAJuliaGS);
+	GetPrivateProfileStringA("SQL","SQLDB","MuOnline",szDatabase,sizeof(szDatabase),IAJuliaGS);
+	GetPrivateProfileStringA("SQL","SQLDB2","Me_MuOnline",szDatabase2,sizeof(szDatabase2),IAJuliaGS);
 
 	if ( MuOnlineQuery.Connect(szDatabase, szUser, szPassword) == TRUE )
 	{

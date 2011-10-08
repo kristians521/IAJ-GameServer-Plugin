@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "StdAfx.h"
@@ -110,12 +114,22 @@ DWORD MainTick()
 						AddTab[gObj->m_Index].VIP_Min = 0;
 						MuOnlineQuery.ExecQuery("UPDATE Character SET %s = 0, %s = 0 WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
 							MuOnlineQuery.Fetch();
+							MuOnlineQuery.Close();			
+						MuOnlineQuery.ExecQuery("SELECT %s, %s FROM Character WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
+							MuOnlineQuery.Fetch();
+							AddTab[gObj->m_Index].VIP_Type = MuOnlineQuery.GetAsInteger(Config.VIP.Column);
+							AddTab[gObj->m_Index].VIP_Min = MuOnlineQuery.GetAsInteger(Config.VIP.ColumnDate);
 							MuOnlineQuery.Close();
 					}
 					else
 					{
-						MuOnlineQuery.ExecQuery("UPDATE Character SET %s = %d WHERE Name = '%s'", Config.VIP.ColumnDate, AddTab[gObj->m_Index].VIP_Min, gObj->Name);
+						MuOnlineQuery.ExecQuery("UPDATE Character SET %s = (%s - 1) WHERE Name = '%s'", Config.VIP.ColumnDate, Config.VIP.ColumnDate, gObj->Name);
 							MuOnlineQuery.Fetch();
+							MuOnlineQuery.Close();
+						MuOnlineQuery.ExecQuery("SELECT %s, %s FROM Character WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
+							MuOnlineQuery.Fetch();
+							AddTab[gObj->m_Index].VIP_Type = MuOnlineQuery.GetAsInteger(Config.VIP.Column);
+							AddTab[gObj->m_Index].VIP_Min = MuOnlineQuery.GetAsInteger(Config.VIP.ColumnDate);
 							MuOnlineQuery.Close();
 					}
 				}
@@ -212,9 +226,9 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 	if(VirtualProtect(LPVOID(0x401000), GSSIZE, PAGE_EXECUTE_READWRITE, &OldProtect))
 	{	
 		//Create Log folder in GameServer
-		CreateDirectory(GreatDevelopConsoleLogs,NULL);	
-		CreateDirectory(GreatDevelopChatLogs,NULL);
-		CreateDirectory(GreatDevelopLog,NULL);	
+		CreateDirectory(IAJuliaConsoleLogs,NULL);	
+		CreateDirectory(IAJuliaChatLogs,NULL);
+		CreateDirectory(IAJuliaLog,NULL);	
 		//
 		Sleep(500);
 		Log.LoggerInit();

@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "Stdafx.h" 
@@ -85,7 +89,7 @@ void cAntiAFK::Load()
 	char buf[256];
 	int nummap, value;
 	bool flag = false;
-	antiafk = fopen(GreatDevelopAntiAFK,"r");
+	antiafk = fopen(IAJuliaAntiAFK,"r");
 	if ( antiafk != NULL )
 	{
 		while ( !feof(antiafk) )

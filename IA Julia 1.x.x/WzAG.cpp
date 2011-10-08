@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "StdAfx.h"
@@ -31,7 +35,7 @@ WZAG_API int AGGetClientVersion(int unknown,char * VerBuff,char * SerialBuff)
 {
 	char ver[0x14];
 	char serial[0x14];
-	char commonlocPath[]=GreatDevelopCommon;
+	char commonlocPath[]=IAJuliaCommon;
 
 
 	GetPrivateProfileString(
@@ -110,7 +114,7 @@ WZAG_API int AGRequestData(int NoneUse,int GetType)
 	CHAR ItemSetOption[256];
 	CHAR ItemSetType[256];	
 
-	char GameServerIni[] = GreatDevelopGS;
+	char GameServerIni[] = IAJuliaGS;
 	GetPrivateProfileString("Data","Item","..\\data\\lang\\Kor\\item(Kor).txt",Item,256,GameServerIni);
 	GetPrivateProfileString("Data","Skill","..\\data\\lang\\Kor\\skill(Kor).txt",Skill,256,GameServerIni);
 	GetPrivateProfileString("Data","Quest","..\\data\\lang\\Kor\\quest(Kor).txt",Quest,256,GameServerIni);

@@ -1,7 +1,11 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
-// ================================================== // 
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
+// ================================================== //
 
 #include "StdAfx.h"
 #include "GmSystem.h"
@@ -29,7 +33,7 @@ void cGmSystem::Load()
 	GMCount = 0;
 	BOOL bResult = FALSE;
 
-	fp = fopen(GreatDevelopGM,"r");
+	fp = fopen(IAJuliaGM,"r");
 
 	rewind(fp);
 	int CFG = -1;

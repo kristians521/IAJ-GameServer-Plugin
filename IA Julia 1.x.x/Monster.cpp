@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "StdAfx.h"
@@ -66,7 +70,7 @@ int MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y)
 void ReadMonsterAdd()
 { 
 		FILE* MonsterFile;
-		if((MonsterFile = fopen( GreatDevelopMobAdd, "r")) == NULL)
+		if((MonsterFile = fopen( IAJuliaMobAdd, "r")) == NULL)
 		{						   
 			MessageBox(NULL, "Cant Find MonsterSpawn.ini", "Error", 0);
 			return;

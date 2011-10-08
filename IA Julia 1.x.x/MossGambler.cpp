@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "StdAfx.h"
@@ -46,28 +50,28 @@ void Moss::DataSendMoss(int Index)
 
 void Moss::LoadMoss()
 {
-	MossConfig.EnableMoss		= Config.GetInt(0,1,0,"Moss","EnableMoss",GreatDevelopMossGambler); 
+	MossConfig.EnableMoss		= Config.GetInt(0,1,0,"Moss","EnableMoss",IAJuliaMossGambler); 
 	if(!MossConfig.EnableMoss)return;
 
-	MossConfig.EnableTimer		= Config.GetInt(0,1,0,"Moss","EnableTimer",GreatDevelopMossGambler);
-	MossConfig.UsePK			= Config.GetInt(0,1,0,"Moss","UsePK",GreatDevelopMossGambler);
+	MossConfig.EnableTimer		= Config.GetInt(0,1,0,"Moss","EnableTimer",IAJuliaMossGambler);
+	MossConfig.UsePK			= Config.GetInt(0,1,0,"Moss","UsePK",IAJuliaMossGambler);
 
-	MossConfig.PriceZen			= Config.GetInt(0,2000000000,100000000,"Moss","PriceZen",GreatDevelopMossGambler);
-	MossConfig.PricePCPoint		= Config.GetInt(0,1000,10,"Moss","PricePCPoint",GreatDevelopMossGambler);
-	MossConfig.PriceWCoin		= Config.GetInt(0,1000,10,"Moss","PriceWCoin",GreatDevelopMossGambler);
+	MossConfig.PriceZen			= Config.GetInt(0,2000000000,100000000,"Moss","PriceZen",IAJuliaMossGambler);
+	MossConfig.PricePCPoint		= Config.GetInt(0,1000,10,"Moss","PricePCPoint",IAJuliaMossGambler);
+	MossConfig.PriceWCoin		= Config.GetInt(0,1000,10,"Moss","PriceWCoin",IAJuliaMossGambler);
 
-	MossConfig.RandExc			= Config.GetInt(0,100,50,"Random","RandExc",GreatDevelopMossGambler);
-	MossConfig.MaxExcOpt		= Config.GetInt(0,100,6,"Random","MaxExcOpt",GreatDevelopMossGambler);
+	MossConfig.RandExc			= Config.GetInt(0,100,50,"Random","RandExc",IAJuliaMossGambler);
+	MossConfig.MaxExcOpt		= Config.GetInt(0,100,6,"Random","MaxExcOpt",IAJuliaMossGambler);
 
-	MossConfig.RandLevel		= Config.GetInt(0,100,85,"Random","RandLevel",GreatDevelopMossGambler);
-	MossConfig.MaxLevel			= Config.GetInt(0,100,13,"Random","MaxLevel",GreatDevelopMossGambler);
+	MossConfig.RandLevel		= Config.GetInt(0,100,85,"Random","RandLevel",IAJuliaMossGambler);
+	MossConfig.MaxLevel			= Config.GetInt(0,100,13,"Random","MaxLevel",IAJuliaMossGambler);
 
-	MossConfig.RandOptAdd		= Config.GetInt(0,100,85,"Random","RandOptAdd",GreatDevelopMossGambler);
-	MossConfig.MaxOptAdd		= Config.GetInt(0,100,7,"Random","MaxOptAdd",GreatDevelopMossGambler);
+	MossConfig.RandOptAdd		= Config.GetInt(0,100,85,"Random","RandOptAdd",IAJuliaMossGambler);
+	MossConfig.MaxOptAdd		= Config.GetInt(0,100,7,"Random","MaxOptAdd",IAJuliaMossGambler);
 
-	MossConfig.RandLuck			= Config.GetInt(0,100,50,"Random","RandLuck",GreatDevelopMossGambler);
-	MossConfig.RandSkill		= Config.GetInt(0,100,50,"Random","RandSkill",GreatDevelopMossGambler);
-	MossConfig.RandAncient		= Config.GetInt(0,100,20,"Random","RandAncient",GreatDevelopMossGambler);
+	MossConfig.RandLuck			= Config.GetInt(0,100,50,"Random","RandLuck",IAJuliaMossGambler);
+	MossConfig.RandSkill		= Config.GetInt(0,100,50,"Random","RandSkill",IAJuliaMossGambler);
+	MossConfig.RandAncient		= Config.GetInt(0,100,20,"Random","RandAncient",IAJuliaMossGambler);
 	moss.LoadItemInfo();
 	if (MossConfig.EnableTimer) moss.LoadTimeConfig();
 }
@@ -118,7 +122,7 @@ void Moss::LoadTimeConfig()
 { 
 	FILE * file;
 
-	file = fopen(GreatDevelopEventTime,"r");
+	file = fopen(IAJuliaEventTime,"r");
 
 	if (file == NULL)
 	{

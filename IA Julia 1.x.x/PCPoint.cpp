@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "PCPoint.h"
@@ -17,14 +21,14 @@ cPCPoint::~cPCPoint() {}
 
 void cPCPoint::LoadIniConfigs()
 {
-	sPoints.MaximumWCPoints		= Config.GetInt(0, 32000,					10000,	"WCoins",		"MaximumWCPoints",			GreatDevelopPcPoints);
+	sPoints.MaximumWCPoints		= Config.GetInt(0, 32000,					10000,	"WCoins",		"MaximumWCPoints",			IAJuliaPcPoints);
 
-	sPoints.Enabled				= Config.GetInt(0, 1	,					1,		"PCPoints",		"Enabled",					GreatDevelopPcPoints);
+	sPoints.Enabled				= Config.GetInt(0, 1	,					1,		"PCPoints",		"Enabled",					IAJuliaPcPoints);
 	if (!sPoints.Enabled) return;
 
-	sPoints.MaximumPCPoints		= Config.GetInt(0, 32000,					10000,	"PCPoints",		"MaximumPCPoints",			GreatDevelopPcPoints);
-	sPoints.AddPCPointsSec		= Config.GetInt(0, 6000000,					3600,	"PCPoints",		"AddPCPointsSec",			GreatDevelopPcPoints);
-	sPoints.AddPCPointsCount	= Config.GetInt(0, sPoints.MaximumPCPoints,	10,		"PCPoints",		"AddPCPointsCount",			GreatDevelopPcPoints);	
+	sPoints.MaximumPCPoints		= Config.GetInt(0, 32000,					10000,	"PCPoints",		"MaximumPCPoints",			IAJuliaPcPoints);
+	sPoints.AddPCPointsSec		= Config.GetInt(0, 6000000,					3600,	"PCPoints",		"AddPCPointsSec",			IAJuliaPcPoints);
+	sPoints.AddPCPointsCount	= Config.GetInt(0, sPoints.MaximumPCPoints,	10,		"PCPoints",		"AddPCPointsCount",			IAJuliaPcPoints);	
 	this->LoadConfigs();
 }
 
@@ -33,11 +37,11 @@ void cPCPoint::LoadConfigs()
 	this->ChekingCallInitItemsInShop = false;
 
 	FILE *file;
-	file = fopen(GreatDevelopPcPoints,"r");
+	file = fopen(IAJuliaPcPoints,"r");
 
 	if (file == NULL)
 	{
-		Log.ConsoleOutPut(1,c_Red,t_Error,"[PC Point] Can`t Find %s",GreatDevelopPcPoints);
+		Log.ConsoleOutPut(1,c_Red,t_Error,"[PC Point] Can`t Find %s",IAJuliaPcPoints);
 		return;
 	}
 

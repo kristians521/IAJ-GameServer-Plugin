@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "StdAfx.h"
@@ -184,13 +188,13 @@ void cDropEvent::dropItem(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int LootIn
 void cDropEvent::updateBC()
 {
 	// Drop Count
-	dropCountBC.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",GreatDevelopEventDropBC);
-	dropCountBC.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",GreatDevelopEventDropBC);
+	dropCountBC.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropBC);
+	dropCountBC.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropBC);
 
 	// Drop List
 
 	FILE* fp;
-	fp = fopen(GreatDevelopEventDropBC, "r");
+	fp = fopen(IAJuliaEventDropBC, "r");
 	rewind(fp);
 
 	if(fp == NULL)
@@ -269,13 +273,13 @@ void cDropEvent::handlerBC(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type,
 void cDropEvent::updateIT()
 {
 	// Drop Count
-	dropCountIT.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",GreatDevelopEventDropIT);
-	dropCountIT.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",GreatDevelopEventDropIT);
+	dropCountIT.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropIT);
+	dropCountIT.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropIT);
 
 	// Drop List
 
 	FILE* fp;
-	fp = fopen(GreatDevelopEventDropIT, "r");
+	fp = fopen(IAJuliaEventDropIT, "r");
 	rewind(fp);
 
 	if(fp == NULL)
@@ -353,13 +357,13 @@ void cDropEvent::handlerIT(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type,
 void cDropEvent::updateWW()
 {
 	// Drop Count
-	dropCountWW.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",GreatDevelopEventDropWW);
-	dropCountWW.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",GreatDevelopEventDropWW);
+	dropCountWW.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropWW);
+	dropCountWW.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropWW);
 
 	// Drop List
 
 	FILE* fp;
-	fp = fopen(GreatDevelopEventDropWW, "r");
+	fp = fopen(IAJuliaEventDropWW, "r");
 	rewind(fp);
 
 	if(fp == NULL)
@@ -424,13 +428,13 @@ void cDropEvent::handlerWW(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type,
 void cDropEvent::updateCC()
 {
 	// Drop Count
-	dropCountCC.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",GreatDevelopEventDropCC);
-	dropCountCC.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",GreatDevelopEventDropCC);
+	dropCountCC.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropCC);
+	dropCountCC.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropCC);
 
 	// Drop List
 
 	FILE* fp;
-	fp = fopen(GreatDevelopEventDropCC, "r");
+	fp = fopen(IAJuliaEventDropCC, "r");
 	rewind(fp);
 
 	if(fp == NULL)

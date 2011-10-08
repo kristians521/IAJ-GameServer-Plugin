@@ -1,6 +1,10 @@
 // ================================================== //
-// # GameServer 1.00.90 WzAG.dll					# //
-// # GreatDevelop 1.1.0 beta						# //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
 // ================================================== //
 
 #include "Archer.h"
@@ -23,11 +27,11 @@ cGoldenArcher::~cGoldenArcher() {}
 void cGoldenArcher::LoadPrizeItems()
 {
 	FILE *file;
-	file = fopen(GreatDevelopArcher,"r");
+	file = fopen(IAJuliaArcher,"r");
 
 	if (file == NULL)
 	{
-		Log.ConsoleOutPut(1,c_Red,t_Default,"[Golden Archer] Cant Find MonsterSpawn.ini! Archer disabled!",GreatDevelopArcher);
+		Log.ConsoleOutPut(1,c_Red,t_Default,"[Golden Archer] Cant Find MonsterSpawn.ini! Archer disabled!",IAJuliaArcher);
 		Config.Archer.Enabled = 0;
 		return;
 	}

@@ -1,11 +1,15 @@
-// ========================================================= //
-// # GameServer 1.00.90 : ChangeLog.txt		    	   # //
-// # GreatDevelop 1.1.0 beta 2011	       	    	   # //
-// # http://greatdevelop.ru, http://greatgame.su	   # //
-// ========================================================= //
+// ================================================== //
+// #		GameServer 1.00.90		    # //
+// #		Imagination Arts		    # //
+// #		Julia Project 1.1.x		    # //
+// ================================================== //
+// #	http://imaginationarts.net/forum/	    # //
+// #	http://auroraplay.ru/			    # //
+// ================================================== //
 
-Great Develop 1.1.0
+Imagination Arts 1.1.0
 	[GS\GSCS] Ware query fix
+	[GS\GSCS] PcPoint, Wcoin db last fixes
 	[GS\GSCS] Ban commands fixed
 
 Great Develop 1.0.9
