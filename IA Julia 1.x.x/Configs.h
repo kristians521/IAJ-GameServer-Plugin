@@ -10,7 +10,8 @@
 #ifndef CONFIGS_H
 #define CONFIGS_H
 
-#define dBuild 0
+//#define dBuild 0
+//#define dCommit 146
 
 //Function Defines //
 #ifdef _GS

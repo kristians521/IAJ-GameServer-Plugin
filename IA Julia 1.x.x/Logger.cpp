@@ -38,7 +38,7 @@ char* Logger::LoggerTittle()
 	#else													   
 	#define GType "(GS_CS)"
 	#endif  
-	sprintf(Tittle, "[%s] [%d/%d] IA Julia 1.1.%d %s", Config.ServerName, Online_All, Online_Max, dBuild, GType);  
+	sprintf(Tittle, "[%s] [%d/%d] IA Julia 1.1.%d.%d %s", Config.ServerName, Online_All, Online_Max, dBuild, dCommit, GType);  
 	return Tittle;
 } 
 
@@ -48,7 +48,7 @@ void Logger::LoggerInit()
 
 	CreateThread( 0 , 0 , (LPTHREAD_START_ROUTINE) LoggerCore , 0 , 0 , &PiD );
 	Sleep(100);
-	ConsoleOutPut(0, c_Green,t_NULL,"IA Julia 1.1.%d Season 4.6", dBuild);
+	ConsoleOutPut(0, c_Green,t_NULL,"IA Julia 1.1.%d.%d Season 4.6", dBuild, dCommit);
 	ConsoleOutPut(0, c_Green,t_NULL,"Official Website: http://imaginationarts.net/");
 	ConsoleOutPut(0, c_Green,t_NULL,"Compile Date: %s %s", __DATE__, __TIME__);
 	ConsoleOutPut(0, c_Green,t_NULL,"Credits: Mu Community, Imagination Arts");
