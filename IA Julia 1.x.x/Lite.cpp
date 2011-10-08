@@ -110,22 +110,12 @@ DWORD MainTick()
 						AddTab[gObj->m_Index].VIP_Min = 0;
 						MuOnlineQuery.ExecQuery("UPDATE Character SET %s = 0, %s = 0 WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
 							MuOnlineQuery.Fetch();
-							MuOnlineQuery.Close();			
-						MuOnlineQuery.ExecQuery("SELECT %s, %s FROM Character WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
-							MuOnlineQuery.Fetch();
-							AddTab[gObj->m_Index].VIP_Type = MuOnlineQuery.GetAsInteger(Config.VIP.Column);
-							AddTab[gObj->m_Index].VIP_Min = MuOnlineQuery.GetAsInteger(Config.VIP.ColumnDate);
 							MuOnlineQuery.Close();
 					}
 					else
 					{
-						MuOnlineQuery.ExecQuery("UPDATE Character SET %s = (%s - 1) WHERE Name = '%s'", Config.VIP.ColumnDate, Config.VIP.ColumnDate, gObj->Name);
+						MuOnlineQuery.ExecQuery("UPDATE Character SET %s = %d WHERE Name = '%s'", Config.VIP.ColumnDate, AddTab[gObj->m_Index].VIP_Min, gObj->Name);
 							MuOnlineQuery.Fetch();
-							MuOnlineQuery.Close();
-						MuOnlineQuery.ExecQuery("SELECT %s, %s FROM Character WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
-							MuOnlineQuery.Fetch();
-							AddTab[gObj->m_Index].VIP_Type = MuOnlineQuery.GetAsInteger(Config.VIP.Column);
-							AddTab[gObj->m_Index].VIP_Min = MuOnlineQuery.GetAsInteger(Config.VIP.ColumnDate);
 							MuOnlineQuery.Close();
 					}
 				}

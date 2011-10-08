@@ -86,7 +86,9 @@ bool cDropSystem::DropItem(LPOBJ mObj,LPOBJ pObj)
 
 	for(int j = 0; j < CountArrayItem; j++)
 	{
-		if((ItemsDrop[mClass][MapArrayItem[j]].MinLvl <= mObj->Level && ItemsDrop[mClass][MapArrayItem[j]].MaxLvl >= mObj->Level) || ItemsDrop[mClass][MapArrayItem[j]].MaxLvl == 0)
+		if((ItemsDrop[mClass][MapArrayItem[j]].MinLvl <= mObj->Level &&
+			ItemsDrop[mClass][MapArrayItem[j]].MaxLvl >= mObj->Level) ||
+			ItemsDrop[mClass][MapArrayItem[j]].MaxLvl == 0)
 		{
 			LvlArrayItem[CountLvlArrayItem] = MapArrayItem[j];
 			CountLvlArrayItem++;
@@ -118,10 +120,10 @@ bool cDropSystem::DropItem(LPOBJ mObj,LPOBJ pObj)
 	if(CountRateItem == 0) return false;
 
 	int RandomItem = rand() % CountRateItem;	
-	if(LastRandomItem == RandomItem)
-		return false;
-	else
-		LastRandomItem = RandomItem;
+	//if(LastRandomItem == RandomItem)
+	//	return false;
+	//else
+	//	LastRandomItem = RandomItem;
 
 	int Level,Skill,Luck,Opt,Exc,Group,Index;
 

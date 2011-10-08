@@ -217,11 +217,11 @@ void cChat::MassLog(LPOBJ gObj, LPBYTE Message)
 	sprintf(Msg,"[%s] [%s:%s] [%s]: %s\n", currdate, gObj->AccountID, gObj->Name, Type,  Msg2);	
 
 	char Date[55];
-	sprintf(Date, "..\\GreatDevelop\\ChatLogs\\%02d-%02d-%02d\\", t.wDay, t.wMonth, t.wYear); 
+	sprintf(Date, "..\\IA Julia\\ChatLogs\\%02d-%02d-%02d\\", t.wDay, t.wMonth, t.wYear); 
 	CreateDirectory(Date,NULL);
 
 	char ChatLog[55];		  		
-	sprintf(ChatLog, "..\\GreatDevelop\\ChatLogs\\%02d-%02d-%02d\\ChatLogs.log", t.wDay, t.wMonth, t.wYear);
+	sprintf(ChatLog, "..\\IA Julia\\ChatLogs\\%02d-%02d-%02d\\ChatLogs.log", t.wDay, t.wMonth, t.wYear);
 	Log.SaveFile(ChatLog, Msg);  
 }
 
@@ -1677,7 +1677,7 @@ bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 		TakeCommand(gObj, Config.VIP.VIPState[RealState].CostZen * Hours, Config.VIP.VIPState[RealState].CostPCPoints * Hours, 
 				Config.VIP.VIPState[RealState].CostWCoins * Hours, "BuyVIP");
 
-		MuOnlineQuery.ExecQuery("UPDATE Character SET %s = (%s + %d), %s = %d WHERE Name = '%s'", Config.VIP.ColumnDate, Config.VIP.ColumnDate, Hours*60, Config.VIP.Column, RealState, gObj->Name);	
+		MuOnlineQuery.ExecQuery("UPDATE Character SET %s = %s + %d, %s = %d WHERE Name = '%s'", Config.VIP.ColumnDate, Config.VIP.ColumnDate, Hours*60, Config.VIP.Column, RealState, gObj->Name);	
 			MuOnlineQuery.Fetch();
 			MuOnlineQuery.Close();
 

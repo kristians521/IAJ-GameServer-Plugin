@@ -26,7 +26,7 @@ void cMoveReq::MoveReqLoad()
 	char sLineTxt[255] = {0};
 	int MoveReqCount = 1;
 
-	fp = fopen("..\\GreatDevelop\\MoveReq.txt","r");
+	fp = fopen("..\\IA Julia\\MoveReq.txt","r");
 
 	if(!fp)
 	{

@@ -70,7 +70,7 @@
     <Filter Include="Source\User">
       <UniqueIdentifier>{022c93be-b537-4cf6-94e2-0bb5104079d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Configs\GreatDevelop">
+    <Filter Include="Configs\IA Julia">
       <UniqueIdentifier>{bfddddc1-3c81-42a5-9b8a-cb833e1ae3da}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\MoveReq">
@@ -94,7 +94,7 @@
     <Filter Include="Source\DropSystem">
       <UniqueIdentifier>{6826c7d3-bcdb-4398-8505-55878038c27b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Configs\GreatDevelop\WzEvents">
+    <Filter Include="Configs\IA Julia\WzEvents">
       <UniqueIdentifier>{2a260854-04f3-45ea-aa89-257ed84b9952}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -281,54 +281,54 @@
       <Filter>Configs\GameServer</Filter>
     </None>
     <None Include="ChangeLog.txt" />
-    <None Include="Configs\GreatDevelop\AntiAFK.txt">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\AntiAFK.txt">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\Commands.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\Commands.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\Common.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\Common.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\DropSystem.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\DropSystem.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\Events.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\Events.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\EventTimer.dat">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\EventTimer.dat">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\GoldenArcher.txt">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\GoldenArcher.txt">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\Items.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\Items.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\MossGambler.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\MossGambler.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\MoveReq.txt">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\MoveReq.txt">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\PCPoints_WCoins.dat">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\PCPoints_WCoins.dat">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\Pets.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\Pets.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\PkClearGuard.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\PkClearGuard.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\Skills.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\Skills.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Great Develop 1.x.x ReadMe.txt" />
-    <None Include="Configs\GreatDevelop\MonsterSpawn.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="IA Julia 1.x.x ReadMe.txt" />
+    <None Include="Configs\IA Julia\MonsterSpawn.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\MapSystem.ini">
-      <Filter>Configs\GreatDevelop</Filter>
+    <None Include="Configs\IA Julia\MapSystem.ini">
+      <Filter>Configs\IA Julia</Filter>
     </None>
     <None Include="Configs\GameServerCS\VIPSystem.ini">
       <Filter>Configs\GameServerCS</Filter>
@@ -337,17 +337,17 @@
       <Filter>Configs\GameServer</Filter>
     </None>
     <None Include="TODO.txt" />
-    <None Include="Configs\GreatDevelop\WzEvents\EventDropBC.txt">
-      <Filter>Configs\GreatDevelop\WzEvents</Filter>
+    <None Include="Configs\IA Julia\WzEvents\EventDropBC.txt">
+      <Filter>Configs\IA Julia\WzEvents</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\WzEvents\EventDropCC.txt">
-      <Filter>Configs\GreatDevelop\WzEvents</Filter>
+    <None Include="Configs\IA Julia\WzEvents\EventDropCC.txt">
+      <Filter>Configs\IA Julia\WzEvents</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\WzEvents\EventDropIT.txt">
-      <Filter>Configs\GreatDevelop\WzEvents</Filter>
+    <None Include="Configs\IA Julia\WzEvents\EventDropIT.txt">
+      <Filter>Configs\IA Julia\WzEvents</Filter>
     </None>
-    <None Include="Configs\GreatDevelop\WzEvents\EventDropWW.txt">
-      <Filter>Configs\GreatDevelop\WzEvents</Filter>
+    <None Include="Configs\IA Julia\WzEvents\EventDropWW.txt">
+      <Filter>Configs\IA Julia\WzEvents</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

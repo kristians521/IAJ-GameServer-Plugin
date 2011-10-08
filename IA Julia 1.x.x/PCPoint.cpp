@@ -226,15 +226,16 @@ void cPCPoint::InitPCPointForPlayer(LPOBJ gObj)
 
 void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoint Type)
 {
-	char ModeType;
+	int AmountPoints;
 
 	if (Type == PCPOINT)		
 	{
-		if(gObj->Connected < PLAYER_PLAYING)
-		{
-			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not playing!)");
-			return;
-		}
+			if(gObj->Connected < PLAYER_PLAYING)
+			{
+				Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not playing!)");
+				return;
+			}
+			AmountPoints = AddTab[gObj->m_Index].PC_PlayerPoints;  
 	}
 	if (Type ==  WCOIN ) 
 	{
@@ -243,37 +244,36 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not logged!)");
 			return;
 		}
+		AmountPoints = 0;
 	}
 
 	switch(Mode)
 	{
 	case PLUS:
-		ModeType = '+';
+		AmountPoints += CountPoints;
+		if (AmountPoints >= sPoints.MaximumPCPoints)	AmountPoints = sPoints.MaximumPCPoints;
 		break;
 	case MINUS:
-		ModeType = '-';
+		AmountPoints -= CountPoints;
+		if (AmountPoints < 0 && Type == PCPOINT) AmountPoints = 0;
 		break;
 	}
 
 	if (Type == PCPOINT)
 	{
+		AddTab[gObj->m_Index].PC_PlayerPoints = AmountPoints;
 
-		MuOnlineQuery.ExecQuery("UPDATE Character SET PCPoint = (PCPoint %c %d) WHERE Name = '%s'", ModeType, CountPoints, gObj->Name);
+		MuOnlineQuery.ExecQuery("UPDATE Character SET PCPoint = %d WHERE Name = '%s'", AmountPoints, gObj->Name);
 			MuOnlineQuery.Fetch();
 			MuOnlineQuery.Close();
 
-		MuOnlineQuery.ExecQuery("SELECT PCPoint FROM Character WHERE Name = '%s'", gObj->Name);
-			MuOnlineQuery.Fetch();
-			AddTab[gObj->m_Index].PC_PlayerPoints = MuOnlineQuery.GetAsInteger("PCPoint");
-			MuOnlineQuery.Close();
-
-		BYTE Packet[8] = {0xC1, 0x08 , 0xD0 , 0x04 , LOBYTE(AddTab[gObj->m_Index].PC_PlayerPoints), HIBYTE(AddTab[gObj->m_Index].PC_PlayerPoints),
+		BYTE Packet[8] = {0xC1, 0x08 , 0xD0 , 0x04 , LOBYTE(AmountPoints), HIBYTE(AmountPoints),
 			LOBYTE(sPoints.MaximumPCPoints), HIBYTE(sPoints.MaximumPCPoints)};
 		DataSend(gObj->m_Index, (PBYTE)Packet, Packet[1]);
 	}
 	if (Type == WCOIN)
 	{
-		Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_INFO SET cspoints = (cspoints %c %d) WHERE memb___id = '%s'", ModeType, CountPoints, gObj->AccountID);
+		Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_INFO SET cspoints = cspoints + %d WHERE memb___id = '%s'", AmountPoints, gObj->AccountID);
 			Me_MuOnlineQuery.Fetch();
 			Me_MuOnlineQuery.Close();
 

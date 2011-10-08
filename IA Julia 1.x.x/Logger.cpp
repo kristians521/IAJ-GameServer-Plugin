@@ -145,22 +145,22 @@ void Logger::CreateLog(sLogType Type,const char* Format, ...)
 	char Date[55];
 	char SqlLog[55];
 	char VipLog[55];
-	sprintf(Date, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\", now.wDay, now.wMonth, now.wYear); 
+	sprintf(Date, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\", now.wDay, now.wMonth, now.wYear); 
 	CreateDirectory(Date,NULL);
 																													  
-	sprintf(CommandsLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\Commands.log", now.wDay, now.wMonth, now.wYear); 
-	sprintf(ConsoleLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\CONSOLE.log", now.wDay, now.wMonth, now.wYear);
-	sprintf(GPostLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\[GPOST].log", now.wDay, now.wMonth, now.wYear);
-	sprintf(PostLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\[POST].log", now.wDay, now.wMonth, now.wYear); 
-	sprintf(DropLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\DROP.log", now.wDay, now.wMonth, now.wYear);
-	sprintf(BanLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\BAN.log", now.wDay, now.wMonth, now.wYear);			 
-	sprintf(GMLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\GM.log", now.wDay, now.wMonth, now.wYear);
-	sprintf(DuelLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\DuelManager.log", now.wDay, now.wMonth, now.wYear);
-	sprintf(PcPointLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\PCPoint.log", now.wDay, now.wMonth, now.wYear);		   
-	sprintf(IpBlockLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\IpBlock.log", now.wDay, now.wMonth, now.wYear);		
-	sprintf(ErrorLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\Error.log", now.wDay, now.wMonth, now.wYear);
-	sprintf(SqlLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\Sql.log", now.wDay, now.wMonth, now.wYear);
-	sprintf(VipLog, "..\\GreatDevelop\\ConsoleLogs\\%02d-%02d-%02d\\Vip.log", now.wDay, now.wMonth, now.wYear);
+	sprintf(CommandsLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\Commands.log", now.wDay, now.wMonth, now.wYear); 
+	sprintf(ConsoleLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\CONSOLE.log", now.wDay, now.wMonth, now.wYear);
+	sprintf(GPostLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\[GPOST].log", now.wDay, now.wMonth, now.wYear);
+	sprintf(PostLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\[POST].log", now.wDay, now.wMonth, now.wYear); 
+	sprintf(DropLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\DROP.log", now.wDay, now.wMonth, now.wYear);
+	sprintf(BanLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\BAN.log", now.wDay, now.wMonth, now.wYear);			 
+	sprintf(GMLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\GM.log", now.wDay, now.wMonth, now.wYear);
+	sprintf(DuelLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\DuelManager.log", now.wDay, now.wMonth, now.wYear);
+	sprintf(PcPointLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\PCPoint.log", now.wDay, now.wMonth, now.wYear);		   
+	sprintf(IpBlockLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\IpBlock.log", now.wDay, now.wMonth, now.wYear);		
+	sprintf(ErrorLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\Error.log", now.wDay, now.wMonth, now.wYear);
+	sprintf(SqlLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\Sql.log", now.wDay, now.wMonth, now.wYear);
+	sprintf(VipLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\Vip.log", now.wDay, now.wMonth, now.wYear);
 
 	va_list pArguments1;
 	va_start(pArguments1, Format);

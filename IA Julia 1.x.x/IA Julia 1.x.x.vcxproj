@@ -12,8 +12,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3CCD65B4-231D-4529-AD8D-FF169085EE2E}</ProjectGuid>
-    <RootNamespace>Tornado_Lite_712</RootNamespace>
-    <ProjectName>GreatDevelop 1.x.x</ProjectName>
+    <RootNamespace>IA_Julia</RootNamespace>
+    <ProjectName>IA Julia 1.x.x</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GS_CS|Win32'" Label="Configuration">
@@ -128,10 +128,10 @@
     <ClInclude Include="WZEventDrop.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Configs\GreatDevelop\WzEvents\EventDropBC.txt" />
-    <None Include="Configs\GreatDevelop\WzEvents\EventDropCC.txt" />
-    <None Include="Configs\GreatDevelop\WzEvents\EventDropIT.txt" />
-    <None Include="Configs\GreatDevelop\WzEvents\EventDropWW.txt" />
+    <None Include="Configs\IA Julia\WzEvents\EventDropBC.txt" />
+    <None Include="Configs\IA Julia\WzEvents\EventDropCC.txt" />
+    <None Include="Configs\IA Julia\WzEvents\EventDropIT.txt" />
+    <None Include="Configs\IA Julia\WzEvents\EventDropWW.txt" />
     <None Include="TODO.txt" />
     <None Include="ChangeLog.txt" />
     <None Include="Configs\GameServerCS\GameServerCS.ini" />
@@ -144,23 +144,23 @@
     <None Include="Configs\GameServer\IPBlock.txt" />
     <None Include="Configs\GameServer\News.txt" />
     <None Include="Configs\GameServer\VIPSystem.ini" />
-    <None Include="Configs\GreatDevelop\AntiAFK.txt" />
-    <None Include="Configs\GreatDevelop\Commands.ini" />
-    <None Include="Configs\GreatDevelop\Common.ini" />
-    <None Include="Configs\GreatDevelop\DropSystem.ini" />
-    <None Include="Configs\GreatDevelop\Events.ini" />
-    <None Include="Configs\GreatDevelop\EventTimer.dat" />
-    <None Include="Configs\GreatDevelop\GoldenArcher.txt" />
-    <None Include="Configs\GreatDevelop\Items.ini" />
-    <None Include="Configs\GreatDevelop\MapSystem.ini" />
-    <None Include="Configs\GreatDevelop\MonsterSpawn.ini" />
-    <None Include="Configs\GreatDevelop\MossGambler.ini" />
-    <None Include="Configs\GreatDevelop\MoveReq.txt" />
-    <None Include="Configs\GreatDevelop\PCPoints_WCoins.dat" />
-    <None Include="Configs\GreatDevelop\Pets.ini" />
-    <None Include="Configs\GreatDevelop\PkClearGuard.ini" />
-    <None Include="Configs\GreatDevelop\Skills.ini" />
-    <None Include="Great Develop 1.x.x ReadMe.txt" />
+    <None Include="Configs\IA Julia\AntiAFK.txt" />
+    <None Include="Configs\IA Julia\Commands.ini" />
+    <None Include="Configs\IA Julia\Common.ini" />
+    <None Include="Configs\IA Julia\DropSystem.ini" />
+    <None Include="Configs\IA Julia\Events.ini" />
+    <None Include="Configs\IA Julia\EventTimer.dat" />
+    <None Include="Configs\IA Julia\GoldenArcher.txt" />
+    <None Include="Configs\IA Julia\Items.ini" />
+    <None Include="Configs\IA Julia\MapSystem.ini" />
+    <None Include="Configs\IA Julia\MonsterSpawn.ini" />
+    <None Include="Configs\IA Julia\MossGambler.ini" />
+    <None Include="Configs\IA Julia\MoveReq.txt" />
+    <None Include="Configs\IA Julia\PCPoints_WCoins.dat" />
+    <None Include="Configs\IA Julia\Pets.ini" />
+    <None Include="Configs\IA Julia\PkClearGuard.ini" />
+    <None Include="Configs\IA Julia\Skills.ini" />
+    <None Include="IA Julia 1.x.x ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
