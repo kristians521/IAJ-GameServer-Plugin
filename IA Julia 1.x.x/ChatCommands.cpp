@@ -513,7 +513,7 @@ bool cChat::Move(LPOBJ gObj, char *Msg)
 			MessageLog(1,  c_Red,  t_COMMANDS, gObj, "[Move] Fonomans can't move");
 			return true;
 		} 
-		if(AddTab[gObj->m_Index].VIP_Type < MoveReq.MoveReqInfo[Index].VIP)
+		if(AddTab[gObj->m_Index].VIP_Type < MoveReq.MoveReqInfo[Index].VIP && !GmSystem.IsAdmin(gObj->Name))
 		{
 			MessageLog(1,  c_Red,  t_COMMANDS, gObj, "[Move] This Map is for VIP users.");
 			return true;
