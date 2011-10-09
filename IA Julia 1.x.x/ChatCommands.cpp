@@ -1681,7 +1681,7 @@ bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 		TakeCommand(gObj, Config.VIP.VIPState[RealState].CostZen * Hours, Config.VIP.VIPState[RealState].CostPCPoints * Hours, 
 				Config.VIP.VIPState[RealState].CostWCoins * Hours, "BuyVIP");
 
-		MuOnlineQuery.ExecQuery("UPDATE Character SET %s = %s + %d, %s = %d WHERE Name = '%s'", Config.VIP.ColumnDate, Config.VIP.ColumnDate, Hours*60, Config.VIP.Column, RealState, gObj->Name);	
+		MuOnlineQuery.ExecQuery("UPDATE Character SET %s = (%s + %d), %s = %d WHERE Name = '%s'", Config.VIP.ColumnDate, Config.VIP.ColumnDate, Hours*60, Config.VIP.Column, RealState, gObj->Name);	
 			MuOnlineQuery.Fetch();
 			MuOnlineQuery.Close();
 

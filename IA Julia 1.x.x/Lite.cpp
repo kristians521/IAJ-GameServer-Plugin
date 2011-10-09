@@ -70,7 +70,7 @@ DWORD MainTick()
 			{
 				AddTab[Index].ON_Min = 0;
 				AddTab[Index].ON_Hour++;
-				Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_STAT SET OnlineHours = OnlineHours + 1 WHERE memb___id = '%s'", gObj->AccountID);
+				Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_STAT SET OnlineHours = (OnlineHours + 1) WHERE memb___id = '%s'", gObj->AccountID);
 					Me_MuOnlineQuery.Fetch();
 					Me_MuOnlineQuery.Close();
 			}
