@@ -349,6 +349,7 @@
     <None Include="Configs\IA Julia\WzEvents\EventDropWW.txt">
       <Filter>Configs\IA Julia\WzEvents</Filter>
     </None>
+    <None Include="Notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

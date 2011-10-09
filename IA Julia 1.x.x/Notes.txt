@@ -1,0 +1,15 @@
+Items Exc Options :
+	Set:
+		1. Zen +40%
+		2. Deffence Success Rate +10%
+		4. Reflect Damage +5%
+		8. Damage Decrease +4%
+		16. Max Mana +4%
+		32. Max HP +4%
+	Weapon:
+		1. Increase 1/8 Mana 
+		2. Increase 1/8 HP 
+		4. Speed +7
+		8. Damage +2%
+		16. Damage +Level/20
+		32. Exc Damage Rate +10%
