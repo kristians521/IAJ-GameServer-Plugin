@@ -13,15 +13,10 @@
 #include "User.h"
 #include "IpBlock.h"
 #include "DuelManager.h"
-//#include "GMSystem.h"
-//#include "Utilits.h"
-//#include "Prodef.h"
 #include "PCPoint.h"
-//#include "Archer.h"
 #include "MossGambler.h"
 #include "Monster.h"
 #include "MapSystem.h"
-//#include "Query.h"
 
 BYTE RecvTable[256] = {
 
