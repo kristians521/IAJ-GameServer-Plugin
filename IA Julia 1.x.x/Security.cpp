@@ -10,19 +10,22 @@
 #include "StdAfx.h" 
 #include "Configs.h"
 #include "User.h" 
-#include "IPBlock.h"
+#include "Security.h"
 #include "Logger.h"
 					  
-cIpBlock IpBlock;
+cSecurity Security;
 
-cIpBlock::cIpBlock()
+cSecurity::cSecurity()
+{		  
+	Load();
+	NumIps = 0;
+}
+
+cSecurity::~cSecurity()
 {		  
 }
-cIpBlock::~cIpBlock()
-{		  
-}
 
-void cIpBlock::LoadIpBlock()
+void cSecurity::Load()
 {
 	FILE *fp;
 	BOOL bRead = FALSE;
@@ -33,7 +36,7 @@ void cIpBlock::LoadIpBlock()
 	fp = fopen(IAJuliaIPBlock,"r");
 
 	rewind(fp);
-	
+
 	while(fgets(sLineTxt, 255, fp) != NULL)
 	{
 		if(sLineTxt[0] == '/')continue;			
@@ -41,7 +44,7 @@ void cIpBlock::LoadIpBlock()
 		if(sLineTxt[0] == 'e' && sLineTxt[1] == 'n' && sLineTxt[2] == 'd')continue;
 		char IP[16];							
 		if(strlen(sLineTxt) <= 1)continue;
-								  
+
 		sscanf(sLineTxt, "%s", IP);
 		sprintf(IPBlockInfo[IPBlockCount].IP,"%s",IP);
 		IPBlockCount++;
@@ -51,22 +54,20 @@ void cIpBlock::LoadIpBlock()
 	fclose(fp);
 }
 
-bool cIpBlock::CheckIp(DWORD aIndex)
+bool cSecurity::CheckIp(char GobjIP[16])
 {
-	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);
 	for(int x=1;x < IPBlockCount;x++)
 	{
-		if(!CheckIp2(IPBlockInfo[x].IP, gObj->Ip_addr))
+		if(!CheckIp2(IPBlockInfo[x].IP, GobjIP))
 		{					
-			Log.ConsoleOutPut(1, c_Red, t_IPBLOCK,"[Anti-Hack] Blocked %s try to connect!!!",gObj->Ip_addr);
-			CloseClient(aIndex);
+			Log.ConsoleOutPut(1, c_Red, t_IPBLOCK,"[Anti-Hack] Blocked %s try to connect!!!",GobjIP);
 			return false;
 		}
 	}
 	return true;
 } 
 						  
-void changestar(char*IP,int i)
+void cSecurity::ChangeStar(char*IP,int i)
 {
 	for(int j=strlen(IP); j>=i; j--)
 		IP[j+1] = IP[j];
@@ -74,7 +75,7 @@ void changestar(char*IP,int i)
 	IP[i+1] = '1';
 }
 
-bool cIpBlock::CheckIp2(char ConfigIP[16], char GobjIP[16])
+bool cSecurity::CheckIp2(char ConfigIP[16], char GobjIP[16])
 {							   
 	for(int i=0; i<16;i++)
 	{							  
@@ -84,7 +85,7 @@ bool cIpBlock::CheckIp2(char ConfigIP[16], char GobjIP[16])
 			GobjIP[i] = ' ';
 									 
 		if(ConfigIP[i] == '*')
-			changestar(ConfigIP, i); 
+			ChangeStar(ConfigIP, i); 
 	}
 
 	int CIP[4];
@@ -99,4 +100,71 @@ bool cIpBlock::CheckIp2(char ConfigIP[16], char GobjIP[16])
 		(CIP[3] == GIP[3] || CIP[3] == -1))
 		return false;	
 	return true;
+}
+
+void cSecurity::Tick()
+{
+	for(UINT x = 0; x < NumIps; x++)
+	{
+		if(Ips[x].Time > 0)
+		{
+			Ips[x].Time --;	  
+			continue;
+		}
+
+		if(Ips[x].Time == 0)
+		{
+			for(UINT j = x; j < NumIps-1; j++)
+			{
+				strcpy(Ips[x].IP, Ips[x+1].IP);    
+				Ips[x].Count = Ips[x+1].Count;
+				Ips[x].Time = Ips[x+1].Time;		  
+			}
+			Ips[NumIps-1].Count = 0;
+			Ips[NumIps-1].IP[0] = NULL;
+			Ips[NumIps-1].Time = -1;	
+			NumIps--;
+		}			 
+	} 
+}
+
+bool cSecurity::CheckIp3(char GobjIP[16])
+{
+	if(NumIps == 0)
+	{			  				  
+		strcpy(Ips[NumIps].IP, GobjIP);
+		Ips[NumIps].Count = 0;		 
+		Ips[NumIps].Time = 5;
+		NumIps++;					
+	}
+	else if(NumIps > 0)
+	{
+		for(UINT x = 0; x < NumIps; x++)
+		{
+			if(!strcmp(Ips[x].IP, GobjIP))
+			{						
+				Ips[x].Count++;
+				if(Ips[x].Count > 400000000)
+					Ips[x].Count = 400000000;
+				Ips[x].Time = 5*Ips[x].Count; 
+				return false;
+			}
+		}	   
+		strcpy(Ips[NumIps].IP, GobjIP);  
+		Ips[NumIps].Count = 0;		  
+		Ips[NumIps].Time = 5; 
+		NumIps++;
+	}
+	return true;
+}
+
+short GOBJGetIndex(SOCKET aSocket, char* ip)
+{						
+	if(!Security.CheckIp(ip))
+		return -1;
+
+	if(!Security.CheckIp3(ip))
+		return -1;
+
+	return GSGOBJGetIndex(aSocket, ip);
 }

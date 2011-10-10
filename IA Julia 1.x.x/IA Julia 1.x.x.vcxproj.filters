@@ -120,9 +120,6 @@
     <ClCompile Include="News.cpp">
       <Filter>Source\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="IpBlock.cpp">
-      <Filter>Source\Security</Filter>
-    </ClCompile>
     <ClCompile Include="WZEventDrop.cpp">
       <Filter>Source\Standart</Filter>
     </ClCompile>
@@ -131,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="Maps.cpp">
       <Filter>Source\Standart</Filter>
+    </ClCompile>
+    <ClCompile Include="Security.cpp">
+      <Filter>Source\Security</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,9 +200,6 @@
     <ClInclude Include="News.h">
       <Filter>Source\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="IpBlock.h">
-      <Filter>Source\Security</Filter>
-    </ClInclude>
     <ClInclude Include="WZEventDrop.h">
       <Filter>Source\Standart</Filter>
     </ClInclude>
@@ -211,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="Maps.h">
       <Filter>Source\Standart</Filter>
+    </ClInclude>
+    <ClInclude Include="Security.h">
+      <Filter>Source\Security</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

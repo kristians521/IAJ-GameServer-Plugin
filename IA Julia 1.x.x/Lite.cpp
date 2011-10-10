@@ -14,7 +14,7 @@
 #include "Utilits.h"
 #include "Protocol.h"
 #include "Logger.h"
-#include "IpBlock.h"	 
+#include "Security.h" 
 #include "AntiAFK.h"
 #include "DuelManager.h" 
 #include "MoveReq.h"
@@ -23,15 +23,6 @@
 #include "MossGambler.h"	 
 #include "Monster.h"  
 #include "Query.h"
-struct sIps
-{
-	char Ip[16];
-	ULONG Count;	   
-	long Time;
-};
-
-UINT NumIps = 0;
-sIps Ips[1000];
 
 bool CheckVipTime(int TimeInMin);
 
@@ -136,28 +127,7 @@ DWORD MainTick()
 			}
 		}				
 														
-		for(UINT x = 0; x < NumIps; x++)
-		{
-			if(Ips[x].Time > 0)
-			{
-				Ips[x].Time --;	  
-				continue;
-			}
-
-			if(Ips[x].Time == 0)
-			{
-				for(UINT j = x; j < NumIps-1; j++)
-				{
-					strcpy(Ips[x].Ip, Ips[x+1].Ip);    
-					Ips[x].Count = Ips[x+1].Count;
-					Ips[x].Time = Ips[x+1].Time;		  
-				}
-				Ips[NumIps-1].Count = 0;
-				Ips[NumIps-1].Ip[0] = NULL;
-				Ips[NumIps-1].Time = -1;	
-				NumIps--;
-			}			 
-		} 
+		Security.Tick();
 #ifdef _GS
 		/* Moss The Gambler */
 		moss.MossConfig.EnableTimer && moss.MossConfig.EnableMoss ? moss.CheckTime() : moss.OpenedMoss = TRUE;	 	
@@ -188,38 +158,6 @@ bool CheckVipTime(int TimeInMin)
 	return false;
 }
 
-short GOBJGetIndex(SOCKET aSocket, char* ip)
-{																		   
-	if(NumIps == 0)
-	{			  				  
-		strcpy(Ips[NumIps].Ip, ip);
-		Ips[NumIps].Count = 0;		 
-		Ips[NumIps].Time = 5;
-		NumIps++;					
-	}
-
-	else if(NumIps > 0)
-	{
-		for(UINT x = 0; x < NumIps; x++)
-		{
-			if(!strcmp(Ips[x].Ip,ip))
-			{						
-				Ips[x].Count++;
-				if(Ips[x].Count > 400000000)
-					Ips[x].Count = 400000000;
-				Ips[x].Time = 5*Ips[x].Count; 
-				return -1;
-			}
-		}	   
-		strcpy(Ips[NumIps].Ip, ip);  
-		Ips[NumIps].Count = 0;		  
-		Ips[NumIps].Time = 5; 
-		NumIps++;
-	}
-
-	return GSGOBJGetIndex(aSocket, ip);
-}
-
 extern "C" __declspec (dllexport) void __cdecl RMST()
 {
 	DWORD OldProtect;
@@ -239,7 +177,7 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		Fixes.ASMFixes();
 		Config.LoadConfigsInGS();
 		Config.LoadAll();
-		IpBlock.LoadIpBlock();
+		//IpBlock.LoadIpBlock();
 		MoveReq.MoveReqLoad();
 		Config.LoadNews();
 		#ifdef _GS

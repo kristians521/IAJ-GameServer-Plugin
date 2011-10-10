@@ -14,7 +14,7 @@
 #include "Logger.h"
 #include "PCPoint.h"
 #include "MoveReq.h"
-#include "IpBlock.h"
+#include "Security.h"
 #include "DropSystem.h"
 #include "Monster.h"
 #include "MapSystem.h"
@@ -1075,7 +1075,7 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 			}
 		case 5:
 			{
-				IpBlock.LoadIpBlock();
+				Security.Load();
 				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] IPBlock Reloaded.");
 				break;
 			}
@@ -1084,7 +1084,7 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 				Config.LoadAll();
 				GameMonsterAllCloseAndReload();
 				pShopDataLoad();
-				IpBlock.LoadIpBlock();
+				Security.Load();
 				if (Config.GmSystemConfig.IsGMSystem)GmSystem.Load();
 				DropSystem.LoadDropItems();
 				#ifdef _GS

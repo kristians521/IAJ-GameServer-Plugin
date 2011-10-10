@@ -12,22 +12,33 @@
 
 #endif
 
-class cIpBlock
+// # Hook in GS # //
+short GOBJGetIndex(SOCKET aSocket, char* ip);
+// # ---------- # //
+
+class cSecurity
 {				  
 public:
-	cIpBlock();
-	~cIpBlock();
-	void LoadIpBlock();
-	bool CheckIp(DWORD aIndex); 
+	cSecurity();
+	~cSecurity();
+	void Load();
+	void ChangeStar(char*IP,int i);
+	bool CheckIp(char GobjIP[16]); 
 	bool CheckIp2(char ConfigIP[16], char GobjIP[16]);
-
-	struct sIPBlock
-	{
-		char IP[16];
-	};
+	bool CheckIp3(char GobjIP[16]);
+	void Tick();
 
 private:
-	sIPBlock IPBlockInfo[255];
-	int IPBlockCount;
+	struct sIps
+	{
+		char IP[16];
+		ULONG Count;	   
+		long Time;
+	};
+
+	sIps IPBlockInfo[255];
+	UINT IPBlockCount;
+	sIps Ips[1000];
+	UINT NumIps;
 };
-extern cIpBlock IpBlock;
+extern cSecurity Security;
