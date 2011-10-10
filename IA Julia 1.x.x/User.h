@@ -10,6 +10,8 @@
 #pragma once
 #include "StdAfx.h"
 #include "Configs.h"
+#include "Prodef.h"
+
 #ifndef USER_H
 #define USER_H
 
@@ -41,8 +43,8 @@
 enum OBJECT_TYPE 
 {
 	OBJECT_EMPTY	    = -1,
-	OBJECT_MONSTER	    = 2,
 	OBJECT_USER		    = 1,
+	OBJECT_MONSTER	    = 2,
 	OBJECT_NPC		    = 3
 };
 
@@ -821,17 +823,40 @@ typedef	struct sAddTab
 	int		UsedSlot;
 }sAddTab;
 
-BOOL __cdecl gObjGameClose_Func(int aIndex);
-void __stdcall gObjViewportPatchExecute(OBJECTSTRUCT *gObj);
-void __stdcall JGPGetCharInfoEx(int Loop, unsigned char *DSPacket, unsigned char *toClientPacket);		
-void TradeSystem__Cancel(void * lpParam);		 
-void GCEquipmentSendHook(int aIndex); 
-void MyObjCalCharacter(int aIndex);			   
-void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDamage, BOOL MSBFlag);
-void gObjCharacterWingsSetPreview(short ItemType, unsigned char *CharSet,int Type,OBJECTSTRUCT *lpObj);	
-void gObjLevelUpPointAddEx(BYTE type, OBJECTSTRUCT* lpObj);
 typedef OBJECTSTRUCT * LPOBJ;
-
 extern sAddTab AddTab[OBJECT_MAX];
+
+// #	FIXES	# //
+void __stdcall gObjViewportPatchExecute(OBJECTSTRUCT *gObj);
+void __stdcall JGPGetCharInfoEx(int Loop, unsigned char *DSPacket, unsigned char *toClientPacket);	
+// # ---------- # //
+
+// # Hook in GS # //
+void gObjLevelUpPointAddEx(BYTE type, OBJECTSTRUCT* lpObj);
+BOOL gObjGameClose_Func(int aIndex);
+void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDamage, BOOL MSBFlag);
+void MyObjCalCharacter(int aIndex);			   	 
+void GCEquipmentSendHook(int aIndex); 
+// # ---------- # //
+
+// #	TICK	# //
+void TradeSystem__Cancel(void * lpParam);	
+// # ---------- # //
+
+class cUser
+{
+public:
+	void PlayerConnect(LPOBJ gObj); 
+	void CheckRingSend(LPOBJ gObj, LPBYTE aRecv);	
+	void CheckRing(LPOBJ gObj, LPBYTE aRecv);
+	void RingSkin(LPOBJ gObj);
+	bool CGPartyRequestRecv(PMSG_PARTYREQUEST * lpMsg, int aIndex);
+	bool CharacterCreate(PMSG_CHARCREATE* lpMsg, int aIndex);
+	bool GuildMasterInfoSave(int aIndex,PMSG_GUILDINFOSAVE* lpMsg);	
+	void gObjCharacterWingsSetPreview(short ItemType, unsigned char *CharSet,int Type,OBJECTSTRUCT *lpObj);	
+private:			
+	void LoginMsg(LPOBJ gObj);
+};
+extern cUser User;
 
 #endif

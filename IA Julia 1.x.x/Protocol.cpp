@@ -13,17 +13,15 @@
 #include "User.h"
 #include "IpBlock.h"
 #include "DuelManager.h"
-#include "GMSystem.h"
-#include "Utilits.h"
-#include "Prodef.h"
+//#include "GMSystem.h"
+//#include "Utilits.h"
+//#include "Prodef.h"
 #include "PCPoint.h"
-#include "Archer.h"
+//#include "Archer.h"
 #include "MossGambler.h"
 #include "Monster.h"
 #include "MapSystem.h"
-#include "Query.h"
-
-cProtoFunc Protocol;
+//#include "Query.h"
 
 BYTE RecvTable[256] = {
 
@@ -72,7 +70,7 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 			{
 			case 0x01:
 				{		   
-					if(Protocol.CharacterCreate((PMSG_CHARCREATE *)aRecv, aIndex))
+					if(User.CharacterCreate((PMSG_CHARCREATE *)aRecv, aIndex))
 					{
 						JGCharacterCreateFailSend(aIndex, gObj->Name);
 						return true;
@@ -91,13 +89,13 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 		break; 
 		case 0x03: // Player Connected Protocol
 		{
-			Protocol.PlayerConnect(gObj);
+			User.PlayerConnect(gObj);
 		}
 		break;
 
 		case 0x24: // Enquip Guardian
 		{
-			Protocol.CheckRing(gObj, aRecv);
+			User.CheckRing(gObj, aRecv);
 		}
 		break;
 
@@ -128,26 +126,26 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 		{
 			case 0xBC: // Lahap Dupe BUG FIX
 			{ 
-				Protocol.LahapDupeBug(gObj);
+				Monster.LahapDupeBug(gObj);
 			}
 			break;
 		}
 		case 0x30: // Click NPC Protocol	  
 		{
-			bool bResult = Protocol.NPCTalkEx(gObj, (aRecv[4] + aRecv[3] * 256));
+			bool bResult = Monster.NPCTalkEx(gObj, (aRecv[4] + aRecv[3] * 256));
 			if(bResult) return true;
 		}
 		break;
 		case 0x40:
 		{							 
 			if(Config.IsPartyGap)
-				if(Protocol.CGPartyRequestRecv((PMSG_PARTYREQUEST*) aRecv,aIndex))
+				if(User.CGPartyRequestRecv((PMSG_PARTYREQUEST*) aRecv,aIndex))
 					return true;
 		}
 		break;
 		case 0x55:
 			{
-				if(Protocol.GuildMasterInfoSave(aIndex, (PMSG_GUILDINFOSAVE *)aRecv))
+				if(User.GuildMasterInfoSave(aIndex, (PMSG_GUILDINFOSAVE *)aRecv))
 					return true;
 			}
 			break;
@@ -209,333 +207,11 @@ void ProtocolCoreSend(int aIndex, PBYTE aSend, int aLen)
 		{
             case 0x24: 
             {   
-				Protocol.CheckRingSend(gObj, aSend);
+				User.CheckRingSend(gObj, aSend);
             }
 			break; 
 		}
 	} 
 
 	DataSend(aIndex,aSend,aLen);
-}
-
-void cProtoFunc::PlayerConnect(LPOBJ gObj)
-{	
-	LoginMsg(gObj);
-	RingSkin(gObj);
-	PCPoint.InitPCPointForPlayer(gObj); 
-
-	Me_MuOnlineQuery.ExecQuery("SELECT cspoints FROM MEMB_INFO WHERE memb___id = '%s'", gObj->AccountID);
-		Me_MuOnlineQuery.Fetch();
-		gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger("cspoints");
-		Me_MuOnlineQuery.Close();
-
-	MuOnlineQuery.ExecQuery("SELECT %s FROM Character WHERE Name = '%s'", Config.ResetColumn, gObj->Name);
-		MuOnlineQuery.Fetch();
-		AddTab[gObj->m_Index].Resets = MuOnlineQuery.GetAsInteger(Config.ResetColumn);
-		MuOnlineQuery.Close();
-
-	AddTab[gObj->m_Index].ON_Min			= 0;   
-	AddTab[gObj->m_Index].ON_Sek			= 0;
-	AddTab[gObj->m_Index].ON_Hour			= 0;
-	AddTab[gObj->m_Index].PC_OnlineTimer	= 0;
-
-#ifdef _GS 
-	if(Config.Duel.Enabled)
-	{
-		if(Config.Duel.Ranking)
-		{
-			g_DuelSystem.DuelSetInfo(gObj->m_Index);
-		}
-				
-		if((!g_DuelSystem.IsOnDuel(gObj->m_Index)) && gObj->MapNumber == 64)
-		{
-			gObjMoveGate(gObj->m_Index, 294);
-			Log.ConsoleOutPut(1, c_Blue ,t_Duel, "[Duel System][%s][%s] Spawn on duel map after duel is not allowed", gObj->AccountID, gObj->Name);
-		}
-		g_DuelSystem.UserDuelInfoReset(gObj);
-	}
-#endif
-		if(Config.VIP.Enabled)
-		{												
-			MuOnlineQuery.ExecQuery("SELECT %s, %s FROM Character WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
-				MuOnlineQuery.Fetch();
-				AddTab[gObj->m_Index].VIP_Type = MuOnlineQuery.GetAsInteger(Config.VIP.Column);
-				AddTab[gObj->m_Index].VIP_Min = MuOnlineQuery.GetAsInteger(Config.VIP.ColumnDate);
-				MuOnlineQuery.Close();
-
-			AddTab[gObj->m_Index].VIP_Sec = 0; // Обнуление секунд при входе
-			if(AddTab[gObj->m_Index].VIP_Min > 0)
-			{											 
-				Chat.MessageLog(1, c_Red, t_VIP, gObj, "[VIP] Left %d minutes of VIP.", AddTab[gObj->m_Index].VIP_Min);
-			} 
-		}
-}
-
-void cProtoFunc::RingSkin(LPOBJ gObj)
-{   
-    if(gObj->pInventory[RING_01].m_Type == 0x1A4C && gObj->m_Change != 503 ||
-        gObj->pInventory[RING_02].m_Type == 0x1A4C && gObj->m_Change != 503)
-        {
-            gObj->m_Change = 503;
-            gObjViewportListProtocolCreate(gObj);
-        }
-}
-
-void cProtoFunc::CheckRingSend(LPOBJ gObj, unsigned char* aSend)
-{
-    if(aSend[4] == RING_01 || aSend[4] == RING_02) 
-        if(gObj->pInventory[RING_01].m_Type == 0x1A4C && gObj->m_Change != 503 ||
-            gObj->pInventory[RING_02].m_Type == 0x1A4C && gObj->m_Change != 503)
-		{
-			gObj->m_Change = 503;
-			gObjViewportListProtocolCreate(gObj);	       
-		}
-}
-
-void cProtoFunc::CheckRing(LPOBJ gObj, LPBYTE aRecv)
-{
-	if((aRecv[4] == RING_01 && gObj->pInventory[RING_02].m_Type != 0x1A4C) 
-		|| (aRecv[4] == RING_02 && gObj->pInventory[RING_01].m_Type != 0x1A4C))
-		if(gObj->m_Change == 503)
-		{
-			gObj->m_Change = -1;	
-			gObjViewportListProtocolCreate(gObj);	
-		}	
-}	
-
-bool cProtoFunc::CGPartyRequestRecv(PMSG_PARTYREQUEST * lpMsg, int aIndex)
-{	
-	int number =  MAKE_NUMBERW(lpMsg->NumberH, lpMsg->NumberL);
-
-	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);	 
-	OBJECTSTRUCT *pObj = (OBJECTSTRUCT*)OBJECT_POINTER(number);
-																			 
-	if(gObj->Level > pObj->Level && gObj->Level - pObj->Level >= Config.PartyGapLvl)
-	{	
-		Chat.MessageLog(1, c_Red, t_Default, gObj, "[Party] You can't stay with %s in party! %s needs %d more lvl.", pObj->Name, pObj->Name, gObj->Level-Config.PartyGapLvl - pObj->Level);
-		return true;
-	}
-
-	if(gObj->Level < pObj->Level && pObj->Level - gObj->Level >= Config.PartyGapLvl)
-	{																													
-		Chat.MessageLog(1, c_Red, t_Default, gObj, "[Party] You can't stay with %s in party! You need %d more lvl.", pObj->Name, pObj->Level - Config.PartyGapLvl - gObj->Level);
-		return true;
-	}	   
-	return false;
-}
-
-void cProtoFunc::LahapDupeBug(LPOBJ gObj)
-{
-	int Error = 0; 
-	for(int i = OBJECT_MIN; i<OBJECT_MAX; i++) 
-	{ 
-		OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(i); 
-
-        if((gObj->TargetNumber == i) && (gObj->pTransaction==1))
-		{
-            Error = 1;
-			Chat.MessageLog(1, c_Red, t_Default, gObj, "[AntiHack][%s] Lahap Trade-Dupe Attempt, Trade: %s[%d], Action: %d",gObj->Name,gObj[i].Name,gObj->TargetNumber,gObj->pTransaction);
-		}
-        
-		if(Error == 1) break; 
-    } 
-}
-
-void cProtoFunc::LoginMsg(LPOBJ gObj)
-{	
-	Chat.Message(1, gObj->m_Index, "http://imaginationarts.net/forum/");
-	Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
-	if (Config.ConnectInfo == 1)
-	{
-		Chat.Message(1, gObj->m_Index, "Total Online: %d/%d", Log.Online_All, Log.Online_Max);
-																			  
-		SYSTEMTIME t;
-		GetLocalTime(&t);  
-		Chat.Message(1, gObj->m_Index, "Server Time & Date: %02d:%02d:%02d %02d-%02d-%04d.", t.wHour, t.wMinute, t.wSecond, t.wDay, t.wMonth, t.wYear);
-	} 
-
-	switch(GmSystem.IsAdmin(gObj->Name))
-	{																									   
-	case 1:
-		Chat.MessageAllLog(0, 0, c_Green, t_GM, gObj, "[Admin] %s join the game!", gObj->Name);
-		break;
-	case 2:
-		Chat.MessageAllLog(0, 0, c_Green, t_GM, gObj, "[GM] %s join the game!", gObj->Name);
-		break;
-	}
-}
-
-bool cProtoFunc::NPCTalkEx(LPOBJ gObj, int NpcId)
-{
-	bool bResult = false;
-	OBJECTSTRUCT *gObjNPC = (OBJECTSTRUCT*)OBJECT_POINTER(NpcId);
-#ifdef _GS
-	if (gObjNPC->Class == 479 && Config.Duel.Enabled)
-	{
-		PMSG_SEND_WINDOW aSend;
-		// ----
-		aSend.uHead			 = 0xC3;
-		aSend.uSize			 = 0x04;
-		aSend.uPacketType	 = 0x30;
-		aSend.uNum			 = 0x21;
-		gObj->m_IfState.use  = 479;
-		gObj->m_IfState.type = 20;
-		// ----
-		DataSend(gObj->m_Index, (BYTE*)&aSend, 4);
-		g_DuelSystem.SendDuelStatus(gObj);
-
-		bResult = true;
-	}
-	if (gObjNPC->Class == 492 && moss.MossConfig.EnableMoss)
-	{
-		if (gObj->m_PK_Level > 3 && moss.MossConfig.UsePK == 0)
-		{
-			Chat.Message(gObj->m_Index,"[Moss The Gambler] PK player don`t use Moss The Gambler");
-			return false;
-		}
-		if (moss.GetStatusMoss() == FALSE)
-		{
-			Chat.Message(gObj->m_Index,"[Moss The Gambler] Moss is closed");
-			return false;
-		}
-		BYTE Send2[6] = {0xC3,0x06,0x30,0x00,0x27,0x00};
-		BYTE Send[71] = {0xC2,0x00,71,0x31,0x00,5,0x00,71,0x00,0x01,0x00,0x00,13*16,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0x02,72,0x00,0x01,0x00,0x00,13*16,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0x04,73,0x00,0x01,0x00,0x00,13*16,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0x18,74,0x00,0x01,0x00,0x00,13*16,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0x06,75,0x00,0x01,0x00,0x00,13*16,0x00,0xFF,0xFF,0xFF,0xFF,0xFF};
-		DataSend(gObj->m_Index,Send2,6);
-		DataSend(gObj->m_Index,Send,71);
-		gObj->TargetShopNumber = 492;
-		gObj->m_IfState.use    = 1;
-		gObj->m_IfState.type   = 3;
-		bResult = true;
-	}
-	if ((gObjNPC->Class == Config.ClearNpc.NpcId) && (Config.ClearNpc.Enabled))
-	{
-		PkClear(gObj, gObjNPC);
-		bResult = true;		
-	}
-	if(gObjNPC->Class == 236 && Config.Archer.Enabled)
-	{
-		GoldenArcher.GoldenArcherClick(gObj);
-		bResult = true;
-	}
-	if (gObjNPC->Class == 241)
-	{
-		if( AddTab[gObj->m_Index].Resets < Config.GuildRes)
-		{
-			Chat.Message(1,gObj->m_Index,"You don't have enough Resets, you need %d more resets.", Config.GuildRes - AddTab[gObj->m_Index].Resets);
-			bResult = true;
-		}
-		if( gObj->Level < Config.GuildLevel)
-		{
-			Chat.Message(1,gObj->m_Index,"You don't have enough Level, you need %d more Level.", Config.GuildLevel - gObj->Level);
-			bResult = true;
-		}
-	} 
-#endif
-	return bResult;
-}
-
-void cProtoFunc::PkClear(LPOBJ gObj, LPOBJ NpcObj)
-{							   			
-	if (gObj->m_PK_Level < 4)
-	{										 
-		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You are good player. God bless your soul.");
-		return;
-	}	
-
-	int PriceZen, PricePcPoint, PriceWCoin;
-	switch(Config.ClearNpc.Type)
-	{	   
-	case 1:	
-		PriceZen = (Config.ClearNpc.PriceZen * gObj->m_PK_Count); 		 
-		PricePcPoint = (Config.ClearNpc.PricePcPoints * gObj->m_PK_Count);
-		PriceWCoin = (Config.ClearNpc.PriceWCoins * gObj->m_PK_Count);
-		break;
-	case 2:	
-		PriceZen = Config.ClearNpc.PriceZenForAll;			 
-		PricePcPoint = Config.ClearNpc.PricePcPoints;
-		PriceWCoin = Config.ClearNpc.PriceWCoins;
-		break;
-	case 0: 
-		PriceZen = 0;					 
-		PricePcPoint = 0;
-		PriceWCoin = 0;
-		break;
-	}
-
-	if(gObj->Money < PriceZen)
-	{
-		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You don't have enough Zen, you need %d more!", PriceZen - gObj->Money);
-		return;
-	}	   
-	if(gObj->m_wCashPoint < PriceWCoin)
-	{	 
-		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You don't have enough WCoin, you need %d more!", PriceWCoin - gObj->m_wCashPoint);
-		return;
-	}
-	if(AddTab[gObj->m_Index].PC_PlayerPoints < PricePcPoint)
-	{	 
-		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You don't have enough PcPoint, you need %d more!", PricePcPoint - AddTab[gObj->m_Index].PC_PlayerPoints);
-		return;
-	}
-	if (PricePcPoint > 0)
-	{
-		PCPoint.UpdatePoints(gObj,PricePcPoint,MINUS,PCPOINT);
-		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[Guard] You pay %d PcPoints", PricePcPoint);
-	}
-
-	if (PriceWCoin > 0)
-	{										
-		PCPoint.UpdatePoints(gObj,PriceWCoin,MINUS,WCOIN);
-		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[Guard] You pay %d WCoin", PriceWCoin);
-	}
-
-	if (PriceZen > 0)
-	{															 
-		gObj->Money -= PriceZen; 
-		GCMoneySend (gObj->m_Index, gObj->Money);
-		Chat.MessageLog(1, c_Blue ,t_PCPOINT, gObj, "[Guard] You pay %d Zen", PriceZen);
-	}
-
-	NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj,"Cleaned %d kills. Don't tell anyone!", gObj->m_PK_Count); 
-
-	gObj->m_PK_Level = 3;
-	gObj->m_PK_Count = 0;
-
-	GCPkLevelSend (gObj->m_Index,3);
-}
-
-bool cProtoFunc::CharacterCreate(PMSG_CHARCREATE* lpMsg, int aIndex)
-{
-	bool bResult = false;
-	for(int i = 0; i < sizeof(lpMsg->Name); i++)
-	{
-		if(!isalnum(lpMsg->Name[i]) && lpMsg->Name[i] != ' ' && lpMsg->Name[i] != NULL)
-		{						
-			bResult = true;
-		}
-	}
-	return bResult;
-}
-
-bool cProtoFunc::GuildMasterInfoSave(int aIndex,PMSG_GUILDINFOSAVE* lpMsg)
-{
-	bool bResult = false;
-	for(int i = 0; i < sizeof(lpMsg->GuildName); i++)
-	{
-		if(!isalnum(lpMsg->GuildName[i]) && lpMsg->GuildName[i] != ' ' && lpMsg->GuildName[i] != NULL)
-		{						
-			bResult = true;
-
-		}
-	}		
-	if(bResult)
-	{
-		PMSG_GUILDCREATED_RESULT pMsg;
-
-		PHeadSetB((LPBYTE)&pMsg, 0x56, sizeof(pMsg));
-		pMsg.Result = 5;
-
-		DataSend(aIndex, (LPBYTE)&pMsg, pMsg.h.size);
-	}	   
-	return bResult;
 }

@@ -15,7 +15,11 @@
 #include "Logger.h"
 #include "MapSystem.h"
 #include "PCPoint.h"
+#include "MossGambler.h"
+#include "Query.h"
+#include "DuelManager.h"
 sAddTab AddTab[OBJECT_MAX]; 
+cUser User;
 
 bool CheckMaxPoints(BYTE type, OBJECTSTRUCT* lpObj)
 {			 
@@ -73,7 +77,7 @@ void gObjLevelUpPointAddEx(BYTE type, OBJECTSTRUCT* lpObj)
 		gObjLevelUpPointAdd(type, lpObj);
 }
 
-void gObjCharacterWingsSetPreview(short ItemType, unsigned char *CharSet,int Type,OBJECTSTRUCT *lpObj) 
+void cUser::gObjCharacterWingsSetPreview(short ItemType, unsigned char *CharSet,int Type,OBJECTSTRUCT *lpObj) 
 {	
 	if(Type == GUARDIAN)
 	{
@@ -114,7 +118,7 @@ void gObjCharacterWingsSetPreview(short ItemType, unsigned char *CharSet,int Typ
 void __stdcall gObjViewportPatchExecute(OBJECTSTRUCT *lpObj) {
 
 	if(lpObj->pInventory[GUARDIAN].m_Type != SLOT_EMPTY)
-		gObjCharacterWingsSetPreview(lpObj->pInventory[GUARDIAN].m_Type, lpObj->CharSet, GUARDIAN,lpObj);
+		User.gObjCharacterWingsSetPreview(lpObj->pInventory[GUARDIAN].m_Type, lpObj->CharSet, GUARDIAN,lpObj);
 }
 						  
 #define CS_SET_BOOTS1(x) ( ((x) & 0x1E0) >> 5 )
@@ -265,6 +269,42 @@ void TradeSystem__Cancel(void * lpParam)
 	}
 	_endthread();
 }
+
+bool cUser::CharacterCreate(PMSG_CHARCREATE* lpMsg, int aIndex)
+{
+	bool bResult = false;
+	for(int i = 0; i < sizeof(lpMsg->Name); i++)
+	{
+		if(!isalnum(lpMsg->Name[i]) && lpMsg->Name[i] != ' ' && lpMsg->Name[i] != NULL)
+		{						
+			bResult = true;
+		}
+	}
+	return bResult;
+}
+
+bool cUser::GuildMasterInfoSave(int aIndex,PMSG_GUILDINFOSAVE* lpMsg)
+{
+	bool bResult = false;
+	for(int i = 0; i < sizeof(lpMsg->GuildName); i++)
+	{
+		if(!isalnum(lpMsg->GuildName[i]) && lpMsg->GuildName[i] != ' ' && lpMsg->GuildName[i] != NULL)
+		{						
+			bResult = true;
+
+		}
+	}		
+	if(bResult)
+	{
+		PMSG_GUILDCREATED_RESULT pMsg;
+
+		PHeadSetB((LPBYTE)&pMsg, 0x56, sizeof(pMsg));
+		pMsg.Result = 5;
+
+		DataSend(aIndex, (LPBYTE)&pMsg, pMsg.h.size);
+	}	   
+	return bResult;
+}
 void GCEquipmentSendHook(int aIndex)
 {							
 	OBJECTSTRUCT * gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);
@@ -297,7 +337,137 @@ void GCEquipmentSendHook(int aIndex)
 		_beginthread( TradeSystem__Cancel, 0, NULL  );
 }
 
-BOOL __cdecl gObjGameClose_Func(int aIndex)
+void cUser::PlayerConnect(LPOBJ gObj)
+{	
+	LoginMsg(gObj);
+	RingSkin(gObj);
+	PCPoint.InitPCPointForPlayer(gObj); 
+
+	Me_MuOnlineQuery.ExecQuery("SELECT cspoints FROM MEMB_INFO WHERE memb___id = '%s'", gObj->AccountID);
+	Me_MuOnlineQuery.Fetch();
+	gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger("cspoints");
+	Me_MuOnlineQuery.Close();
+
+	MuOnlineQuery.ExecQuery("SELECT %s FROM Character WHERE Name = '%s'", Config.ResetColumn, gObj->Name);
+	MuOnlineQuery.Fetch();
+	AddTab[gObj->m_Index].Resets = MuOnlineQuery.GetAsInteger(Config.ResetColumn);
+	MuOnlineQuery.Close();
+
+	AddTab[gObj->m_Index].ON_Min			= 0;   
+	AddTab[gObj->m_Index].ON_Sek			= 0;
+	AddTab[gObj->m_Index].ON_Hour			= 0;
+	AddTab[gObj->m_Index].PC_OnlineTimer	= 0;
+
+#ifdef _GS 
+	if(Config.Duel.Enabled)
+	{
+		if(Config.Duel.Ranking)
+		{
+			g_DuelSystem.DuelSetInfo(gObj->m_Index);
+		}
+
+		if((!g_DuelSystem.IsOnDuel(gObj->m_Index)) && gObj->MapNumber == 64)
+		{
+			gObjMoveGate(gObj->m_Index, 294);
+			Log.ConsoleOutPut(1, c_Blue ,t_Duel, "[Duel System][%s][%s] Spawn on duel map after duel is not allowed", gObj->AccountID, gObj->Name);
+		}
+		g_DuelSystem.UserDuelInfoReset(gObj);
+	}
+#endif
+	if(Config.VIP.Enabled)
+	{												
+		MuOnlineQuery.ExecQuery("SELECT %s, %s FROM Character WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
+		MuOnlineQuery.Fetch();
+		AddTab[gObj->m_Index].VIP_Type = MuOnlineQuery.GetAsInteger(Config.VIP.Column);
+		AddTab[gObj->m_Index].VIP_Min = MuOnlineQuery.GetAsInteger(Config.VIP.ColumnDate);
+		MuOnlineQuery.Close();
+
+		AddTab[gObj->m_Index].VIP_Sec = 0; // Обнуление секунд при входе
+		if(AddTab[gObj->m_Index].VIP_Min > 0)
+		{											 
+			Chat.MessageLog(1, c_Red, t_VIP, gObj, "[VIP] Left %d minutes of VIP.", AddTab[gObj->m_Index].VIP_Min);
+		} 
+	}
+}
+
+void cUser::RingSkin(LPOBJ gObj)
+{   
+	if(gObj->pInventory[RING_01].m_Type == 0x1A4C && gObj->m_Change != 503 ||
+		gObj->pInventory[RING_02].m_Type == 0x1A4C && gObj->m_Change != 503)
+	{
+		gObj->m_Change = 503;
+		gObjViewportListProtocolCreate(gObj);
+	}
+}
+
+void cUser::CheckRingSend(LPOBJ gObj, unsigned char* aSend)
+{
+	if(aSend[4] == RING_01 || aSend[4] == RING_02) 
+		if(gObj->pInventory[RING_01].m_Type == 0x1A4C && gObj->m_Change != 503 ||
+			gObj->pInventory[RING_02].m_Type == 0x1A4C && gObj->m_Change != 503)
+		{
+			gObj->m_Change = 503;
+			gObjViewportListProtocolCreate(gObj);	       
+		}
+}
+
+void cUser::CheckRing(LPOBJ gObj, LPBYTE aRecv)
+{
+	if((aRecv[4] == RING_01 && gObj->pInventory[RING_02].m_Type != 0x1A4C) 
+		|| (aRecv[4] == RING_02 && gObj->pInventory[RING_01].m_Type != 0x1A4C))
+		if(gObj->m_Change == 503)
+		{
+			gObj->m_Change = -1;	
+			gObjViewportListProtocolCreate(gObj);	
+		}	
+}	
+
+bool cUser::CGPartyRequestRecv(PMSG_PARTYREQUEST * lpMsg, int aIndex)
+{	
+	int number =  MAKE_NUMBERW(lpMsg->NumberH, lpMsg->NumberL);
+
+	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);	 
+	OBJECTSTRUCT *pObj = (OBJECTSTRUCT*)OBJECT_POINTER(number);
+
+	if(gObj->Level > pObj->Level && gObj->Level - pObj->Level >= Config.PartyGapLvl)
+	{	
+		Chat.MessageLog(1, c_Red, t_Default, gObj, "[Party] You can't stay with %s in party! %s needs %d more lvl.", pObj->Name, pObj->Name, gObj->Level-Config.PartyGapLvl - pObj->Level);
+		return true;
+	}
+
+	if(gObj->Level < pObj->Level && pObj->Level - gObj->Level >= Config.PartyGapLvl)
+	{																													
+		Chat.MessageLog(1, c_Red, t_Default, gObj, "[Party] You can't stay with %s in party! You need %d more lvl.", pObj->Name, pObj->Level - Config.PartyGapLvl - gObj->Level);
+		return true;
+	}	   
+	return false;
+}
+
+void cUser::LoginMsg(LPOBJ gObj)
+{	
+	Chat.Message(1, gObj->m_Index, "http://imaginationarts.net/forum/");
+	Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
+	if (Config.ConnectInfo == 1)
+	{
+		Chat.Message(1, gObj->m_Index, "Total Online: %d/%d", Log.Online_All, Log.Online_Max);
+
+		SYSTEMTIME t;
+		GetLocalTime(&t);  
+		Chat.Message(1, gObj->m_Index, "Server Time & Date: %02d:%02d:%02d %02d-%02d-%04d.", t.wHour, t.wMinute, t.wSecond, t.wDay, t.wMonth, t.wYear);
+	} 
+
+	switch(GmSystem.IsAdmin(gObj->Name))
+	{																									   
+	case 1:
+		Chat.MessageAllLog(0, 0, c_Green, t_GM, gObj, "[Admin] %s join the game!", gObj->Name);
+		break;
+	case 2:
+		Chat.MessageAllLog(0, 0, c_Green, t_GM, gObj, "[GM] %s join the game!", gObj->Name);
+		break;
+	}
+}
+
+BOOL gObjGameClose_Func(int aIndex)
 {	 						
 	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);	  
 

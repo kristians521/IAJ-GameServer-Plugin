@@ -8,6 +8,7 @@
 // ================================================== //
 
 #include "StdAfx.h"
+#include "Monster.h"
 #include "User.h"
 #include "DropSystem.h"
 #include "Utilits.h"
@@ -16,7 +17,28 @@
 #include "Logger.h"
 #include "ChatCommands.h"
 #include "MapSystem.h"
+#include "DuelManager.h"
+#include "MossGambler.h"
+#include "Archer.h"
 
+cMonster Monster;
+
+void cMonster::LahapDupeBug(LPOBJ gObj)
+{
+	int Error = 0; 
+	for(int i = OBJECT_MIN; i<OBJECT_MAX; i++) 
+	{ 
+		OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(i); 
+
+		if((gObj->TargetNumber == i) && (gObj->pTransaction==1))
+		{
+			Error = 1;
+			Chat.MessageLog(1, c_Red, t_Default, gObj, "[AntiHack][%s] Lahap Trade-Dupe Attempt, Trade: %s[%d], Action: %d",gObj->Name,gObj[i].Name,gObj->TargetNumber,gObj->pTransaction);
+		}
+
+		if(Error == 1) break; 
+	} 
+}
 
 // Monster die Handler (hooked replacement for gObjMonsterDieGiveItem)
 void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
@@ -219,4 +241,144 @@ void NPCMessageNear(LPOBJ mObj, char* Msg,...)
 		if(mObj->Y <= gObj->Y-10 || mObj->Y >= gObj->Y+10) continue;
 		ChatTargetSend(mObj, Messages1, i);
 	}
+}
+
+
+bool cMonster::NPCTalkEx(LPOBJ gObj, int NpcId)
+{
+	bool bResult = false;
+	OBJECTSTRUCT *gObjNPC = (OBJECTSTRUCT*)OBJECT_POINTER(NpcId);
+#ifdef _GS
+	if (gObjNPC->Class == 479 && Config.Duel.Enabled)
+	{
+		PMSG_SEND_WINDOW aSend;
+		// ----
+		aSend.uHead			 = 0xC3;
+		aSend.uSize			 = 0x04;
+		aSend.uPacketType	 = 0x30;
+		aSend.uNum			 = 0x21;
+		gObj->m_IfState.use  = 479;
+		gObj->m_IfState.type = 20;
+		// ----
+		DataSend(gObj->m_Index, (BYTE*)&aSend, 4);
+		g_DuelSystem.SendDuelStatus(gObj);
+
+		bResult = true;
+	}
+	if (gObjNPC->Class == 492 && moss.MossConfig.EnableMoss)
+	{
+		if (gObj->m_PK_Level > 3 && moss.MossConfig.UsePK == 0)
+		{
+			Chat.Message(gObj->m_Index,"[Moss The Gambler] PK player don`t use Moss The Gambler");
+			return false;
+		}
+		if (moss.GetStatusMoss() == FALSE)
+		{
+			Chat.Message(gObj->m_Index,"[Moss The Gambler] Moss is closed");
+			return false;
+		}
+		BYTE Send2[6] = {0xC3,0x06,0x30,0x00,0x27,0x00};
+		BYTE Send[71] = {0xC2,0x00,71,0x31,0x00,5,0x00,71,0x00,0x01,0x00,0x00,13*16,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0x02,72,0x00,0x01,0x00,0x00,13*16,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0x04,73,0x00,0x01,0x00,0x00,13*16,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0x18,74,0x00,0x01,0x00,0x00,13*16,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0x06,75,0x00,0x01,0x00,0x00,13*16,0x00,0xFF,0xFF,0xFF,0xFF,0xFF};
+		DataSend(gObj->m_Index,Send2,6);
+		DataSend(gObj->m_Index,Send,71);
+		gObj->TargetShopNumber = 492;
+		gObj->m_IfState.use    = 1;
+		gObj->m_IfState.type   = 3;
+		bResult = true;
+	}
+	if ((gObjNPC->Class == Config.ClearNpc.NpcId) && (Config.ClearNpc.Enabled))
+	{
+		PkClear(gObj, gObjNPC);
+		bResult = true;		
+	}
+	if(gObjNPC->Class == 236 && Config.Archer.Enabled)
+	{
+		GoldenArcher.GoldenArcherClick(gObj);
+		bResult = true;
+	}
+	if (gObjNPC->Class == 241)
+	{
+		if( AddTab[gObj->m_Index].Resets < Config.GuildRes)
+		{
+			Chat.Message(1,gObj->m_Index,"You don't have enough Resets, you need %d more resets.", Config.GuildRes - AddTab[gObj->m_Index].Resets);
+			bResult = true;
+		}
+		if( gObj->Level < Config.GuildLevel)
+		{
+			Chat.Message(1,gObj->m_Index,"You don't have enough Level, you need %d more Level.", Config.GuildLevel - gObj->Level);
+			bResult = true;
+		}
+	} 
+#endif
+	return bResult;
+}
+
+void cMonster::PkClear(LPOBJ gObj, LPOBJ NpcObj)
+{							   			
+	if (gObj->m_PK_Level < 4)
+	{										 
+		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You are good player. God bless your soul.");
+		return;
+	}	
+
+	int PriceZen, PricePcPoint, PriceWCoin;
+	switch(Config.ClearNpc.Type)
+	{	   
+	case 1:	
+		PriceZen = (Config.ClearNpc.PriceZen * gObj->m_PK_Count); 		 
+		PricePcPoint = (Config.ClearNpc.PricePcPoints * gObj->m_PK_Count);
+		PriceWCoin = (Config.ClearNpc.PriceWCoins * gObj->m_PK_Count);
+		break;
+	case 2:	
+		PriceZen = Config.ClearNpc.PriceZenForAll;			 
+		PricePcPoint = Config.ClearNpc.PricePcPoints;
+		PriceWCoin = Config.ClearNpc.PriceWCoins;
+		break;
+	case 0: 
+		PriceZen = 0;					 
+		PricePcPoint = 0;
+		PriceWCoin = 0;
+		break;
+	}
+
+	if(gObj->Money < PriceZen)
+	{
+		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You don't have enough Zen, you need %d more!", PriceZen - gObj->Money);
+		return;
+	}	   
+	if(gObj->m_wCashPoint < PriceWCoin)
+	{	 
+		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You don't have enough WCoin, you need %d more!", PriceWCoin - gObj->m_wCashPoint);
+		return;
+	}
+	if(AddTab[gObj->m_Index].PC_PlayerPoints < PricePcPoint)
+	{	 
+		NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj, "You don't have enough PcPoint, you need %d more!", PricePcPoint - AddTab[gObj->m_Index].PC_PlayerPoints);
+		return;
+	}
+	if (PricePcPoint > 0)
+	{
+		PCPoint.UpdatePoints(gObj,PricePcPoint,MINUS,PCPOINT);
+		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[Guard] You pay %d PcPoints", PricePcPoint);
+	}
+
+	if (PriceWCoin > 0)
+	{										
+		PCPoint.UpdatePoints(gObj,PriceWCoin,MINUS,WCOIN);
+		Chat.MessageLog(1, c_Blue, t_PCPOINT, gObj,"[Guard] You pay %d WCoin", PriceWCoin);
+	}
+
+	if (PriceZen > 0)
+	{															 
+		gObj->Money -= PriceZen; 
+		GCMoneySend (gObj->m_Index, gObj->Money);
+		Chat.MessageLog(1, c_Blue ,t_PCPOINT, gObj, "[Guard] You pay %d Zen", PriceZen);
+	}
+
+	NPCMessageLog( c_Blue ,t_COMMANDS, gObj, NpcObj,"Cleaned %d kills. Don't tell anyone!", gObj->m_PK_Count); 
+
+	gObj->m_PK_Level = 3;
+	gObj->m_PK_Count = 0;
+
+	GCPkLevelSend (gObj->m_Index,3);
 }

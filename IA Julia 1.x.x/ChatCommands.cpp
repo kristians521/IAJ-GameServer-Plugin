@@ -348,11 +348,11 @@ bool cChat::CheckCommand(LPOBJ gObj, int lConfig, cGmSystem::Commands Command,
 		return true;
 	}
 
-	if (!GmSystem.IsCommand(Command, gObj->Name))
-	{
-		MessageLog(1, c_Red, t_COMMANDS, gObj, "[%s] You can't use this command.", CommandName);
-		return true;
-	}		
+	//if (!GmSystem.IsCommand(Command, gObj->Name))
+	//{
+	//	MessageLog(1, c_Red, t_COMMANDS, gObj, "[%s] You can't use this command.", CommandName);
+	//	return true;
+	//}		
 					   
 	if (NeedLvl > 0 && gObj->Level < NeedLvl)
 	{

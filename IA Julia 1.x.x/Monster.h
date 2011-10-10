@@ -8,6 +8,8 @@
 // ================================================== //
 
 #include "StdAfx.h"
+#include "User.h"
+#include "Logger.h"
 #ifndef MONSTER_H
 #define MONSTER_H
 #ifdef _GS
@@ -20,6 +22,16 @@ void __cdecl MonsterDie(LPOBJ lpObjOfMonster, LPOBJ lpObjOfPlayer);
 void NPCMessage(int IndexPlayer, LPOBJ mObj, char* Msg,...);	
 void NPCMessageLog(sColor LogColor, sLogType LogType, LPOBJ gObj, LPOBJ mObj, char* Msg,...);
 void NPCMessageNear(LPOBJ mObj, char* Msg,...);	
-//						 	
+//				
+class cMonster
+{
+public:
+	bool NPCTalkEx(LPOBJ gObj, int NpcId);
+	void LahapDupeBug(LPOBJ gObj);
+private:			
+	void PkClear(LPOBJ gObj, LPOBJ NpcObj); 
+};
+extern cMonster Monster;
+
 #define OBJ_MAXMONSTER 7400
 #endif
