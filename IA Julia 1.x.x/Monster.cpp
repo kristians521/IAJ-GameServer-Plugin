@@ -266,14 +266,14 @@ bool cMonster::NPCTalkEx(LPOBJ gObj, int NpcId)
 
 		bResult = true;
 	}
-	if (gObjNPC->Class == 492 && moss.MossConfig.EnableMoss)
+	if (gObjNPC->Class == 492 && Moss.MossConfig.EnableMoss)
 	{
-		if (gObj->m_PK_Level > 3 && moss.MossConfig.UsePK == 0)
+		if (gObj->m_PK_Level > 3 && Moss.MossConfig.UsePK == 0)
 		{
 			Chat.Message(gObj->m_Index,"[Moss The Gambler] PK player don`t use Moss The Gambler");
 			return false;
 		}
-		if (moss.GetStatusMoss() == FALSE)
+		if (Moss.GetStatusMoss() == FALSE)
 		{
 			Chat.Message(gObj->m_Index,"[Moss The Gambler] Moss is closed");
 			return false;

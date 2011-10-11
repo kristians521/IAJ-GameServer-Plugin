@@ -7,13 +7,12 @@
 // #	http://auroraplay.ru/						# //
 // ================================================== //
 
-#include "Logger.h"
-#include "User.h"
-#include "GMSystem.h"
-
 #ifndef CHAT_H
 #define CHAT_H
 
+#include "Logger.h"
+#include "User.h"
+#include "GMSystem.h"
 
 class cChat
 {

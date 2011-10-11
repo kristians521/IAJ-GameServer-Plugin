@@ -7,10 +7,11 @@
 // #	http://auroraplay.ru/						# //
 // ================================================== //
 
-#include "User.h"
-#include "Prodef.h"
 #ifndef PROTOC_H
 #define PROTOC_H	   								
+
+#include "User.h"
+#include "Prodef.h"
 
 int gObjAttack(LPOBJ lpObj, LPOBJ lpTargetObj, class CMagicInf* lpMagic, int magicsend, unsigned char MSBFlag, int AttackDamage, BOOL bCombo);	 
 void gObjPlayerKiller(LPOBJ lpObj, LPOBJ lpTargetObj); 

@@ -7,13 +7,15 @@
 // #	http://auroraplay.ru/						# //
 // ================================================== //
 
-#pragma once
+#ifndef NEWS_H
+#define NEWS_H
+
 void NewsSystem(void * lpParam);
-class News
+class cNews
 {
 public:
-	News();
-	~News();  
+	cNews();
+	~cNews();  
 	int Sections;
 	struct sNews
 	{
@@ -25,4 +27,5 @@ public:
 	};
 	sNews NewsSys[20];
 };
-extern News g_News;
+extern cNews News;
+#endif

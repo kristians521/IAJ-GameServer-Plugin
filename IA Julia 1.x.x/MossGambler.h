@@ -11,11 +11,11 @@
 #ifdef _GS
 #ifndef MOSS_H
 #define MOSS_H 
-class Moss
+class cMoss
 {
 public:
-	Moss();
-	~Moss();
+	cMoss();
+	~cMoss();
 	void LoadMoss();  
 	void LoadMainConfig();
 	void LoadItemInfo();
@@ -77,6 +77,6 @@ private:
 	int AmountTimers;
 	int BuyType;  
 }; 
-extern Moss moss; 
+extern cMoss Moss; 
 #endif
 #endif

@@ -14,13 +14,13 @@
 #include "Logger.h"
 #pragma warning(disable: 4244)
 
-News g_News;
+cNews News;
 
-News::News()
+cNews::cNews()
 { 
 }
 
-News::~News()
+cNews::~cNews()
 {
 
 }
@@ -28,24 +28,24 @@ void NewsSystem(void * lpParam)
 {
 	while(true)
 	{ 
-		g_News.Sections = GetPrivateProfileIntA("News","NewsSections",5,IAJuliaNews); 
+		News.Sections = GetPrivateProfileIntA("News","NewsSections",5,IAJuliaNews); 
 
 		char PState[10]; 
-		for(int i = 1; i <= g_News.Sections; i++)
+		for(int i = 1; i <= News.Sections; i++)
 		{
 			wsprintf(PState, "Section%d", i);		
-			g_News.NewsSys[i].Time = GetPrivateProfileIntA(PState,"ShowTime",0,IAJuliaNews) * 60000;
-			g_News.NewsSys[i].Type = GetPrivateProfileIntA(PState,"ShowType",0,IAJuliaNews);
-			GetPrivateProfileStringA(PState,"News1","NULL",g_News.NewsSys[i].MSG01,50,IAJuliaNews);
-			GetPrivateProfileStringA(PState,"News2", "NULL", g_News.NewsSys[i].MSG02,50,IAJuliaNews);
-			GetPrivateProfileStringA(PState,"News3", "NULL", g_News.NewsSys[i].MSG03,50,IAJuliaNews); 	   
-			Log.CheckProcent(g_News.NewsSys[i].MSG01);	 
-			Log.CheckProcent(g_News.NewsSys[i].MSG02);
-			Log.CheckProcent(g_News.NewsSys[i].MSG03);
-			Sleep(g_News.NewsSys[i].Time); 
-			Chat.MessageAll(g_News.NewsSys[i].Type, 0, NULL, g_News.NewsSys[i].MSG01);
-			Chat.MessageAll(g_News.NewsSys[i].Type, 0, NULL, g_News.NewsSys[i].MSG02);
-			Chat.MessageAll(g_News.NewsSys[i].Type, 0, NULL, g_News.NewsSys[i].MSG03); 
+			News.NewsSys[i].Time = GetPrivateProfileIntA(PState,"ShowTime",0,IAJuliaNews) * 60000;
+			News.NewsSys[i].Type = GetPrivateProfileIntA(PState,"ShowType",0,IAJuliaNews);
+			GetPrivateProfileStringA(PState,"News1","NULL",News.NewsSys[i].MSG01,50,IAJuliaNews);
+			GetPrivateProfileStringA(PState,"News2", "NULL", News.NewsSys[i].MSG02,50,IAJuliaNews);
+			GetPrivateProfileStringA(PState,"News3", "NULL", News.NewsSys[i].MSG03,50,IAJuliaNews); 	   
+			Log.CheckProcent(News.NewsSys[i].MSG01);	 
+			Log.CheckProcent(News.NewsSys[i].MSG02);
+			Log.CheckProcent(News.NewsSys[i].MSG03);
+			Sleep(News.NewsSys[i].Time); 
+			Chat.MessageAll(News.NewsSys[i].Type, 0, NULL, News.NewsSys[i].MSG01);
+			Chat.MessageAll(News.NewsSys[i].Type, 0, NULL, News.NewsSys[i].MSG02);
+			Chat.MessageAll(News.NewsSys[i].Type, 0, NULL, News.NewsSys[i].MSG03); 
 		} 
 	}
 	_endthread();

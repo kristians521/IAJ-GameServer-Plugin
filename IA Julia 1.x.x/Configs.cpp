@@ -571,7 +571,7 @@ void cConfigs::LoadAll()
 	Misc();
 	MapSys();
 #ifdef _GS
-	moss.LoadMoss();
+	Moss.LoadMoss();
 	DropEvent.Init();
 #endif 
 }

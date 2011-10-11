@@ -90,7 +90,7 @@ DWORD MainTick()
 		Security.Tick();
 #ifdef _GS
 		/* Moss The Gambler */
-		moss.MossConfig.EnableTimer && moss.MossConfig.EnableMoss ? moss.CheckTime() : moss.OpenedMoss = TRUE;	 	
+		Moss.MossConfig.EnableTimer && Moss.MossConfig.EnableMoss ? Moss.CheckTime() : Moss.OpenedMoss = TRUE;	 	
 #endif	
 		Sleep(1000);
 		Log.Online_All = Temp_All;

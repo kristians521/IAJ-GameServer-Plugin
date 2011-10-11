@@ -17,7 +17,7 @@
 #include "Utilits.h"
 #include "PCPoint.h"
 #include "Monster.h"
-Moss moss;
+cMoss Moss;
 #define ITEMGET(x,y) ((x)*512+(y))
 enum {OPT_LEVEL,OPT_SKILL,OPT_LUCK,OPT_ADD,OPT_EXC,OPT_ANC};
 
@@ -30,16 +30,16 @@ struct PMSG_BUYRESULT
 
 void MossBuyDelay(void *lparam)
 {
-	moss.g_MossDelay = true;
+	Moss.g_MossDelay = true;
 	Sleep(1500);
-	moss.g_MossDelay = false;
+	Moss.g_MossDelay = false;
 	_endthread();
 }
 
-Moss::Moss() {}
-Moss::~Moss() {}
+cMoss::cMoss() {}
+cMoss::~cMoss() {}
 
-void Moss::DataSendMoss(int Index)
+void cMoss::DataSendMoss(int Index)
 {
 	PMSG_BUYRESULT pRez;
 	pRez.h.c=0xC1;
@@ -48,7 +48,7 @@ void Moss::DataSendMoss(int Index)
 	DataSend(Index,(LPBYTE)&pRez,pRez.h.size);
 }
 
-void Moss::LoadMoss()
+void cMoss::LoadMoss()
 {
 	MossConfig.EnableMoss		= Config.GetInt(0,1,0,"Moss","EnableMoss",IAJuliaMossGambler); 
 	if(!MossConfig.EnableMoss)return;
@@ -72,11 +72,11 @@ void Moss::LoadMoss()
 	MossConfig.RandLuck			= Config.GetInt(0,100,50,"Random","RandLuck",IAJuliaMossGambler);
 	MossConfig.RandSkill		= Config.GetInt(0,100,50,"Random","RandSkill",IAJuliaMossGambler);
 	MossConfig.RandAncient		= Config.GetInt(0,100,20,"Random","RandAncient",IAJuliaMossGambler);
-	moss.LoadItemInfo();
-	if (MossConfig.EnableTimer) moss.LoadTimeConfig();
+	Moss.LoadItemInfo();
+	if (MossConfig.EnableTimer) Moss.LoadTimeConfig();
 }
 
-void Moss::LoadItemInfo()
+void cMoss::LoadItemInfo()
 {
 	FILE *file;
 	file = fopen("..\\Data\\Lang\\Kor\\Item(Kor).txt","r");
@@ -118,7 +118,7 @@ void Moss::LoadItemInfo()
 	fclose(file);
 }
 
-void Moss::LoadTimeConfig()
+void cMoss::LoadTimeConfig()
 { 
 	FILE * file;
 
@@ -164,7 +164,7 @@ void Moss::LoadTimeConfig()
 	OpenedMoss = FALSE; 
 }
 
-void Moss::CheckTime()
+void cMoss::CheckTime()
 {
 	CTime t = CTime::GetCurrentTime();
 
@@ -212,7 +212,7 @@ void Moss::CheckTime()
 	}
 }
 
-BOOL Moss::GetStatusMoss()
+BOOL cMoss::GetStatusMoss()
 {
 	if(MossTimer)
 		return this->OpenedMoss;
@@ -220,12 +220,12 @@ BOOL Moss::GetStatusMoss()
 		return TRUE;
 }
 
-void Moss::SpawnMoss()
+void cMoss::SpawnMoss()
 {
 	Monster.MonsterAddAndSpawn(492,0,51,22,225);
 }
 
-void Moss::DisappearMoss()
+void cMoss::DisappearMoss()
 {
 	for(int iIndex = 0; iIndex < OBJ_MAXMONSTER; iIndex++)
 	{
@@ -238,13 +238,13 @@ void Moss::DisappearMoss()
 	MobCount--;
 }
 
-BOOL Moss::BuyItem(int aIndex, unsigned char * aRecv)
+BOOL cMoss::BuyItem(int aIndex, unsigned char * aRecv)
 {
 	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);
 
 	if (gObj->TargetShopNumber != 492) return FALSE;
 	
-	if (moss.GetStatusMoss() == FALSE)
+	if (Moss.GetStatusMoss() == FALSE)
 	{
 		Chat.Message(aIndex,"Moss The Gambler is closed");
 		return TRUE;
@@ -317,7 +317,7 @@ BOOL Moss::BuyItem(int aIndex, unsigned char * aRecv)
 	return TRUE;
 }
 
-int Moss::RandValue(int IndexOption)
+int cMoss::RandValue(int IndexOption)
 {
 	int rValue;
 	srand((unsigned) GetTickCount());
