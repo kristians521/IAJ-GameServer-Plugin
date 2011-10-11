@@ -22,7 +22,7 @@
 sAddTab AddTab[OBJECT_MAX]; 
 cUser User;
 
-bool CheckMaxPoints(BYTE type, OBJECTSTRUCT* lpObj)
+bool cUser::CheckMaxPoints(BYTE type, OBJECTSTRUCT* lpObj)
 {			 
 	bool bResult = false;
 
@@ -66,7 +66,7 @@ void gObjLevelUpPointAddEx(BYTE type, OBJECTSTRUCT* lpObj)
 {
 	bool Error = false;
 
-	if(CheckMaxPoints(type, lpObj))
+	if(User.CheckMaxPoints(type, lpObj))
 		Error = true;
 
 	if (Error == true)
@@ -338,46 +338,6 @@ void GCEquipmentSendHook(int aIndex)
 		_beginthread( TradeSystem__Cancel, 0, NULL  );
 }
 
-void cUser::PlayerConnect(LPOBJ gObj)
-{	
-	LoginMsg(gObj);
-	RingSkin(gObj);
-	PCPoint.InitPCPointForPlayer(gObj); 
-
-	Me_MuOnlineQuery.ExecQuery("SELECT cspoints FROM MEMB_INFO WHERE memb___id = '%s'", gObj->AccountID);
-	Me_MuOnlineQuery.Fetch();
-	gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger("cspoints");
-	Me_MuOnlineQuery.Close();
-
-	MuOnlineQuery.ExecQuery("SELECT %s FROM Character WHERE Name = '%s'", Config.ResetColumn, gObj->Name);
-	MuOnlineQuery.Fetch();
-	AddTab[gObj->m_Index].Resets = MuOnlineQuery.GetAsInteger(Config.ResetColumn);
-	MuOnlineQuery.Close();
-
-	AddTab[gObj->m_Index].ON_Min			= 0;   
-	AddTab[gObj->m_Index].ON_Sek			= 0;
-	AddTab[gObj->m_Index].ON_Hour			= 0;
-	AddTab[gObj->m_Index].PC_OnlineTimer	= 0;
-
-#ifdef _GS 
-	if(Config.Duel.Enabled)
-	{
-		if(Config.Duel.Ranking)
-		{
-			g_DuelSystem.DuelSetInfo(gObj->m_Index);
-		}
-
-		if((!g_DuelSystem.IsOnDuel(gObj->m_Index)) && gObj->MapNumber == 64)
-		{
-			gObjMoveGate(gObj->m_Index, 294);
-			Log.ConsoleOutPut(1, c_Blue ,t_Duel, "[Duel System][%s][%s] Spawn on duel map after duel is not allowed", gObj->AccountID, gObj->Name);
-		}
-		g_DuelSystem.UserDuelInfoReset(gObj);
-	}
-#endif
-	Vip.Connect(gObj);
-}
-
 void cUser::RingSkin(LPOBJ gObj)
 {   
 	if(gObj->pInventory[RING_01].m_Type == 0x1A4C && gObj->m_Change != 503 ||
@@ -429,6 +389,46 @@ bool cUser::CGPartyRequestRecv(PMSG_PARTYREQUEST * lpMsg, int aIndex)
 		return true;
 	}	   
 	return false;
+}
+
+void cUser::PlayerConnect(LPOBJ gObj)
+{	
+	LoginMsg(gObj);
+	RingSkin(gObj);
+	PCPoint.InitPCPointForPlayer(gObj); 
+
+	Me_MuOnlineQuery.ExecQuery("SELECT cspoints FROM MEMB_INFO WHERE memb___id = '%s'", gObj->AccountID);
+	Me_MuOnlineQuery.Fetch();
+	gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger("cspoints");
+	Me_MuOnlineQuery.Close();
+
+	MuOnlineQuery.ExecQuery("SELECT %s FROM Character WHERE Name = '%s'", Config.ResetColumn, gObj->Name);
+	MuOnlineQuery.Fetch();
+	AddTab[gObj->m_Index].Resets = MuOnlineQuery.GetAsInteger(Config.ResetColumn);
+	MuOnlineQuery.Close();
+
+	AddTab[gObj->m_Index].ON_Min			= 0;   
+	AddTab[gObj->m_Index].ON_Sek			= 0;
+	AddTab[gObj->m_Index].ON_Hour			= 0;
+	AddTab[gObj->m_Index].PC_OnlineTimer	= 0;
+
+#ifdef _GS 
+	if(Config.Duel.Enabled)
+	{
+		if(Config.Duel.Ranking)
+		{
+			g_DuelSystem.DuelSetInfo(gObj->m_Index);
+		}
+
+		if((!g_DuelSystem.IsOnDuel(gObj->m_Index)) && gObj->MapNumber == 64)
+		{
+			gObjMoveGate(gObj->m_Index, 294);
+			Log.ConsoleOutPut(1, c_Blue ,t_Duel, "[Duel System][%s][%s] Spawn on duel map after duel is not allowed", gObj->AccountID, gObj->Name);
+		}
+		g_DuelSystem.UserDuelInfoReset(gObj);
+	}
+#endif
+	Vip.Connect(gObj);
 }
 
 void cUser::LoginMsg(LPOBJ gObj)
