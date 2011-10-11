@@ -9,7 +9,7 @@
 
 #include "StdAfx.h"
 #include "MapSystem.h"
-#include "Configs.h"
+#include "Prodef.h"
 #include "Logger.h"
 
 cMapSystem MapSystem;

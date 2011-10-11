@@ -1,3 +1,11 @@
+// ================================================== //
+// #			GameServer 1.00.90					# //
+// #			Imagination Arts					# //
+// #			Julia Project 1.1.x					# //
+// ================================================== //
+// #	http://imaginationarts.net/forum/			# //
+// #	http://auroraplay.ru/						# //
+// ================================================== //
 
 #include "StdAfx.h"
 #include "Vip.h"

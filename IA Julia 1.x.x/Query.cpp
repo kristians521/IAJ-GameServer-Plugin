@@ -10,7 +10,7 @@
 #include "stdafx.h"
 #include "Query.h"
 #include "Logger.h"
-#include "Configs.h"
+#include "Prodef.h"
 
 CQuery MuOnlineQuery;
 CQuery Me_MuOnlineQuery;

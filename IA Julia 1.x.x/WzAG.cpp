@@ -9,7 +9,7 @@
 
 #include "StdAfx.h"
 #include "WzAG.h"
-#include "Configs.h"
+#include "Prodef.h"
 
 
 FILE * fstream1, * fstream2;
