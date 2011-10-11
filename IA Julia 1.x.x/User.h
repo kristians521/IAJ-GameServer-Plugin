@@ -789,6 +789,7 @@ typedef	struct sAddTab
 {			
 	//Post Delay
 	int		POST_Delay; 
+
 	//Anti AFK
 	int		AFK_Timer;
 	int		AFK_MapNumber;
@@ -814,11 +815,13 @@ typedef	struct sAddTab
     int		PC_InfoReceived;
     int		PC_PlayerPoints;
 	int		PC_OnlineTimer;
+
 	//Online
 	int		ON_Min;   
 	int		ON_Sek;
 	int		ON_Hour;
 
+	//Other
 	int		Resets;
 	int		UsedSlot;
 }sAddTab;

@@ -23,8 +23,7 @@
 #include "MossGambler.h"	 
 #include "Monster.h"  
 #include "Query.h"
-
-bool CheckVipTime(int TimeInMin);
+#include "Vip.h"
 
 DWORD MainTick()  	
 {
@@ -85,48 +84,9 @@ DWORD MainTick()
 					}
 				}
 			} 
-			/*VIP System*/
-			if(AddTab[gObj->m_Index].VIP_Type > 0 && Config.VIP.Enabled)
-			{ 
-				AddTab[gObj->m_Index].VIP_Sec++;
-				if(AddTab[gObj->m_Index].VIP_Sec >= 60)
-				{
-					AddTab[gObj->m_Index].VIP_Min--;
-					AddTab[gObj->m_Index].VIP_Sec = 0;
+			Vip.Tick(gObj);
+		}										
 
-					if(CheckVipTime(AddTab[gObj->m_Index].VIP_Min))
-					{			
-						Chat.MessageLog(1, c_Red, t_VIP, gObj, "[VIP] You have %d more vip minutes", AddTab[gObj->m_Index].VIP_Min); 
-					}
-					if(AddTab[gObj->m_Index].VIP_Min <= 0)
-					{
-						Chat.MessageLog(1, c_Red, t_VIP, gObj, "[VIP] Your vip time is over! You are normal player again."); 
-						AddTab[gObj->m_Index].VIP_Type = 0;
-						AddTab[gObj->m_Index].VIP_Min = 0;
-						MuOnlineQuery.ExecQuery("UPDATE Character SET %s = 0, %s = 0 WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
-							MuOnlineQuery.Fetch();
-							MuOnlineQuery.Close();			
-						MuOnlineQuery.ExecQuery("SELECT %s, %s FROM Character WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
-							MuOnlineQuery.Fetch();
-							AddTab[gObj->m_Index].VIP_Type = MuOnlineQuery.GetAsInteger(Config.VIP.Column);
-							AddTab[gObj->m_Index].VIP_Min = MuOnlineQuery.GetAsInteger(Config.VIP.ColumnDate);
-							MuOnlineQuery.Close();
-					}
-					else
-					{
-						MuOnlineQuery.ExecQuery("UPDATE Character SET %s = (%s - 1) WHERE Name = '%s'", Config.VIP.ColumnDate, Config.VIP.ColumnDate, gObj->Name);
-							MuOnlineQuery.Fetch();
-							MuOnlineQuery.Close();
-						MuOnlineQuery.ExecQuery("SELECT %s, %s FROM Character WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
-							MuOnlineQuery.Fetch();
-							AddTab[gObj->m_Index].VIP_Type = MuOnlineQuery.GetAsInteger(Config.VIP.Column);
-							AddTab[gObj->m_Index].VIP_Min = MuOnlineQuery.GetAsInteger(Config.VIP.ColumnDate);
-							MuOnlineQuery.Close();
-					}
-				}
-			}
-		}				
-														
 		Security.Tick();
 #ifdef _GS
 		/* Moss The Gambler */
@@ -138,25 +98,6 @@ DWORD MainTick()
 	}
 	return 1;	
 } 
-
-bool CheckVipTime(int TimeInMin)
-{
-	switch(TimeInMin)
-	{
-	case 1:
-	case 2:
-	case 3:
-	case 5:
-	case 15:
-	case 30:
-	case 60:
-	case 120:
-	case 340:
-	case 680:
-		return true;
-	}
-	return false;
-}
 
 extern "C" __declspec (dllexport) void __cdecl RMST()
 {
@@ -177,7 +118,6 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		Fixes.ASMFixes();
 		Config.LoadConfigsInGS();
 		Config.LoadAll();
-		//IpBlock.LoadIpBlock();
 		MoveReq.MoveReqLoad();
 		Config.LoadNews();
 		#ifdef _GS
@@ -219,7 +159,6 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 			Utilits.HookThis((DWORD)&gObjLevelUpPointAddEx,0x004075B3);
 			Utilits.HookThis((DWORD)&gObjPlayerKiller, 0x00406C8A);
 			Utilits.HookThis((DWORD)&gObjAttack, 0x00403E72);
-
 		#endif
 
 		DWORD ThreadID;

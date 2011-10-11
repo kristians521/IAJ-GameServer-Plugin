@@ -96,6 +96,7 @@
     <ClCompile Include="Query.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Utilits.cpp" />
+    <ClCompile Include="Vip.cpp" />
     <ClCompile Include="WzAG.cpp" />
     <ClCompile Include="WZEventDrop.cpp" />
   </ItemGroup>
@@ -124,6 +125,7 @@
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="Utilits.h" />
+    <ClInclude Include="Vip.h" />
     <ClInclude Include="WzAG.h" />
     <ClInclude Include="WZEventDrop.h" />
   </ItemGroup>

@@ -132,6 +132,9 @@
     <ClCompile Include="Security.cpp">
       <Filter>Source\Security</Filter>
     </ClCompile>
+    <ClCompile Include="Vip.cpp">
+      <Filter>Source\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -211,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="Security.h">
       <Filter>Source\Security</Filter>
+    </ClInclude>
+    <ClInclude Include="Vip.h">
+      <Filter>Source\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

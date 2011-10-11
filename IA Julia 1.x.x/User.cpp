@@ -18,6 +18,7 @@
 #include "MossGambler.h"
 #include "Query.h"
 #include "DuelManager.h"
+#include "Vip.h"
 sAddTab AddTab[OBJECT_MAX]; 
 cUser User;
 
@@ -374,20 +375,7 @@ void cUser::PlayerConnect(LPOBJ gObj)
 		g_DuelSystem.UserDuelInfoReset(gObj);
 	}
 #endif
-	if(Config.VIP.Enabled)
-	{												
-		MuOnlineQuery.ExecQuery("SELECT %s, %s FROM Character WHERE Name = '%s'", Config.VIP.Column, Config.VIP.ColumnDate, gObj->Name);
-		MuOnlineQuery.Fetch();
-		AddTab[gObj->m_Index].VIP_Type = MuOnlineQuery.GetAsInteger(Config.VIP.Column);
-		AddTab[gObj->m_Index].VIP_Min = MuOnlineQuery.GetAsInteger(Config.VIP.ColumnDate);
-		MuOnlineQuery.Close();
-
-		AddTab[gObj->m_Index].VIP_Sec = 0; // Обнуление секунд при входе
-		if(AddTab[gObj->m_Index].VIP_Min > 0)
-		{											 
-			Chat.MessageLog(1, c_Red, t_VIP, gObj, "[VIP] Left %d minutes of VIP.", AddTab[gObj->m_Index].VIP_Min);
-		} 
-	}
+	Vip.Connect(gObj);
 }
 
 void cUser::RingSkin(LPOBJ gObj)
