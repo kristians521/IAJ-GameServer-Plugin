@@ -1038,7 +1038,7 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 			{
 				GameMonsterAllCloseAndReload(); 
 				#ifdef _GS
-				ReadMonsterAdd();
+				Monster.ReadMonsterAdd();
 				#endif
 				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] Monsters Reloaded.");
 				break;
@@ -1088,7 +1088,7 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 				if (Config.GmSystemConfig.IsGMSystem)GmSystem.Load();
 				DropSystem.LoadDropItems();
 				#ifdef _GS
-				ReadMonsterAdd();
+				Monster.ReadMonsterAdd();
 		 		DropEvent.updateBC();	// reload BC drop config
 		  		DropEvent.updateIT();	// reload IT drop config
 		 		DropEvent.updateWW();	// reload WW drop config
@@ -1529,7 +1529,7 @@ bool cChat::AddMobCommand(LPOBJ gObj, char *Msg)
 		}		 
 		for(int i = 0; i < Cnt; i++)
 		{
-			MonsterAddAndSpawn(Mob,Speed,Map,X,Y);
+			Monster.MonsterAddAndSpawn(Mob,Speed,Map,X,Y);
 		}
 		MessageLog(1, c_Red, t_COMMANDS, gObj, "[AddMob] %d Mob Successfully spawned (Map: %d, X: %d, Y: %d, MobID: %d)", Cnt,Map,X,Y, Mob);
 #endif

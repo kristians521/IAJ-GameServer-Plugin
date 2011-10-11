@@ -143,7 +143,7 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 			Utilits.HookThis((DWORD)&gObjLevelUpPointAddEx,0x00406D7F);
 			Utilits.HookThis((DWORD)&gObjPlayerKiller, 0x0040655F); 
 			Utilits.HookThis((DWORD)&gObjAttack, 0x00403CA6);
-			ReadMonsterAdd();
+			Monster.ReadMonsterAdd();
 		#endif
 
 		#ifdef _GS_CS

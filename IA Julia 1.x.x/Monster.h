@@ -7,27 +7,30 @@
 // #	http://auroraplay.ru/						# //
 // ================================================== //
 
+#ifndef MONSTER_H
+#define MONSTER_H
+
 #include "StdAfx.h"
 #include "User.h"
 #include "Logger.h"
-#ifndef MONSTER_H
-#define MONSTER_H
-#ifdef _GS
-int MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y);
-#endif
-void ReadMonsterAdd();
+
+// # Hook in GS # //
 int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr);		   
 void __cdecl MonsterDie(LPOBJ lpObjOfMonster, LPOBJ lpObjOfPlayer);	 
-//Monster Speak																												  
-void NPCMessage(int IndexPlayer, LPOBJ mObj, char* Msg,...);	
-void NPCMessageLog(sColor LogColor, sLogType LogType, LPOBJ gObj, LPOBJ mObj, char* Msg,...);
-void NPCMessageNear(LPOBJ mObj, char* Msg,...);	
-//				
+// # ---------- # //
+
 class cMonster
 {
 public:
+#ifdef _GS
+	void ReadMonsterAdd();
+	int MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y);
+#endif
 	bool NPCTalkEx(LPOBJ gObj, int NpcId);
-	void LahapDupeBug(LPOBJ gObj);
+	void LahapDupeBug(LPOBJ gObj);																			  
+	void NPCMessage(int IndexPlayer, LPOBJ mObj, char* Msg,...);	
+	void NPCMessageLog(sColor LogColor, sLogType LogType, LPOBJ gObj, LPOBJ mObj, char* Msg,...);
+	void NPCMessageNear(LPOBJ mObj, char* Msg,...);	
 private:			
 	void PkClear(LPOBJ gObj, LPOBJ NpcObj); 
 };

@@ -222,7 +222,7 @@ BOOL Moss::GetStatusMoss()
 
 void Moss::SpawnMoss()
 {
-	MonsterAddAndSpawn(492,0,51,22,225);
+	Monster.MonsterAddAndSpawn(492,0,51,22,225);
 }
 
 void Moss::DisappearMoss()

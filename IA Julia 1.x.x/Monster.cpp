@@ -56,7 +56,7 @@ void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
 }
 
 #ifdef _GS
-int MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y)
+int cMonster::MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y)
 {
 	int MobCount = *(DWORD *)(MonsterCount);
 
@@ -89,7 +89,7 @@ int MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y)
 	}
 }
 
-void ReadMonsterAdd()
+void cMonster::ReadMonsterAdd()
 { 
 		FILE* MonsterFile;
 		if((MonsterFile = fopen( IAJuliaMobAdd, "r")) == NULL)
@@ -119,6 +119,7 @@ void ReadMonsterAdd()
 		fclose(MonsterFile); 
 }
 #endif
+
 //Monster Death Control
 int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 {
@@ -201,7 +202,7 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
  
 char Messages1[1024];
 
-void NPCMessage(int IndexPlayer, LPOBJ mObj, char* Msg,...)
+void cMonster::NPCMessage(int IndexPlayer, LPOBJ mObj, char* Msg,...)
 {						 
 	Messages1[0] = 0;
 	va_list pArguments1;
@@ -212,7 +213,7 @@ void NPCMessage(int IndexPlayer, LPOBJ mObj, char* Msg,...)
 	ChatTargetSend(mObj, Messages1, IndexPlayer);
 }
 
-void NPCMessageLog(sColor LogColor, sLogType LogType, LPOBJ gObj, LPOBJ mObj, char* Msg,...)
+void cMonster::NPCMessageLog(sColor LogColor, sLogType LogType, LPOBJ gObj, LPOBJ mObj, char* Msg,...)
 {						  
 	Messages1[0] = 0;
 	va_list pArguments1;
@@ -224,7 +225,7 @@ void NPCMessageLog(sColor LogColor, sLogType LogType, LPOBJ gObj, LPOBJ mObj, ch
 	Log.ConsoleOutPut(1, LogColor, LogType, "[%s]: %s", gObj->Name, Messages1);
 }
 
-void NPCMessageNear(LPOBJ mObj, char* Msg,...)
+void cMonster::NPCMessageNear(LPOBJ mObj, char* Msg,...)
 {						   
 	Messages1[0] = 0;
 	va_list pArguments1;
