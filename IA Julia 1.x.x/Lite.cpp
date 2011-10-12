@@ -35,62 +35,34 @@ DWORD MainTick()
 		{
 			OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(i);	
 
-			if(gObj->Connected < PLAYER_PLAYING) continue;	
-			
+			// # PLAYER  LOGGED # //
+
+			if(gObj->Connected < PLAYER_LOGGED) continue;
+
 			if(GmSystem.IsGMBD(gObj->Name))
 				Temp_Gms++;
 			Temp_All++;
 
-			int Index = gObj->m_Index;  
+			// # -------------- # //
 
-			if(AddTab[Index].POST_Delay > 0)
-				AddTab[Index].POST_Delay--;
+			// # PLAYER PLAYING # //
 
-			if(Config.AntiAfkConfig.Enabled == 1)
-				AntiAFK.SendInfo(gObj);
+			if(gObj->Connected < PLAYER_PLAYING) continue;				
 
-			AddTab[Index].ON_Sek++;
-			if(AddTab[Index].ON_Sek >= 60)
-			{
-				AddTab[Index].ON_Sek = 0;
-				AddTab[Index].ON_Min++;
-				//PCPoint.UpdatePoints(gObj,0,PLUS,PCPOINT);
-			}
-			if(AddTab[Index].ON_Min >= 60)
-			{
-				AddTab[Index].ON_Min = 0;
-				AddTab[Index].ON_Hour++;
-				Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_STAT SET OnlineHours = (OnlineHours + 1) WHERE memb___id = '%s'", gObj->AccountID);
-					Me_MuOnlineQuery.Fetch();
-					Me_MuOnlineQuery.Close();
-			}
-			/*Add PCPoints for Online System*/
-			if (PCPoint.sPoints.Enabled && PCPoint.sPoints.AddPCPointsSec > 0)
-			{
-				AddTab[Index].PC_OnlineTimer++;
-				if (AddTab[Index].PC_OnlineTimer == PCPoint.sPoints.AddPCPointsSec)
-				{
-					AddTab[Index].PC_OnlineTimer = 0;
-					PCPoint.UpdatePoints(gObj,PCPoint.sPoints.AddPCPointsCount,PLUS,PCPOINT);
+			if(AddTab[gObj->m_Index].POST_Delay > 0)
+				AddTab[gObj->m_Index].POST_Delay--;
 
-					if (AddTab[Index].PC_PlayerPoints < PCPoint.sPoints.MaximumPCPoints)
-					{
-						Chat.Message( Index,"[PointShop] You earned %d Points for being online!", PCPoint.sPoints.AddPCPointsCount);
-						Chat.Message( Index,"[PointShop] You have been online %d Hour %d Minutes!", AddTab[Index].ON_Hour, AddTab[Index].ON_Min);
-					}
-					else
-					{
-						Chat.Message( Index,"[PCPoint] You have maximum PCPoints");
-					}
-				}
-			} 
+			AntiAFK.Tick(gObj);
+			User.OnlineTimeTick(gObj);
+			PCPoint.Tick(gObj);
 			Vip.Tick(gObj);
+
+			// # -------------- # //
 		}										
 
 		Security.Tick();
 #ifdef _GS
-		/* Moss The Gambler */
-		Moss.MossConfig.EnableTimer && Moss.MossConfig.EnableMoss ? Moss.CheckTime() : Moss.OpenedMoss = TRUE;	 	
+		Moss.CheckTime();	 	
 #endif	
 		Sleep(1000);
 		Log.Online_All = Temp_All;

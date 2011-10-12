@@ -93,6 +93,28 @@ void cPCPoint::LoadConfigs()
 	Log.ConsoleOutPut(1,c_Cyan,t_PCPOINT,"[WCoin] Total Monster Loaded [%d]",AmountRecords[2]);
 }
 
+void cPCPoint::Tick(LPOBJ gObj)
+{
+	if (PCPoint.sPoints.Enabled && PCPoint.sPoints.AddPCPointsSec > 0)
+	{
+		AddTab[gObj->m_Index].PC_OnlineTimer++;
+		if (AddTab[gObj->m_Index].PC_OnlineTimer == PCPoint.sPoints.AddPCPointsSec)
+		{
+			AddTab[gObj->m_Index].PC_OnlineTimer = 0;
+			PCPoint.UpdatePoints(gObj,PCPoint.sPoints.AddPCPointsCount,PLUS,PCPOINT);
+
+			if (AddTab[gObj->m_Index].PC_PlayerPoints < PCPoint.sPoints.MaximumPCPoints)
+			{
+				Chat.Message(gObj->m_Index,"[PointShop] You earned %d Points for being online!", PCPoint.sPoints.AddPCPointsCount);
+				Chat.Message(gObj->m_Index,"[PointShop] You have been online %d Hour %d Minutes!", AddTab[gObj->m_Index].ON_Hour, AddTab[gObj->m_Index].ON_Min);
+			}
+			else
+			{
+				Chat.Message(gObj->m_Index,"[PCPoint] You have maximum PCPoints");
+			}
+		}
+	} 
+}
 void cPCPoint::CreatePacketShop()
 {
 	int PacketSize = 0;

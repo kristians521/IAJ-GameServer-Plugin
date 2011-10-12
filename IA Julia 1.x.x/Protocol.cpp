@@ -160,7 +160,7 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 #ifdef _GS
 		case 0x32:
 			{
-				if (Moss.MossConfig.EnableMoss)
+				if (Moss.Config.Enable)
 				{
 					if (Moss.BuyItem(aIndex,aRecv) == TRUE)
 					{

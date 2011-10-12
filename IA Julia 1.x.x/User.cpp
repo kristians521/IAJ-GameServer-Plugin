@@ -471,3 +471,21 @@ BOOL gObjGameClose_Func(int aIndex)
 	BOOL rValue = gObjGameClose(aIndex);
 	return rValue;		  	
 }
+
+void cUser::OnlineTimeTick(LPOBJ gObj)
+{
+	AddTab[gObj->m_Index].ON_Sek++;
+	if(AddTab[gObj->m_Index].ON_Sek >= 60)
+	{
+		AddTab[gObj->m_Index].ON_Sek = 0;
+		AddTab[gObj->m_Index].ON_Min++;
+	}
+	if(AddTab[gObj->m_Index].ON_Min >= 60)
+	{
+		AddTab[gObj->m_Index].ON_Min = 0;
+		AddTab[gObj->m_Index].ON_Hour++;
+		Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_STAT SET OnlineHours = (OnlineHours + 1) WHERE memb___id = '%s'", gObj->AccountID);
+		Me_MuOnlineQuery.Fetch();
+		Me_MuOnlineQuery.Close();
+	}
+}

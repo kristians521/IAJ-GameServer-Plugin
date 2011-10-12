@@ -16,14 +16,14 @@ class cMoss
 public:
 	cMoss();
 	~cMoss();
-	void LoadMoss();  
+	void Load();  
 	void LoadMainConfig();
 	void LoadItemInfo();
 	void LoadTimeConfig();
 	void DataSendMoss(int Index);
 
-	void SpawnMoss();
-	void DisappearMoss();
+	void Spawn();
+	void Disappear();
 
 	BOOL BuyItem(int aIndex, unsigned char * aRecv);
 
@@ -37,12 +37,13 @@ public:
 
 	void CheckTime();
 	BOOL GetStatusMoss();
-	bool g_MossDelay;
-	BOOL OpenedMoss;
+
+	bool Delay;
+	BOOL Opened;
 
 	struct 
 	{
-		int EnableMoss;
+		int Enable;
 		int EnableTimer;
 		int UsePK;
 		int PriceZen;
@@ -57,7 +58,7 @@ public:
 		int RandLuck;
 		int RandSkill;
 		int RandAncient;
-	}MossConfig;
+	}Config;
 private:
 	struct
 	{
@@ -72,7 +73,7 @@ private:
 		int delay;
 		int closehour;
 		int closemin;
-	}MossTimer[128];
+	}Timer[128];
 
 	int AmountTimers;
 	int BuyType;  

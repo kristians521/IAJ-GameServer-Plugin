@@ -16,7 +16,7 @@ class cAntiAFK
 public:
 	cAntiAFK();
 	~cAntiAFK();
-	void SendInfo(LPOBJ gObj);
+	void Tick(LPOBJ gObj);
 	void Load();
 private:
 	int ArrayMap[64];

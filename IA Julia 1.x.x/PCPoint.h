@@ -32,6 +32,7 @@ public:
 	void BuyItem(int Index,int Position);
 	int gObjCalcItems(int X, int Y);
 	/*For PCPoint*/
+	void Tick(LPOBJ gObj);
 	void InitPCPointForPlayer(LPOBJ gObj);
 	void UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoint Type);
 	void RewardsPointsKillMob(LPOBJ gObj,LPOBJ mObj,eTypePoint Type);

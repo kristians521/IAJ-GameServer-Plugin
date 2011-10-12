@@ -27,8 +27,10 @@ cAntiAFK::~cAntiAFK()
 }				   
 
 
-void cAntiAFK::SendInfo(LPOBJ gObj)
+void cAntiAFK::Tick(LPOBJ gObj)
 {
+	if(Config.AntiAfkConfig.Enabled == 0) return;
+
 	int Index = gObj->m_Index;
 	AddTab[Index].AFK_Timer++;
 

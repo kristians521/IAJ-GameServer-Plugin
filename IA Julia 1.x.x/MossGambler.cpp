@@ -30,9 +30,9 @@ struct PMSG_BUYRESULT
 
 void MossBuyDelay(void *lparam)
 {
-	Moss.g_MossDelay = true;
+	Moss.Delay = true;
 	Sleep(1500);
-	Moss.g_MossDelay = false;
+	Moss.Delay = false;
 	_endthread();
 }
 
@@ -48,32 +48,32 @@ void cMoss::DataSendMoss(int Index)
 	DataSend(Index,(LPBYTE)&pRez,pRez.h.size);
 }
 
-void cMoss::LoadMoss()
+void cMoss::Load()
 {
-	MossConfig.EnableMoss		= Config.GetInt(0,1,0,"Moss","EnableMoss",IAJuliaMossGambler); 
-	if(!MossConfig.EnableMoss)return;
+	Config.Enable		= Config.GetInt(0,1,0,"Moss","EnableMoss",IAJuliaMossGambler); 
+	if(!Config.Enable)return;
 
-	MossConfig.EnableTimer		= Config.GetInt(0,1,0,"Moss","EnableTimer",IAJuliaMossGambler);
-	MossConfig.UsePK			= Config.GetInt(0,1,0,"Moss","UsePK",IAJuliaMossGambler);
+	Config.EnableTimer		= Config.GetInt(0,1,0,"Moss","EnableTimer",IAJuliaMossGambler);
+	Config.UsePK			= Config.GetInt(0,1,0,"Moss","UsePK",IAJuliaMossGambler);
 
-	MossConfig.PriceZen			= Config.GetInt(0,2000000000,100000000,"Moss","PriceZen",IAJuliaMossGambler);
-	MossConfig.PricePCPoint		= Config.GetInt(0,1000,10,"Moss","PricePCPoint",IAJuliaMossGambler);
-	MossConfig.PriceWCoin		= Config.GetInt(0,1000,10,"Moss","PriceWCoin",IAJuliaMossGambler);
+	Config.PriceZen			= Config.GetInt(0,2000000000,100000000,"Moss","PriceZen",IAJuliaMossGambler);
+	Config.PricePCPoint		= Config.GetInt(0,1000,10,"Moss","PricePCPoint",IAJuliaMossGambler);
+	Config.PriceWCoin		= Config.GetInt(0,1000,10,"Moss","PriceWCoin",IAJuliaMossGambler);
 
-	MossConfig.RandExc			= Config.GetInt(0,100,50,"Random","RandExc",IAJuliaMossGambler);
-	MossConfig.MaxExcOpt		= Config.GetInt(0,100,6,"Random","MaxExcOpt",IAJuliaMossGambler);
+	Config.RandExc			= Config.GetInt(0,100,50,"Random","RandExc",IAJuliaMossGambler);
+	Config.MaxExcOpt		= Config.GetInt(0,100,6,"Random","MaxExcOpt",IAJuliaMossGambler);
 
-	MossConfig.RandLevel		= Config.GetInt(0,100,85,"Random","RandLevel",IAJuliaMossGambler);
-	MossConfig.MaxLevel			= Config.GetInt(0,100,13,"Random","MaxLevel",IAJuliaMossGambler);
+	Config.RandLevel		= Config.GetInt(0,100,85,"Random","RandLevel",IAJuliaMossGambler);
+	Config.MaxLevel			= Config.GetInt(0,100,13,"Random","MaxLevel",IAJuliaMossGambler);
 
-	MossConfig.RandOptAdd		= Config.GetInt(0,100,85,"Random","RandOptAdd",IAJuliaMossGambler);
-	MossConfig.MaxOptAdd		= Config.GetInt(0,100,7,"Random","MaxOptAdd",IAJuliaMossGambler);
+	Config.RandOptAdd		= Config.GetInt(0,100,85,"Random","RandOptAdd",IAJuliaMossGambler);
+	Config.MaxOptAdd		= Config.GetInt(0,100,7,"Random","MaxOptAdd",IAJuliaMossGambler);
 
-	MossConfig.RandLuck			= Config.GetInt(0,100,50,"Random","RandLuck",IAJuliaMossGambler);
-	MossConfig.RandSkill		= Config.GetInt(0,100,50,"Random","RandSkill",IAJuliaMossGambler);
-	MossConfig.RandAncient		= Config.GetInt(0,100,20,"Random","RandAncient",IAJuliaMossGambler);
+	Config.RandLuck			= Config.GetInt(0,100,50,"Random","RandLuck",IAJuliaMossGambler);
+	Config.RandSkill		= Config.GetInt(0,100,50,"Random","RandSkill",IAJuliaMossGambler);
+	Config.RandAncient		= Config.GetInt(0,100,20,"Random","RandAncient",IAJuliaMossGambler);
 	Moss.LoadItemInfo();
-	if (MossConfig.EnableTimer) Moss.LoadTimeConfig();
+	if (Config.EnableTimer) Moss.LoadTimeConfig();
 }
 
 void cMoss::LoadItemInfo()
@@ -84,7 +84,7 @@ void cMoss::LoadItemInfo()
 	if (file == NULL)
 	{
 		Log.ConsoleOutPut(0,c_Red,t_NULL,"[Moss The Gambler] Cant Find Item(kor).txt, Moss The Gambler Disabled");
-		MossConfig.EnableMoss = 0;
+		Config.Enable = 0;
 		return;
 	}
 
@@ -127,7 +127,7 @@ void cMoss::LoadTimeConfig()
 	if (file == NULL)
 	{
 		Log.ConsoleOutPut(0,c_Red,t_NULL,"[Moss The Gambler] Cant Find EventTime.dat, Timer in Moss Disabled");
-		MossConfig.EnableTimer = 0;
+		Config.EnableTimer = 0;
 		return;
 	}
 
@@ -147,25 +147,34 @@ void cMoss::LoadTimeConfig()
 		if (flag)
 		{
 			int indexEvent,closeHour,closeMin;
-			sscanf(zbuf,"%d %d %d %d",&indexEvent,&MossTimer[j].hour,&MossTimer[j].minute,&MossTimer[j].delay);
+			sscanf(zbuf,"%d %d %d %d",&indexEvent,&Timer[j].hour,&Timer[j].minute,&Timer[j].delay);
 			if (indexEvent != 1) break;
 
-			closeMin = MossTimer[j].minute + MossTimer[j].delay;
-			closeHour = MossTimer[j].hour;
+			closeMin = Timer[j].minute + Timer[j].delay;
+			closeHour = Timer[j].hour;
 
 			while (closeMin >= 60)	{ closeMin -=60; closeHour++; }
 
-			MossTimer[j].closehour = closeHour;
-			MossTimer[j].closemin = closeMin;
+			Timer[j].closehour = closeHour;
+			Timer[j].closemin = closeMin;
 			j++;
 		}
 	}
 	this->AmountTimers = j;
-	OpenedMoss = FALSE; 
+	Opened = FALSE; 
 }
 
 void cMoss::CheckTime()
 {
+	if(!Config.Enable)
+		return;
+
+	if(!Config.EnableTimer)
+	{
+		Moss.Opened = TRUE;
+		return;
+	}
+
 	CTime t = CTime::GetCurrentTime();
 
 	short hour,min;
@@ -173,8 +182,8 @@ void cMoss::CheckTime()
 	min = t.GetMinute();
 	hour = t.GetHour();
 
-	if (this->OpenedMoss == FALSE)
-		this->DisappearMoss();
+	if (this->Opened == FALSE)
+		this->Disappear();
 
 	if (t.GetSecond() == 0)
 	{
@@ -183,8 +192,8 @@ void cMoss::CheckTime()
 			for (int j=1; j<6; j++)
 			{
 				int BeforeOpenMin, BeforeOpenHour;
-				BeforeOpenMin = MossTimer[i].minute - j;
-				BeforeOpenHour = MossTimer[i].hour;
+				BeforeOpenMin = Timer[i].minute - j;
+				BeforeOpenHour = Timer[i].hour;
 
 				if (BeforeOpenMin < 0 ) {BeforeOpenMin += 60; BeforeOpenHour --;}
 
@@ -195,18 +204,18 @@ void cMoss::CheckTime()
 				}
 			}
 
-			if (hour == MossTimer[i].hour && min == MossTimer[i].minute)
+			if (hour == Timer[i].hour && min == Timer[i].minute)
 			{
 				Chat.MessageAll(0,0,NULL,"Moss The Gambler is arrived!");
-				this->SpawnMoss();
-				this->OpenedMoss = TRUE;
+				this->Spawn();
+				this->Opened = TRUE;
 			}
 
-			if (hour == MossTimer[i].closehour && min == MossTimer[i].closemin)
+			if (hour == Timer[i].closehour && min == Timer[i].closemin)
 			{
 				Chat.MessageAll(0,0,NULL,"Moss The Gambler is closed!");
-				this->DisappearMoss();
-				this->OpenedMoss = FALSE;
+				this->Disappear();
+				this->Opened = FALSE;
 			}
 		}
 	}
@@ -214,18 +223,18 @@ void cMoss::CheckTime()
 
 BOOL cMoss::GetStatusMoss()
 {
-	if(MossTimer)
-		return this->OpenedMoss;
+	if(Timer)
+		return this->Opened;
 	else
 		return TRUE;
 }
 
-void cMoss::SpawnMoss()
+void cMoss::Spawn()
 {
 	Monster.MonsterAddAndSpawn(492,0,51,22,225);
 }
 
-void cMoss::DisappearMoss()
+void cMoss::Disappear()
 {
 	for(int iIndex = 0; iIndex < OBJ_MAXMONSTER; iIndex++)
 	{
@@ -250,25 +259,25 @@ BOOL cMoss::BuyItem(int aIndex, unsigned char * aRecv)
 		return TRUE;
 	}
 
-	if ( this->g_MossDelay == true )
+	if ( this->Delay == true )
 	{
 		Chat.Message(aIndex,"[Moss The Gambler] Please wait 1.5 second after a previous purchase");
 		return TRUE;
 	}
 
-	if (gObj->Money < MossConfig.PriceZen)
+	if (gObj->Money < Config.PriceZen)
 	{
 		Chat.Message(gObj->m_Index,"[Moss The Gambler] You haven't got enough money");
 		return TRUE;
 	}
 
-	if (AddTab[gObj->m_Index].PC_PlayerPoints < MossConfig.PricePCPoint)
+	if (AddTab[gObj->m_Index].PC_PlayerPoints < Config.PricePCPoint)
 	{
 		Chat.Message(gObj->m_Index,"[Moss The Gambler] You haven't got enough PCPoint");
 		return TRUE;
 	}
 
-	if (gObj->m_wCashPoint < MossConfig.PriceWCoin)
+	if (gObj->m_wCashPoint < Config.PriceWCoin)
 	{
 		Chat.Message(gObj->m_Index,"[Moss The Gambler] You haven't got enough WCoin");
 		return TRUE;
@@ -308,10 +317,10 @@ BOOL cMoss::BuyItem(int aIndex, unsigned char * aRecv)
 	if (NewOption > 0)
 		Chat.Message(gObj->m_Index,"[Moss The Gambler] Congratulations, you are very lucky!!!");
 
-	gObj->Money -= MossConfig.PriceZen;
+	gObj->Money -= Config.PriceZen;
 	GCMoneySend(gObj->m_Index,gObj->Money);
-	if(MossConfig.PricePCPoint > 0) PCPoint.UpdatePoints(gObj,MossConfig.PricePCPoint,MINUS,PCPOINT);
-	if(MossConfig.PriceWCoin > 0)   PCPoint.UpdatePoints(gObj,MossConfig.PriceWCoin  ,MINUS,WCOIN);
+	if(Config.PricePCPoint > 0) PCPoint.UpdatePoints(gObj,Config.PricePCPoint,MINUS,PCPOINT);
+	if(Config.PriceWCoin > 0)   PCPoint.UpdatePoints(gObj,Config.PriceWCoin  ,MINUS,WCOIN);
 
 	_beginthread(MossBuyDelay,0,0);
 	return TRUE;
@@ -326,37 +335,37 @@ int cMoss::RandValue(int IndexOption)
 	case OPT_LEVEL:
 		{
 			rValue = rand()%100+1;
-			rValue > MossConfig.RandLevel ?	rValue =  0 : rValue =  rand()%(MossConfig.MaxLevel + 1);
+			rValue > Config.RandLevel ?	rValue =  0 : rValue =  rand()%(Config.MaxLevel + 1);
 		}
 		break;
 	case OPT_SKILL:
 		{
 			rValue = rand()%100+1;
-			rValue > MossConfig.RandSkill ? rValue =  0 : rValue =  1;
+			rValue > Config.RandSkill ? rValue =  0 : rValue =  1;
 		}
 		break;
 	case OPT_LUCK:
 		{
 			rValue = rand()%100+1;
-			rValue > MossConfig.RandLuck ? rValue =  0 : rValue =  1;
+			rValue > Config.RandLuck ? rValue =  0 : rValue =  1;
 		}
 		break;
 	case OPT_ADD:
 		{
 			rValue = rand()%100+1;
-			rValue > MossConfig.RandOptAdd ? rValue =  0 : rValue =  rand()%(MossConfig.MaxOptAdd + 1);
+			rValue > Config.RandOptAdd ? rValue =  0 : rValue =  rand()%(Config.MaxOptAdd + 1);
 		}
 		break;
 	case OPT_EXC:
 		{
 			rValue = rand()%100+1;
-			rValue > MossConfig.RandExc ? rValue =  0 : rValue =  Utilits.GenExcOpt(rand()%(MossConfig.MaxExcOpt + 1));
+			rValue > Config.RandExc ? rValue =  0 : rValue =  Utilits.GenExcOpt(rand()%(Config.MaxExcOpt + 1));
 		}
 		break;
 	case OPT_ANC:
 		{
 			rValue = rand()%100+1;
-			rValue > MossConfig.RandAncient ? rValue =  0 : rValue =  10;
+			rValue > Config.RandAncient ? rValue =  0 : rValue =  10;
 		}
 		break;
 	}

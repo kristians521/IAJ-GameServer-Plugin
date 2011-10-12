@@ -273,9 +273,9 @@ bool cMonster::NPCTalkEx(LPOBJ gObj, int NpcId)
 
 		bResult = true;
 	}
-	if (gObjNPC->Class == 492 && Moss.MossConfig.EnableMoss)
+	if (gObjNPC->Class == 492 && Moss.Config.Enable)
 	{
-		if (gObj->m_PK_Level > 3 && Moss.MossConfig.UsePK == 0)
+		if (gObj->m_PK_Level > 3 && Moss.Config.UsePK == 0)
 		{
 			Chat.Message(gObj->m_Index,"[Moss The Gambler] PK player don`t use Moss The Gambler");
 			return false;

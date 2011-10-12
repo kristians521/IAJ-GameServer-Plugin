@@ -80,6 +80,7 @@ void TradeSystem__Cancel(void * lpParam);
 class cUser
 {
 public:
+	void OnlineTimeTick(LPOBJ gObj);
 	void PlayerConnect(LPOBJ gObj); 
 	void CheckRingSend(LPOBJ gObj, LPBYTE aRecv);	
 	void CheckRing(LPOBJ gObj, LPBYTE aRecv);
