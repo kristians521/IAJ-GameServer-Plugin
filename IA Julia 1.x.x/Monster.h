@@ -14,6 +14,8 @@
 #include "User.h"
 #include "Logger.h"
 
+DWORD MonsterAddTick();
+
 // # Hook in GS # //
 int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr);		   
 void __cdecl MonsterDie(LPOBJ lpObjOfMonster, LPOBJ lpObjOfPlayer);	 

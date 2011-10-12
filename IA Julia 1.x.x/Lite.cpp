@@ -143,7 +143,6 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 			Utilits.HookThis((DWORD)&gObjLevelUpPointAddEx,0x00406D7F);
 			Utilits.HookThis((DWORD)&gObjPlayerKiller, 0x0040655F); 
 			Utilits.HookThis((DWORD)&gObjAttack, 0x00403CA6);
-			Monster.ReadMonsterAdd();
 		#endif
 
 		#ifdef _GS_CS
@@ -163,6 +162,16 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 
 		DWORD ThreadID;
 		HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)MainTick, NULL, 0, &ThreadID);
+
+		if ( hThread == 0 )
+		{
+			Log.ConsoleOutPut(0, c_Red, t_NULL, "CreateThread() failed with error %d", GetLastError());
+			return;
+		}
+
+		CloseHandle(hThread);
+
+		hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)MonsterAddTick, NULL, 0, &ThreadID);
 
 		if ( hThread == 0 )
 		{

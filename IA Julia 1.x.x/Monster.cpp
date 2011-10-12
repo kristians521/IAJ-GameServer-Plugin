@@ -55,6 +55,13 @@ void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
 	}
 }
 
+DWORD MonsterAddTick()
+{
+	Sleep(15000);
+	Monster.ReadMonsterAdd();
+	return 0;
+}
+
 #ifdef _GS
 int cMonster::MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y)
 {
