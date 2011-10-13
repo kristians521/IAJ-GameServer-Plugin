@@ -143,14 +143,16 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 
 		CloseHandle(hThread);
 
-		hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)MonsterAddTick, NULL, 0, &ThreadID);
+		#ifdef _GS
+			hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)MonsterAddTick, NULL, 0, &ThreadID);
 
-		if ( hThread == 0 )
-		{
-			Log.ConsoleOutPut(0, c_Red, t_NULL, "CreateThread() failed with error %d", GetLastError());
-			return;
-		}
+			if ( hThread == 0 )
+			{
+				Log.ConsoleOutPut(0, c_Red, t_NULL, "CreateThread() failed with error %d", GetLastError());
+				return;
+			}
 
-		CloseHandle(hThread);
+			CloseHandle(hThread);
+		#endif
 	}
 } 

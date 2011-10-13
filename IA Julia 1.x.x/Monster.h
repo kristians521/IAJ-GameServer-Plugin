@@ -14,7 +14,9 @@
 #include "User.h"
 #include "Logger.h"
 
+#ifdef _GS
 DWORD MonsterAddTick();
+#endif
 
 // # Hook in GS # //
 int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr);		   

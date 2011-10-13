@@ -55,6 +55,7 @@ void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
 	}
 }
 
+#ifdef _GS
 DWORD MonsterAddTick()
 {
 	Sleep(15000);
@@ -62,7 +63,6 @@ DWORD MonsterAddTick()
 	return 0;
 }
 
-#ifdef _GS
 int cMonster::MonsterAddAndSpawn(int Mob, int Map, int Speed, int X1, int Y1, int X2, int Y2, int Dir)
 {
 	int MobCount = *(DWORD *)(MonsterCount);
