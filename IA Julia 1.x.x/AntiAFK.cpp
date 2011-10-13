@@ -29,7 +29,7 @@ cAntiAFK::~cAntiAFK()
 
 void cAntiAFK::Tick(LPOBJ gObj)
 {
-	if(Config.AntiAfkConfig.Enabled == 0) return;
+	if(Configs.AntiAfkConfig.Enabled == 0) return;
 
 	int Index = gObj->m_Index;
 	AddTab[Index].AFK_Timer++;
@@ -59,7 +59,7 @@ void cAntiAFK::Tick(LPOBJ gObj)
 		AddTab[Index].AFK_Temp = gObj->m_TotalAttackCount;
 	}
 
-	if (gObj->m_TotalAttackCount != AddTab[Index].AFK_Temp && AddTab[Index].AFK_Timer >= Config.AntiAfkConfig.Time && ReWarning != Config.AntiAfkConfig.Warnings)
+	if (gObj->m_TotalAttackCount != AddTab[Index].AFK_Temp && AddTab[Index].AFK_Timer >= Configs.AntiAfkConfig.Time && ReWarning != Configs.AntiAfkConfig.Warnings)
 	{
 		AddTab[Index].AFK_Timer = 0;	
 		AddTab[Index].AFK_Temp = gObj->m_TotalAttackCount;	 
@@ -70,7 +70,7 @@ void cAntiAFK::Tick(LPOBJ gObj)
 		Chat.MessageLog(1, c_Red, t_Default, gObj,"[AntiAfk][%s] Current Warning Number: %d",gObj->Name,ReWarning);
 	}
 
-	if(gObj->m_TotalAttackCount != AddTab[Index].AFK_Temp && AddTab[Index].AFK_Timer >= Config.AntiAfkConfig.Time)
+	if(gObj->m_TotalAttackCount != AddTab[Index].AFK_Temp && AddTab[Index].AFK_Timer >= Configs.AntiAfkConfig.Time)
 	{			 					   
 		AddTab[Index].AFK_Timer = 0;   		  
 		AddTab[Index].AFK_Temp = gObj->m_TotalAttackCount;	 

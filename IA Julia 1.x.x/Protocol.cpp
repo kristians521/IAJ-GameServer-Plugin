@@ -55,7 +55,7 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 {
 	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);
 
-	if(!Config.Unicode32)
+	if(!Configs.Unicode32)
 	{
 		if(protoNum == 0xF3)
 		{	 													   
@@ -116,7 +116,7 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 			}
 		}
 		break;
-		if(Config.LahapDupe)
+		if(Configs.LahapDupe)
 		{
 			case 0xBC: // Lahap Dupe BUG FIX
 			{ 
@@ -132,7 +132,7 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 		break;
 		case 0x40:
 		{							 
-			if(Config.IsPartyGap)
+			if(Configs.IsPartyGap)
 				if(User.CGPartyRequestRecv((PMSG_PARTYREQUEST*) aRecv,aIndex))
 					return true;
 		}
@@ -146,7 +146,7 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 
 		case 0xAA:	
 			{  		
-				if(Config.Duel.Enabled)
+				if(Configs.Duel.Enabled)
 				{
 #ifdef _GS 
 					g_DuelSystem.DuelProtocolCore(gObj, aRecv);

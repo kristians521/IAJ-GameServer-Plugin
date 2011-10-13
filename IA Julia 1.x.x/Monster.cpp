@@ -63,7 +63,7 @@ DWORD MonsterAddTick()
 }
 
 #ifdef _GS
-int cMonster::MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y)
+int cMonster::MonsterAddAndSpawn(int Mob, int Map, int Speed, int X1, int Y1, int X2, int Y2, int Dir)
 {
 	int MobCount = *(DWORD *)(MonsterCount);
 
@@ -71,20 +71,22 @@ int cMonster::MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y
 	{
 		MobCount++;
 		*(DWORD *)(MonsterCount) = MobCount;
-		*(WORD *)(12 * MobCount + MonsterReads) = Monster;
+		*(WORD *)(12 * MobCount + MonsterReads) = Mob;
 		*(BYTE *)(12 * MobCount + MonsterReads+2) = Map;
 		*(BYTE *)(12 * MobCount + MonsterReads+3) = Speed;
-		*(BYTE *)(12 * MobCount + MonsterReads+4) = X;
-		*(BYTE *)(12 * MobCount + MonsterReads+5) = Y;
-		*(BYTE *)(12 * MobCount + MonsterReads+6) = 2;
-		*(BYTE *)(12 * MobCount + MonsterReads+7) = X;
-		*(BYTE *)(12 * MobCount + MonsterReads+8) = Y;
+		*(BYTE *)(12 * MobCount + MonsterReads+4) = X1;
+		*(BYTE *)(12 * MobCount + MonsterReads+5) = Y1;
+		*(BYTE *)(12 * MobCount + MonsterReads+6) = Dir;
+		*(BYTE *)(12 * MobCount + MonsterReads+7) = X2;
+		*(BYTE *)(12 * MobCount + MonsterReads+8) = Y2;
 
 		int MobID = gObjAddMonster(*(BYTE *)(12 * MobCount + (MonsterReads+2)));
 		if(MobID>=0)
 		{
 			int MobNr = *(WORD *)(12 * MobCount + MonsterReads);
-			gObjSetPosMonster(MobID, MobCount);
+			//if(X1 != X2 || Y1 != Y2)
+			//	GSSetBoxPosition(MobID, Map, X1, Y1, X2, Y2);
+			gObjSetPosMonster(MobID, MobCount); 
 			gObjSetMonster(MobID, MobNr);
 		}
 
@@ -114,14 +116,16 @@ void cMonster::ReadMonsterAdd()
 			if(Buff[0] == '/' || Buff[0] == '#' || Buff[0] == ' ' || strlen(Buff) < 9)
 				continue;			
 
-			int Mob = -1, Cnt = -1, Map = -1, Speed = -1, X = -1, Y = -1;
-			sscanf(Buff, "%d %d %d %d %d %d", &Mob, &Cnt, &Speed, &Map, &X, &Y);
+			int Mob = -1,	Count = -1,	Map = -1,	Speed = -1, X1 = -1, 
+				Y1 = -1,	X2 = -1,	Y2 = -1,	Dir = -1,	Distance = -1;
+			sscanf(Buff, "%d %d %d %d %d %d %d %d %d", &Mob, &Map, &Speed, &X1, &Y1, &X2, &Y2, &Dir, &Count);
 
-			if(Mob == -1 || Cnt == -1 || Map == -1 || X == -1 || Y == -1)
+			if(Mob == -1 ||	Count == -1 ||	Map == -1 ||	Speed == -1 ||	X1 == -1 || 
+				Y1 == -1 ||	X2 == -1 ||		Y2 == -1 ||		Dir == -1 ||	Distance == -1)
 				continue;
-								  
-			for(int i = 0; i < Cnt; i++)
-				MonsterAddAndSpawn(Mob,Speed,Map,X,Y);
+			
+			for(int i = 0; i < Count; i++)
+				MonsterAddAndSpawn(Mob, Map, Speed, X1, Y1, X2, Y2, Dir);
 		}	 
 		fclose(MonsterFile); 
 }
@@ -148,7 +152,7 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 
 	
 	int NewMoney = Utilits.gObjZenSingle(pObj,mObj,500,700);
-	mObj->Money = (NewMoney/1000) * Config.Zen.NormalZen; 
+	mObj->Money = (NewMoney/1000) * Configs.Zen.NormalZen; 
 
 	if(pObj->PartyNumber != -1)
 	{    
@@ -163,19 +167,19 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 			switch(Count)
 			{ 
 				case 1: // 2 Persons in Party
-					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 20);
+					mObj->Money = (mObj->Money * Configs.Zen.ZenInParty) + (((mObj->Money * Configs.Zen.ZenInParty) / 100) * 20);
 				break;
 
 				case 2: // 3 Persons in Party
-					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 25);
+					mObj->Money = (mObj->Money * Configs.Zen.ZenInParty) + (((mObj->Money * Configs.Zen.ZenInParty) / 100) * 25);
 				break;
 
 				case 3: // 4 Persons in Party
-					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 35);
+					mObj->Money = (mObj->Money * Configs.Zen.ZenInParty) + (((mObj->Money * Configs.Zen.ZenInParty) / 100) * 35);
 				break;
 
 				case 4: // 5 Persons in Party
-					mObj->Money = (mObj->Money * Config.Zen.ZenInParty) + (((mObj->Money * Config.Zen.ZenInParty) / 100) * 40);
+					mObj->Money = (mObj->Money * Configs.Zen.ZenInParty) + (((mObj->Money * Configs.Zen.ZenInParty) / 100) * 40);
 				break;
 			}
 	}
@@ -187,10 +191,10 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 	} 
 
 	//VIP System 
-	if(Config.VIP.Enabled && AddTab[pObj->m_Index].VIP_Type > 0)
+	if(Configs.VIP.Enabled && AddTab[pObj->m_Index].VIP_Type > 0)
 	{
 		int VIPInfo = AddTab[pObj->m_Index].VIP_Type;
-		mObj->Money += ((mObj->Money/ 100) * Config.VIP.VIPState[VIPInfo].BonusZen);
+		mObj->Money += ((mObj->Money/ 100) * Configs.VIP.VIPState[VIPInfo].BonusZen);
 	} 
 
 	// Drop System
@@ -257,7 +261,7 @@ bool cMonster::NPCTalkEx(LPOBJ gObj, int NpcId)
 	bool bResult = false;
 	OBJECTSTRUCT *gObjNPC = (OBJECTSTRUCT*)OBJECT_POINTER(NpcId);
 #ifdef _GS
-	if (gObjNPC->Class == 479 && Config.Duel.Enabled)
+	if (gObjNPC->Class == 479 && Configs.Duel.Enabled)
 	{
 		PMSG_SEND_WINDOW aSend;
 		// ----
@@ -294,26 +298,26 @@ bool cMonster::NPCTalkEx(LPOBJ gObj, int NpcId)
 		gObj->m_IfState.type   = 3;
 		bResult = true;
 	}
-	if ((gObjNPC->Class == Config.ClearNpc.NpcId) && (Config.ClearNpc.Enabled))
+	if ((gObjNPC->Class == Configs.ClearNpc.NpcId) && (Configs.ClearNpc.Enabled))
 	{
 		PkClear(gObj, gObjNPC);
 		bResult = true;		
 	}
-	if(gObjNPC->Class == 236 && Config.Archer.Enabled)
+	if(gObjNPC->Class == 236 && Configs.Archer.Enabled)
 	{
 		GoldenArcher.GoldenArcherClick(gObj);
 		bResult = true;
 	}
 	if (gObjNPC->Class == 241)
 	{
-		if( AddTab[gObj->m_Index].Resets < Config.GuildRes)
+		if( AddTab[gObj->m_Index].Resets < Configs.GuildRes)
 		{
-			Chat.Message(1,gObj->m_Index,"You don't have enough Resets, you need %d more resets.", Config.GuildRes - AddTab[gObj->m_Index].Resets);
+			Chat.Message(1,gObj->m_Index,"You don't have enough Resets, you need %d more resets.", Configs.GuildRes - AddTab[gObj->m_Index].Resets);
 			bResult = true;
 		}
-		if( gObj->Level < Config.GuildLevel)
+		if( gObj->Level < Configs.GuildLevel)
 		{
-			Chat.Message(1,gObj->m_Index,"You don't have enough Level, you need %d more Level.", Config.GuildLevel - gObj->Level);
+			Chat.Message(1,gObj->m_Index,"You don't have enough Level, you need %d more Level.", Configs.GuildLevel - gObj->Level);
 			bResult = true;
 		}
 	} 
@@ -330,17 +334,17 @@ void cMonster::PkClear(LPOBJ gObj, LPOBJ NpcObj)
 	}	
 
 	int PriceZen, PricePcPoint, PriceWCoin;
-	switch(Config.ClearNpc.Type)
+	switch(Configs.ClearNpc.Type)
 	{	   
 	case 1:	
-		PriceZen = (Config.ClearNpc.PriceZen * gObj->m_PK_Count); 		 
-		PricePcPoint = (Config.ClearNpc.PricePcPoints * gObj->m_PK_Count);
-		PriceWCoin = (Config.ClearNpc.PriceWCoins * gObj->m_PK_Count);
+		PriceZen = (Configs.ClearNpc.PriceZen * gObj->m_PK_Count); 		 
+		PricePcPoint = (Configs.ClearNpc.PricePcPoints * gObj->m_PK_Count);
+		PriceWCoin = (Configs.ClearNpc.PriceWCoins * gObj->m_PK_Count);
 		break;
 	case 2:	
-		PriceZen = Config.ClearNpc.PriceZenForAll;			 
-		PricePcPoint = Config.ClearNpc.PricePcPoints;
-		PriceWCoin = Config.ClearNpc.PriceWCoins;
+		PriceZen = Configs.ClearNpc.PriceZenForAll;			 
+		PricePcPoint = Configs.ClearNpc.PricePcPoints;
+		PriceWCoin = Configs.ClearNpc.PriceWCoins;
 		break;
 	case 0: 
 		PriceZen = 0;					 

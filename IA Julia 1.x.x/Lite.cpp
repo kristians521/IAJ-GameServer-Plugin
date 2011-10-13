@@ -88,12 +88,12 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		LoadQuery();
 		Maps.MapInit();
 		Fixes.ASMFixes();
-		Config.LoadConfigsInGS();
-		Config.LoadAll();
+		Configs.LoadConfigsInGS();
+		Configs.LoadAll();
 		MoveReq.MoveReqLoad();
-		Config.LoadNews();
+		Configs.LoadNews();
 		#ifdef _GS
-			if(Config.Duel.Enabled)
+			if(Configs.Duel.Enabled)
 			{
 				g_DuelSystem.DuelCreateThread();
 				Utilits.HookThis((DWORD)&HookSetDuelOption,0x004037B5);

@@ -170,8 +170,9 @@ struct PMSG_GUILDCREATED_RESULT
 #define ShopExcellentMod_Exit2						0x0055BC0A
 #define MonsterCount 0x7D95B94
 #define MonsterReads 0x7D800B6
-#define GetPartyMemberCount ((int(*)(LPOBJ lpObj))0x004D8110) //GS
-#define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD))0x00439260)
+#define GSSetBoxPosition ((void(*)(int TableNum, int mapnumber, int ax, int ay, int aw, int ah)) 0x00427340) //GS
+#define GetPartyMemberCount ((int(*)(LPOBJ lpObj)) 0x004D8110) //GS
+#define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD)) 0x00439260)
 #define GSCheckInventoryEmptySpace ((int(*) (LPOBJ lpObj, int iItemHeight, int iItemWidth)) 0x0051C770 ) 
 #define GSItemGetSize		((void(*) (int index, int & width, int & height)) 0x00558AE0 )
 #define gObjDel				((void(*) (int)) 0x00403AE4)

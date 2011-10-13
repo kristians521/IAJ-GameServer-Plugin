@@ -97,7 +97,7 @@ int cGmSystem::IsCommand(Commands Cmd, char Character[11])
 	}
 	if(IsGMBD(Character))
 	{
-		if (Config.GmSystemConfig.IsGMSystem)
+		if (Configs.GmSystemConfig.IsGMSystem)
 		{
 			for(int x=0; x < GMCount; x++)
 				if(!strcmp(GM[x].Name, Character))
@@ -147,7 +147,7 @@ int cGmSystem::IsAdmin(char Character[11])
 {	
 	if(IsGMBD(Character))
 	{
-		if (Config.GmSystemConfig.IsGMSystem)
+		if (Configs.GmSystemConfig.IsGMSystem)
 		{
 			for(int x=0; x < GMCount; x++)
 				if(!strcmp(GM[x].Name, Character))
@@ -172,7 +172,7 @@ int cGmSystem::IsAdmin(char Character[11])
 	
 bool cGmSystem::IsGMBD(char Character[11])
 {
-	if(Config.GmSystemConfig.IsGMInDB == 0)
+	if(Configs.GmSystemConfig.IsGMInDB == 0)
 		return true;
 	for(int i = OBJECT_MIN; i <= OBJECT_MAX; i++)
 	{  	 

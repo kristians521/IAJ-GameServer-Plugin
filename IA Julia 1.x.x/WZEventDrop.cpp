@@ -188,8 +188,8 @@ void cDropEvent::dropItem(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int LootIn
 void cDropEvent::updateBC()
 {
 	// Drop Count
-	dropCountBC.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropBC);
-	dropCountBC.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropBC);
+	dropCountBC.countRate = Configs.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropBC);
+	dropCountBC.countItems = Configs.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropBC);
 
 	// Drop List
 
@@ -273,8 +273,8 @@ void cDropEvent::handlerBC(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type,
 void cDropEvent::updateIT()
 {
 	// Drop Count
-	dropCountIT.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropIT);
-	dropCountIT.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropIT);
+	dropCountIT.countRate = Configs.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropIT);
+	dropCountIT.countItems = Configs.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropIT);
 
 	// Drop List
 
@@ -357,8 +357,8 @@ void cDropEvent::handlerIT(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type,
 void cDropEvent::updateWW()
 {
 	// Drop Count
-	dropCountWW.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropWW);
-	dropCountWW.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropWW);
+	dropCountWW.countRate = Configs.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropWW);
+	dropCountWW.countItems = Configs.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropWW);
 
 	// Drop List
 
@@ -428,8 +428,8 @@ void cDropEvent::handlerWW(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type,
 void cDropEvent::updateCC()
 {
 	// Drop Count
-	dropCountCC.countRate = Config.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropCC);
-	dropCountCC.countItems = Config.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropCC);
+	dropCountCC.countRate = Configs.GetInt(0, 100, 0, "DropCount", "DropCountRate",IAJuliaEventDropCC);
+	dropCountCC.countItems = Configs.GetInt(1, 10, 1, "DropCount", "DropCountItems",IAJuliaEventDropCC);
 
 	// Drop List
 

@@ -38,7 +38,7 @@ char* Logger::LoggerTittle()
 	#else													   
 	#define GType "(GS_CS)"
 	#endif  
-	sprintf(Tittle, "[%s] [%d/%d] IA Julia 1.1.%d.%d %s", Config.ServerName, Online_All, Online_Max, dBuild, dCommit, GType);  
+	sprintf(Tittle, "[%s] [%d/%d] IA Julia 1.1.%d.%d %s", Configs.ServerName, Online_All, Online_Max, dBuild, dCommit, GType);  
 	return Tittle;
 } 
 

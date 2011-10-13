@@ -26,7 +26,7 @@ class cMonster
 public:
 #ifdef _GS
 	void ReadMonsterAdd();
-	int MonsterAddAndSpawn(WORD Monster,BYTE Speed,BYTE Map,BYTE X, BYTE Y);
+	int MonsterAddAndSpawn(int Mob, int Map, int Speed, int X1, int Y1, int X2, int Y2, int Dir);
 #endif
 	bool NPCTalkEx(LPOBJ gObj, int NpcId);
 	void LahapDupeBug(LPOBJ gObj);																			  

@@ -122,7 +122,7 @@ void __declspec(naked) FixNewPetDurabDown()
 
 void cFixes::ASMFixes()
 { 
-	Config.LoadFixes();
+	Configs.LoadFixes();
 	ShopExeHook();
 #ifdef _GS	
 	/////////////////////////////////////////////////////////
@@ -186,7 +186,7 @@ void cFixes::ASMFixes()
 	*(unsigned int*)0x0071B200  = (unsigned int)JGPGetCharInfoEx; 
 
 	// CheckSum			
-	if (Config.UseChecksum)
+	if (Configs.UseChecksum)
 	{
 		Utilits.SetByte(0x00438D3A, 0x74);// CheckSum On
 	}
@@ -197,19 +197,19 @@ void cFixes::ASMFixes()
 
 
 	// Personal ID
-	if (Config.PersonalIDFix)
+	if (Configs.PersonalIDFix)
 	{
 		Utilits.SetNop(0x0043B9D6, 5);// Personal ID Fix
 	}
 	// Guild ID
-	if (Config.GuildIDFix)
+	if (Configs.GuildIDFix)
 	{
 		Utilits.SetNop(0x004504E9, 2);// Guild ID Fix
 		Utilits.SetNop(0x00450376, 6);// Guild ID Fix
 	}
 
 	// Disable Logs
-	if (Config.DisableLogs)
+	if (Configs.DisableLogs)
 	{
 		Utilits.SetNop(0x0050D1C6,6);
 		Utilits.SetNop(0x00582C56,6);
@@ -220,7 +220,7 @@ void cFixes::ASMFixes()
 	}
 
 	// Chaos Castle Phonoman PK Level Entrance (All)
-	if (Config.CCAllowingPlayers)
+	if (Configs.CCAllowingPlayers)
 	{
 		Utilits.SetByte(0x00460B1C+2,0x07);       
 		Utilits.SetByte(0x0046303A+2,0x07);
@@ -231,7 +231,7 @@ void cFixes::ASMFixes()
 	}
 
 	// Chaos Castle Phonoman Just PK Level Entrance
-	if (Config.CCAllowingPlayers == 2)
+	if (Configs.CCAllowingPlayers == 2)
 	{
 		Utilits.SetByte(0x00460B1C+2,0x06);       
 		Utilits.SetByte(0x0046303A+2,0x06);
@@ -242,7 +242,7 @@ void cFixes::ASMFixes()
 	}
 
 	// Blood Castle Phonoman PK Level Entrance (All)
-	if (Config.BCAllowingPlayers)
+	if (Configs.BCAllowingPlayers)
 	{
 		Utilits.SetByte(0x0046227E, 0x07); // Enter
 		Utilits.SetByte(0x00460A20, 0x07); // Time
@@ -250,7 +250,7 @@ void cFixes::ASMFixes()
 	}
 
 	// Blood Castle Phonoman Just PK Level Entrance
-	if (Config.BCAllowingPlayers == 2)
+	if (Configs.BCAllowingPlayers == 2)
 	{
 		Utilits.SetByte(0x0046227E, 0x06); // Enter
 		Utilits.SetByte(0x00460A20, 0x06); // Time
@@ -258,7 +258,7 @@ void cFixes::ASMFixes()
 	}
 
 	// Devil Square Phonoman PK Level Entrance (All)
-	if (Config.DSAllowingPlayers)
+	if (Configs.DSAllowingPlayers)
 	{
 		Utilits.SetByte(0x0045FF36, 0x07); // Enter
 		Utilits.SetByte(0x00460957, 0x07); // Time
@@ -266,7 +266,7 @@ void cFixes::ASMFixes()
 	}
 
 	// Devil Square Phonoman Just PK Level Entrance
-	if (Config.DSAllowingPlayers == 2)
+	if (Configs.DSAllowingPlayers == 2)
 	{
 		Utilits.SetByte(0x0045FF36, 0x06); // Enter
 		Utilits.SetByte(0x00460957, 0x06); // Time
@@ -274,20 +274,20 @@ void cFixes::ASMFixes()
 	}
 
 	 // Allow Excellent Ancient 
-	if (Config.AllowExeAnc)
+	if (Configs.AllowExeAnc)
 	{
 		Utilits.SetByte(0x0054EFC6,0xEB);   
 	}
 
 	// Allow Jewel of Harmony Ancient 
-	if (Config.AllowJohAnc)
+	if (Configs.AllowJohAnc)
 	{
 		Utilits.SetByte(0x005C600A,0xEB);      
 	}
 
 
 	// Allow Exelent Socket   
-	if (Config.AllowExeSock)
+	if (Configs.AllowExeSock)
 	{
 		Utilits.SetByte(0x0054F06F,0xEB);       
 	}
@@ -300,7 +300,7 @@ void cFixes::ASMFixes()
 		memcpy((int*)0x004801DB,FixGoldenInvMsg1,sizeof(FixGoldenInvMsg1));
 
 	// Old KOR Style Eldarado Event
-	if (Config.EldaradoEventType)
+	if (Configs.EldaradoEventType)
 	{
 		//Fix tantalos from drop +3, back to +5
 		BYTE FixGoldenTantalosDrop[7]={0xC7, 0x45, 0xEC, 0x0C, 0x00, 0x00, 0x00};
@@ -335,7 +335,7 @@ void cFixes::ASMFixes()
 		Utilits.SetNop(0x0041EADA,2); //Golden Golem FIX
 	}
 
-	if (Config.CSSkillsOnNOrmal)
+	if (Configs.CSSkillsOnNOrmal)
 	{
 		Utilits.SetByte(0x004E0D09,0xEB);
 		Utilits.SetByte(0x004E0D19,0xEB);
@@ -351,7 +351,7 @@ void cFixes::ASMFixes()
 		Utilits.SetByte(0x004E1146,0xEB);
 	}
 
-	if (Config.MaxLifeOpt)
+	if (Configs.MaxLifeOpt)
 	{
 		//Options +28
 		BYTE Opt28[2] = { 0x90,0x90};
@@ -371,7 +371,7 @@ void cFixes::ASMFixes()
 	}
 
 // Maximum Stats (65535)
-	if (Config.Enable65kStats)
+	if (Configs.Enable65kStats)
 	{
 		 Utilits.SetByte(0x004567F3+1,0xB7); 
          Utilits.SetByte(0x004592A2+1,0xB7); 
@@ -658,7 +658,7 @@ void cFixes::ASMFixes()
     Utilits.SetNop(0x0056D6F3,5);        // ggauth.dll Unload 
     Utilits.SetByte(0x0056D708,0xEB);    // 
 
-	if (Config.BCEnterMasterType)
+	if (Configs.BCEnterMasterType)
 	{
     Utilits.SetByte(0x0057FDB3,0x33);    // BC Master Enter FIX
     Utilits.SetByte(0x0057FDB4,0xC0);    // 
@@ -815,7 +815,7 @@ void cFixes::ASMFixes()
     Utilits.SetByte(0x00504519,0xEB); 
 	////////////////////////////////////////////
 
-	if(Config.DumpFile == 0)
+	if(Configs.DumpFile == 0)
 	{
 		Utilits.SetByte(0x004C7041,0xE9);    // Fix Crash Dump File 
 		Utilits.SetByte(0x004C7042,0x2E);    // Fix Crash Dump File 
@@ -934,7 +934,7 @@ void cFixes::ASMFixes()
 	memcpy((int*)0x004C211B, cFixPacketPerSecond,	sizeof(cFixPacketPerSecond));
 
 	//CheckSum
-	if (Config.UseChecksum)
+	if (Configs.UseChecksum)
 	{
 		Utilits.SetByte(0x0043BD7A, 0x74);// CheckSum On
 	}
@@ -944,36 +944,36 @@ void cFixes::ASMFixes()
 	}
 	
 	//Personal ID
-	if (Config.PersonalIDFix)
+	if (Configs.PersonalIDFix)
 		Utilits.SetNop(0x0043EA16, 5);// Personal ID Fix
 	
 	//Guild ID
-	if (Config.GuildIDFix)
+	if (Configs.GuildIDFix)
 	{
 		Utilits.SetNop(0x00453549, 2);// Guild ID Fix
 		Utilits.SetNop(0x00453375, 6);// Guild ID Fix
 	}
 
 	// Allow Excellent Ancient 
-	if (Config.AllowExeAnc)
+	if (Configs.AllowExeAnc)
 	{
 		Utilits.SetByte(0x00561FE6,0xEB);  
 	}
 
 	// Allow Jewel of Harmony Ancient 
-	if (Config.AllowJohAnc)
+	if (Configs.AllowJohAnc)
 	{
 		Utilits.SetByte(0x005FD81A,0xEB);      
 	}
 
 	// Allow Exelent Socket   
-	if (Config.AllowExeSock)
+	if (Configs.AllowExeSock)
 	{
 		Utilits.SetByte(0x0056208F,0xEB);      
 	}
 
 	//Disable Logs
-	if (Config.DisableLogs)
+	if (Configs.DisableLogs)
 	{
 		Utilits.SetNop(0x0051F1D6,6);
 		Utilits.SetNop(0x00596076,6);
@@ -983,7 +983,7 @@ void cFixes::ASMFixes()
 		Utilits.SetNop(0x004C96A5,6);
 	}
 
-	if (Config.MaxLifeOpt)
+	if (Configs.MaxLifeOpt)
 	{
 		//Life +28
 		BYTE Opt28[2] = { 0x90,0x90};
@@ -1042,7 +1042,7 @@ void cFixes::ASMFixes()
 	memcpy((int*)0x00516B39,FixGMEnter,sizeof(FixGMEnter));
 
 	// Fix Crash Dump File
-	if(Config.DumpFile == 0)
+	if(Configs.DumpFile == 0)
 	{
 		Utilits.SetByte(0x004D7FE1,0xE9);
 		Utilits.SetByte(0x004D7FE2,0x2E);
@@ -1108,7 +1108,7 @@ void cFixes::ASMFixes()
 	// Marder Move;
 	Utilits.SetByte(0x00573CB0, 0x06); 
 
-	if (Config.Enable65kStats)
+	if (Configs.Enable65kStats)
 	{
 		Utilits.SetByte(0x00458DD3+1,0xB7);
 		Utilits.SetByte(0x0045B982+1,0xB7);
@@ -1348,7 +1348,7 @@ void cFixes::ASMFixes()
 		Utilits.SetByte(0x00609904+1,0xB7);
 		}
 
-	if (Config.CSSkillsOnNOrmal)
+	if (Configs.CSSkillsOnNOrmal)
 	{
 		Utilits.SetByte(0x004F2409,0xEB);
 		Utilits.SetByte(0x004F2419,0xEB);

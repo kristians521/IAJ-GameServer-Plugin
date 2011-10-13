@@ -101,7 +101,7 @@ void DuelSystem::Run()
 						GCStateInfoSendg(this->g_DuelRooms[i].szSeparators[u], 0, 98);
 						// ----
 				
-						if(Config.Duel.Logging)
+						if(Configs.Duel.Logging)
 						{
 							Log.ConsoleOutPut(1, c_Blue, t_Duel,"[Duel System] Spectator [%s] Leave [%d] Room", 
 													this->g_DuelRooms[i].szSeparators[u]->Name, i + 1);
@@ -114,7 +114,7 @@ void DuelSystem::Run()
 				}
 				else
 				{
-					if(Config.Duel.Logging)
+					if(Configs.Duel.Logging)
 					{
 						Log.ConsoleOutPut(1, c_Blue, t_Duel,"[Duel System] Spectator Leave Room [%d]", i + 1);
 					}
@@ -169,7 +169,7 @@ void DuelSystem::Run()
 				{
 					this->RoomReset(i);
 					// ---
-					if(Config.Duel.Logging)
+					if(Configs.Duel.Logging)
 					{
 						Log.ConsoleOutPut(1, c_Blue, t_Duel,"[Duel System] Room [%d] Cleaned", i + 1);
 					}
@@ -189,7 +189,7 @@ void DuelSystem::Run()
 							// ----
 							gObjViewportListProtocolDestroy(this->g_DuelRooms[i].szSeparators[s]);
 							// ----
-							if(Config.Duel.Logging)
+							if(Configs.Duel.Logging)
 							{
 								Log.ConsoleOutPut(1, c_Blue, t_Duel,"[Duel System]Character [%s] Added Invisible", 
 												    this->g_DuelRooms[i].szSeparators[s]->Name);
@@ -265,7 +265,7 @@ void DuelSystem::UpdateDuelScore(short iRoom)
 	LPOBJ gObj     = (LPOBJ)OBJECT_POINTER(aIndex);
 	LPOBJ lpObj    = (LPOBJ)OBJECT_POINTER(uIndex);
 	// ----
-	if(Config.Duel.Logging)
+	if(Configs.Duel.Logging)
 	{
 		Log.ConsoleOutPut(1, c_Blue, t_Duel,"[Duel System] Room [%d] Results [%s][%s] VS [%s][%s] Rank [%d] : [%d]", 
 							iRoom + 1, gObj->AccountID, gObj->Name, lpObj->AccountID, lpObj->Name,
@@ -274,7 +274,7 @@ void DuelSystem::UpdateDuelScore(short iRoom)
 	// ----
 	if(g_DuelRooms[iRoom].szPointsOne >= MAX_DUEL_WIN_POINTS)
 	{
-		if(Config.Duel.Ranking)
+		if(Configs.Duel.Ranking)
 		{
 			SaveDuel(gObj->AccountID, gObj->Name, lpObj->AccountID,lpObj->Name,
 								g_DuelRooms[iRoom].szPointsOne, g_DuelRooms[iRoom].szPointsTy);
@@ -283,7 +283,7 @@ void DuelSystem::UpdateDuelScore(short iRoom)
 	// ----
 	if(g_DuelRooms[iRoom].szPointsTy >= MAX_DUEL_WIN_POINTS)
 	{
-		if(Config.Duel.Ranking)
+		if(Configs.Duel.Ranking)
 		{
 			SaveDuel(lpObj->AccountID, lpObj->Name, gObj->AccountID, gObj->Name,
 								g_DuelRooms[iRoom].szPointsTy, g_DuelRooms[iRoom].szPointsOne);
@@ -510,7 +510,7 @@ void DuelSystem::RoomReset(short iRoom, bool dontMove, bool dontSendEnd)
 	this->g_DuelRooms[iRoom].dwTicketCount= 0;
 	this->g_DuelRooms[iRoom].dwStartTime  = 0;
 	// ----
-			if(Config.Duel.Logging)
+			if(Configs.Duel.Logging)
 		{
 	Log.ConsoleOutPut(1, c_Blue, t_Duel,"[Duel System] Room [%d] Has Restarted", iRoom +1);
 			}
@@ -915,7 +915,7 @@ void DuelSystem::RecvWatchRequest(LPOBJ lpObj, PMSG_DUEL_REQUEST_WATCH* lpMsg)
 					// ----
 					GCServerMsgStringSend("Please sit down and watch this duel. Have fun.", lpObj->m_Index, 1);
 					// ----
-							if(Config.Duel.Logging)
+							if(Configs.Duel.Logging)
 		{
 					Log.ConsoleOutPut(1, c_Blue, t_Duel,"[Duel System][%s][%s] Spectator join to room: [%d]", 
 									lpObj->AccountID, lpObj->Name, lpMsg->btRoomIndex + 1);
@@ -1405,7 +1405,7 @@ void DuelSystem::RecvDuelRequest(LPOBJ lpObj, PMSG_DUEL_REQUEST_START* lpMsg)
 	// ----
 	GCServerMsgStringSend(Buff, lpObj->m_Index, 1);
 	// ----
-			if(Config.Duel.Logging)
+			if(Configs.Duel.Logging)
 		{
 	Log.ConsoleOutPut(1, c_Blue, t_Duel,"[Duel System][%s][%s] Requested to Start Duel to [%s][%s] on Room [%d]",
 							lpObj->AccountID, lpObj->Name, gObjs->AccountID, gObjs->Name, iDuelRoom + 1);
@@ -1511,7 +1511,7 @@ void DuelSystem::WinnerBuff(LPOBJ lpObj)
 	{
 		AddBuff(lpObj, 103, 20, 10, 0, 0, 3600);
 		// ----
-				if(Config.Duel.Logging)
+				if(Configs.Duel.Logging)
 		{
 		Log.ConsoleOutPut(1, c_Blue, t_Duel,"[Duel System] Winner : [%s][%s] received a Gladiator Glory Buff",
 								lpObj->AccountID, lpObj->Name);

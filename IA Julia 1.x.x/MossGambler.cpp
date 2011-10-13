@@ -50,28 +50,28 @@ void cMoss::DataSendMoss(int Index)
 
 void cMoss::Load()
 {
-	Config.Enable		= Config.GetInt(0,1,0,"Moss","EnableMoss",IAJuliaMossGambler); 
+	Config.Enable		= Configs.GetInt(0,1,0,"Moss","EnableMoss",IAJuliaMossGambler); 
 	if(!Config.Enable)return;
 
-	Config.EnableTimer		= Config.GetInt(0,1,0,"Moss","EnableTimer",IAJuliaMossGambler);
-	Config.UsePK			= Config.GetInt(0,1,0,"Moss","UsePK",IAJuliaMossGambler);
+	Config.EnableTimer		= Configs.GetInt(0,1,0,"Moss","EnableTimer",IAJuliaMossGambler);
+	Config.UsePK			= Configs.GetInt(0,1,0,"Moss","UsePK",IAJuliaMossGambler);
 
-	Config.PriceZen			= Config.GetInt(0,2000000000,100000000,"Moss","PriceZen",IAJuliaMossGambler);
-	Config.PricePCPoint		= Config.GetInt(0,1000,10,"Moss","PricePCPoint",IAJuliaMossGambler);
-	Config.PriceWCoin		= Config.GetInt(0,1000,10,"Moss","PriceWCoin",IAJuliaMossGambler);
+	Config.PriceZen			= Configs.GetInt(0,2000000000,100000000,"Moss","PriceZen",IAJuliaMossGambler);
+	Config.PricePCPoint		= Configs.GetInt(0,1000,10,"Moss","PricePCPoint",IAJuliaMossGambler);
+	Config.PriceWCoin		= Configs.GetInt(0,1000,10,"Moss","PriceWCoin",IAJuliaMossGambler);
 
-	Config.RandExc			= Config.GetInt(0,100,50,"Random","RandExc",IAJuliaMossGambler);
-	Config.MaxExcOpt		= Config.GetInt(0,100,6,"Random","MaxExcOpt",IAJuliaMossGambler);
+	Config.RandExc			= Configs.GetInt(0,100,50,"Random","RandExc",IAJuliaMossGambler);
+	Config.MaxExcOpt		= Configs.GetInt(0,100,6,"Random","MaxExcOpt",IAJuliaMossGambler);
 
-	Config.RandLevel		= Config.GetInt(0,100,85,"Random","RandLevel",IAJuliaMossGambler);
-	Config.MaxLevel			= Config.GetInt(0,100,13,"Random","MaxLevel",IAJuliaMossGambler);
+	Config.RandLevel		= Configs.GetInt(0,100,85,"Random","RandLevel",IAJuliaMossGambler);
+	Config.MaxLevel			= Configs.GetInt(0,100,13,"Random","MaxLevel",IAJuliaMossGambler);
 
-	Config.RandOptAdd		= Config.GetInt(0,100,85,"Random","RandOptAdd",IAJuliaMossGambler);
-	Config.MaxOptAdd		= Config.GetInt(0,100,7,"Random","MaxOptAdd",IAJuliaMossGambler);
+	Config.RandOptAdd		= Configs.GetInt(0,100,85,"Random","RandOptAdd",IAJuliaMossGambler);
+	Config.MaxOptAdd		= Configs.GetInt(0,100,7,"Random","MaxOptAdd",IAJuliaMossGambler);
 
-	Config.RandLuck			= Config.GetInt(0,100,50,"Random","RandLuck",IAJuliaMossGambler);
-	Config.RandSkill		= Config.GetInt(0,100,50,"Random","RandSkill",IAJuliaMossGambler);
-	Config.RandAncient		= Config.GetInt(0,100,20,"Random","RandAncient",IAJuliaMossGambler);
+	Config.RandLuck			= Configs.GetInt(0,100,50,"Random","RandLuck",IAJuliaMossGambler);
+	Config.RandSkill		= Configs.GetInt(0,100,50,"Random","RandSkill",IAJuliaMossGambler);
+	Config.RandAncient		= Configs.GetInt(0,100,20,"Random","RandAncient",IAJuliaMossGambler);
 	Moss.LoadItemInfo();
 	if (Config.EnableTimer) Moss.LoadTimeConfig();
 }
@@ -231,7 +231,7 @@ BOOL cMoss::GetStatusMoss()
 
 void cMoss::Spawn()
 {
-	Monster.MonsterAddAndSpawn(492,0,51,22,225);
+	Monster.MonsterAddAndSpawn(492,51,0,22,225,22,225,2);
 }
 
 void cMoss::Disappear()

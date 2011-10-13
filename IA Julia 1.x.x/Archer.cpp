@@ -32,7 +32,7 @@ void cGoldenArcher::LoadPrizeItems()
 	if (file == NULL)
 	{
 		Log.ConsoleOutPut(1,c_Red,t_Default,"[Golden Archer] Cant Find MonsterSpawn.ini! Archer disabled!",IAJuliaArcher);
-		Config.Archer.Enabled = 0;
+		Configs.Archer.Enabled = 0;
 		return;
 	}
 
@@ -67,7 +67,7 @@ void cGoldenArcher::GoldenArcherClick(LPOBJ gObj)
 	unsigned short *CurrentRena;
 	CurrentRena = (unsigned short*)&gObj->m_Quest[29];
 
-	if (*CurrentRena > Config.Archer.NeedRenaAmount ) *CurrentRena = 0;
+	if (*CurrentRena > Configs.Archer.NeedRenaAmount ) *CurrentRena = 0;
 
 	if (!this->ChekingRena(gObj,INV_CHECK))
 	{
@@ -78,11 +78,11 @@ void cGoldenArcher::GoldenArcherClick(LPOBJ gObj)
 	++*CurrentRena;
 	this->ChekingRena(gObj,INV_DEL);
 
-	if (*CurrentRena < Config.Archer.NeedRenaAmount )
+	if (*CurrentRena < Configs.Archer.NeedRenaAmount )
 		Chat.Message(gObj->m_Index,"[Golden Archer] Your Rena accepted. You have %d renas, for reward need %d more",
-			*CurrentRena,Config.Archer.NeedRenaAmount - *CurrentRena);
+			*CurrentRena,Configs.Archer.NeedRenaAmount - *CurrentRena);
 
-	if (*CurrentRena == Config.Archer.NeedRenaAmount)
+	if (*CurrentRena == Configs.Archer.NeedRenaAmount)
 	{
 		int ArrayItemsIndex[MAX_ITEM_PRIZE];
 		int g = -1;
@@ -115,25 +115,25 @@ void cGoldenArcher::GoldenArcherClick(LPOBJ gObj)
 		int Item = ITEMGET(ItemsPrize[PrizeIndex].Index,ItemsPrize[PrizeIndex].ItemID);
 		ItemSerialCreateSend (gObj->m_Index,gObj->MapNumber,(BYTE)gObj->X,(BYTE)gObj->Y,Item,Level,0,Skill,Luck,Opt,gObj->m_Index,Exc,0);
 
-		if (Config.Archer.ZenReward > 0)
+		if (Configs.Archer.ZenReward > 0)
 		{
-			int UpdateZen = gObj->Money + Config.Archer.ZenReward;
+			int UpdateZen = gObj->Money + Configs.Archer.ZenReward;
 
 			if (UpdateZen > 2000000000)
 				UpdateZen = 2000000000;
 			gObj->Money = UpdateZen;
 			GCMoneySend(gObj->m_Index,UpdateZen);
-			Chat.Message(gObj->m_Index,"[Golden Archer] Added Zen:%d", Config.Archer.ZenReward);
+			Chat.Message(gObj->m_Index,"[Golden Archer] Added Zen:%d", Configs.Archer.ZenReward);
 		}
-		if (Config.Archer.WCoinsReward > 0)
+		if (Configs.Archer.WCoinsReward > 0)
 		{
-			PCPoint.UpdatePoints(gObj,Config.Archer.WCoinsReward,PLUS,WCOIN);
-			Chat.Message(gObj->m_Index,"[Golden Archer] Added Coins:%d", Config.Archer.WCoinsReward);
+			PCPoint.UpdatePoints(gObj,Configs.Archer.WCoinsReward,PLUS,WCOIN);
+			Chat.Message(gObj->m_Index,"[Golden Archer] Added Coins:%d", Configs.Archer.WCoinsReward);
 		}
-		if (Config.Archer.PCPointsReward > 0)
+		if (Configs.Archer.PCPointsReward > 0)
 		{
-			PCPoint.UpdatePoints(gObj,Config.Archer.PCPointsReward,PLUS,PCPOINT);
-			Chat.Message(gObj->m_Index,"[Golden Archer] Added PCPoints:%d", Config.Archer.PCPointsReward);
+			PCPoint.UpdatePoints(gObj,Configs.Archer.PCPointsReward,PLUS,PCPOINT);
+			Chat.Message(gObj->m_Index,"[Golden Archer] Added PCPoints:%d", Configs.Archer.PCPointsReward);
 		}
 	}
 }

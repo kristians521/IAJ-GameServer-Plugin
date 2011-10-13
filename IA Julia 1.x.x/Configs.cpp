@@ -20,7 +20,7 @@
 #include "MapSystem.h"
 #include "Query.h"
 #include "WZEventDrop.h"
-cConfigs Config;	  
+cConfigs Configs;	  
 
 cConfigs::cConfigs()
 {
@@ -409,7 +409,7 @@ void cConfigs::LoadArcher()
 
 void cConfigs::VIPSystem()
 {
-	VIP.Enabled = Config.GetInt(0, 1,				1,		"VipSystem",			"EnableVip",			IAJuliaVIP); 
+	VIP.Enabled = Configs.GetInt(0, 1,				1,		"VipSystem",			"EnableVip",			IAJuliaVIP); 
 	if(!VIP.Enabled)return;
 
 	GetPrivateProfileString("VipSystem","VIPColumn","VIP",VIP.Column,sizeof(VIP.Column), IAJuliaVIP);
@@ -418,7 +418,7 @@ void cConfigs::VIPSystem()
 	MuOnlineQuery.CheckColumn(VIP.Column, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", VIP.Column);
 	MuOnlineQuery.CheckColumn(VIP.ColumnDate, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", VIP.ColumnDate);
 
-	VIP.NumStates = Config.GetInt(0, 10, 3, "VipSystem", "NumStates", IAJuliaVIP);	
+	VIP.NumStates = Configs.GetInt(0, 10, 3, "VipSystem", "NumStates", IAJuliaVIP);	
 		
 	char PState[10]; 
 	for(int i = 1; i <= VIP.NumStates; i++)
@@ -426,17 +426,17 @@ void cConfigs::VIPSystem()
 		wsprintf(PState, "State%d", i);
 
 		GetPrivateProfileString(PState,"VIPStateName","bronze",VIP.VIPState[i].VIPName,sizeof(VIP.VIPState[i].VIPName), IAJuliaVIP);	  
-		VIP.VIPState[i].EnabledCmd		= Config.GetInt(0, 1,									1,		PState,			"AllowAutoBuy",		IAJuliaVIP); 
-		VIP.VIPState[i].CostPCPoints	= Config.GetInt(0, PCPoint.sPoints.MaximumPCPoints,		5,		PState,			"CostPCPoints",		IAJuliaVIP);
-		VIP.VIPState[i].CostWCoins		= Config.GetInt(0, PCPoint.sPoints.MaximumWCPoints,		5,		PState,			"CostWCoins",		IAJuliaVIP);
-		VIP.VIPState[i].CostZen			= Config.GetInt(0, 2000000000,							5000,	PState,			"CostZen",			IAJuliaVIP);
+		VIP.VIPState[i].EnabledCmd		= Configs.GetInt(0, 1,									1,		PState,			"AllowAutoBuy",		IAJuliaVIP); 
+		VIP.VIPState[i].CostPCPoints	= Configs.GetInt(0, PCPoint.sPoints.MaximumPCPoints,		5,		PState,			"CostPCPoints",		IAJuliaVIP);
+		VIP.VIPState[i].CostWCoins		= Configs.GetInt(0, PCPoint.sPoints.MaximumWCPoints,		5,		PState,			"CostWCoins",		IAJuliaVIP);
+		VIP.VIPState[i].CostZen			= Configs.GetInt(0, 2000000000,							5000,	PState,			"CostZen",			IAJuliaVIP);
 
-		VIP.VIPState[i].BonusExp		= Config.GetInt(0, 9999,								5,		PState,			"BonusExp",			IAJuliaVIP);
-		VIP.VIPState[i].BonusZen		= Config.GetInt(0, 9999,								5,		PState,			"BonusZen",			IAJuliaVIP);
-		VIP.VIPState[i].BonusDrop		= Config.GetInt(0, 9999,								5,		PState,			"BonusDrop",		IAJuliaVIP);
+		VIP.VIPState[i].BonusExp		= Configs.GetInt(0, 9999,								5,		PState,			"BonusExp",			IAJuliaVIP);
+		VIP.VIPState[i].BonusZen		= Configs.GetInt(0, 9999,								5,		PState,			"BonusZen",			IAJuliaVIP);
+		VIP.VIPState[i].BonusDrop		= Configs.GetInt(0, 9999,								5,		PState,			"BonusDrop",		IAJuliaVIP);
 		
-		VIP.VIPState[i].MinHours		= Config.GetInt(0, 32000,								1,		PState,			"MinHours",			IAJuliaVIP);
-		VIP.VIPState[i].MaxHours		= Config.GetInt(VIP.VIPState[i].MinHours, 32000,		200,	PState,			"MaxHours",			IAJuliaVIP);
+		VIP.VIPState[i].MinHours		= Configs.GetInt(0, 32000,								1,		PState,			"MinHours",			IAJuliaVIP);
+		VIP.VIPState[i].MaxHours		= Configs.GetInt(VIP.VIPState[i].MinHours, 32000,		200,	PState,			"MaxHours",			IAJuliaVIP);
 	}
 }
 
@@ -538,9 +538,9 @@ void cConfigs::LoadPkClearGuard()
 void cConfigs::Misc()
 {
 	//
-	GetPrivateProfileString("Reset","ResetColumn","Resets", Config.ResetColumn, sizeof(Config.ResetColumn), IAJuliaCommon); 
-	MuOnlineQuery.CheckColumn(Config.ResetColumn, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", Config.ResetColumn);
-	GetPrivateProfileString("GameServerInfo","ServerName","GS", Config.ServerName, sizeof(Config.ServerName), ".\\Data\\ServerInfo.dat"); 
+	GetPrivateProfileString("Reset","ResetColumn","Resets", Configs.ResetColumn, sizeof(Configs.ResetColumn), IAJuliaCommon); 
+	MuOnlineQuery.CheckColumn(Configs.ResetColumn, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", Configs.ResetColumn);
+	GetPrivateProfileString("GameServerInfo","ServerName","GS", Configs.ServerName, sizeof(Configs.ServerName), ".\\Data\\ServerInfo.dat"); 
 	IsPartyGap				= GetInt(0, 1, 1,"PartyGap", "IsPartyGap", IAJuliaCommon);	
 	PartyGapLvl				= GetInt(0, 400, 120,"PartyGap", "PartyGapLvl", IAJuliaCommon);
 	GuildRes				= GetInt(0, 32767, 5,"GuildMaster", "GuildCreateReset", IAJuliaCommon);

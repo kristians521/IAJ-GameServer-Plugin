@@ -27,7 +27,7 @@ bool cUser::CheckMaxPoints(BYTE type, OBJECTSTRUCT* lpObj)
 	bool bResult = false;
 
 	int MaxPoints = 32000;
-	if(Config.Enable65kStats >= 1)
+	if(Configs.Enable65kStats >= 1)
 		MaxPoints = -536;	
 
 	int Stats;
@@ -169,8 +169,8 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
      // ----
      if(lpObj->pInventory[8].m_Type == 0x1A50) // Panda
      {          
-          pBonusExp               = ((exp * Config.Panda.PetPandaExpirence) / 100);
-          pBonusExpML               = ((exp * Config.Panda.PetPandaMLExpirence) / 100);
+          pBonusExp               = ((exp * Configs.Panda.PetPandaExpirence) / 100);
+          pBonusExpML               = ((exp * Configs.Panda.PetPandaMLExpirence) / 100);
           // ----
           pNewExperience          += pBonusExp;
           pNewExperenceML          += pBonusExpML;
@@ -181,8 +181,8 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
 
 	if(lpObj->pInventory[10].m_Type == 0x1A4C || lpObj->pInventory[11].m_Type == 0x1A4C) // Panda Ring
      {          
-          pBonusExp               = ((exp * Config.Panda.PandaRingExpirence) / 100);
-          pBonusExpML               = ((exp * Config.Panda.PandaRingMLExpirence) / 100);
+          pBonusExp               = ((exp * Configs.Panda.PandaRingExpirence) / 100);
+          pBonusExpML               = ((exp * Configs.Panda.PandaRingMLExpirence) / 100);
           // ----
           pNewExperience          += pBonusExp;
           pNewExperenceML          += pBonusExpML;
@@ -191,11 +191,11 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
           lpObj->MLExp          += pBonusExpML;
      }
 	//VIPSystem	
-	if(Config.VIP.Enabled && AddTab[lpObj->m_Index].VIP_Type > 0)
+	if(Configs.VIP.Enabled && AddTab[lpObj->m_Index].VIP_Type > 0)
 	{
 		  int VIPInfo = AddTab[lpObj->m_Index].VIP_Type;
-		  pBonusExp               = ((exp * Config.VIP.VIPState[VIPInfo].BonusExp) / 100);
-          pBonusExpML               = ((exp * Config.VIP.VIPState[VIPInfo].BonusExp) / 100);
+		  pBonusExp               = ((exp * Configs.VIP.VIPState[VIPInfo].BonusExp) / 100);
+          pBonusExpML               = ((exp * Configs.VIP.VIPState[VIPInfo].BonusExp) / 100);
           // ----
           pNewExperience          += pBonusExp;
           pNewExperenceML          += pBonusExpML;
@@ -227,27 +227,27 @@ void MyObjCalCharacter(int aIndex)
      // -----
      if(lpObj->pInventory[8].m_Type == 0x1A50) //Panda
      {
-          lpObj->m_Defense                  += Config.Panda.PetPandaDefense;
-          lpObj->m_AttackDamageMinLeft		+= Config.Panda.PetPandaAttackDamageMinLeft;
-          lpObj->m_AttackDamageMaxLeft		+= Config.Panda.PetPandaAttackDamageMaxLeft;
-          lpObj->m_AttackDamageMinRight     += Config.Panda.PetPandaAttackDamageMinRight;
-          lpObj->m_AttackDamageMaxRight     += Config.Panda.PetPandaAttackDamageMaxRight;
-          lpObj->m_MagicDamageMin           += Config.Panda.PetPandaMagicDamageMin;
-          lpObj->m_MagicDamageMax           += Config.Panda.PetPandaMagicDamageMax;
-          lpObj->m_MagicSpeed               += Config.Panda.PetPandaMagicSpeed;
-          lpObj->m_AttackSpeed              += Config.Panda.PetPandaAttackSpeed;
+          lpObj->m_Defense                  += Configs.Panda.PetPandaDefense;
+          lpObj->m_AttackDamageMinLeft		+= Configs.Panda.PetPandaAttackDamageMinLeft;
+          lpObj->m_AttackDamageMaxLeft		+= Configs.Panda.PetPandaAttackDamageMaxLeft;
+          lpObj->m_AttackDamageMinRight     += Configs.Panda.PetPandaAttackDamageMinRight;
+          lpObj->m_AttackDamageMaxRight     += Configs.Panda.PetPandaAttackDamageMaxRight;
+          lpObj->m_MagicDamageMin           += Configs.Panda.PetPandaMagicDamageMin;
+          lpObj->m_MagicDamageMax           += Configs.Panda.PetPandaMagicDamageMax;
+          lpObj->m_MagicSpeed               += Configs.Panda.PetPandaMagicSpeed;
+          lpObj->m_AttackSpeed              += Configs.Panda.PetPandaAttackSpeed;
      }
    if(lpObj->pInventory[10].m_Type == 0x1A4C || lpObj->pInventory[11].m_Type == 0x1A4C) // Panda Ring
     {
-         lpObj->m_Defense                   += Config.Panda.PandaRingDefense;
-         lpObj->m_AttackDamageMinLeft		+= Config.Panda.PandaRingAttackDamageMinLeft;
-         lpObj->m_AttackDamageMaxLeft		+= Config.Panda.PandaRingAttackDamageMaxLeft;
-         lpObj->m_AttackDamageMinRight		+= Config.Panda.PandaRingAttackDamageMinRight;
-         lpObj->m_AttackDamageMaxRight		+= Config.Panda.PandaRingAttackDamageMaxRight;
-         lpObj->m_MagicDamageMin            += Config.Panda.PandaRingMagicDamageMin;
-         lpObj->m_MagicDamageMax            += Config.Panda.PandaRingMagicDamageMax;
-         lpObj->m_MagicSpeed                += Config.Panda.PandaRingMagicSpeed;
-         lpObj->m_AttackSpeed               += Config.Panda.PandaRingAttackSpeed;	
+         lpObj->m_Defense                   += Configs.Panda.PandaRingDefense;
+         lpObj->m_AttackDamageMinLeft		+= Configs.Panda.PandaRingAttackDamageMinLeft;
+         lpObj->m_AttackDamageMaxLeft		+= Configs.Panda.PandaRingAttackDamageMaxLeft;
+         lpObj->m_AttackDamageMinRight		+= Configs.Panda.PandaRingAttackDamageMinRight;
+         lpObj->m_AttackDamageMaxRight		+= Configs.Panda.PandaRingAttackDamageMaxRight;
+         lpObj->m_MagicDamageMin            += Configs.Panda.PandaRingMagicDamageMin;
+         lpObj->m_MagicDamageMax            += Configs.Panda.PandaRingMagicDamageMax;
+         lpObj->m_MagicSpeed                += Configs.Panda.PandaRingMagicSpeed;
+         lpObj->m_AttackSpeed               += Configs.Panda.PandaRingAttackSpeed;	
     }
 }
 //Wait 2 miliseconds for update
@@ -377,15 +377,15 @@ bool cUser::CGPartyRequestRecv(PMSG_PARTYREQUEST * lpMsg, int aIndex)
 	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);	 
 	OBJECTSTRUCT *pObj = (OBJECTSTRUCT*)OBJECT_POINTER(number);
 
-	if(gObj->Level > pObj->Level && gObj->Level - pObj->Level >= Config.PartyGapLvl)
+	if(gObj->Level > pObj->Level && gObj->Level - pObj->Level >= Configs.PartyGapLvl)
 	{	
-		Chat.MessageLog(1, c_Red, t_Default, gObj, "[Party] You can't stay with %s in party! %s needs %d more lvl.", pObj->Name, pObj->Name, gObj->Level-Config.PartyGapLvl - pObj->Level);
+		Chat.MessageLog(1, c_Red, t_Default, gObj, "[Party] You can't stay with %s in party! %s needs %d more lvl.", pObj->Name, pObj->Name, gObj->Level-Configs.PartyGapLvl - pObj->Level);
 		return true;
 	}
 
-	if(gObj->Level < pObj->Level && pObj->Level - gObj->Level >= Config.PartyGapLvl)
+	if(gObj->Level < pObj->Level && pObj->Level - gObj->Level >= Configs.PartyGapLvl)
 	{																													
-		Chat.MessageLog(1, c_Red, t_Default, gObj, "[Party] You can't stay with %s in party! You need %d more lvl.", pObj->Name, pObj->Level - Config.PartyGapLvl - gObj->Level);
+		Chat.MessageLog(1, c_Red, t_Default, gObj, "[Party] You can't stay with %s in party! You need %d more lvl.", pObj->Name, pObj->Level - Configs.PartyGapLvl - gObj->Level);
 		return true;
 	}	   
 	return false;
@@ -402,9 +402,9 @@ void cUser::PlayerConnect(LPOBJ gObj)
 	gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger("cspoints");
 	Me_MuOnlineQuery.Close();
 
-	MuOnlineQuery.ExecQuery("SELECT %s FROM Character WHERE Name = '%s'", Config.ResetColumn, gObj->Name);
+	MuOnlineQuery.ExecQuery("SELECT %s FROM Character WHERE Name = '%s'", Configs.ResetColumn, gObj->Name);
 	MuOnlineQuery.Fetch();
-	AddTab[gObj->m_Index].Resets = MuOnlineQuery.GetAsInteger(Config.ResetColumn);
+	AddTab[gObj->m_Index].Resets = MuOnlineQuery.GetAsInteger(Configs.ResetColumn);
 	MuOnlineQuery.Close();
 
 	AddTab[gObj->m_Index].ON_Min			= 0;   
@@ -413,9 +413,9 @@ void cUser::PlayerConnect(LPOBJ gObj)
 	AddTab[gObj->m_Index].PC_OnlineTimer	= 0;
 
 #ifdef _GS 
-	if(Config.Duel.Enabled)
+	if(Configs.Duel.Enabled)
 	{
-		if(Config.Duel.Ranking)
+		if(Configs.Duel.Ranking)
 		{
 			g_DuelSystem.DuelSetInfo(gObj->m_Index);
 		}
@@ -434,8 +434,8 @@ void cUser::PlayerConnect(LPOBJ gObj)
 void cUser::LoginMsg(LPOBJ gObj)
 {	
 	Chat.Message(1, gObj->m_Index, "http://imaginationarts.net/forum/");
-	Chat.Message(0, gObj->m_Index, Config.ConnectNotice);
-	if (Config.ConnectInfo == 1)
+	Chat.Message(0, gObj->m_Index, Configs.ConnectNotice);
+	if (Configs.ConnectInfo == 1)
 	{
 		Chat.Message(1, gObj->m_Index, "Total Online: %d/%d", Log.Online_All, Log.Online_Max);
 

@@ -21,14 +21,14 @@ cPCPoint::~cPCPoint() {}
 
 void cPCPoint::LoadIniConfigs()
 {
-	sPoints.MaximumWCPoints		= Config.GetInt(0, 32000,					10000,	"WCoins",		"MaximumWCPoints",			IAJuliaPcPoints);
+	sPoints.MaximumWCPoints		= Configs.GetInt(0, 32000,					10000,	"WCoins",		"MaximumWCPoints",			IAJuliaPcPoints);
 
-	sPoints.Enabled				= Config.GetInt(0, 1	,					1,		"PCPoints",		"Enabled",					IAJuliaPcPoints);
+	sPoints.Enabled				= Configs.GetInt(0, 1	,					1,		"PCPoints",		"Enabled",					IAJuliaPcPoints);
 	if (!sPoints.Enabled) return;
 
-	sPoints.MaximumPCPoints		= Config.GetInt(0, 32000,					10000,	"PCPoints",		"MaximumPCPoints",			IAJuliaPcPoints);
-	sPoints.AddPCPointsSec		= Config.GetInt(0, 6000000,					3600,	"PCPoints",		"AddPCPointsSec",			IAJuliaPcPoints);
-	sPoints.AddPCPointsCount	= Config.GetInt(0, sPoints.MaximumPCPoints,	10,		"PCPoints",		"AddPCPointsCount",			IAJuliaPcPoints);	
+	sPoints.MaximumPCPoints		= Configs.GetInt(0, 32000,					10000,	"PCPoints",		"MaximumPCPoints",			IAJuliaPcPoints);
+	sPoints.AddPCPointsSec		= Configs.GetInt(0, 6000000,					3600,	"PCPoints",		"AddPCPointsSec",			IAJuliaPcPoints);
+	sPoints.AddPCPointsCount	= Configs.GetInt(0, sPoints.MaximumPCPoints,	10,		"PCPoints",		"AddPCPointsCount",			IAJuliaPcPoints);	
 	this->LoadConfigs();
 }
 

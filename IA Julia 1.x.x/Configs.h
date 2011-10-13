@@ -222,6 +222,6 @@ public:
 		int PandaRingMLExpirence;
 	}Panda;
 };
-extern cConfigs Config;
+extern cConfigs Configs;
 
 #endif
