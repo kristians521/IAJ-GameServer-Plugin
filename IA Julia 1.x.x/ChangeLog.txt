@@ -10,7 +10,13 @@
 Imagination Arts 1.1.0
 	[GS\GSCS] Ware query fix
 	[GS\GSCS] PcPoint, Wcoin db last fixes
+	[GS\GSCS] VIP queryes fix
 	[GS\GSCS] Ban commands fixed
+	[GS\GSCS] MoveReq VIP for admeen free access
+	[GS\GSCS] MobAdd fix when start GS
+	[GS\GSCS] Disconnect fix
+	[GS\GSCS] Some more optimization and small fixes
+	[GS] MobAdd Distance (not worked yet)
 
 Great Develop 1.0.9
 	[GS] Event.ini Fully Fixed
