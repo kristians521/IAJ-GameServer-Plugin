@@ -29,12 +29,14 @@ public:
 #ifdef _GS
 	void ReadMonsterAdd();
 	int MonsterAddAndSpawn(int Mob, int Map, int Speed, int X1, int Y1, int X2, int Y2, int Dir);
+	int SetBoxPosition(int TableNum, int mapnumber, int ax, int ay, int aw, int ah);
 #endif
 	bool NPCTalkEx(LPOBJ gObj, int NpcId);
 	void LahapDupeBug(LPOBJ gObj);																			  
 	void NPCMessage(int IndexPlayer, LPOBJ mObj, char* Msg,...);	
 	void NPCMessageLog(sColor LogColor, sLogType LogType, LPOBJ gObj, LPOBJ mObj, char* Msg,...);
 	void NPCMessageNear(LPOBJ mObj, char* Msg,...);	
+	int GetPartyMemberCount(LPOBJ lpObj);
 private:			
 	void PkClear(LPOBJ gObj, LPOBJ NpcObj); 
 };

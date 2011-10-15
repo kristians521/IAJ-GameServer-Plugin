@@ -63,6 +63,41 @@ DWORD MonsterAddTick()
 	return 0;
 }
 
+int cMonster::SetBoxPosition(int TableNum, int mapnumber, int Axsx, int Axsy, int aw, int Axsh)
+{
+	_asm
+	{
+		mov edx, TableNum;
+		push edx;
+		mov edx, mapnumber;
+		push edx;
+		mov edx, Axsx;
+		push edx;
+		mov edx, Axsy;
+		push edx;
+		mov edx, aw;
+		push edx;
+		mov edx, Axsh;
+		push edx;
+
+		mov ecx, 0x7D800B0;
+		mov edi, 0x004032F6;
+		call edi;
+	}
+}
+
+int cMonster::GetPartyMemberCount(LPOBJ lpObj)
+{
+	_asm
+	{
+		mov edx, lpObj;
+		push edx;
+		mov ecx, 0x7757970;
+		mov edi, 0x004D8110;
+		call edi;
+	}
+}
+
 int cMonster::MonsterAddAndSpawn(int Mob, int Map, int Speed, int X1, int Y1, int X2, int Y2, int Dir)
 {
 	int MobCount = *(DWORD *)(MonsterCount);
@@ -84,8 +119,8 @@ int cMonster::MonsterAddAndSpawn(int Mob, int Map, int Speed, int X1, int Y1, in
 		if(MobID>=0)
 		{
 			int MobNr = *(WORD *)(12 * MobCount + MonsterReads);
-			//if(X1 != X2 || Y1 != Y2)
-			//	GSSetBoxPosition(MobID, Map, X1, Y1, X2, Y2);
+			if(X1 != X2 || Y1 != Y2)
+				SetBoxPosition(MobID, Map, X1, Y1, X2-X1, Y2-Y1);
 			gObjSetPosMonster(MobID, MobCount); 
 			gObjSetMonster(MobID, MobNr);
 		}
@@ -156,29 +191,23 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 
 	if(pObj->PartyNumber != -1)
 	{    
-			int Count = 0;
-			for(int i=OBJECT_MIN;i<OBJECT_MAX;i++)
-			{
-				OBJECTSTRUCT *gObj = (OBJECTSTRUCT*) OBJECT_POINTER (i); 
-				if(gObj->Connected == PLAYER_PLAYING && gObj->PartyNumber == pObj->PartyNumber)Count++;  
-			} 
-			//Count = GetPartyMemberCount(pObj); //To Psycho: Ты нашел не ту функцию, я нашел правильную все равно крошит. Пока будем юзать старый фикс.
-			
+			int Count = Monster.GetPartyMemberCount(pObj); 
+
 			switch(Count)
 			{ 
-				case 1: // 2 Persons in Party
+				case 2: // 2 Persons in Party
 					mObj->Money = (mObj->Money * Configs.Zen.ZenInParty) + (((mObj->Money * Configs.Zen.ZenInParty) / 100) * 20);
 				break;
 
-				case 2: // 3 Persons in Party
+				case 3: // 3 Persons in Party
 					mObj->Money = (mObj->Money * Configs.Zen.ZenInParty) + (((mObj->Money * Configs.Zen.ZenInParty) / 100) * 25);
 				break;
 
-				case 3: // 4 Persons in Party
+				case 4: // 4 Persons in Party
 					mObj->Money = (mObj->Money * Configs.Zen.ZenInParty) + (((mObj->Money * Configs.Zen.ZenInParty) / 100) * 35);
 				break;
 
-				case 4: // 5 Persons in Party
+				case 5: // 5 Persons in Party
 					mObj->Money = (mObj->Money * Configs.Zen.ZenInParty) + (((mObj->Money * Configs.Zen.ZenInParty) / 100) * 40);
 				break;
 			}
