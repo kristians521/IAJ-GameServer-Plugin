@@ -454,7 +454,7 @@ bool cChat::TraceCommand(LPOBJ gObj, char *Msg)
 	OBJECTSTRUCT *tObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
 
 	gObjTeleport(gObj->m_Index, tObj->MapNumber, (int)tObj->X, (int)tObj->Y);	
-	MessageLog(1, c_Green, t_GPOST, gObj, "[Trace] You successfully traced to %s",Target);
+	MessageLog(1, c_Green, t_GM, gObj, "[Trace] You successfully traced to %s",Target);
 	return true;
 }		
 
@@ -470,7 +470,7 @@ bool cChat::SummonCommand(LPOBJ gObj, char *Msg)
 	OBJECTSTRUCT *tObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
 
 	gObjTeleport(tObj->m_Index, gObj->MapNumber, (int)gObj->X, (int)gObj->Y);	
-	MessageLog(1, c_Green, t_GPOST, gObj, "[Track] You successfully summoned %s",Target);
+	MessageLog(1, c_Green, t_GM, gObj, "[Track] You successfully summoned %s",Target);
 	return true;
 }		
 
@@ -483,7 +483,7 @@ bool cChat::DiskCommand(LPOBJ gObj, char *Msg)
 	sscanf(Msg, "%s", &Target);
 	CloseClient(Utilits.GetPlayerIndex(Target));
 
-	MessageLog(1, c_Green, t_GPOST, gObj, "[Disconnect] %s was disconnected.",Target);	
+	MessageLog(1, c_Green, t_GM, gObj, "[Disconnect] %s was disconnected.",Target);	
 	return true;
 }			
 
