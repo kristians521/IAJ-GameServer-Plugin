@@ -86,18 +86,6 @@ int cMonster::SetBoxPosition(int TableNum, int mapnumber, int Axsx, int Axsy, in
 	}
 }
 
-int cMonster::GetPartyMemberCount(LPOBJ lpObj)
-{
-	_asm
-	{
-		mov edx, lpObj;
-		push edx;
-		mov ecx, 0x7757970;
-		mov edi, 0x004D8110;
-		call edi;
-	}
-}
-
 int cMonster::MonsterAddAndSpawn(int Mob, int Map, int Speed, int X1, int Y1, int X2, int Y2, int Dir)
 {
 	int MobCount = *(DWORD *)(MonsterCount);
@@ -163,6 +151,32 @@ void cMonster::ReadMonsterAdd()
 				MonsterAddAndSpawn(Mob, Map, Speed, X1, Y1, X2, Y2, Dir);
 		}	 
 		fclose(MonsterFile); 
+}
+
+int cMonster::GetPartyMemberCount(LPOBJ lpObj)
+{
+	_asm
+	{
+		mov edx, lpObj;
+		push edx;
+		mov ecx, 0x7757970;
+		mov edi, 0x004D8110;
+		call edi;
+	}
+}
+#endif
+
+#ifdef _GS_CS
+int cMonster::GetPartyMemberCount(LPOBJ lpObj)
+{
+	_asm
+	{
+		mov edx, lpObj;
+		push edx;
+		mov ecx, 0x3C18178;
+		mov edi, 0x004E94A0;
+		call edi;
+	}
 }
 #endif
 

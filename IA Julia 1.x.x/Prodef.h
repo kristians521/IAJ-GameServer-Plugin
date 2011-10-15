@@ -234,7 +234,6 @@ struct PMSG_GUILDCREATED_RESULT
 #define gObjGameClose ((BOOL(*)(int)) 0x0051B3E0)  	
 #define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD))0x0043C2A0);
 #define gObjMoveGate ((int(*)(int aIndex, int Gate)) 0x00545170) //duel
-#define GetPartyMemberCount ((int(*)(LPOBJ lpObj))0x004E94A0) //GSCS
 #define gObjTeleport ((void(*) (int,unsigned char,unsigned char,unsigned char)) 0x0040341D)
 #define CloseClient ((void(*)(DWORD))0x0040822E)	
 #define DataRecv ((void(*) (BYTE,PBYTE,DWORD,DWORD,...)) 0x00439900)

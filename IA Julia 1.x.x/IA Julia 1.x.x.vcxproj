@@ -38,7 +38,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GS_CS|Win32'">
-    <TargetName>WzAG.dll</TargetName>
+    <TargetName>WzAG</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GS|Win32'">
     <TargetName>WzAG.dll</TargetName>
