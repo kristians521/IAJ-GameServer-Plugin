@@ -170,6 +170,11 @@ struct PMSG_GUILDCREATED_RESULT
 #define ShopExcellentMod_Exit2						0x0055BC0A
 #define MonsterCount 0x7D95B94
 #define MonsterReads 0x7D800B6
+
+//00415D70  /> 55             PUSH EBP
+//00415DB4  |. B9 B000D807    MOV ECX,GameServ.07D800B0
+//00415DB9  |. E8 D118FFFF    CALL GameServ.0040768F
+
 #define GSSetBoxPosition ((void(*)(int TableNum, int mapnumber, int ax, int ay, int aw, int ah)) 0x00427340) //GS
 #define GetPartyMemberCount ((int(*)(LPOBJ lpObj)) 0x004D8110) //GS
 #define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD)) 0x00439260)
