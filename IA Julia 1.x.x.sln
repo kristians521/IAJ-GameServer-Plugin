@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IA Julia 1.x.x 1.x.x", "IA Julia 1.x.x\IA Julia 1.x.x.vcxproj", "{3CCD65B4-231D-4529-AD8D-FF169085EE2E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IA Julia 1.x.x", "IA Julia 1.x.x\IA Julia 1.x.x.vcxproj", "{92880F91-EEA5-4B06-85DC-37556C54F577}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		GS|Win32 = GS|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3CCD65B4-231D-4529-AD8D-FF169085EE2E}.GS_CS|Win32.ActiveCfg = GS_CS|Win32
-		{3CCD65B4-231D-4529-AD8D-FF169085EE2E}.GS_CS|Win32.Build.0 = GS_CS|Win32
-		{3CCD65B4-231D-4529-AD8D-FF169085EE2E}.GS|Win32.ActiveCfg = GS|Win32
-		{3CCD65B4-231D-4529-AD8D-FF169085EE2E}.GS|Win32.Build.0 = GS|Win32
+		{92880F91-EEA5-4B06-85DC-37556C54F577}.GS_CS|Win32.ActiveCfg = GS_CS|Win32
+		{92880F91-EEA5-4B06-85DC-37556C54F577}.GS_CS|Win32.Build.0 = GS_CS|Win32
+		{92880F91-EEA5-4B06-85DC-37556C54F577}.GS|Win32.ActiveCfg = GS|Win32
+		{92880F91-EEA5-4B06-85DC-37556C54F577}.GS|Win32.Build.0 = GS|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
