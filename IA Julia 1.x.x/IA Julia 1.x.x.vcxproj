@@ -146,7 +146,6 @@
     <None Include="Configs\IA Julia\WzEvents\EventDropIT.txt" />
     <None Include="Configs\IA Julia\WzEvents\EventDropWW.txt" />
     <None Include="Notes.txt" />
-    <None Include="TODO.txt" />
     <None Include="ChangeLog.txt" />
     <None Include="Configs\GameServerCS\GameServerCS.ini" />
     <None Include="Configs\GameServerCS\GMSystem.txt" />

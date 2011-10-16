@@ -24,8 +24,17 @@ P.S. Please respect credits!
 ------------------------------------------------------------------------------------------------------------------------------------------------
 							Contact Information/Контакты:
 
-Forum 
+Forum / Форум
 	http://imaginationarts.net/forum/
+
+Project on Github / Проект на Github
+	https://github.com/PsychoGod/ImaginationArts-Julia-Addon
+
+Download source / Скачать исходники
+	https://github.com/PsychoGod/ImaginationArts-Julia-Addon/tags
+
+Bug, request tracker / Баг и трекер предложений
+	https://github.com/PsychoGod/ImaginationArts-Julia-Addon/issues
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------

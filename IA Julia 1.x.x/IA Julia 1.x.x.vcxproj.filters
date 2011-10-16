@@ -300,7 +300,6 @@
     <None Include="Configs\GameServer\VIPSystem.ini">
       <Filter>Configs\GameServer</Filter>
     </None>
-    <None Include="TODO.txt" />
     <None Include="Configs\IA Julia\WzEvents\EventDropBC.txt">
       <Filter>Configs\IA Julia\WzEvents</Filter>
     </None>
