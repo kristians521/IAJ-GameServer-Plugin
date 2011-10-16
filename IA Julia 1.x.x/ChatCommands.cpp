@@ -1727,6 +1727,6 @@ bool cChat::GuildPost(LPOBJ gObj, char *Msg)
 
 bool cChat::Core(LPOBJ gObj, char *Msg)
 { 
-	MessageLog(1, c_Red, t_Default, gObj,"IA Julia 1.1.%d.%d, Compiled %s %s",dBuild, dCommit, __DATE__, __TIME__);	
+	MessageLog(1, c_Red, t_Default, gObj,"IA Julia 1.1.%d.%d, Compiled %s %s %s",dBuild, dCommit, dVersion, __DATE__, __TIME__);	
 	return true;
 }
