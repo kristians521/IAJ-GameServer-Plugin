@@ -102,16 +102,8 @@ void cPCPoint::Tick(LPOBJ gObj)
 		{
 			AddTab[gObj->m_Index].PC_OnlineTimer = 0;
 			PCPoint.UpdatePoints(gObj,PCPoint.sPoints.AddPCPointsCount,PLUS,PCPOINT);
-
-			if (AddTab[gObj->m_Index].PC_PlayerPoints < PCPoint.sPoints.MaximumPCPoints)
-			{
-				Chat.Message(gObj->m_Index,"[PointShop] You earned %d Points for being online!", PCPoint.sPoints.AddPCPointsCount);
-				Chat.Message(gObj->m_Index,"[PointShop] You have been online %d Hour %d Minutes!", AddTab[gObj->m_Index].ON_Hour, AddTab[gObj->m_Index].ON_Min);
-			}
-			else
-			{
-				Chat.Message(gObj->m_Index,"[PCPoint] You have maximum PCPoints");
-			}
+			Chat.Message(gObj->m_Index,"[PointShop] You earned %d Points for being online!", PCPoint.sPoints.AddPCPointsCount);
+			Chat.Message(gObj->m_Index,"[PointShop] You have been online %d Hours!", AddTab[gObj->m_Index].ON_Hour);
 		}
 	} 
 }
@@ -261,12 +253,22 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not playing!)");
 			return;
 		}
+		if (AddTab[gObj->m_Index].PC_PlayerPoints + CountPoints > PCPoint.sPoints.MaximumPCPoints)
+		{
+			Chat.Message(gObj->m_Index,"[PCPoint] You have maximum PCPoints");
+			return;
+		}
 	}
 	if (Type ==  WCOIN ) 
 	{
 		if(gObj->Connected < PLAYER_LOGGED)
 		{
 			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not logged!)");
+			return;
+		}
+		if (AddTab[gObj->m_Index].PC_PlayerPoints + CountPoints > PCPoint.sPoints.MaximumWCPoints)
+		{
+			Chat.Message(gObj->m_Index,"[PCPoint] You have maximum WCoins");
 			return;
 		}
 	}
