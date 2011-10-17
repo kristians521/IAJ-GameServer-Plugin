@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{92880F91-EEA5-4B06-85DC-37556C54F577}</ProjectGuid>
+    <ProjectGuid>{3CCD65B4-231D-4529-AD8D-FF169085EE2E}</ProjectGuid>
     <RootNamespace>IAJulia1xx</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

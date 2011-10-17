@@ -72,19 +72,19 @@ bool cChat::ChatDataSend(LPOBJ gObj,LPBYTE aRecv)
 
 	bool bResult = false;		 
 	if (!memcmp(&aRecv[13],"/gg",strlen("/gg")))
-			bResult = GgCommand(gObj,(char*)aRecv+13+strlen("/gg"));	 
-	 if (!memcmp(&aRecv[13],"!",strlen("!")))
+		bResult = GgCommand(gObj,(char*)aRecv+13+strlen("/gg"));	 
+	if (!memcmp(&aRecv[13],"!",strlen("!")))
 		bResult = VosklCommand(gObj,(char*)aRecv+13+strlen("!"));	
 	if (!memcmp(&aRecv[13],"/trace",strlen("/trace")))
-			bResult = TraceCommand(gObj,(char*)aRecv+13+strlen("/trace"));	 
+		bResult = TraceCommand(gObj,(char*)aRecv+13+strlen("/trace"));	 
 	if (!memcmp(&aRecv[13],"/disconnect",strlen("/disconnect")))
-			bResult = DiskCommand(gObj,(char*)aRecv+13+strlen("/disconnect"));	  
+		bResult = DiskCommand(gObj,(char*)aRecv+13+strlen("/disconnect"));	  
 	if (!memcmp(&aRecv[13],"/track",strlen("/track")))
-			bResult = SummonCommand(gObj,(char*)aRecv+13+strlen("/track"));	
+		bResult = SummonCommand(gObj,(char*)aRecv+13+strlen("/track"));	
 	if (!memcmp(&aRecv[13],"/move",strlen("/move")))
-			bResult = Move(gObj,(char*)aRecv+13+strlen("/move"));	
+		bResult = Move(gObj,(char*)aRecv+13+strlen("/move"));	
 	if (!memcmp(&aRecv[13],"/warp",strlen("/warp")))
-			bResult = Move(gObj,(char*)aRecv+13+strlen("/warp"));	 
+		bResult = Move(gObj,(char*)aRecv+13+strlen("/warp"));	 
 	if (!memcmp(&aRecv[13],"/level",strlen("/level")))
 		bResult = LevelCommand(gObj,(char*)aRecv+13+strlen("/level"));	  
 	if (!memcmp(&aRecv[13],"/post",strlen("/post")))
@@ -146,9 +146,9 @@ bool cChat::ChatDataSend(LPOBJ gObj,LPBYTE aRecv)
 	if (!memcmp(&aRecv[13],"/viplist",strlen("/viplist")))
 		bResult = VIPListCommand(gObj,(char*)aRecv+13+strlen("/viplist"));
 	if (!memcmp(&aRecv[13],"~core",strlen("~core")))
-			bResult = Core(gObj,(char*)aRecv+13+strlen("~core"));	 
+		bResult = Core(gObj,(char*)aRecv+13+strlen("~core"));	 
 	if (!memcmp(&aRecv[13],"@>",strlen("@>")))
-			bResult = GuildPost(gObj,(char*)aRecv+13+strlen("@>"));	 
+		bResult = GuildPost(gObj,(char*)aRecv+13+strlen("@>"));	 
 	MassLog(gObj, aRecv);
 
 	return bResult;												
@@ -1727,6 +1727,6 @@ bool cChat::GuildPost(LPOBJ gObj, char *Msg)
 
 bool cChat::Core(LPOBJ gObj, char *Msg)
 { 
-	MessageLog(1, c_Red, t_Default, gObj,"IA Julia 1.1.%d.%d, Compiled %s %s %s",dBuild, dCommit, dVersion, __DATE__, __TIME__);	
+	MessageLog(1, c_Red, t_Default, gObj,"IA Julia 1.1.%d.%d %s, Compiled %s %s",dBuild, dCommit, dVersion, __DATE__, __TIME__);	
 	return true;
 }

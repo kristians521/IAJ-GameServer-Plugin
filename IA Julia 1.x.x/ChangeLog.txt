@@ -7,6 +7,8 @@
 // #	http://auroraplay.ru/			    # //
 // ================================================== //
 
+Imagination Arts 1.1.1
+
 Imagination Arts 1.1.0
 	[GS\GSCS] Ware query fix
 	[GS\GSCS] PcPoint, Wcoin db last fixes
