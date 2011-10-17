@@ -19,9 +19,7 @@ public:
 	int Sections;
 	struct sNews
 	{
-		char MSG01[50];
-		char MSG02[50];
-		char MSG03[50];
+		char MSG[3][50];
 		float Time;
 		int Type;
 	};

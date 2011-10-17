@@ -34,18 +34,19 @@ void NewsSystem(void * lpParam)
 		for(int i = 1; i <= News.Sections; i++)
 		{
 			wsprintf(PState, "Section%d", i);		
-			News.NewsSys[i].Time = GetPrivateProfileIntA(PState,"ShowTime",0,IAJuliaNews) * 60000;
-			News.NewsSys[i].Type = GetPrivateProfileIntA(PState,"ShowType",0,IAJuliaNews);
-			GetPrivateProfileStringA(PState,"News1","NULL",News.NewsSys[i].MSG01,50,IAJuliaNews);
-			GetPrivateProfileStringA(PState,"News2", "NULL", News.NewsSys[i].MSG02,50,IAJuliaNews);
-			GetPrivateProfileStringA(PState,"News3", "NULL", News.NewsSys[i].MSG03,50,IAJuliaNews); 	   
-			Log.CheckProcent(News.NewsSys[i].MSG01);	 
-			Log.CheckProcent(News.NewsSys[i].MSG02);
-			Log.CheckProcent(News.NewsSys[i].MSG03);
+			News.NewsSys[i].Time = GetPrivateProfileIntA(PState,"ShowTime", 0, IAJuliaNews) * 60000;
+			News.NewsSys[i].Type = GetPrivateProfileIntA(PState,"ShowType", 0, IAJuliaNews);
+			GetPrivateProfileStringA(PState,"News1", NULL, News.NewsSys[i].MSG[0], 50, IAJuliaNews);
+			GetPrivateProfileStringA(PState,"News2", NULL, News.NewsSys[i].MSG[1], 50, IAJuliaNews);
+			GetPrivateProfileStringA(PState,"News3", NULL, News.NewsSys[i].MSG[2], 50, IAJuliaNews); 
 			Sleep(News.NewsSys[i].Time); 
-			Chat.MessageAll(News.NewsSys[i].Type, 0, NULL, News.NewsSys[i].MSG01);
-			Chat.MessageAll(News.NewsSys[i].Type, 0, NULL, News.NewsSys[i].MSG02);
-			Chat.MessageAll(News.NewsSys[i].Type, 0, NULL, News.NewsSys[i].MSG03); 
+			for(int j=0; j<3; j++)
+			{
+				if(News.NewsSys[i].MSG[j] == NULL)
+					continue;
+				Log.CheckProcent(News.NewsSys[i].MSG[j]);	
+				Chat.MessageAll(News.NewsSys[i].Type, 0, NULL, News.NewsSys[i].MSG[j]);
+			}
 		} 
 	}
 	_endthread();
