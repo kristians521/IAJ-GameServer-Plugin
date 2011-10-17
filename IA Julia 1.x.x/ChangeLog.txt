@@ -8,6 +8,9 @@
 // ================================================== //
 
 Imagination Arts 1.1.1
+	[GS\GSCS] News NULL Fix
+	[GS\GSCS] PCPoint Maximum fix
+	[GS\GSCS] WCoins Maximum fix
 
 Imagination Arts 1.1.0
 	[GS\GSCS] Ware query fix

@@ -266,9 +266,9 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not logged!)");
 			return;
 		}
-		if (AddTab[gObj->m_Index].PC_PlayerPoints + CountPoints > PCPoint.sPoints.MaximumWCPoints)
+		if (gObj->m_wCashPoint + CountPoints > PCPoint.sPoints.MaximumWCPoints)
 		{
-			Chat.Message(gObj->m_Index,"[PCPoint] You have maximum WCoins");
+			Chat.Message(gObj->m_Index,"[WCoins] You have maximum WCoins");
 			return;
 		}
 	}
@@ -322,10 +322,7 @@ void cPCPoint::RewardsPointsKillMob(LPOBJ gObj,LPOBJ mObj,eTypePoint Type)
 				if ( PCMonsters[i].MobID == mObj->Class )
 				{
 					this->UpdatePoints(gObj,PCMonsters[i].PCPoints,PLUS,Type);
-					if (AddTab[gObj->m_Index].PC_PlayerPoints >= sPoints.MaximumPCPoints)
-						Chat.Message(gObj->m_Index,"[PCPoint] You have maximum PCPoints");
-					else
-						Chat.Message(gObj->m_Index,"[PCPoint] You earned %d PCPoints",PCMonsters[i].PCPoints);
+					Chat.Message(gObj->m_Index,"[PCPoint] You earned %d PCPoints",PCMonsters[i].PCPoints);
 					return;
 				}
 			return;
@@ -336,13 +333,10 @@ void cPCPoint::RewardsPointsKillMob(LPOBJ gObj,LPOBJ mObj,eTypePoint Type)
 				if ( WCoinMonsters[i].MobID == mObj->Class )
 				{
 					this->UpdatePoints(gObj,WCoinMonsters[i].WCoins,PLUS,Type);
-				//	if (gObj->m_wCashPoint >= sPoints.MaximumWCPoints)
-				//		Chat.Message(gObj->m_Index,"[WCoin] You have maximum WCoins");
-				//	else
-						Chat.Message(gObj->m_Index,"[WCoin] You earned %d WCoins",WCoinMonsters[i].WCoins);
+					Chat.Message(gObj->m_Index,"[WCoin] You earned %d WCoins",WCoinMonsters[i].WCoins);
 					return;
 				}
-				return;
+			return;
 		}
 	}
 }
