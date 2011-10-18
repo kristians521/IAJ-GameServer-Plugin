@@ -21,14 +21,14 @@ cPCPoint::~cPCPoint() {}
 
 void cPCPoint::LoadIniConfigs()
 {
-	sPoints.MaximumWCPoints		= Configs.GetInt(0, 32000,					10000,	"WCoins",		"MaximumWCPoints",			IAJuliaPcPoints);
+	Config.MaximumWCPoints		= Configs.GetInt(0, 32000,					10000,	"WCoins",		"MaximumWCPoints",			IAJuliaPcPoints);
 
-	sPoints.Enabled				= Configs.GetInt(0, 1	,					1,		"PCPoints",		"Enabled",					IAJuliaPcPoints);
-	if (!sPoints.Enabled) return;
+	Config.Enabled				= Configs.GetInt(0, 1	,					1,		"PCPoints",		"Enabled",					IAJuliaPcPoints);
+	if (!Config.Enabled) return;
 
-	sPoints.MaximumPCPoints		= Configs.GetInt(0, 32000,					10000,	"PCPoints",		"MaximumPCPoints",			IAJuliaPcPoints);
-	sPoints.AddPCPointsSec		= Configs.GetInt(0, 6000000,					3600,	"PCPoints",		"AddPCPointsSec",			IAJuliaPcPoints);
-	sPoints.AddPCPointsCount	= Configs.GetInt(0, sPoints.MaximumPCPoints,	10,		"PCPoints",		"AddPCPointsCount",			IAJuliaPcPoints);	
+	Config.MaximumPCPoints		= Configs.GetInt(0, 32000,					10000,	"PCPoints",		"MaximumPCPoints",			IAJuliaPcPoints);
+	Config.AddPCPointsSec		= Configs.GetInt(0, 6000000,					3600,	"PCPoints",		"AddPCPointsSec",			IAJuliaPcPoints);
+	Config.AddPCPointsCount	= Configs.GetInt(0, Config.MaximumPCPoints,	10,		"PCPoints",		"AddPCPointsCount",			IAJuliaPcPoints);	
 	this->LoadConfigs();
 }
 
@@ -95,14 +95,14 @@ void cPCPoint::LoadConfigs()
 
 void cPCPoint::Tick(LPOBJ gObj)
 {
-	if (PCPoint.sPoints.Enabled && PCPoint.sPoints.AddPCPointsSec > 0)
+	if (PCPoint.Config.Enabled && PCPoint.Config.AddPCPointsSec > 0)
 	{
 		AddTab[gObj->m_Index].PC_OnlineTimer++;
-		if (AddTab[gObj->m_Index].PC_OnlineTimer == PCPoint.sPoints.AddPCPointsSec)
+		if (AddTab[gObj->m_Index].PC_OnlineTimer == PCPoint.Config.AddPCPointsSec)
 		{
 			AddTab[gObj->m_Index].PC_OnlineTimer = 0;
-			PCPoint.UpdatePoints(gObj,PCPoint.sPoints.AddPCPointsCount,PLUS,PCPOINT);
-			Chat.Message(gObj->m_Index,"[PointShop] You earned %d Points for being online!", PCPoint.sPoints.AddPCPointsCount);
+			PCPoint.UpdatePoints(gObj,PCPoint.Config.AddPCPointsCount,PLUS,PCPOINT);
+			Chat.Message(gObj->m_Index,"[PointShop] You earned %d Points for being online!", PCPoint.Config.AddPCPointsCount);
 			Chat.Message(gObj->m_Index,"[PointShop] You have been online %d Hours!", AddTab[gObj->m_Index].ON_Hour);
 		}
 	} 
@@ -233,11 +233,11 @@ void cPCPoint::InitPCPointForPlayer(LPOBJ gObj)
 		int AmountPoints = MuOnlineQuery.GetAsInteger("PCPoint");
 		MuOnlineQuery.Close();
 
-	if (AmountPoints > sPoints.MaximumPCPoints) AmountPoints = sPoints.MaximumPCPoints;
+	if (AmountPoints > Config.MaximumPCPoints) AmountPoints = Config.MaximumPCPoints;
 	AddTab[gObj->m_Index].PC_PlayerPoints = AmountPoints;
 
 	BYTE Packet[8] = {0xC1, 0x08 , 0xD0 , 0x04 , LOBYTE(AmountPoints), HIBYTE(AmountPoints),
-		LOBYTE(sPoints.MaximumPCPoints), HIBYTE(sPoints.MaximumPCPoints)};
+		LOBYTE(Config.MaximumPCPoints), HIBYTE(Config.MaximumPCPoints)};
 
 	DataSend(gObj->m_Index, (PBYTE)Packet, Packet[1]);
 }
@@ -253,7 +253,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not playing!)");
 			return;
 		}
-		if (AddTab[gObj->m_Index].PC_PlayerPoints + CountPoints > PCPoint.sPoints.MaximumPCPoints)
+		if (AddTab[gObj->m_Index].PC_PlayerPoints + CountPoints > PCPoint.Config.MaximumPCPoints)
 		{
 			Chat.Message(gObj->m_Index,"[PCPoint] You have maximum PCPoints");
 			return;
@@ -266,7 +266,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not logged!)");
 			return;
 		}
-		if (gObj->m_wCashPoint + CountPoints > PCPoint.sPoints.MaximumWCPoints)
+		if (gObj->m_wCashPoint + CountPoints > PCPoint.Config.MaximumWCPoints)
 		{
 			Chat.Message(gObj->m_Index,"[WCoins] You have maximum WCoins");
 			return;
@@ -296,7 +296,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 		MuOnlineQuery.Close();
 
 		BYTE Packet[8] = {0xC1, 0x08 , 0xD0 , 0x04 , LOBYTE(AddTab[gObj->m_Index].PC_PlayerPoints), HIBYTE(AddTab[gObj->m_Index].PC_PlayerPoints),
-			LOBYTE(sPoints.MaximumPCPoints), HIBYTE(sPoints.MaximumPCPoints)};
+			LOBYTE(Config.MaximumPCPoints), HIBYTE(Config.MaximumPCPoints)};
 		DataSend(gObj->m_Index, (PBYTE)Packet, Packet[1]);
 	}
 	if (Type == WCOIN)

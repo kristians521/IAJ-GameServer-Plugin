@@ -21,6 +21,9 @@
 #include "Query.h"
 #include "WZEventDrop.h"
 #include "MoveReq.h"
+#include "DuelManager.h"
+#include "Vip.h"
+
 cConfigs Configs;	  
 
 cConfigs::cConfigs()
@@ -72,14 +75,6 @@ void cConfigs::LoadNotice()
 	GetPrivateProfileString("Connect","ConnectNotice","Powered by IA Julia 1.1.x",ConnectNotice,sizeof(ConnectNotice),IAJuliaGS); 
 	Log.CheckProcent(ConnectNotice);	 
 } 
-
-void cConfigs::LoadDuel()
-{		  			   
-	Duel.Enabled					= GetInt(0, 1,					1,		"DuelManager",	"DuelEnabled",					IAJuliaCommon);  
-	if(!Duel.Enabled)return;
-	Duel.Ranking					= GetInt(0, 1,					0,		"DuelManager",	"DuelRanking",					IAJuliaCommon);
-	Duel.Logging					= GetInt(0, 1,					1,		"DuelManager",	"DuelLogging",					IAJuliaCommon);
-}
 
 void cConfigs::LoadConfigsInGS()
 {								  	 
@@ -369,53 +364,6 @@ void cConfigs::LoadFixes()
 	DumpFile		= GetInt(0, 1, 0, "Dump", "EnableCrashDump",IAJuliaCommon);
 }
 
-void cConfigs::LoadArcher()
-{		  		 
-	Archer.Enabled				= GetInt(0, 1,						1,		"GoldenArcher",	"ArcherEnabled",		IAJuliaArcher);	
-	
-	if(Archer.Enabled)
-	{	
-		Archer.NeedRenaAmount	= GetInt(0, 250,								7,		"GoldenArcher", "RenasCount",			IAJuliaArcher); 	   
-		Archer.WCoinsReward		= GetInt(0, PCPoint.sPoints.MaximumWCPoints,	1,		"GoldenArcher", "WCoinsReward",			IAJuliaArcher);
-		Archer.PCPointsReward	= GetInt(0, PCPoint.sPoints.MaximumPCPoints,	1,		"GoldenArcher", "PCPointsReward",		IAJuliaArcher);	   
-		Archer.ZenReward		= GetInt(0, 2000000000,							100000, "GoldenArcher", "ZenReward",			IAJuliaArcher);
-		GoldenArcher.LoadPrizeItems();
-	}
-}
-
-void cConfigs::VIPSystem()
-{
-	VIP.Enabled = Configs.GetInt(0, 1,				1,		"VipSystem",			"EnableVip",			IAJuliaVIP); 
-	if(!VIP.Enabled)return;
-
-	GetPrivateProfileString("VipSystem","VIPColumn","VIP",VIP.Column,sizeof(VIP.Column), IAJuliaVIP);
-	GetPrivateProfileString("VipSystem","VIPColumnDate","VIP_DATE",VIP.ColumnDate,sizeof(VIP.ColumnDate), IAJuliaVIP);	 				 
-
-	MuOnlineQuery.CheckColumn(VIP.Column, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", VIP.Column);
-	MuOnlineQuery.CheckColumn(VIP.ColumnDate, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", VIP.ColumnDate);
-
-	VIP.NumStates = Configs.GetInt(0, 10, 3, "VipSystem", "NumStates", IAJuliaVIP);	
-		
-	char PState[10]; 
-	for(int i = 1; i <= VIP.NumStates; i++)
-	{
-		wsprintf(PState, "State%d", i);
-
-		GetPrivateProfileString(PState,"VIPStateName","bronze",VIP.VIPState[i].VIPName,sizeof(VIP.VIPState[i].VIPName), IAJuliaVIP);	  
-		VIP.VIPState[i].EnabledCmd		= Configs.GetInt(0, 1,									1,		PState,			"AllowAutoBuy",		IAJuliaVIP); 
-		VIP.VIPState[i].CostPCPoints	= Configs.GetInt(0, PCPoint.sPoints.MaximumPCPoints,		5,		PState,			"CostPCPoints",		IAJuliaVIP);
-		VIP.VIPState[i].CostWCoins		= Configs.GetInt(0, PCPoint.sPoints.MaximumWCPoints,		5,		PState,			"CostWCoins",		IAJuliaVIP);
-		VIP.VIPState[i].CostZen			= Configs.GetInt(0, 2000000000,							5000,	PState,			"CostZen",			IAJuliaVIP);
-
-		VIP.VIPState[i].BonusExp		= Configs.GetInt(0, 9999,								5,		PState,			"BonusExp",			IAJuliaVIP);
-		VIP.VIPState[i].BonusZen		= Configs.GetInt(0, 9999,								5,		PState,			"BonusZen",			IAJuliaVIP);
-		VIP.VIPState[i].BonusDrop		= Configs.GetInt(0, 9999,								5,		PState,			"BonusDrop",		IAJuliaVIP);
-		
-		VIP.VIPState[i].MinHours		= Configs.GetInt(0, 32000,								1,		PState,			"MinHours",			IAJuliaVIP);
-		VIP.VIPState[i].MaxHours		= Configs.GetInt(VIP.VIPState[i].MinHours, 32000,		200,	PState,			"MaxHours",			IAJuliaVIP);
-	}
-}
-
 void cConfigs::LoadCommands()
 {	
 	Commands.MaxLvl						= GetInt(300, 1000, 400,"LevelSettings", "MaxLevel", IAJuliaCommon);
@@ -455,15 +403,15 @@ void cConfigs::LoadCommands()
 	Commands.SkinOnlyForGm				= GetInt(0, 1,									0,		"Skin",			"SkinOnlyForGm",				IAJuliaCmd);
 	Commands.SkinLevelReq				= GetInt(0, Commands.MaxLvl,					250,	"Skin",			"SkinLevelReq",					IAJuliaCmd);
 	Commands.SkinPriceZen				= GetInt(0, 2000000000,							100000,	"Skin",			"SkinPriceZen",					IAJuliaCmd);
-	Commands.SkinPricePcPoint			= GetInt(0, PCPoint.sPoints.MaximumPCPoints,	1,		"Skin",			"SkinPricePcPoint",				IAJuliaCmd);
-	Commands.SkinPriceWCoin				= GetInt(0, PCPoint.sPoints.MaximumWCPoints,	1,		"Skin",			"SkinPriceWCoin",				IAJuliaCmd);	
+	Commands.SkinPricePcPoint			= GetInt(0, PCPoint.Config.MaximumPCPoints,	1,		"Skin",			"SkinPricePcPoint",				IAJuliaCmd);
+	Commands.SkinPriceWCoin				= GetInt(0, PCPoint.Config.MaximumWCPoints,	1,		"Skin",			"SkinPriceWCoin",				IAJuliaCmd);	
 
 	//		post		//	 
 	Commands.IsPost						= GetInt(0, 1,									1,		"Post",			"PostEnabled",					IAJuliaCmd); 
 	Commands.PostLvl					= GetInt(0, Commands.MaxLvl,					1,		"Post",			"PostLevelReq",					IAJuliaCmd);				  
 	Commands.PostPriceZen				= GetInt(0, 2000000000,							10000,	"Post",			"PostPriceZen",					IAJuliaCmd);		 
-	Commands.PostPricePCPoint			= GetInt(0, PCPoint.sPoints.MaximumPCPoints,	0,		"Post",			"PostPricePcPoint",				IAJuliaCmd);	 
-	Commands.PostPriceWCoin				= GetInt(0, PCPoint.sPoints.MaximumWCPoints,	0,		"Post",			"PostPriceWCoin",				IAJuliaCmd);												
+	Commands.PostPricePCPoint			= GetInt(0, PCPoint.Config.MaximumPCPoints,	0,		"Post",			"PostPricePcPoint",				IAJuliaCmd);	 
+	Commands.PostPriceWCoin				= GetInt(0, PCPoint.Config.MaximumWCPoints,	0,		"Post",			"PostPriceWCoin",				IAJuliaCmd);												
 	Commands.PostColor					= GetInt(1, 3,									1,		"Post",			"PostColor",					IAJuliaCmd);  
 	Commands.PostDelay					= GetInt(0,	32767,								60,		"Post",			"PostDelay",					IAJuliaCmd);
 
@@ -471,16 +419,16 @@ void cConfigs::LoadCommands()
 	Commands.AddPointEnabled			= GetInt(0, 1,									1,		"AddCommand",	"AddPointEnabled",				IAJuliaCmd);
 	Commands.AddPointLevelReq			= GetInt(0, Commands.MaxLvl,					0,		"AddCommand",	"AddPointLevelReq",				IAJuliaCmd);			   	
 	Commands.AddPriceZen				= GetInt(0, 2000000000,							10000,	"AddCommand",	"AddPriceZen",					IAJuliaCmd);		 
-	Commands.AddPricePCPoint			= GetInt(0, PCPoint.sPoints.MaximumPCPoints,	0,		"AddCommand",	"AddPricePCPoint",				IAJuliaCmd);	 
-	Commands.AddPriceWCoin				= GetInt(0, PCPoint.sPoints.MaximumWCPoints,	0,		"AddCommand",	"AddPriceWCoin",				IAJuliaCmd);	 
+	Commands.AddPricePCPoint			= GetInt(0, PCPoint.Config.MaximumPCPoints,	0,		"AddCommand",	"AddPricePCPoint",				IAJuliaCmd);	 
+	Commands.AddPriceWCoin				= GetInt(0, PCPoint.Config.MaximumWCPoints,	0,		"AddCommand",	"AddPriceWCoin",				IAJuliaCmd);	 
 	Commands.MaxAddedStats				= GetInt(0, 65000,								0,		"AddCommand",	"MaxAddedStats",				IAJuliaCmd);
 
 	//		ware		//
 	Commands.IsMultyVault				= GetInt(0,	1,									1,		"MultyVault",	"IsMultyVault",					IAJuliaCmd);  
 	Commands.NumberOfVaults				= GetInt(2,	99,									3,		"MultyVault",	"NumberOfVaults",				IAJuliaCmd); 
 	Commands.ZenForChange				= GetInt(0,	2000000000,							10000,	"MultyVault",	"ZenForChange",					IAJuliaCmd);
-	Commands.PcPointForChange			= GetInt(0, PCPoint.sPoints.MaximumPCPoints,	0,		"MultyVault",	"PcPointForChange",				IAJuliaCmd);
-	Commands.WCoinForChange				= GetInt(0,	PCPoint.sPoints.MaximumWCPoints,	0,		"MultyVault",	"WCoinForChange",				IAJuliaCmd);
+	Commands.PcPointForChange			= GetInt(0, PCPoint.Config.MaximumPCPoints,	0,		"MultyVault",	"PcPointForChange",				IAJuliaCmd);
+	Commands.WCoinForChange				= GetInt(0,	PCPoint.Config.MaximumWCPoints,	0,		"MultyVault",	"WCoinForChange",				IAJuliaCmd);
 
 	//		pkclear		//	
 	ClearCommand.Enabled				= GetInt(0, 1,									1,		"PkClear",		"PkClearEnabled",				IAJuliaCmd);
@@ -488,10 +436,10 @@ void cConfigs::LoadCommands()
 	ClearCommand.Type					= GetInt(0, 2,									1,		"PkClear",		"PKClearType",					IAJuliaCmd);	 																													
 	ClearCommand.PriceZen				= GetInt(0, 2000000000,							100000, "PkClear",		"PkClearPriceZen",				IAJuliaCmd);	 
 	ClearCommand.PriceZenForAll			= GetInt(0, 2000000000,							1000000,"PkClear",		"PkClearPriceZenForAll",		IAJuliaCmd);
-	ClearCommand.PricePcPoints			= GetInt(0, PCPoint.sPoints.MaximumPCPoints,	20,		"PkClear",		"PkClearPricePcPoints",			IAJuliaCmd);	 
-	ClearCommand.PricePcPointsForAll	= GetInt(0, PCPoint.sPoints.MaximumPCPoints,	200,	"PkClear",		"PkClearPricePcPointsForAll",	IAJuliaCmd);
-	ClearCommand.PriceWCoins			= GetInt(0, PCPoint.sPoints.MaximumWCPoints,	2,		"PkClear",		"PkClearPriceWCoins",			IAJuliaCmd);	 
-	ClearCommand.PriceWCoinsForAll		= GetInt(0, PCPoint.sPoints.MaximumWCPoints,	20,		"PkClear",		"PkClearPriceWCoinsForAll",		IAJuliaCmd);
+	ClearCommand.PricePcPoints			= GetInt(0, PCPoint.Config.MaximumPCPoints,	20,		"PkClear",		"PkClearPricePcPoints",			IAJuliaCmd);	 
+	ClearCommand.PricePcPointsForAll	= GetInt(0, PCPoint.Config.MaximumPCPoints,	200,	"PkClear",		"PkClearPricePcPointsForAll",	IAJuliaCmd);
+	ClearCommand.PriceWCoins			= GetInt(0, PCPoint.Config.MaximumWCPoints,	2,		"PkClear",		"PkClearPriceWCoins",			IAJuliaCmd);	 
+	ClearCommand.PriceWCoinsForAll		= GetInt(0, PCPoint.Config.MaximumWCPoints,	20,		"PkClear",		"PkClearPriceWCoinsForAll",		IAJuliaCmd);
 	ClearCommand.LevelReq				= GetInt(0, Commands.MaxLvl,					100,	"PkClear",		"PkClearLevelReq",				IAJuliaCmd);  
 }
 
@@ -505,10 +453,10 @@ void cConfigs::LoadPkClearGuard()
 	ClearNpc.Type					= GetInt(0, 2,									1,		"PkClearGuard",		"PKClearGuardType",					IAJuliaPkClear);																															
 	ClearNpc.PriceZen				= GetInt(0, 2000000000,							100000,	"PkClearGuard",		"PkClearGuardPriceZen",				IAJuliaPkClear);	 
 	ClearNpc.PriceZenForAll			= GetInt(0, 2000000000,							1000000,"PkClearGuard",		"PkClearGuardPriceZenForAll",		IAJuliaPkClear);
-	ClearNpc.PricePcPoints			= GetInt(0, PCPoint.sPoints.MaximumPCPoints,	20,		"PkClearGuard",		"PkClearGuardPricePcPoints",		IAJuliaPkClear);	 
-	ClearNpc.PricePcPointsForAll	= GetInt(0, PCPoint.sPoints.MaximumPCPoints,	200,	"PkClearGuard",		"PkClearGuardPricePcPointsForAll",	IAJuliaPkClear);	
-	ClearNpc.PriceWCoins			= GetInt(0, PCPoint.sPoints.MaximumWCPoints,	2,		"PkClearGuard",		"PkClearGuardPriceWCoins",			IAJuliaPkClear);	 
-	ClearNpc.PriceWCoinsForAll		= GetInt(0, PCPoint.sPoints.MaximumWCPoints,	20,		"PkClearGuard",		"PkClearGuardPriceWCoinsForAll",	IAJuliaPkClear);	   
+	ClearNpc.PricePcPoints			= GetInt(0, PCPoint.Config.MaximumPCPoints,	20,		"PkClearGuard",		"PkClearGuardPricePcPoints",		IAJuliaPkClear);	 
+	ClearNpc.PricePcPointsForAll	= GetInt(0, PCPoint.Config.MaximumPCPoints,	200,	"PkClearGuard",		"PkClearGuardPricePcPointsForAll",	IAJuliaPkClear);	
+	ClearNpc.PriceWCoins			= GetInt(0, PCPoint.Config.MaximumWCPoints,	2,		"PkClearGuard",		"PkClearGuardPriceWCoins",			IAJuliaPkClear);	 
+	ClearNpc.PriceWCoinsForAll		= GetInt(0, PCPoint.Config.MaximumWCPoints,	20,		"PkClearGuard",		"PkClearGuardPriceWCoinsForAll",	IAJuliaPkClear);	   
 	ClearNpc.LevelReq				= GetInt(0, 400,								100,	"PkClearGuard",		"PkClearGuardLevelReq",				IAJuliaPkClear);
 }	   
 void cConfigs::Misc()
@@ -537,10 +485,10 @@ void cConfigs::LoadAll()
 	GmSystem.Load();
 	News.Load();
 	AntiAFK.Load();
-	LoadDuel();
+	DuelSystem.Load();
 	LoadNotice();
-	LoadArcher();
-	VIPSystem();
+	GoldenArcher.Load();
+	Vip.Load();
 	LoadCommands();
 	LoadPkClearGuard();
 	DropSystem.LoadDropItems();

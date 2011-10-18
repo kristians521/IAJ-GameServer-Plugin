@@ -20,6 +20,8 @@
 #include "MapSystem.h"
 #include "Query.h"
 #include "WZEventDrop.h"
+#include "Vip.h"
+
 cChat Chat;
 						 
 cChat::cChat()
@@ -874,15 +876,15 @@ bool cChat::SetChar(LPOBJ gObj, char *Msg)
 		return true;
 	}	
 
-	if(PCPnt < 0 || PCPnt > PCPoint.sPoints.MaximumPCPoints)
+	if(PCPnt < 0 || PCPnt > PCPoint.Config.MaximumPCPoints)
 	{
-		MessageLog(1, c_Red, t_GM, gObj, "[SetChar] PCPnt can't be less than 0 and more than %d!", PCPoint.sPoints.MaximumPCPoints);
+		MessageLog(1, c_Red, t_GM, gObj, "[SetChar] PCPnt can't be less than 0 and more than %d!", PCPoint.Config.MaximumPCPoints);
 		return true;
 	}	
 
-	if(WCoin < 0 || WCoin > PCPoint.sPoints.MaximumWCPoints)
+	if(WCoin < 0 || WCoin > PCPoint.Config.MaximumWCPoints)
 	{
-		MessageLog(1, c_Red, t_GM, gObj, "[SetChar] WCoin can't be less than 0 and more than %d!", PCPoint.sPoints.MaximumWCPoints);
+		MessageLog(1, c_Red, t_GM, gObj, "[SetChar] WCoin can't be less than 0 and more than %d!", PCPoint.Config.MaximumWCPoints);
 		return true;
 	}	
 
@@ -1630,25 +1632,27 @@ bool cChat::CheckCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::CheckVIPCommand(LPOBJ gObj, char *Msg)
 {
-	if(CheckCommand(gObj, Configs.VIP.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "VipCheck", "/vipcheck", Msg))
+	if(CheckCommand(gObj, Vip.Config.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "VipCheck", "/vipcheck", Msg))
 	return true;
 
 	if(AddTab[gObj->m_Index].VIP_Type > 0)
-	MessageLog(1, c_Red, t_VIP, gObj, "[VIP] You have %d min(s) left.",AddTab[gObj->m_Index].VIP_Min);
+		MessageLog(1, c_Red, t_VIP, gObj, "[VIP] You have %d min(s) left.",AddTab[gObj->m_Index].VIP_Min);
 	else
-	MessageLog(1, c_Red, t_VIP, gObj, "[VIP] You haven't bought VIP yet.");
+		MessageLog(1, c_Red, t_VIP, gObj, "[VIP] You haven't bought VIP yet.");
 	return true;
 } 
 
 bool cChat::VIPListCommand(LPOBJ gObj, char *Msg)
 { 
-	if(CheckCommand(gObj, Configs.VIP.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "VipList", "/viplist", Msg))
+	if(CheckCommand(gObj, Vip.Config.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "VipList", "/viplist", Msg))
 		return true; 
 
-	for(int i = 1; i<= Configs.VIP.NumStates; i++)
+	for(int i = 1; i<= Vip.Config.NumStates; i++)
 	{
-		MessageLog(1, c_Red, t_VIP, gObj, "[VipList] %s - %d PCPnt, %d WCn, %d Zen, %d hours min, %d - max", Configs.VIP.VIPState[i].VIPName, Configs.VIP.VIPState[i].CostPCPoints, 
-																	Configs.VIP.VIPState[i].CostWCoins, Configs.VIP.VIPState[i].CostZen, Configs.VIP.VIPState[i].MinHours, Configs.VIP.VIPState[i].MaxHours);
+		MessageLog(1, c_Red, t_VIP, gObj, "[VipList] %s - %d PCPnt, %d WCn, %d Zen, %d hours min, %d - max", 
+						Vip.Config.VIPState[i].VIPName, Vip.Config.VIPState[i].CostPCPoints, 
+						Vip.Config.VIPState[i].CostWCoins, Vip.Config.VIPState[i].CostZen,
+						Vip.Config.VIPState[i].MinHours, Vip.Config.VIPState[i].MaxHours);
 		
 	}
 	return true;
@@ -1656,7 +1660,7 @@ bool cChat::VIPListCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 {
-	if(Configs.VIP.Enabled)
+	if(Vip.Config.Enabled)
 	{
 		DWORD Hours = 1;
 		char State[255];
@@ -1669,9 +1673,9 @@ bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 		}
 
 		int RealState = -1;
-		for(int i = 1; i<= Configs.VIP.NumStates; i++)
+		for(int i = 1; i<= Vip.Config.NumStates; i++)
 		{
-			if(!_strcmpi(State, Configs.VIP.VIPState[i].VIPName))
+			if(!_strcmpi(State, Vip.Config.VIPState[i].VIPName))
 			{
 				RealState = i;
 				break;
@@ -1683,32 +1687,32 @@ bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 			MessageLog(1, c_Red, t_VIP, gObj, "[VIP] There are no such vip status.");
 			return true;
 		}
-		if(!Configs.VIP.VIPState[RealState].EnabledCmd)
+		if(!Vip.Config.VIPState[RealState].EnabledCmd)
 		{			 
-			MessageLog(1, c_Red, t_VIP, gObj, "[VIP] You can't buy %s vip status.", Configs.VIP.VIPState[RealState].VIPName);
+			MessageLog(1, c_Red, t_VIP, gObj, "[VIP] You can't buy %s vip status.", Vip.Config.VIPState[RealState].VIPName);
 			return true;
 		}
-		if(Hours < Configs.VIP.VIPState[RealState].MinHours || Hours > Configs.VIP.VIPState[RealState].MaxHours)
+		if(Hours < Vip.Config.VIPState[RealState].MinHours || Hours > Vip.Config.VIPState[RealState].MaxHours)
 		{
-			MessageLog(1, c_Red, t_VIP, gObj, "[VIP] You can't buy less then %d and more than %d hours.", Configs.VIP.VIPState[RealState].MinHours, Configs.VIP.VIPState[RealState].MaxHours);
+			MessageLog(1, c_Red, t_VIP, gObj, "[VIP] You can't buy less then %d and more than %d hours.", Vip.Config.VIPState[RealState].MinHours, Vip.Config.VIPState[RealState].MaxHours);
 			return true;
 		}
 
-		if(CheckCommand(gObj, Configs.VIP.VIPState[RealState].EnabledCmd, GmSystem.NONE, Configs.VIP.VIPState[RealState].CostZen * Hours, 
-			Configs.VIP.VIPState[RealState].CostPCPoints * Hours, Configs.VIP.VIPState[RealState].CostWCoins * Hours, 0, 2, 0, "VIPBuy", "/vipbuy <state> <hours>", Msg))
+		if(CheckCommand(gObj, Vip.Config.VIPState[RealState].EnabledCmd, GmSystem.NONE, Vip.Config.VIPState[RealState].CostZen * Hours, 
+			Vip.Config.VIPState[RealState].CostPCPoints * Hours, Vip.Config.VIPState[RealState].CostWCoins * Hours, 0, 2, 0, "VIPBuy", "/vipbuy <state> <hours>", Msg))
 			return true;
 
-		TakeCommand(gObj, Configs.VIP.VIPState[RealState].CostZen * Hours, Configs.VIP.VIPState[RealState].CostPCPoints * Hours, 
-				Configs.VIP.VIPState[RealState].CostWCoins * Hours, "BuyVIP");
+		TakeCommand(gObj, Vip.Config.VIPState[RealState].CostZen * Hours, Vip.Config.VIPState[RealState].CostPCPoints * Hours, 
+				Vip.Config.VIPState[RealState].CostWCoins * Hours, "BuyVIP");
 
-		MuOnlineQuery.ExecQuery("UPDATE Character SET %s = (%s + %d), %s = %d WHERE Name = '%s'", Configs.VIP.ColumnDate, Configs.VIP.ColumnDate, Hours*60, Configs.VIP.Column, RealState, gObj->Name);	
+		MuOnlineQuery.ExecQuery("UPDATE Character SET %s = (%s + %d), %s = %d WHERE Name = '%s'", Vip.Config.ColumnDate, Vip.Config.ColumnDate, Hours*60, Vip.Config.Column, RealState, gObj->Name);	
 			MuOnlineQuery.Fetch();
 			MuOnlineQuery.Close();
 
 		AddTab[gObj->m_Index].VIP_Min += Hours*60;
 		AddTab[gObj->m_Index].VIP_Type = RealState;
 
-		MessageLog(1, c_Red, t_VIP, gObj, "[VIPBuy] Successfully bought %s for %d Hour(s)", Configs.VIP.VIPState[RealState].VIPName, Hours);
+		MessageLog(1, c_Red, t_VIP, gObj, "[VIPBuy] Successfully bought %s for %d Hour(s)", Vip.Config.VIPState[RealState].VIPName, Hours);
 		MessageLog(1, c_Red, t_VIP, gObj, "[VIPBuy] Your VIP status starts right now!");
 	}
 	return true;

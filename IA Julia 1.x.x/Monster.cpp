@@ -20,6 +20,7 @@
 #include "DuelManager.h"
 #include "MossGambler.h"
 #include "Archer.h"
+#include "Vip.h"
 
 cMonster Monster;
 
@@ -234,10 +235,10 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 	} 
 
 	//VIP System 
-	if(Configs.VIP.Enabled && AddTab[pObj->m_Index].VIP_Type > 0)
+	if(Vip.Config.Enabled && AddTab[pObj->m_Index].VIP_Type > 0)
 	{
 		int VIPInfo = AddTab[pObj->m_Index].VIP_Type;
-		mObj->Money += ((mObj->Money/ 100) * Configs.VIP.VIPState[VIPInfo].BonusZen);
+		mObj->Money += ((mObj->Money/ 100) * Vip.Config.VIPState[VIPInfo].BonusZen);
 	} 
 
 	// Drop System
@@ -304,7 +305,7 @@ bool cMonster::NPCTalkEx(LPOBJ gObj, int NpcId)
 	bool bResult = false;
 	OBJECTSTRUCT *gObjNPC = (OBJECTSTRUCT*)OBJECT_POINTER(NpcId);
 #ifdef _GS
-	if (gObjNPC->Class == 479 && Configs.Duel.Enabled)
+	if (gObjNPC->Class == 479 && DuelSystem.Config.Enabled)
 	{
 		PMSG_SEND_WINDOW aSend;
 		// ----
@@ -316,7 +317,7 @@ bool cMonster::NPCTalkEx(LPOBJ gObj, int NpcId)
 		gObj->m_IfState.type = 20;
 		// ----
 		DataSend(gObj->m_Index, (BYTE*)&aSend, 4);
-		g_DuelSystem.SendDuelStatus(gObj);
+		DuelSystem.SendDuelStatus(gObj);
 
 		bResult = true;
 	}
@@ -346,7 +347,7 @@ bool cMonster::NPCTalkEx(LPOBJ gObj, int NpcId)
 		PkClear(gObj, gObjNPC);
 		bResult = true;		
 	}
-	if(gObjNPC->Class == 236 && Configs.Archer.Enabled)
+	if(gObjNPC->Class == 236 && GoldenArcher.Config.Enabled)
 	{
 		GoldenArcher.GoldenArcherClick(gObj);
 		bResult = true;

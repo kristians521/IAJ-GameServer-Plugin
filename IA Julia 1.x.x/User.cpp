@@ -191,11 +191,11 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
           lpObj->MLExp          += pBonusExpML;
      }
 	//VIPSystem	
-	if(Configs.VIP.Enabled && AddTab[lpObj->m_Index].VIP_Type > 0)
+	if(Vip.Config.Enabled && AddTab[lpObj->m_Index].VIP_Type > 0)
 	{
 		  int VIPInfo = AddTab[lpObj->m_Index].VIP_Type;
-		  pBonusExp               = ((exp * Configs.VIP.VIPState[VIPInfo].BonusExp) / 100);
-          pBonusExpML               = ((exp * Configs.VIP.VIPState[VIPInfo].BonusExp) / 100);
+		  pBonusExp               = ((exp * Vip.Config.VIPState[VIPInfo].BonusExp) / 100);
+          pBonusExpML               = ((exp * Vip.Config.VIPState[VIPInfo].BonusExp) / 100);
           // ----
           pNewExperience          += pBonusExp;
           pNewExperenceML          += pBonusExpML;
@@ -413,19 +413,19 @@ void cUser::PlayerConnect(LPOBJ gObj)
 	AddTab[gObj->m_Index].PC_OnlineTimer	= 0;
 
 #ifdef _GS 
-	if(Configs.Duel.Enabled)
+	if(DuelSystem.Config.Enabled)
 	{
-		if(Configs.Duel.Ranking)
+		if(DuelSystem.Config.Ranking)
 		{
-			g_DuelSystem.DuelSetInfo(gObj->m_Index);
+			DuelSystem.DuelSetInfo(gObj->m_Index);
 		}
 
-		if((!g_DuelSystem.IsOnDuel(gObj->m_Index)) && gObj->MapNumber == 64)
+		if((!DuelSystem.IsOnDuel(gObj->m_Index)) && gObj->MapNumber == 64)
 		{
 			gObjMoveGate(gObj->m_Index, 294);
 			Log.ConsoleOutPut(1, c_Blue ,t_Duel, "[Duel System][%s][%s] Spawn on duel map after duel is not allowed", gObj->AccountID, gObj->Name);
 		}
-		g_DuelSystem.UserDuelInfoReset(gObj);
+		DuelSystem.UserDuelInfoReset(gObj);
 	}
 #endif
 	Vip.Connect(gObj);

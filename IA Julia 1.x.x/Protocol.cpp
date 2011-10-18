@@ -146,10 +146,10 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 
 		case 0xAA:	
 			{  		
-				if(Configs.Duel.Enabled)
+				if(DuelSystem.Config.Enabled)
 				{
 #ifdef _GS 
-					g_DuelSystem.DuelProtocolCore(gObj, aRecv);
+					DuelSystem.DuelProtocolCore(gObj, aRecv);
 					return true;
 #else 
 					GCServerMsgStringSend("You can't use duel on CS server!", aIndex, 1);	 		 

@@ -44,7 +44,7 @@ public:
 		int AddPCPointsSec;
 		int AddPCPointsCount;
 		int MaximumWCPoints;
-	}sPoints;
+	}Config;
 private:
 	struct
 	{

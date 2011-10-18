@@ -90,9 +90,9 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		Fixes.ASMFixes();
 		Configs.LoadAll();
 		#ifdef _GS
-			if(Configs.Duel.Enabled)
+			if(DuelSystem.Config.Enabled)
 			{
-				g_DuelSystem.DuelCreateThread();
+				DuelSystem.DuelCreateThread();
 				Utilits.HookThis((DWORD)&HookSetDuelOption,0x004037B5);
 				Utilits.HookThis((DWORD)&HookIsDuelEnable,0x00404BCE);
 				Utilits.HookThis((DWORD)&HookIsOnDuel,0x00404B56);

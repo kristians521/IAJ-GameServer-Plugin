@@ -12,12 +12,9 @@
 
 class cConfigs
 {
-private:					
-	void LoadDuel();
+private:				
 	void LoadNotice();
 	void LoadPets();
-	void LoadArcher();
-	void VIPSystem();
 	void LoadCommands();
 	void LoadPkClearGuard();
 	void ZenFixes();
@@ -122,55 +119,13 @@ public:
 	sPkClear ClearNpc;			 
 	sPkClear ClearCommand;
 
-	struct sDuel
-	{
-		int Enabled;
-		int Ranking;
-		int Logging;
-	}Duel;
-	
-	struct sArcher
-	{
-		int Enabled;
-		int ZenReward;
-		int WCoinsReward;
-		int PCPointsReward;
-		int NeedRenaAmount; 
-	}Archer;
-
 	struct cZen
 	{ 
 		int	NormalZen;
 		int ZenInParty;
 
 	}Zen;
-
-	struct VIP
-	{
-		int NumStates;
-		int Enabled;
-		char Column[25];
-		char ColumnDate[25];
-
-		struct VIPConfig
-		{ 
-			char VIPName[8];
-			int EnabledCmd;
-			DWORD CostZen;
-			int CostPCPoints;
-
-			int CostWCoins;
-			int BonusExp;
-			int BonusZen;
-			int BonusDrop; 
-
-			int MinHours;
-			int MaxHours;
-		};
-		VIPConfig VIPState[20]; 
-
-	}VIP;
-
+	
 	int GuildRes;
 	int GuildLevel;
 	int IsPartyGap;

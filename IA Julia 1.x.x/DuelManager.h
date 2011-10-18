@@ -236,7 +236,7 @@ g_DuelRespawns [MAX_DUEL_ROOMS] =
 };
 // ----------------------------------------------------------------------------------------------------------------
 //## Class;
-class DuelSystem
+class cDuelSystem
 {
 	// ----
 private:
@@ -246,9 +246,17 @@ private:
 public:
 	DUEL_ROOM	g_DuelRooms[MAX_DUEL_ROOMS];
 	// ----
-	DuelSystem(void);
-	~DuelSystem(void);
+	cDuelSystem(void);
+	~cDuelSystem(void);
 	// ----
+	struct sConfig
+	{
+		int Enabled;
+		int Ranking;
+		int Logging;
+	}Config;
+
+	void Load();
 	void Run();
 	void DuelProtocolCore(LPOBJ lpObj, unsigned char * lpPacket);
 	void KillUserProc ( LPOBJ lpObj, LPOBJ lpTarget);
@@ -260,7 +268,7 @@ public:
 	{
 		while(true)
 		{
-			DuelSystem* This = (DuelSystem*)param;
+			cDuelSystem* This = (cDuelSystem*)param;
 			// ----
 			This->Run();
 			// ----
@@ -308,7 +316,7 @@ public:
 
 	static void TimerThreadEP(void * pThis) 
 	{ 
-		DuelSystem * pt = (DuelSystem*)pThis; 
+		cDuelSystem * pt = (cDuelSystem*)pThis; 
 	}
 	// ----
 	void SendEndDuel(LPOBJ lpObj);
@@ -326,7 +334,7 @@ public:
 	bool SetDuelState(int aIndex, char AccountID[11], char Name[11]);
 };
 // ----------------------------------------------------------------------------------------------------------------
-extern DuelSystem g_DuelSystem;
+extern cDuelSystem DuelSystem;
 
 	bool HookSetDuelOption(int lpObj, BOOL bState);
 	bool HookIsDuelEnable(int aIndex);

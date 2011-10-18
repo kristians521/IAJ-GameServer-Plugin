@@ -19,9 +19,19 @@ class cGoldenArcher
 public:
 	cGoldenArcher();
 	~cGoldenArcher();
-	void LoadPrizeItems();
+	void Load();
 	void GoldenArcherClick(LPOBJ gObj);
 	bool ChekingRena(LPOBJ gObj,int Mode);
+
+	struct sConfig
+	{
+		int Enabled;
+		int ZenReward;
+		int WCoinsReward;
+		int PCPointsReward;
+		int NeedRenaAmount; 
+	}Config;
+
 private:
 	struct
 	{
