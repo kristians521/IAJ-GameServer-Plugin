@@ -146,15 +146,15 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 
 		case 0xAA:	
 			{  		
+#ifdef _GS 
 				if(DuelSystem.Config.Enabled)
 				{
-#ifdef _GS 
 					DuelSystem.DuelProtocolCore(gObj, aRecv);
 					return true;
-#else 
-					GCServerMsgStringSend("You can't use duel on CS server!", aIndex, 1);	 		 
-#endif	
 				}
+#else 
+				GCServerMsgStringSend("You can't use duel on CS server!", aIndex, 1);	 		 
+#endif	
 			}
 		break;
 #ifdef _GS
@@ -171,17 +171,6 @@ bool ProtocolCore (BYTE protoNum, LPBYTE aRecv, DWORD aLen, int aIndex, DWORD En
 			}
 			break;	
 #endif
-
-		//case 0xF1: // IP Connect Protocol
-		//{
-		//	if (aRecv[3] == 0x03)
-		//	{
-		//		Log.ConsoleOutPut(1,c_Red,t_Error,"error-L1 : HackCheck [%s][%s] 0x0 0x1e",gObj->AccountID,gObj->Name);
-		//		Chat.Message(gObj->m_Index,"[PC Point] Cannot be attack with opening shop. You are disconnect");
-		//		CloseClient(gObj->m_Index);
-		//	}	
-		//}
-		//break;
 	}
 	DataRecv(protoNum, aRecv, aLen, aIndex, Encrypt, Serial);
 	return true;

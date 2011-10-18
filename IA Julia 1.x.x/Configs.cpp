@@ -485,7 +485,6 @@ void cConfigs::LoadAll()
 	GmSystem.Load();
 	News.Load();
 	AntiAFK.Load();
-	DuelSystem.Load();
 	LoadNotice();
 	GoldenArcher.Load();
 	Vip.Load();
@@ -496,6 +495,7 @@ void cConfigs::LoadAll()
 	MapSys();
 	MoveReq.MoveReqLoad();
 #ifdef _GS
+	DuelSystem.Load();
 	Moss.Load();
 	DropEvent.Init();
 #endif 
