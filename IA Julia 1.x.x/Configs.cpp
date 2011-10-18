@@ -20,6 +20,7 @@
 #include "MapSystem.h"
 #include "Query.h"
 #include "WZEventDrop.h"
+#include "MoveReq.h"
 cConfigs Configs;	  
 
 cConfigs::cConfigs()
@@ -30,27 +31,12 @@ cConfigs::~cConfigs()
 {
 }
 
-void cConfigs::LoadGmSystem()
-{		  					   
-	GmSystemConfig.IsGMSystem	= GetInt(0, 1, 0, "GMSystem", "IsGMSystem",	IAJuliaGM);		
-	if(!GmSystemConfig.IsGMSystem)return;
-	GmSystemConfig.IsGMInDB	= GetInt(0, 1, 0, "GMSystem", "IsGMInDB",	IAJuliaGM);
-	GmSystem.Load();
-} 
-
-
-void cConfigs::LoadNews()
-{
-	IsNews						= GetInt(0, 1,					1,		"News",			"NewsSystemEnabled",			IAJuliaNews);
-	if(!IsNews)return;
-	_beginthread(NewsSystem, 0, NULL);
-}
-
 void cConfigs::ZenFixes()
 {
 	Zen.NormalZen					= GetInt(0, 65535,				20,		"ZenSettings",	"ZenDrop",			IAJuliaCommon);
 	Zen.ZenInParty					= GetInt(0, 65535,				20,		"ZenSettings",	"ZenPartyDrop",		IAJuliaCommon);
 }
+
 void cConfigs::LoadPets()
 {		  																									   
 	Panda.PetPandaDefense				= GetInt(0, 1000,			10,		"Panda",		"PetPandaDefense",				IAJuliaPets);
@@ -537,7 +523,6 @@ void cConfigs::LoadPkClearGuard()
 }	   
 void cConfigs::Misc()
 {
-	//
 	GetPrivateProfileString("Reset","ResetColumn","Resets", Configs.ResetColumn, sizeof(Configs.ResetColumn), IAJuliaCommon); 
 	MuOnlineQuery.CheckColumn(Configs.ResetColumn, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", Configs.ResetColumn);
 	GetPrivateProfileString("GameServerInfo","ServerName","GS", Configs.ServerName, sizeof(Configs.ServerName), ".\\Data\\ServerInfo.dat"); 
@@ -547,7 +532,6 @@ void cConfigs::Misc()
 	Unicode32				= GetInt(0, 1, 0,"CharacterGuild", "AllowUnicode32", IAJuliaCommon);
 	LahapDupe				= GetInt(0, 1, 1,"Lahap", "DupeBugFix", IAJuliaCommon);
 	GuildLevel				= GetInt(0, 400, 320,"GameServerInfo", "GuildCreateLevel", "..\\Data\\CommonServer.cfg"); 
-	// 
 }
 void cConfigs::MapSys()
 { 
@@ -557,9 +541,11 @@ void cConfigs::MapSys()
 }
 void cConfigs::LoadAll()
 {
+	LoadConfigsInGS();
 	PCPoint.LoadIniConfigs();
 	ZenFixes();
-	LoadGmSystem();
+	GmSystem.Load();
+	News.Load();
 	LoadAntiAfk();
 	LoadDuel();
 	LoadNotice();
@@ -570,6 +556,7 @@ void cConfigs::LoadAll()
 	DropSystem.LoadDropItems();
 	Misc();
 	MapSys();
+	MoveReq.MoveReqLoad();
 #ifdef _GS
 	Moss.Load();
 	DropEvent.Init();

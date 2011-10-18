@@ -14,8 +14,8 @@ void NewsSystem(void * lpParam);
 class cNews
 {
 public:
-	cNews();
-	~cNews();  
+	void Load();
+
 	int Sections;
 	struct sNews
 	{
@@ -23,7 +23,14 @@ public:
 		float Time;
 		int Type;
 	};
+
+	struct sConfig
+	{
+		int IsNews;
+	};
+
 	sNews NewsSys[20];
+	sConfig Config;
 };
 extern cNews News;
 #endif

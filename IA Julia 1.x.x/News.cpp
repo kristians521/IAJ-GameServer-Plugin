@@ -16,14 +16,13 @@
 
 cNews News;
 
-cNews::cNews()
-{ 
-}
-
-cNews::~cNews()
+void cNews::Load()
 {
-
+	Config.IsNews						= Configs.GetInt(0, 1, 1, "News", "NewsSystemEnabled", IAJuliaNews);
+	if(!Config.IsNews)return;
+	_beginthread(NewsSystem, 0, NULL);
 }
+
 void NewsSystem(void * lpParam)
 {
 	while(true)
@@ -34,14 +33,14 @@ void NewsSystem(void * lpParam)
 		for(int i = 1; i <= News.Sections; i++)
 		{
 			wsprintf(PState, "Section%d", i);		
-			News.NewsSys[i].Time = GetPrivateProfileIntA(PState,"ShowTime", 0, IAJuliaNews) * 60000;
-			News.NewsSys[i].Type = GetPrivateProfileIntA(PState,"ShowType", 0, IAJuliaNews);
-			GetPrivateProfileStringA(PState,"News1", NULL, News.NewsSys[i].MSG[0], 50, IAJuliaNews);
-			GetPrivateProfileStringA(PState,"News2", NULL, News.NewsSys[i].MSG[1], 50, IAJuliaNews);
-			GetPrivateProfileStringA(PState,"News3", NULL, News.NewsSys[i].MSG[2], 50, IAJuliaNews); 
+			News.NewsSys[i].Time = GetPrivateProfileIntA(PState, "ShowTime", 0, IAJuliaNews) * 60000;
+			News.NewsSys[i].Type = GetPrivateProfileIntA(PState, "ShowType", 0, IAJuliaNews);
 			Sleep(News.NewsSys[i].Time); 
+			char PNews[6];
 			for(int j=0; j<3; j++)
 			{
+				wsprintf(PNews, "News%d", j);	
+				GetPrivateProfileStringA(PState, PNews, NULL, News.NewsSys[i].MSG[0], 50, IAJuliaNews);
 				if(News.NewsSys[i].MSG[j] == NULL)
 					continue;
 				Log.CheckProcent(News.NewsSys[i].MSG[j]);	

@@ -15,17 +15,13 @@
 #include "GMSystem.h"
 
 cGmSystem GmSystem;
-					  
-cGmSystem::cGmSystem()
-{
-}
-
-cGmSystem::~cGmSystem()
-{
-}
 
 void cGmSystem::Load()
 {
+	Config.IsGMSystem	= Configs.GetInt(0, 1, 0, "GMSystem", "IsGMSystem",	IAJuliaGM);		
+	if(!Config.IsGMSystem)return;
+	Config.IsGMInDB		= Configs.GetInt(0, 1, 0, "GMSystem", "IsGMInDB",	IAJuliaGM);
+
 	FILE *fp;
 	BOOL bRead = FALSE;
 	DWORD dwArgv = 0;
@@ -97,7 +93,7 @@ int cGmSystem::IsCommand(Commands Cmd, char Character[11])
 	}
 	if(IsGMBD(Character))
 	{
-		if (Configs.GmSystemConfig.IsGMSystem)
+		if (Config.IsGMSystem)
 		{
 			for(int x=0; x < GMCount; x++)
 				if(!strcmp(GM[x].Name, Character))
@@ -147,7 +143,7 @@ int cGmSystem::IsAdmin(char Character[11])
 {	
 	if(IsGMBD(Character))
 	{
-		if (Configs.GmSystemConfig.IsGMSystem)
+		if (Config.IsGMSystem)
 		{
 			for(int x=0; x < GMCount; x++)
 				if(!strcmp(GM[x].Name, Character))
@@ -172,7 +168,7 @@ int cGmSystem::IsAdmin(char Character[11])
 	
 bool cGmSystem::IsGMBD(char Character[11])
 {
-	if(Configs.GmSystemConfig.IsGMInDB == 0)
+	if(Config.IsGMInDB == 0)
 		return true;
 	for(int i = OBJECT_MIN; i <= OBJECT_MAX; i++)
 	{  	 

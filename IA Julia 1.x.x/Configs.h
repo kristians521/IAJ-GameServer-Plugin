@@ -12,8 +12,7 @@
 
 class cConfigs
 {
-private:
-	void LoadGmSystem();  									 
+private:								 
 	void LoadAntiAfk();	
 	void LoadDuel();
 	void LoadNotice();
@@ -31,7 +30,6 @@ public:
 	void LoadFixes();	
 	void LoadConfigsInGS();
 	void LoadAll();
-	void LoadNews();
 	long GetInt(long Min, long Max, long Default, LPCSTR BlockName, LPCSTR ConfigName, LPCSTR FolderName);
 	char GetChar(long Min, long Max, unsigned char Default, LPCSTR BlockName, LPCSTR ConfigName, LPCSTR FolderName);
 
@@ -58,7 +56,6 @@ public:
 
 	char ResetColumn[25];	
 	char ServerName[25];
-	int IsNews;
 	char ConnectNotice[100];	
 	int ConnectInfo; 
 	struct sCommands
@@ -126,13 +123,6 @@ public:
 	sPkClear ClearNpc;			 
 	sPkClear ClearCommand;
 
-
-	struct sGmConfig
-	{	  
-		int IsGMSystem;
-		int IsGMInDB;
-	}GmSystemConfig;	 
-
 	struct sDuel
 	{
 		int Enabled;
@@ -195,6 +185,7 @@ public:
 	int PartyGapLvl;
 	int LahapDupe;
 	int Unicode32;
+
 	struct sPanda
 	{
 		int PetPandaDefense;

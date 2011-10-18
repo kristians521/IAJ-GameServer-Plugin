@@ -1052,7 +1052,7 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 			}
 		case 3:
 			{
-				if (Configs.GmSystemConfig.IsGMSystem)
+				if (GmSystem.Config.IsGMSystem)
 				{
 					GmSystem.Load();
 					MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] GMSystem Reloaded.");
@@ -1085,7 +1085,6 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 				GameMonsterAllCloseAndReload();
 				pShopDataLoad();
 				Security.Load();
-				if (Configs.GmSystemConfig.IsGMSystem)GmSystem.Load();
 				DropSystem.LoadDropItems();
 				#ifdef _GS
 				Monster.ReadMonsterAdd();

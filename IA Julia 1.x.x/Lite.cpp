@@ -88,10 +88,7 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		LoadQuery();
 		Maps.MapInit();
 		Fixes.ASMFixes();
-		Configs.LoadConfigsInGS();
 		Configs.LoadAll();
-		MoveReq.MoveReqLoad();
-		Configs.LoadNews();
 		#ifdef _GS
 			if(Configs.Duel.Enabled)
 			{

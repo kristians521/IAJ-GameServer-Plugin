@@ -44,8 +44,6 @@ public:
 		int AddPCPointsSec;
 		int AddPCPointsCount;
 		int MaximumWCPoints;
-		//short AddPCPointsMinLvl;
-		//short AddPCPointsLevelUP;   
 	}sPoints;
 private:
 	struct

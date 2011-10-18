@@ -50,12 +50,17 @@ public:
 					cDisconnect,
 					cTrace};
 
+	struct sConfig
+	{	  
+		int IsGMSystem;
+		int IsGMInDB;
+	};	
+
 	//Structures
+	sConfig Config;
 	GMSystem GM[255];
 	int GMCount;
-					   
-	cGmSystem();
-	~cGmSystem();	
+					
 	void Load();
 	int IsCommand(Commands, char[11]);
 	int IsAdmin(char[11]);
