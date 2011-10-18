@@ -14,11 +14,17 @@
 class cAntiAFK
 {
 public:
-	cAntiAFK();
-	~cAntiAFK();
 	void Tick(LPOBJ gObj);
 	void Load();
+
 private:
+	struct sConfig
+	{
+		int Enabled;
+		int Time;
+		int Warnings;
+	}Config;
+
 	int ArrayMap[64];
 	int ReWarning;
 };

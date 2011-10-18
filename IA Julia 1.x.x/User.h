@@ -26,6 +26,7 @@ typedef	struct sAddTab
 	int		AFK_MapNumber;
 	int		AFK_X;
 	int		AFK_Y;
+	int		AFK_Warnings;
 	DWORD	AFK_Temp;	
 
 	//VIP System

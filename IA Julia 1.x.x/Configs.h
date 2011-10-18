@@ -12,8 +12,7 @@
 
 class cConfigs
 {
-private:								 
-	void LoadAntiAfk();	
+private:					
 	void LoadDuel();
 	void LoadNotice();
 	void LoadPets();
@@ -129,14 +128,7 @@ public:
 		int Ranking;
 		int Logging;
 	}Duel;
-
-	struct sAntiAfkConfig
-	{
-		int Enabled;
-		int Time;
-		int Warnings;
-	}AntiAfkConfig;
-
+	
 	struct sArcher
 	{
 		int Enabled;

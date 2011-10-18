@@ -369,16 +369,6 @@ void cConfigs::LoadFixes()
 	DumpFile		= GetInt(0, 1, 0, "Dump", "EnableCrashDump",IAJuliaCommon);
 }
 
-void cConfigs::LoadAntiAfk()
-{		  			  
-	AntiAfkConfig.Enabled	= GetInt(0, 1,		1,		"AntiAFK",		"AntiAFKEnabled",		IAJuliaAntiAFK);  
-	if(!AntiAfkConfig.Enabled)
-		return;
-	AntiAfkConfig.Time		= GetInt(0, 32000,	300,	"AntiAFK",		"AntiAFKTimer",			IAJuliaAntiAFK);
-	AntiAfkConfig.Warnings	= GetInt(0, 5,		3,		"AntiAFK",		"AntiAFKWarnings",		IAJuliaAntiAFK);	  
-	AntiAFK.Load();
-}
-
 void cConfigs::LoadArcher()
 {		  		 
 	Archer.Enabled				= GetInt(0, 1,						1,		"GoldenArcher",	"ArcherEnabled",		IAJuliaArcher);	
@@ -546,7 +536,7 @@ void cConfigs::LoadAll()
 	ZenFixes();
 	GmSystem.Load();
 	News.Load();
-	LoadAntiAfk();
+	AntiAFK.Load();
 	LoadDuel();
 	LoadNotice();
 	LoadArcher();
