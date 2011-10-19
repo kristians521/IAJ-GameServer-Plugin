@@ -253,7 +253,8 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not playing!)");
 			return;
 		}
-		if (AddTab[gObj->m_Index].PC_PlayerPoints + CountPoints > PCPoint.Config.MaximumPCPoints)
+		if (Mode == PLUS && 
+			AddTab[gObj->m_Index].PC_PlayerPoints + CountPoints > PCPoint.Config.MaximumPCPoints)
 		{
 			Chat.Message(gObj->m_Index,"[PCPoint] You have maximum PCPoints");
 			return;
@@ -266,7 +267,8 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not logged!)");
 			return;
 		}
-		if (gObj->m_wCashPoint + CountPoints > PCPoint.Config.MaximumWCPoints)
+		if (Mode == PLUS && 
+			gObj->m_wCashPoint + CountPoints > PCPoint.Config.MaximumWCPoints)
 		{
 			Chat.Message(gObj->m_Index,"[WCoins] You have maximum WCoins");
 			return;
