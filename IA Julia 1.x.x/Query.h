@@ -66,5 +66,6 @@ protected:
 
 extern CQuery MuOnlineQuery;
 extern CQuery Me_MuOnlineQuery;
+extern CQuery MuOnlineQuery_Test;
 
 #endif

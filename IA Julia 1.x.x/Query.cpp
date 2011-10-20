@@ -14,6 +14,7 @@
 
 CQuery MuOnlineQuery;
 CQuery Me_MuOnlineQuery;
+CQuery MuOnlineQuery_Test;
 
 CQuery::CQuery()
 {

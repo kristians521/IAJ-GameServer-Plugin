@@ -233,6 +233,11 @@ void cPCPoint::InitPCPointForPlayer(LPOBJ gObj)
 		int AmountPoints = MuOnlineQuery.GetAsInteger("PCPoint");
 		MuOnlineQuery.Close();
 
+	MuOnlineQuery_Test.ExecQuery("SELECT test_pcpoint FROM Character WHERE Name = '%s'", gObj->Name);
+		MuOnlineQuery_Test.Fetch();
+		AddTab[gObj->m_Index].PC_POINT_TEST = MuOnlineQuery_Test.GetAsInteger("PCPoint");
+		MuOnlineQuery_Test.Close();
+
 	if (AmountPoints > Config.MaximumPCPoints) AmountPoints = Config.MaximumPCPoints;
 	AddTab[gObj->m_Index].PC_PlayerPoints = AmountPoints;
 
@@ -287,6 +292,10 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 
 	if (Type == PCPOINT)
 	{
+		if(Mode == PLUS)
+			AddTab[gObj->m_Index].PC_POINT_TEST += CountPoints;
+		if(Mode == MINUS)
+			AddTab[gObj->m_Index].PC_POINT_TEST -= CountPoints;
 
 		MuOnlineQuery.ExecQuery("UPDATE Character SET PCPoint = (PCPoint %c %d) WHERE Name = '%s'", ModeType, CountPoints, gObj->Name);
 		MuOnlineQuery.Fetch();

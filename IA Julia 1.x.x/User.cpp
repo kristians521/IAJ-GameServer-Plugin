@@ -459,6 +459,10 @@ BOOL gObjGameClose_Func(int aIndex)
 {	 						
 	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);	  
 
+	MuOnlineQuery_Test.ExecQuery("UPDATE Character SET test_pcpoint = %d WHERE Name = '%s'", AddTab[aIndex].PC_POINT_TEST, gObj->Name);
+	MuOnlineQuery_Test.Fetch();
+	MuOnlineQuery_Test.Close();
+
 	switch(GmSystem.IsAdmin(gObj->Name))
 	{																									   
 	case 1:
