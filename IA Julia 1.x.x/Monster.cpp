@@ -342,7 +342,7 @@ bool cMonster::NPCTalkEx(LPOBJ gObj, int NpcId)
 		gObj->m_IfState.type   = 3;
 		bResult = true;
 	}
-	if ((gObjNPC->Class == Configs.ClearNpc.NpcId) && (Configs.ClearNpc.Enabled))
+	if ((gObjNPC->Class == ClearNpc.NpcId) && (ClearNpc.Enabled))
 	{
 		PkClear(gObj, gObjNPC);
 		bResult = true;		
@@ -369,6 +369,38 @@ bool cMonster::NPCTalkEx(LPOBJ gObj, int NpcId)
 	return bResult;
 }
 
+void cMonster::LoadPkClear()
+{			
+	//		pkclear		//	
+	ClearCommand.Enabled				= Configs.GetInt(0, 1, 1, "PkClear", "PkClearEnabled", IAJuliaCmd);
+	if(ClearCommand.Enabled)
+	{
+		ClearCommand.OnlyForGm				= Configs.GetInt(0, 1,						0,		 "PkClear",	"PkClearOnlyForGm",			IAJuliaCmd);
+		ClearCommand.Type					= Configs.GetInt(0, 2,						1,		 "PkClear",	"PKClearType",				IAJuliaCmd);	 																													
+		ClearCommand.PriceZen				= Configs.GetInt(0, 2000000000,				100000,  "PkClear",	"PkClearPriceZen",			IAJuliaCmd);	 
+		ClearCommand.PriceZenForAll			= Configs.GetInt(0, 2000000000,				1000000, "PkClear",	"PkClearPriceZenForAll",	IAJuliaCmd);
+		ClearCommand.LevelReq				= Configs.GetInt(0, Configs.Commands.MaxLvl,100,	 "PkClear",	"PkClearLevelReq",			IAJuliaCmd);  	
+		ClearCommand.PricePcPoints			= Configs.GetInt(0, PCPoint.Config.MaximumPCPoints,	20,		"PkClear",	"PkClearPricePcPoints",			IAJuliaCmd);	 
+		ClearCommand.PricePcPointsForAll	= Configs.GetInt(0, PCPoint.Config.MaximumPCPoints,	200,	"PkClear",	"PkClearPricePcPointsForAll",	IAJuliaCmd);
+		ClearCommand.PriceWCoins			= Configs.GetInt(0, PCPoint.Config.MaximumWCPoints,	2,		"PkClear",	"PkClearPriceWCoins",			IAJuliaCmd);	 
+		ClearCommand.PriceWCoinsForAll		= Configs.GetInt(0, PCPoint.Config.MaximumWCPoints,	20,		"PkClear",	"PkClearPriceWCoinsForAll",		IAJuliaCmd);		  
+	}
+
+	ClearNpc.Enabled				= Configs.GetInt(0, 1, 1, "PkClearGuard", "LoadPkGuard", IAJuliaPkClear);
+	if(ClearNpc.Enabled)
+	{
+		ClearNpc.NpcId					= Configs.GetInt(0, 32000,		249,	"PkClearGuard",	"PkClearGuardId",				IAJuliaPkClear);	   				 
+		ClearNpc.Type					= Configs.GetInt(0, 2,			1,		"PkClearGuard",	"PKClearGuardType",				IAJuliaPkClear);																															
+		ClearNpc.PriceZen				= Configs.GetInt(0, 2000000000,	100000,	"PkClearGuard",	"PkClearGuardPriceZen",			IAJuliaPkClear);	 
+		ClearNpc.PriceZenForAll			= Configs.GetInt(0, 2000000000,	1000000,"PkClearGuard",	"PkClearGuardPriceZenForAll",	IAJuliaPkClear);
+		ClearNpc.LevelReq				= Configs.GetInt(0, 400,		100,	"PkClearGuard",	"PkClearGuardLevelReq",			IAJuliaPkClear);
+		ClearNpc.PricePcPoints			= Configs.GetInt(0, PCPoint.Config.MaximumPCPoints,	20,		"PkClearGuard",		"PkClearGuardPricePcPoints",		IAJuliaPkClear);	 
+		ClearNpc.PricePcPointsForAll	= Configs.GetInt(0, PCPoint.Config.MaximumPCPoints,	200,	"PkClearGuard",		"PkClearGuardPricePcPointsForAll",	IAJuliaPkClear);	
+		ClearNpc.PriceWCoins			= Configs.GetInt(0, PCPoint.Config.MaximumWCPoints,	2,		"PkClearGuard",		"PkClearGuardPriceWCoins",			IAJuliaPkClear);	 
+		ClearNpc.PriceWCoinsForAll		= Configs.GetInt(0, PCPoint.Config.MaximumWCPoints,	20,		"PkClearGuard",		"PkClearGuardPriceWCoinsForAll",	IAJuliaPkClear);	   
+	}
+}	   
+
 void cMonster::PkClear(LPOBJ gObj, LPOBJ NpcObj)
 {							   			
 	if (gObj->m_PK_Level < 4)
@@ -378,17 +410,17 @@ void cMonster::PkClear(LPOBJ gObj, LPOBJ NpcObj)
 	}	
 
 	int PriceZen, PricePcPoint, PriceWCoin;
-	switch(Configs.ClearNpc.Type)
+	switch(ClearNpc.Type)
 	{	   
 	case 1:	
-		PriceZen = (Configs.ClearNpc.PriceZen * gObj->m_PK_Count); 		 
-		PricePcPoint = (Configs.ClearNpc.PricePcPoints * gObj->m_PK_Count);
-		PriceWCoin = (Configs.ClearNpc.PriceWCoins * gObj->m_PK_Count);
+		PriceZen = (ClearNpc.PriceZen * gObj->m_PK_Count); 		 
+		PricePcPoint = (ClearNpc.PricePcPoints * gObj->m_PK_Count);
+		PriceWCoin = (ClearNpc.PriceWCoins * gObj->m_PK_Count);
 		break;
 	case 2:	
-		PriceZen = Configs.ClearNpc.PriceZenForAll;			 
-		PricePcPoint = Configs.ClearNpc.PricePcPoints;
-		PriceWCoin = Configs.ClearNpc.PriceWCoins;
+		PriceZen = ClearNpc.PriceZenForAll;			 
+		PricePcPoint = ClearNpc.PricePcPoints;
+		PriceWCoin = ClearNpc.PriceWCoins;
 		break;
 	case 0: 
 		PriceZen = 0;					 

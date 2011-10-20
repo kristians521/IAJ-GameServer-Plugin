@@ -23,6 +23,7 @@
 #include "MoveReq.h"
 #include "DuelManager.h"
 #include "Vip.h"
+#include "Monster.h"
 
 cConfigs Configs;	  
 
@@ -429,36 +430,8 @@ void cConfigs::LoadCommands()
 	Commands.ZenForChange				= GetInt(0,	2000000000,							10000,	"MultyVault",	"ZenForChange",					IAJuliaCmd);
 	Commands.PcPointForChange			= GetInt(0, PCPoint.Config.MaximumPCPoints,	0,		"MultyVault",	"PcPointForChange",				IAJuliaCmd);
 	Commands.WCoinForChange				= GetInt(0,	PCPoint.Config.MaximumWCPoints,	0,		"MultyVault",	"WCoinForChange",				IAJuliaCmd);
-
-	//		pkclear		//	
-	ClearCommand.Enabled				= GetInt(0, 1,									1,		"PkClear",		"PkClearEnabled",				IAJuliaCmd);
-	ClearCommand.OnlyForGm				= GetInt(0, 1,									0,		"PkClear",		"PkClearOnlyForGm",				IAJuliaCmd);
-	ClearCommand.Type					= GetInt(0, 2,									1,		"PkClear",		"PKClearType",					IAJuliaCmd);	 																													
-	ClearCommand.PriceZen				= GetInt(0, 2000000000,							100000, "PkClear",		"PkClearPriceZen",				IAJuliaCmd);	 
-	ClearCommand.PriceZenForAll			= GetInt(0, 2000000000,							1000000,"PkClear",		"PkClearPriceZenForAll",		IAJuliaCmd);
-	ClearCommand.PricePcPoints			= GetInt(0, PCPoint.Config.MaximumPCPoints,	20,		"PkClear",		"PkClearPricePcPoints",			IAJuliaCmd);	 
-	ClearCommand.PricePcPointsForAll	= GetInt(0, PCPoint.Config.MaximumPCPoints,	200,	"PkClear",		"PkClearPricePcPointsForAll",	IAJuliaCmd);
-	ClearCommand.PriceWCoins			= GetInt(0, PCPoint.Config.MaximumWCPoints,	2,		"PkClear",		"PkClearPriceWCoins",			IAJuliaCmd);	 
-	ClearCommand.PriceWCoinsForAll		= GetInt(0, PCPoint.Config.MaximumWCPoints,	20,		"PkClear",		"PkClearPriceWCoinsForAll",		IAJuliaCmd);
-	ClearCommand.LevelReq				= GetInt(0, Commands.MaxLvl,					100,	"PkClear",		"PkClearLevelReq",				IAJuliaCmd);  
 }
 
-void cConfigs::LoadPkClearGuard()
-{						  
-	ClearNpc.Enabled				= GetInt(0, 1,					1,		"PkClearGuard",		"LoadPkGuard",						IAJuliaPkClear);
-	if(!ClearNpc.Enabled)
-		return;
-
-	ClearNpc.NpcId					= GetInt(0, 32000,								249,	"PkClearGuard",		"PkClearGuardId",					IAJuliaPkClear);	   				 
-	ClearNpc.Type					= GetInt(0, 2,									1,		"PkClearGuard",		"PKClearGuardType",					IAJuliaPkClear);																															
-	ClearNpc.PriceZen				= GetInt(0, 2000000000,							100000,	"PkClearGuard",		"PkClearGuardPriceZen",				IAJuliaPkClear);	 
-	ClearNpc.PriceZenForAll			= GetInt(0, 2000000000,							1000000,"PkClearGuard",		"PkClearGuardPriceZenForAll",		IAJuliaPkClear);
-	ClearNpc.PricePcPoints			= GetInt(0, PCPoint.Config.MaximumPCPoints,	20,		"PkClearGuard",		"PkClearGuardPricePcPoints",		IAJuliaPkClear);	 
-	ClearNpc.PricePcPointsForAll	= GetInt(0, PCPoint.Config.MaximumPCPoints,	200,	"PkClearGuard",		"PkClearGuardPricePcPointsForAll",	IAJuliaPkClear);	
-	ClearNpc.PriceWCoins			= GetInt(0, PCPoint.Config.MaximumWCPoints,	2,		"PkClearGuard",		"PkClearGuardPriceWCoins",			IAJuliaPkClear);	 
-	ClearNpc.PriceWCoinsForAll		= GetInt(0, PCPoint.Config.MaximumWCPoints,	20,		"PkClearGuard",		"PkClearGuardPriceWCoinsForAll",	IAJuliaPkClear);	   
-	ClearNpc.LevelReq				= GetInt(0, 400,								100,	"PkClearGuard",		"PkClearGuardLevelReq",				IAJuliaPkClear);
-}	   
 void cConfigs::Misc()
 {
 	GetPrivateProfileString("Reset","ResetColumn","Resets", Configs.ResetColumn, sizeof(Configs.ResetColumn), IAJuliaCommon); 
@@ -471,12 +444,14 @@ void cConfigs::Misc()
 	LahapDupe				= GetInt(0, 1, 1,"Lahap", "DupeBugFix", IAJuliaCommon);
 	GuildLevel				= GetInt(0, 400, 320,"GameServerInfo", "GuildCreateLevel", "..\\Data\\CommonServer.cfg"); 
 }
+
 void cConfigs::MapSys()
 { 
 	MapSystem.Enabled				= GetInt(0, 1, 1,"MapSystem", "EnableMapSystem", IAJuliaMapSystem);	
 	if(!MapSystem.Enabled)return; 
 	MapSystem.Load();
 }
+
 void cConfigs::LoadAll()
 {
 	LoadConfigsInGS();
@@ -489,7 +464,7 @@ void cConfigs::LoadAll()
 	GoldenArcher.Load();
 	Vip.Load();
 	LoadCommands();
-	LoadPkClearGuard();
+	Monster.LoadPkClear();
 	DropSystem.LoadDropItems();
 	Misc();
 	MapSys();

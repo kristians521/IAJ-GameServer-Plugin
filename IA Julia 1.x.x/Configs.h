@@ -16,7 +16,6 @@ private:
 	void LoadNotice();
 	void LoadPets();
 	void LoadCommands();
-	void LoadPkClearGuard();
 	void ZenFixes();
 	void Misc(); 
 	void MapSys();
@@ -100,25 +99,7 @@ public:
 		int AddPricePCPoint;
 		int AddPriceWCoin;
 	}Commands;
-
-	struct sPkClear
-	{
-		int Enabled;
-		int NpcId;	  
-		int OnlyForGm;
-		int Type;	
-		DWORD PriceZen;
-		DWORD PriceZenForAll;	  
-		int PricePcPoints;
-		int PricePcPointsForAll;	   
-		int PriceWCoins;
-		int PriceWCoinsForAll;
-		int LevelReq;
-	};	
-
-	sPkClear ClearNpc;			 
-	sPkClear ClearCommand;
-
+	
 	struct cZen
 	{ 
 		int	NormalZen;

@@ -1255,7 +1255,7 @@ bool cChat::GmoveCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::PKClearCommand(LPOBJ gObj, char *Msg)
 {
-	if(CheckCommand(gObj, Configs.ClearCommand.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "PKClear", "/pkclear", Msg))
+	if(CheckCommand(gObj, Monster.ClearCommand.Enabled, GmSystem.NONE, 0, 0, 0, 0, 0, 0, "PKClear", "/pkclear", Msg))
 		return true;
 
 	if(GmSystem.IsCommand(GmSystem.cPkClear, gObj->Name))
@@ -1279,7 +1279,7 @@ bool cChat::PKClearCommand(LPOBJ gObj, char *Msg)
 			return true;
 		}
 
-		if(CheckCommand(gObj, Configs.ClearCommand.Enabled, GmSystem.NONE, 0, 0, 0, 0, 1, 1, "PKClear", "/pkclear (nick)", Msg))
+		if(CheckCommand(gObj, Monster.ClearCommand.Enabled, GmSystem.NONE, 0, 0, 0, 0, 1, 1, "PKClear", "/pkclear (nick)", Msg))
 			return true;
 
 		int Index = Utilits.GetPlayerIndex(Target); 
@@ -1296,22 +1296,22 @@ bool cChat::PKClearCommand(LPOBJ gObj, char *Msg)
 		MessageLog(1, c_Red, t_GM, gObj, "[PkClear] You successfully clear %s pk.", tObj->Name);
 		MessageLog(1, c_Red, t_GM, tObj, "[PkClear] Your pk was cleared by %s.", gObj->Name);	
 	}
-	else if(!Configs.ClearCommand.OnlyForGm)
+	else if(!Monster.ClearCommand.OnlyForGm)
 	{
 		int PriceZen;
 		int PricePcPoint;
 		int PriceWCoin;
-		switch(Configs.ClearCommand.Type)
+		switch(Monster.ClearCommand.Type)
 		{	   
 		case 1:	
-			PriceZen = (Configs.ClearCommand.PriceZen * gObj->m_PK_Count); 		 
-			PricePcPoint = (Configs.ClearCommand.PricePcPoints * gObj->m_PK_Count);
-			PriceWCoin = (Configs.ClearCommand.PriceWCoins * gObj->m_PK_Count);
+			PriceZen = (Monster.ClearCommand.PriceZen * gObj->m_PK_Count); 		 
+			PricePcPoint = (Monster.ClearCommand.PricePcPoints * gObj->m_PK_Count);
+			PriceWCoin = (Monster.ClearCommand.PriceWCoins * gObj->m_PK_Count);
 			break;
 		case 2:	
-			PriceZen = Configs.ClearCommand.PriceZenForAll;			 
-			PricePcPoint = Configs.ClearCommand.PricePcPointsForAll;
-			PriceWCoin = Configs.ClearCommand.PriceWCoinsForAll;
+			PriceZen = Monster.ClearCommand.PriceZenForAll;			 
+			PricePcPoint = Monster.ClearCommand.PricePcPointsForAll;
+			PriceWCoin = Monster.ClearCommand.PriceWCoinsForAll;
 			break;
 		case 0: 
 			PriceZen = 0;					 
@@ -1325,7 +1325,7 @@ bool cChat::PKClearCommand(LPOBJ gObj, char *Msg)
 			MessageLog(1, c_Blue, t_COMMANDS, gObj, "[PkClear] Your are not pk!");			
 			return true;
 		}			
-		if(CheckCommand(gObj, Configs.ClearCommand.Enabled, GmSystem.NONE, PriceZen, PricePcPoint, PriceWCoin, Configs.ClearCommand.LevelReq, 0, 0, "PKClear", "/pkclear", Msg))
+		if(CheckCommand(gObj, Monster.ClearCommand.Enabled, GmSystem.NONE, PriceZen, PricePcPoint, PriceWCoin, Monster.ClearCommand.LevelReq, 0, 0, "PKClear", "/pkclear", Msg))
 			return true;
 
 		TakeCommand(gObj, PriceZen, PricePcPoint, PriceWCoin, "PKClear");	

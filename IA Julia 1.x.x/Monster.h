@@ -31,12 +31,31 @@ public:
 	int MonsterAddAndSpawn(int Mob, int Map, int Speed, int X1, int Y1, int X2, int Y2, int Dir);
 	int SetBoxPosition(int TableNum, int mapnumber, int ax, int ay, int aw, int ah);
 #endif
+	void LoadPkClear();
 	bool NPCTalkEx(LPOBJ gObj, int NpcId);
 	void LahapDupeBug(LPOBJ gObj);																			  
 	void NPCMessage(int IndexPlayer, LPOBJ mObj, char* Msg,...);	
 	void NPCMessageLog(sColor LogColor, sLogType LogType, LPOBJ gObj, LPOBJ mObj, char* Msg,...);
 	void NPCMessageNear(LPOBJ mObj, char* Msg,...);	
 	int GetPartyMemberCount(LPOBJ lpObj);
+
+	struct sPkClear
+	{
+		int Enabled;
+		int NpcId;	  
+		int OnlyForGm;
+		int Type;	
+		DWORD PriceZen;
+		DWORD PriceZenForAll;	  
+		int PricePcPoints;
+		int PricePcPointsForAll;	   
+		int PriceWCoins;
+		int PriceWCoinsForAll;
+		int LevelReq;
+	};	
+
+	sPkClear ClearNpc;			 
+	sPkClear ClearCommand;
 private:			
 	void PkClear(LPOBJ gObj, LPOBJ NpcObj); 
 };

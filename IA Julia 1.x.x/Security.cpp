@@ -56,7 +56,7 @@ void cSecurity::Load()
 
 bool cSecurity::CheckIp(char GobjIP[16])
 {
-	for(int x=1;x < IPBlockCount;x++)
+	for(UINT x=1; x < IPBlockCount; x++)
 	{
 		if(!CheckIp2(IPBlockInfo[x].IP, GobjIP))
 		{					
