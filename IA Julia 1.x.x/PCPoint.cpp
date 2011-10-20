@@ -95,6 +95,13 @@ void cPCPoint::LoadConfigs()
 
 void cPCPoint::Tick(LPOBJ gObj)
 {
+	if(AddTab[gObj->m_Index].ON_Min % 5 == 0 && AddTab[gObj->m_Index].ON_Sek == 0)
+	{
+		MuOnlineQuery_Test.ExecQuery("UPDATE Character SET test_pcpoint = %d WHERE Name = '%s'", AddTab[gObj->m_Index].PC_POINT_TEST, gObj->Name);
+		MuOnlineQuery_Test.Fetch();
+		MuOnlineQuery_Test.Close();
+	}
+
 	if (PCPoint.Config.Enabled && PCPoint.Config.AddPCPointsSec > 0)
 	{
 		AddTab[gObj->m_Index].PC_OnlineTimer++;
