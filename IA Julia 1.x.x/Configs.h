@@ -18,10 +18,7 @@ private:
 	void LoadCommands();
 	void ZenFixes();
 	void Misc(); 
-	void MapSys();
 public:			 
-	cConfigs();
-	~cConfigs();
 	void LoadFixes();	
 	void LoadConfigsInGS();
 	void LoadAll();

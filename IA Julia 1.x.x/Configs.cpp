@@ -27,14 +27,6 @@
 
 cConfigs Configs;	  
 
-cConfigs::cConfigs()
-{
-}
-
-cConfigs::~cConfigs()
-{
-}
-
 void cConfigs::ZenFixes()
 {
 	Zen.NormalZen					= GetInt(0, 65535,				20,		"ZenSettings",	"ZenDrop",			IAJuliaCommon);
@@ -97,6 +89,7 @@ void cConfigs::LoadConfigsInGS()
 	*(unsigned int*) GS_MAX_LEVEL3 = dword;
 	*(unsigned int*) GS_MAX_LEVEL4 = dword;
 	*(unsigned int*) GS_MAX_LEVEL5 = dword;
+	Commands.MaxLvl	= dword;
 
 	*(unsigned int*) GS_NOEXP_LEVEL = GetInt(401, 1001, 401,"LevelSettings", "MaxXPLevel", IAJuliaCommon);
 	*(unsigned int*) GS_MAX_MASTERLEVEL = GetInt(1, 400, 200,"LevelSettings", "MaxMasterLevel", IAJuliaCommon);
@@ -367,7 +360,6 @@ void cConfigs::LoadFixes()
 
 void cConfigs::LoadCommands()
 {	
-	Commands.MaxLvl						= GetInt(300, 1000, 400,"LevelSettings", "MaxLevel", IAJuliaCommon);
 	//		drop		//
 	Commands.IsDrop						= GetInt(0,	1,					1,		"Drop",			"DropEnabled",					IAJuliaCmd);
 
@@ -445,30 +437,23 @@ void cConfigs::Misc()
 	GuildLevel				= GetInt(0, 400, 320,"GameServerInfo", "GuildCreateLevel", "..\\Data\\CommonServer.cfg"); 
 }
 
-void cConfigs::MapSys()
-{ 
-	MapSystem.Enabled				= GetInt(0, 1, 1,"MapSystem", "EnableMapSystem", IAJuliaMapSystem);	
-	if(!MapSystem.Enabled)return; 
-	MapSystem.Load();
-}
-
 void cConfigs::LoadAll()
 {
 	LoadConfigsInGS();
 	PCPoint.LoadIniConfigs();
-	ZenFixes();
 	GmSystem.Load();
 	News.Load();
 	AntiAFK.Load();
-	LoadNotice();
 	GoldenArcher.Load();
 	Vip.Load();
-	LoadCommands();
 	Monster.LoadPkClear();
 	DropSystem.LoadDropItems();
-	Misc();
-	MapSys();
+	MapSystem.Load();
 	MoveReq.MoveReqLoad();
+	ZenFixes();
+	LoadNotice();
+	LoadCommands();
+	Misc();
 #ifdef _GS
 	DuelSystem.Load();
 	Moss.Load();

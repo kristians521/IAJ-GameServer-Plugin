@@ -11,6 +11,7 @@
 #include "MapSystem.h"
 #include "Prodef.h"
 #include "Logger.h"
+#include "Configs.h"
 
 cMapSystem MapSystem;
 
@@ -32,6 +33,9 @@ cMapSystem::~cMapSystem()
 
 void cMapSystem::Load()
 {
+	MapSystem.Enabled				= Configs.GetInt(0, 1, 1,"MapSystem", "EnableMapSystem", IAJuliaMapSystem);	
+	if(!MapSystem.Enabled)return; 
+
    	FILE *fp;
 	fp = fopen(IAJuliaMapSystem, "r");
 
