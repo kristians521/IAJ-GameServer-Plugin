@@ -81,6 +81,8 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 		CreateDirectory(IAJuliaChatLogs,NULL);
 		CreateDirectory(IAJuliaLog,NULL);	
 		//
+		srand(time(NULL));
+		//
 		Sleep(500);
 		Log.LoggerInit();
 		Sleep(500);

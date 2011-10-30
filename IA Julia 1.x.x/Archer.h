@@ -17,8 +17,6 @@
 class cGoldenArcher
 {
 public:
-	cGoldenArcher();
-	~cGoldenArcher();
 	void Load();
 	void GoldenArcherClick(LPOBJ gObj);
 	bool ChekingRena(LPOBJ gObj,int Mode);

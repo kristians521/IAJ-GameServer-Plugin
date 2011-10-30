@@ -282,7 +282,7 @@ BOOL cMoss::BuyItem(int aIndex, unsigned char * aRecv)
 		Chat.Message(gObj->m_Index,"[Moss The Gambler] You haven't got enough WCoin");
 		return TRUE;
 	}
-	srand(GetTickCount());
+
 	/*Узнаем какую группу оружия было выбрано*/
 	if (aRecv[3] == 0 )  BuyType = 0;
 	if (aRecv[3] == 2 )  { BuyType = rand()%2+1;	if (BuyType == 2) BuyType = 3;	}
@@ -329,7 +329,7 @@ BOOL cMoss::BuyItem(int aIndex, unsigned char * aRecv)
 int cMoss::RandValue(int IndexOption)
 {
 	int rValue;
-	srand((unsigned) GetTickCount());
+
 	switch(IndexOption)
 	{
 	case OPT_LEVEL:

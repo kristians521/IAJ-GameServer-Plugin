@@ -240,7 +240,6 @@ void cDropEvent::updateBC()
 
 void cDropEvent::handlerBC(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type, BYTE level, BYTE dur, BYTE Op1, BYTE Op2, BYTE Op3, int LootIndex, BYTE NewOption, BYTE SetOption)
 {
-	//srand(time_seed());
 	int rand10k = rand() % 10000 + 1;
 	int d = 0; // random system
 
@@ -324,7 +323,6 @@ void cDropEvent::updateIT()
 
 void cDropEvent::handlerIT(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type, BYTE level, BYTE dur, BYTE Op1, BYTE Op2, BYTE Op3, int LootIndex, BYTE NewOption, BYTE SetOption)
 {
-	//srand(time_seed());
 	int rand10k = rand() % 10000 + 1;
 	int d = 0; // random system
 
@@ -397,7 +395,6 @@ void cDropEvent::updateWW()
 
 void cDropEvent::handlerWW(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type, BYTE level, BYTE dur, BYTE Op1, BYTE Op2, BYTE Op3, int LootIndex, BYTE NewOption, BYTE SetOption)
 {
-	//srand(time_seed());
 	int rand10k = rand() % 10000 + 1;
 	int d = 0; // random system
 
@@ -479,7 +476,6 @@ void cDropEvent::updateCC()
 
 void cDropEvent::handlerCC(int aIndex, BYTE MapNumber, BYTE x, BYTE y, int type, BYTE level, BYTE dur, BYTE Op1, BYTE Op2, BYTE Op3, int LootIndex, BYTE NewOption, BYTE SetOption)
 {
-	//srand(time_seed());
 	int rand10k = rand() % 10000 + 1;
 	int d = 0; // random system
 

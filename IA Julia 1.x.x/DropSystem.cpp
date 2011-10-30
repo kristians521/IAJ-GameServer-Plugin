@@ -100,9 +100,7 @@ bool cDropSystem::DropItem(LPOBJ mObj,LPOBJ pObj)
 	}
 
 	if(CountLvlArrayItem == 0) return false;
-
-	srand(GetTickCount());
-
+	
 	int RandomValue = rand() % 10000 + 1;
 	if(LastRandomValue == RandomValue)
 		return false;

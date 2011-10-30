@@ -21,9 +21,6 @@ cGoldenArcher GoldenArcher;
 enum {INV_CHECK,INV_DEL};
 #define ITEMGET(x,y) ((x)*512+(y))
 
-cGoldenArcher::cGoldenArcher() {}
-cGoldenArcher::~cGoldenArcher() {}
-
 void cGoldenArcher::Load()
 {
 	Config.Enabled				= Configs.GetInt(0, 1, 1, "GoldenArcher", "ArcherEnabled", IAJuliaArcher);	
@@ -97,7 +94,6 @@ void cGoldenArcher::GoldenArcherClick(LPOBJ gObj)
 		int ArrayItemsIndex[MAX_ITEM_PRIZE];
 		int g = -1;
 
-		srand(GetTickCount());
 		short RandValue = rand()%100 + 1;
 		if (RandValue > MaxRateItem) RandValue = MaxRateItem;
 
