@@ -123,10 +123,10 @@ bool cDropSystem::DropItem(LPOBJ mObj,LPOBJ pObj)
 
 bool cDropSystem::DropItem2(LPOBJ mObj,LPOBJ pObj, sItemsDrop ItemDrop[], unsigned int MaxItem)
 {
-	short MapArrayItem[MAX_ITEM_FOR_MONSTER];
-	short CountArrayItem = 0;
-	short LvlArrayItem[MAX_ITEM_FOR_MONSTER];
-	short CountLvlArrayItem = 0;
+	int MapArrayItem[1000];
+	int CountArrayItem = 0;
+	int LvlArrayItem[1000];
+	int CountLvlArrayItem = 0;
 
 	for(unsigned int i = 0; i < MaxItem; i++)
 	{
@@ -158,8 +158,8 @@ bool cDropSystem::DropItem2(LPOBJ mObj,LPOBJ pObj, sItemsDrop ItemDrop[], unsign
 	else
 		LastRandomValue = RandomValue;
 
-	short RateArrayItem[MAX_ITEM_FOR_MONSTER];
-	short CountRateItem = 0;
+	int RateArrayItem[1000];
+	int CountRateItem = 0;
 
 	for(int f = 0; f < CountLvlArrayItem; f++)
 	{
