@@ -11,6 +11,7 @@ Imagination Arts 1.1.1
 	[GS\GSCS] News NULL Fix
 	[GS\GSCS] PCPoint Maximum fix
 	[GS\GSCS] WCoins Maximum fix
+	[GS\GSCS] Some more optimization and small fixes
 
 Imagination Arts 1.1.0
 	[GS\GSCS] Ware query fix

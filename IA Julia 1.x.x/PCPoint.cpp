@@ -242,7 +242,7 @@ void cPCPoint::InitPCPointForPlayer(LPOBJ gObj)
 
 	MuOnlineQuery_Test.ExecQuery("SELECT test_pcpoint FROM Character WHERE Name = '%s'", gObj->Name);
 		MuOnlineQuery_Test.Fetch();
-		AddTab[gObj->m_Index].PC_POINT_TEST = MuOnlineQuery_Test.GetAsInteger("PCPoint");
+		AddTab[gObj->m_Index].PC_POINT_TEST = MuOnlineQuery_Test.GetAsInteger("test_pcpoint");
 		MuOnlineQuery_Test.Close();
 
 	if (AmountPoints > Config.MaximumPCPoints) AmountPoints = Config.MaximumPCPoints;

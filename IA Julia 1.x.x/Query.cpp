@@ -83,7 +83,10 @@ void CQuery::CheckColumns(int MeMu)
 		,"Items04","warehouse"},		
 
 		{"ALTER TABLE warehouse ADD [Items05][varbinary](1920) NULL"
-		,"Items05","warehouse"},															   																   
+		,"Items05","warehouse"},	
+
+		{"ALTER TABLE Character ADD [test_pcpoint][int] DEFAULT (0) NOT NULL"
+		,"test_pcpoint","Character"},														   																   
 	};
 
 	Temp QueryMeMuOnline[] = {												   																   
@@ -155,6 +158,15 @@ void LoadQuery()
 	else
 	{
 		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[Me_MuOnlineQuery] Error On Connection!");
+	}
+
+	if ( MuOnlineQuery_Test.Connect(szDatabase2, szUser, szPassword) == TRUE )
+	{
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[MuOnlineQuery_Test] Connection Successfull!");
+	}
+	else
+	{
+		Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[MuOnlineQuery_Test] Error On Connection!");
 	}
 	MuOnlineQuery.CheckColumns(0);
 	Me_MuOnlineQuery.CheckColumns(1);
