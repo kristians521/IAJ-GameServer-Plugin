@@ -20,7 +20,7 @@ public:
 	struct sNews
 	{
 		char MSG[3][50];
-		float Time;
+		int Time;
 		int Type;
 	};
 

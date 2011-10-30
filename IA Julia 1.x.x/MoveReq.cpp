@@ -21,7 +21,7 @@ cMoveReq::~cMoveReq()
 {
 
 }
-#pragma warning(disable: 4018)
+
 void cMoveReq::MoveReqLoad()
 {
 	FILE *fp;

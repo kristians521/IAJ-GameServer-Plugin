@@ -12,7 +12,6 @@
 #include "ChatCommands.h"
 #include "News.h"
 #include "Logger.h"
-#pragma warning(disable: 4244)
 
 cNews News;
 

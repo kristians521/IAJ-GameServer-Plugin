@@ -121,7 +121,7 @@ void cPCPoint::CreatePacketShop()
 	int Size       = 0;
 	BYTE Packet1[11] = {0xC1, 0x05, 0xD0, 0x06, 0x00, 0xC2, 0x00, 0x36, 0x31, HIBYTE(AmountRecords[0]), LOBYTE(AmountRecords[0])};
 	BYTE Packet2[4680];
-#pragma warning(disable: 4244)
+
 	for (int i = 0; i < AmountRecords[0]; i++)
 	{
 		BYTE ItemInfo[13];
@@ -317,6 +317,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 			LOBYTE(Config.MaximumPCPoints), HIBYTE(Config.MaximumPCPoints)};
 		DataSend(gObj->m_Index, (PBYTE)Packet, Packet[1]);
 	}
+#pragma warning(disable: 4244)
 	if (Type == WCOIN)
 	{
 		Me_MuOnlineQuery.ExecQuery("UPDATE MEMB_INFO SET cspoints = (cspoints %c %d) WHERE memb___id = '%s'", ModeType, CountPoints, gObj->AccountID);
@@ -328,6 +329,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 		gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger("cspoints");
 		Me_MuOnlineQuery.Close();
 	}
+#pragma warning(default: 4244)
 }
 
 void cPCPoint::RewardsPointsKillMob(LPOBJ gObj,LPOBJ mObj,eTypePoint Type)

@@ -103,7 +103,6 @@ int cUtilits::GenExcOpt(int amount)
 
 int cUtilits::gObjZenSingle(OBJECTSTRUCT* gObj,OBJECTSTRUCT* tObj, int dmg, int tot_dmg)
 {		  
-#pragma warning(disable: 4244)
 	int exp;
 	int maxexp = 0;
 	int level = (tObj->Level+25)*tObj->Level/3;
@@ -138,9 +137,7 @@ int cUtilits::gObjZenSingle(OBJECTSTRUCT* gObj,OBJECTSTRUCT* tObj, int dmg, int 
 
 	exp = dmg * exp / tot_dmg;
 
-	exp *= 1000;
-
-	exp =  (float)exp * ((float)1000  / 100.0f);
+	exp *= 10000;
 
 	return exp;
 }

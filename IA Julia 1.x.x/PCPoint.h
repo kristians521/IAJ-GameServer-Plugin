@@ -53,20 +53,20 @@ private:
 		short Reward;
 		int X;
 		int Y;
-		short Level;
-		short Opt;
-		short Luck;
-		short Skill;
-		short Dur;
-		short Exc;
-		short Ancient;
-		short NewOpt1;
-		short NewOpt2;
-		short NewOpt3;
-		short NewOpt4;
-		short NewOpt5;
-		short Cost;
-		short SlotX;
+		BYTE Level;
+		BYTE Opt;
+		BYTE Luck;
+		BYTE Skill;
+		BYTE Dur;
+		BYTE Exc;
+		BYTE Ancient;
+		BYTE NewOpt1;
+		BYTE NewOpt2;
+		BYTE NewOpt3;
+		BYTE NewOpt4;
+		BYTE NewOpt5;
+		BYTE Cost;
+		BYTE SlotX;
 	}PCShop[MAX_PCSHOPITEM];
 	struct
 	{

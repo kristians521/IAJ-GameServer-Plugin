@@ -862,11 +862,11 @@ bool cChat::DropCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::SetChar(LPOBJ gObj, char *Msg)
 {
-#pragma warning(disable: 4018 4244)
 	if(CheckCommand(gObj, Configs.Commands.IsSetChar, GmSystem.cSetZen, 0, 0, 0, 0, 2, 1, "SetChar", "/setchar <Nick> <Zen> <PCPnt> <WCoins> <AddPnt> <lvl> <Prof>", Msg))
 		return true;
 
-	DWORD Zen = 0, PCPnt = 0, WCoin = 0, AddPnt = 0, Lvl = 0, Prof = 0;
+	DWORD Zen = 0;
+	int PCPnt = 0, WCoin = 0, AddPnt = 0, Lvl = 0, Prof = 0;
 	char Target[11]; 	 
 	sscanf(Msg, "%s %d %d %d %d %d %d", &Target, &Zen, &PCPnt, &WCoin, &AddPnt, &Lvl, &Prof);
 
@@ -1363,7 +1363,7 @@ bool cChat::AddCommands(LPOBJ gObj, char *Msg, int Type)
 			return true;
 		break;
 	}
-	DWORD Points;
+	int Points;
 	sscanf(Msg,"%d",&Points);		  
 
 
@@ -1410,7 +1410,6 @@ bool cChat::AddCommands(LPOBJ gObj, char *Msg, int Type)
 
 	int StatsTemp = Stats; 
 	Stats += Points;
-#pragma warning(disable: 4018)
 	if(gObj->LevelUpPoint < Points)
 	{	
 		MessageLog(1, c_Red, t_COMMANDS, gObj, "[AddStats] You don't have enough points to add. Need %d more.", Points - gObj->LevelUpPoint);
@@ -1456,7 +1455,7 @@ bool cChat::AddCommands(LPOBJ gObj, char *Msg, int Type)
 	else
 	{
 		BYTE lpMsg[5] = {0xC1,0x05,0xF3,0x06,Type};
-		for(UINT i = 0; i < Points; i++)
+		for(int i = 0; i < Points; i++)
 			CGLevelUpPointAdd(lpMsg, gObj->m_Index); 
 		GCLevelUpMsgSend(gObj->m_Index, 0);	  
 		Chat.MessageLog(1, c_Blue, t_COMMANDS, gObj, "[AddStats] Your %d stats added, %d points left!", Points, gObj->LevelUpPoint);
@@ -1662,7 +1661,7 @@ bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 {
 	if(Vip.Config.Enabled)
 	{
-		DWORD Hours = 1;
+		int Hours = 1;
 		char State[255];
 		sscanf(Msg, "%s %d", &State, &Hours);
 

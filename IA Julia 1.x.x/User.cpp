@@ -397,10 +397,12 @@ void cUser::PlayerConnect(LPOBJ gObj)
 	RingSkin(gObj);
 	PCPoint.InitPCPointForPlayer(gObj); 
 
+#pragma warning(disable: 4244)
 	Me_MuOnlineQuery.ExecQuery("SELECT cspoints FROM MEMB_INFO WHERE memb___id = '%s'", gObj->AccountID);
 	Me_MuOnlineQuery.Fetch();
 	gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger("cspoints");
 	Me_MuOnlineQuery.Close();
+#pragma warning(default: 4244)
 
 	MuOnlineQuery.ExecQuery("SELECT %s FROM Character WHERE Name = '%s'", Configs.ResetColumn, gObj->Name);
 	MuOnlineQuery.Fetch();

@@ -128,7 +128,7 @@ bool cDropSystem::DropItem2(LPOBJ mObj,LPOBJ pObj, sItemsDrop ItemDrop[], unsign
 	short LvlArrayItem[MAX_ITEM_FOR_MONSTER];
 	short CountLvlArrayItem = 0;
 
-	for(int i = 0; i < MaxItem; i++)
+	for(unsigned int i = 0; i < MaxItem; i++)
 	{
 		if(ItemDrop[i].MMap == mObj->MapNumber || ItemDrop[i].MMap == -1)
 		{

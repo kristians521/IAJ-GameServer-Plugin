@@ -12,6 +12,7 @@ Imagination Arts 1.1.1
 	[GS\GSCS] PCPoint Maximum fix
 	[GS\GSCS] WCoins Maximum fix
 	[GS\GSCS] DropSystem max items crash fix
+	[GS\GSCS] New Mega DropSystem
 	[GS\GSCS] Some more optimization and small fixes
 
 Imagination Arts 1.1.0

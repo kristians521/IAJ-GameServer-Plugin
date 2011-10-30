@@ -27,7 +27,6 @@
 
 #pragma comment ( lib , "comctl32.lib" )
 #pragma comment ( lib , "WS2_32.lib" )
-#pragma warning (disable: 4244 4996 4646)
 // C RunTime Header Files
 #include <stdlib.h>
 #include <malloc.h>
