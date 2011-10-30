@@ -46,21 +46,46 @@ void cDropSystem::LoadDropItems()
 		{
 			int n[12];
 			sscanf(zBuf,"%d %d %d %d %d %d %d %d %d %d %d %d", &n[0], &n[1], &n[2], &n[3], &n[4], &n[5], &n[6], &n[7], &n[8], &n[9], &n[10], &n[11]);
-			int MobId = n[0] == -1 ? 559 : n[0];
-			int j = ArrayMaxItem[MobId];
-			ItemsDrop[MobId][j].Map			= n[1];
-			ItemsDrop[MobId][j].MinLvl		= n[2];
-			ItemsDrop[MobId][j].MaxLvl		= n[3];
-			ItemsDrop[MobId][j].RateItem	= n[4];
-			ItemsDrop[MobId][j].Group		= n[5];
-			ItemsDrop[MobId][j].Index		= n[6];
-			ItemsDrop[MobId][j].Level		= n[7];
-			ItemsDrop[MobId][j].Option		= n[8];
-			ItemsDrop[MobId][j].Skill		= n[9];
-			ItemsDrop[MobId][j].Luck		= n[10];
-			ItemsDrop[MobId][j].Exc			= n[11];
 			
-			ArrayMaxItem[MobId] = ++j;
+			if(n[0] == -1)
+			{
+				int j = AllMobArrayMaxItem;
+				if(j >= 1000)
+					continue;
+				AllMobItemsDrop[j].Map			= n[1];
+				AllMobItemsDrop[j].MinLvl		= n[2];
+				AllMobItemsDrop[j].MaxLvl		= n[3];
+				AllMobItemsDrop[j].RateItem		= n[4];
+				AllMobItemsDrop[j].Group		= n[5];
+				AllMobItemsDrop[j].Index		= n[6];
+				AllMobItemsDrop[j].Level		= n[7];
+				AllMobItemsDrop[j].Option		= n[8];
+				AllMobItemsDrop[j].Skill		= n[9];
+				AllMobItemsDrop[j].Luck			= n[10];
+				AllMobItemsDrop[j].Exc			= n[11];
+
+				AllMobArrayMaxItem = ++j;
+			}
+			else
+			{
+				int MobId = n[0];
+				int j = ArrayMaxItem[MobId];
+				if(j >= MAX_ITEM_FOR_MONSTER)
+					continue;
+				ItemsDrop[MobId][j].Map			= n[1];
+				ItemsDrop[MobId][j].MinLvl		= n[2];
+				ItemsDrop[MobId][j].MaxLvl		= n[3];
+				ItemsDrop[MobId][j].RateItem	= n[4];
+				ItemsDrop[MobId][j].Group		= n[5];
+				ItemsDrop[MobId][j].Index		= n[6];
+				ItemsDrop[MobId][j].Level		= n[7];
+				ItemsDrop[MobId][j].Option		= n[8];
+				ItemsDrop[MobId][j].Skill		= n[9];
+				ItemsDrop[MobId][j].Luck		= n[10];
+				ItemsDrop[MobId][j].Exc			= n[11];
+
+				ArrayMaxItem[MobId] = ++j;
+			}			
 		}
 	}
 
@@ -70,16 +95,22 @@ void cDropSystem::LoadDropItems()
 
 bool cDropSystem::DropItem(LPOBJ mObj,LPOBJ pObj)
 {
-	int mClass = ArrayMaxItem[mObj->Class] == 0 ? 559 : mObj->Class;
+	if(ArrayMaxItem[mObj->Class] == 0)
+		return DropItem2(mObj, pObj, AllMobItemsDrop, AllMobArrayMaxItem);
+	else
+		return DropItem2(mObj, pObj, ItemsDrop[mObj->Class], ArrayMaxItem[mObj->Class]);
+}
 
+bool cDropSystem::DropItem2(LPOBJ mObj,LPOBJ pObj, sItemsDrop ItemDrop[], unsigned int MaxItem)
+{
 	short MapArrayItem[MAX_ITEM_FOR_MONSTER];
 	short CountArrayItem = 0;
 	short LvlArrayItem[MAX_ITEM_FOR_MONSTER];
 	short CountLvlArrayItem = 0;
 
-	for(int i = 0; i < ArrayMaxItem[mClass]; i++)
+	for(int i = 0; i < MaxItem; i++)
 	{
-		if(ItemsDrop[mClass][i].Map == mObj->MapNumber || ItemsDrop[mClass][i].Map == -1)
+		if(ItemDrop[i].Map == mObj->MapNumber || ItemDrop[i].Map == -1)
 		{
 			MapArrayItem[CountArrayItem] = i;
 			CountArrayItem++;
@@ -90,9 +121,9 @@ bool cDropSystem::DropItem(LPOBJ mObj,LPOBJ pObj)
 
 	for(int j = 0; j < CountArrayItem; j++)
 	{
-		if((ItemsDrop[mClass][MapArrayItem[j]].MinLvl <= mObj->Level &&
-			ItemsDrop[mClass][MapArrayItem[j]].MaxLvl >= mObj->Level) ||
-			ItemsDrop[mClass][MapArrayItem[j]].MaxLvl == 0)
+		if((ItemDrop[MapArrayItem[j]].MinLvl <= mObj->Level &&
+			ItemDrop[MapArrayItem[j]].MaxLvl >= mObj->Level) ||
+			ItemDrop[MapArrayItem[j]].MaxLvl == 0)
 		{
 			LvlArrayItem[CountLvlArrayItem] = MapArrayItem[j];
 			CountLvlArrayItem++;
@@ -112,7 +143,7 @@ bool cDropSystem::DropItem(LPOBJ mObj,LPOBJ pObj)
 
 	for(int f = 0; f < CountLvlArrayItem; f++)
 	{
-		if(ItemsDrop[mClass][LvlArrayItem[f]].RateItem >= RandomValue)
+		if(ItemDrop[LvlArrayItem[f]].RateItem >= RandomValue)
 		{
 			RateArrayItem[CountRateItem] = LvlArrayItem[f];
 			CountRateItem++;
@@ -122,20 +153,16 @@ bool cDropSystem::DropItem(LPOBJ mObj,LPOBJ pObj)
 	if(CountRateItem == 0) return false;
 
 	int RandomItem = rand() % CountRateItem;	
-	//if(LastRandomItem == RandomItem)
-	//	return false;
-	//else
-	//	LastRandomItem = RandomItem;
 
 	int Level,Skill,Luck,Opt,Exc,Group,Index;
 
-	Group	= ItemsDrop[mClass][RateArrayItem[RandomItem]].Group;
-	Index	= ItemsDrop[mClass][RateArrayItem[RandomItem]].Index;
-	Level	= ItemsDrop[mClass][RateArrayItem[RandomItem]].Level;
-	Opt		= ItemsDrop[mClass][RateArrayItem[RandomItem]].Option;
-	Luck	= ItemsDrop[mClass][RateArrayItem[RandomItem]].Luck;
-	Skill	= ItemsDrop[mClass][RateArrayItem[RandomItem]].Skill; 
-	Exc		= ItemsDrop[mClass][RateArrayItem[RandomItem]].Exc;
+	Group	= ItemDrop[RateArrayItem[RandomItem]].Group;
+	Index	= ItemDrop[RateArrayItem[RandomItem]].Index;
+	Level	= ItemDrop[RateArrayItem[RandomItem]].Level;
+	Opt		= ItemDrop[RateArrayItem[RandomItem]].Option;
+	Luck	= ItemDrop[RateArrayItem[RandomItem]].Luck;
+	Skill	= ItemDrop[RateArrayItem[RandomItem]].Skill; 
+	Exc		= ItemDrop[RateArrayItem[RandomItem]].Exc;
 
 	int Item = ITEMGET(Group,Index);
 

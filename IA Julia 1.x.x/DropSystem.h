@@ -24,7 +24,7 @@ public:
 	bool DropItem(LPOBJ mObj,LPOBJ pObj);
 
 private:
-	struct
+	struct sItemsDrop
 	{
 		short Map;
 		short MinLvl;
@@ -37,12 +37,17 @@ private:
 		short Skill;
 		short Luck;
 		short Exc;
-	}ItemsDrop[MAX_MONSTER_ID][MAX_ITEM_FOR_MONSTER];
+	};
+	sItemsDrop ItemsDrop[MAX_MONSTER_ID][MAX_ITEM_FOR_MONSTER];
+	sItemsDrop AllMobItemsDrop[1000];
 
 	int LastRandomValue;
 	int LastRandomItem;
 
 	unsigned char ArrayMaxItem[MAX_MONSTER_ID];
+	unsigned int AllMobArrayMaxItem;
+
+	bool DropItem2(LPOBJ mObj,LPOBJ pObj, sItemsDrop ItemDrop[], unsigned int MaxItem);
 };
 
 extern cDropSystem DropSystem;
