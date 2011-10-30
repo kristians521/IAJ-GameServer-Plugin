@@ -196,10 +196,13 @@ bool cDropSystem::DropItem2(LPOBJ mObj,LPOBJ pObj, sItemsDrop ItemDrop[], unsign
 	Luck	= Utilits.GetNumberByPercent(ItemDrop[RateArrayItem[RandomItem]].ILuckRate, 0, 
 										ItemDrop[RateArrayItem[RandomItem]].ILuck);
 
-	ExcNum	= Utilits.GetNumberByPercent(ItemDrop[RateArrayItem[RandomItem]].IExcRate,
-										ItemDrop[RateArrayItem[RandomItem]].IMinExc,
-										ItemDrop[RateArrayItem[RandomItem]].IMaxExc);
-	Exc		= Utilits.GenExcOpt(ExcNum);
+	if(ItemDrop[RateArrayItem[RandomItem]].IExcRate > 0)
+	{
+		ExcNum	= Utilits.GetNumberByPercent(ItemDrop[RateArrayItem[RandomItem]].IExcRate,
+											ItemDrop[RateArrayItem[RandomItem]].IMinExc,
+											ItemDrop[RateArrayItem[RandomItem]].IMaxExc);
+		Exc		= Utilits.GenExcOpt(ExcNum);
+	}
 
 	if(ItemDrop[RateArrayItem[RandomItem]].IAnc > 0)
 		if(ItemDrop[RateArrayItem[RandomItem]].IAncRate > rand()%100)
