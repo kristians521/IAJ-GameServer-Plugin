@@ -62,6 +62,28 @@ int cUtilits::gObjIsConnected(int Index)
 	return 0;
 }
 
+int cUtilits::GetNumberByPercent(int Proc, int Min, int Max)
+{
+	int Random = rand()%100;
+	int Number;
+
+	if(Proc == 0 || Max == Min)
+		return Min;
+	
+	if(Random <= Proc)
+		Number = Max;
+	else
+	{	
+		// TODO: work on it
+		//if(Proc > 50)
+		//	Proc -= (proc%50)/(MaxOption-MinOption+1);
+		//else
+		//	Proc += 50/(MaxOption-MinOption) - (proc%50)/(MaxOption-MinOption+1);
+		Number = GetNumberByPercent(Proc, Min, Max-1);
+	}
+	return Number;
+}
+
 int cUtilits::GenExcOpt(int amount)
 {
 	// User input errors
@@ -74,9 +96,7 @@ int cUtilits::GenExcOpt(int amount)
 	std::random_shuffle(opt_db, opt_db + 6);
 
 	for(int n=0; n < amount; n++)
-	{
 		exc += opt_db[n];
-	}
 
 	return exc;
 }

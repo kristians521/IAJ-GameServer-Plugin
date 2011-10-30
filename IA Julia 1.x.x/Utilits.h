@@ -26,6 +26,7 @@ public:
 	int GetPlayerIndex(char *Name);
 	int GenExcOpt(int amount);	   
 	int gObjZenSingle(LPOBJ gObj,LPOBJ tObj, int dmg, int tot_dmg);
+	int GetNumberByPercent(int Proc, int Min, int Max);
 };
 extern cUtilits Utilits;
 #endif
