@@ -114,6 +114,7 @@ void cPCPoint::Tick(LPOBJ gObj)
 		}
 	} 
 }
+#pragma warning(disable:4244)
 void cPCPoint::CreatePacketShop()
 {
 	int PacketSize = 0;
@@ -152,6 +153,7 @@ void cPCPoint::CreatePacketShop()
 	PCPointPacket[7]    = LOBYTE(Size);
 	this->PacketSizes = (sizeof(Packet1) + PacketSize);
 }
+#pragma warning(default:4244)
 
 void cPCPoint::InitItemShop()
 {
@@ -218,9 +220,10 @@ void cPCPoint::BuyItem(int Index,int Position)
 		{
 			if ( GSCheckInventoryEmptySpace(gObj,PCShop[IndexItem].Y,PCShop[IndexItem].X) != 0 )
 			{
+#pragma warning (disable:4244)
 				ItemSerialCreateSend(gObj->m_Index,236,0,0,PCShop[IndexItem].Reward,PCShop[IndexItem].Level,PCShop[IndexItem].Dur,
 					PCShop[IndexItem].Skill,PCShop[IndexItem].Luck,PCShop[IndexItem].Opt,-1,PCShop[IndexItem].Exc,PCShop[IndexItem].Ancient);
-
+#pragma warning (default:4244)
 				Log.ConsoleOutPut(1,c_Cyan,t_PCPOINT,"[PointShop] Character [%s] Buy Item [%d %d] Cost [%d]",
 					gObj->Name,PCShop[IndexItem].Index,PCShop[IndexItem].ID,PCShop[IndexItem].Cost);
 				this->UpdatePoints(gObj,PCShop[IndexItem].Cost,MINUS,PCPOINT);
