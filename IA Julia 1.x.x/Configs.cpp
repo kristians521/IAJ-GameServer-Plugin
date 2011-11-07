@@ -24,8 +24,35 @@
 #include "DuelManager.h"
 #include "Vip.h"
 #include "Monster.h"
+#include "HappyHour.h"
 
 cConfigs Configs;	  
+
+
+void cConfigs::LoadAll()
+{
+	LoadConfigsInGS();
+	PCPoint.LoadIniConfigs();
+	GmSystem.Load();
+	News.Load();
+	AntiAFK.Load();
+	GoldenArcher.Load();
+	Vip.Load();
+	Monster.LoadPkClear();
+	DropSystem.LoadDropItems();
+	MapSystem.Load();
+	MoveReq.MoveReqLoad();
+	ZenFixes();
+	LoadNotice();
+	LoadCommands();
+	Misc();
+	HappyHour.LoadConfig();
+#ifdef _GS
+	DuelSystem.Load();
+	Moss.Load();
+	DropEvent.Init();
+#endif 
+}
 
 void cConfigs::ZenFixes()
 {
@@ -435,30 +462,6 @@ void cConfigs::Misc()
 	Unicode32				= GetInt(0, 1, 0,"CharacterGuild", "AllowUnicode32", IAJuliaCommon);
 	LahapDupe				= GetInt(0, 1, 1,"Lahap", "DupeBugFix", IAJuliaCommon);
 	GuildLevel				= GetInt(0, 400, 320,"GameServerInfo", "GuildCreateLevel", "..\\Data\\CommonServer.cfg"); 
-}
-
-void cConfigs::LoadAll()
-{
-	LoadConfigsInGS();
-	PCPoint.LoadIniConfigs();
-	GmSystem.Load();
-	News.Load();
-	AntiAFK.Load();
-	GoldenArcher.Load();
-	Vip.Load();
-	Monster.LoadPkClear();
-	DropSystem.LoadDropItems();
-	MapSystem.Load();
-	MoveReq.MoveReqLoad();
-	ZenFixes();
-	LoadNotice();
-	LoadCommands();
-	Misc();
-#ifdef _GS
-	DuelSystem.Load();
-	Moss.Load();
-	DropEvent.Init();
-#endif 
 }
 
 long cConfigs::GetInt(long Min, long Max, long Default, LPCSTR BlockName, LPCSTR ConfigName, LPCSTR FolderName)

@@ -92,6 +92,7 @@
     <ClCompile Include="Fixes.cpp" />
     <ClCompile Include="GMSystem.cpp" />
     <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="HappyHour.cpp" />
     <ClCompile Include="Security.cpp" />
     <ClCompile Include="Lite.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -120,6 +121,7 @@
     <ClInclude Include="DuelManager.h" />
     <ClInclude Include="Fixes.h" />
     <ClInclude Include="GMSystem.h" />
+    <ClInclude Include="HappyHour.h" />
     <ClInclude Include="Security.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Maps.h" />
@@ -164,6 +166,7 @@
     <None Include="Configs\IA Julia\Events.ini" />
     <None Include="Configs\IA Julia\EventTimer.dat" />
     <None Include="Configs\IA Julia\GoldenArcher.txt" />
+    <None Include="Configs\IA Julia\HappyHour.ini" />
     <None Include="Configs\IA Julia\Items.ini" />
     <None Include="Configs\IA Julia\MapSystem.ini" />
     <None Include="Configs\IA Julia\MonsterSpawn.ini" />

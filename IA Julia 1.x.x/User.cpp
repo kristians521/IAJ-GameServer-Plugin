@@ -19,6 +19,7 @@
 #include "Query.h"
 #include "DuelManager.h"
 #include "Vip.h"
+#include "HappyHour.h"
 sAddTab AddTab[OBJECT_MAX]; 
 cUser User;
 
@@ -190,7 +191,8 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
           lpObj->Experience     += pBonusExp;
           lpObj->MLExp          += pBonusExpML;
      }
-	//VIPSystem	
+
+	//VIPSystem	Exp
 	if(Vip.Config.Enabled && AddTab[lpObj->m_Index].VIP_Type > 0)
 	{
 		  int VIPInfo = AddTab[lpObj->m_Index].VIP_Type;
@@ -204,7 +206,7 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
           lpObj->MLExp          += pBonusExpML;
 	}
 
-	//MapSystem Module Exp
+	//MapSystem Exp
 	if(MapSystem.Enabled && MapSystem.Maps[lpObj->MapNumber].Exp != 0)
 	{
 		  pBonusExp               = ((exp * MapSystem.Maps[lpObj->MapNumber].Exp) / 100);
@@ -215,6 +217,20 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
           // ----
           lpObj->Experience     += pBonusExp;
           lpObj->MLExp          += pBonusExpML;
+	}
+
+	//HappyHour Exp
+	int IsHappyHour = HappyHour.IsHappyHour(lpObj->MapNumber);
+	if(IsHappyHour)
+	{
+		pBonusExp               = ((exp * HappyHour.HappyStruct[IsHappyHour].P_Exp) / 100);
+		pBonusExpML               = ((exp * HappyHour.HappyStruct[IsHappyHour].P_Exp) / 100);
+		// ----
+		pNewExperience          += pBonusExp;
+		pNewExperenceML          += pBonusExpML;
+		// ----
+		lpObj->Experience     += pBonusExp;
+		lpObj->MLExp          += pBonusExpML;
 	}
     GCKillPlayerExpSend(aIndex , TargetIndex , pNewExperience , AttackDamage , MSBFlag);
 }

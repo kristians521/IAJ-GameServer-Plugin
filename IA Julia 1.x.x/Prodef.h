@@ -279,8 +279,8 @@ struct PMSG_GUILDCREATED_RESULT
 #define IAJuliaArcher			"..\\IA Julia\\GoldenArcher.txt"
 #define IAJuliaItems			"..\\IA Julia\\Items.ini"	
 #define IAJuliaMossGambler		"..\\IA Julia\\MossGambler.ini"
-#define IAJuliaPcPoints		"..\\IA Julia\\PCPoints_WCoins.dat"
-#define IAJuliaPets			"..\\IA Julia\\Pets.ini"
+#define IAJuliaPcPoints			"..\\IA Julia\\PCPoints_WCoins.dat"
+#define IAJuliaPets				"..\\IA Julia\\Pets.ini"
 #define IAJuliaPkClear			"..\\IA Julia\\PkClearGuard.ini"
 #define IAJuliaSkills			"..\\IA Julia\\Skills.ini"  
 #define IAJuliaMobAdd			"..\\IA Julia\\MonsterSpawn.ini"  
@@ -289,16 +289,17 @@ struct PMSG_GUILDCREATED_RESULT
 #define IAJuliaEventDropIT		"..\\IA Julia\\WzEvents\\EventDropIT.txt"
 #define IAJuliaEventDropWW		"..\\IA Julia\\WzEvents\\EventDropWW.txt"
 #define IAJuliaEventDropCC		"..\\IA Julia\\WzEvents\\EventDropCC.txt"
-#define	IAJuliaWzEvents		"..\\IA Julia\\WzEvents"
-#define IAJuliaNews			".\\News.txt"
+#define	IAJuliaWzEvents			"..\\IA Julia\\WzEvents"
+#define IAJuliaNews				".\\News.txt"
 #define IAJuliaGM				".\\GMSystem.txt"
 #define IAJuliaIPBlock			".\\IPBlock.txt" 
 #define IAJuliaVIP				".\\VIPSystem.ini" 
-#define IAJuliaChatLogs		"..\\IA Julia\\ChatLogs"
+#define IAJuliaChatLogs			"..\\IA Julia\\ChatLogs"
 #define IAJuliaConsoleLogs		"..\\IA Julia\\ConsoleLogs" 
 #define IAJuliaLog				".\\Log" 
+#define IAJuliaHappyHour		"..\\IA Julia\\HappyHour.ini"
 
-#define GS_CONFIG_FILE				".\\Data\\ServerInfo.dat" 
+#define GS_CONFIG_FILE			".\\Data\\ServerInfo.dat" 
 
 #ifdef _GS
 //================================================//

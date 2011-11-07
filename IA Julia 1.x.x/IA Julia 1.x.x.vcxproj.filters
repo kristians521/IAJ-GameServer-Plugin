@@ -135,6 +135,9 @@
     <ClCompile Include="Vip.cpp">
       <Filter>Source\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="HappyHour.cpp">
+      <Filter>Source\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -218,6 +221,9 @@
     <ClInclude Include="Vip.h">
       <Filter>Source\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="HappyHour.h">
+      <Filter>Source\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Configs\GameServerCS\GameServerCS.ini">
@@ -264,6 +270,9 @@
       <Filter>Configs\IA Julia</Filter>
     </None>
     <None Include="Configs\IA Julia\GoldenArcher.txt">
+      <Filter>Configs\IA Julia</Filter>
+    </None>
+    <None Include="Configs\IA Julia\HappyHour.ini">
       <Filter>Configs\IA Julia</Filter>
     </None>
     <None Include="Configs\IA Julia\Items.ini">

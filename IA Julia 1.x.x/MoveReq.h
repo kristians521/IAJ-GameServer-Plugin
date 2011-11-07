@@ -17,7 +17,6 @@ public:
 	~cMoveReq(); 
 
 	void MoveReqLoad();
-	char* GetMapName(int MapId);
 
 	int n[5];
 	struct sMoveReq

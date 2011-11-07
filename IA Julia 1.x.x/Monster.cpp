@@ -21,6 +21,7 @@
 #include "MossGambler.h"
 #include "Archer.h"
 #include "Vip.h"
+#include "HappyHour.h"
 
 cMonster Monster;
 
@@ -49,11 +50,20 @@ void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
 	// Original function
 	gObjMonsterDieGiveItem(lpObj, lpTargetObj);
 
-	//MapSystem Module Drop
+	//MapSystem  Drop
 	if(MapSystem.Maps[lpTargetObj->MapNumber].Drop != 0)
 	{
 		lpObj->m_wItemDropRate += MapSystem.Maps[lpObj->MapNumber].Drop;
 	}
+
+	//HappyHour Drop
+	int IsHappyHour = HappyHour.IsHappyHour(lpTargetObj->MapNumber);
+	if(IsHappyHour)
+	{
+		lpObj->m_wItemDropRate += HappyHour.HappyStruct[IsHappyHour].P_Drop;
+	}
+
+	//TODO: VIP DROP
 }
 
 #ifdef _GS
@@ -240,6 +250,13 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 		int VIPInfo = AddTab[pObj->m_Index].VIP_Type;
 		mObj->Money += ((mObj->Money/ 100) * Vip.Config.VIPState[VIPInfo].BonusZen);
 	} 
+
+	//HappyHour
+	int IsHappyHour = HappyHour.IsHappyHour(mObj->MapNumber);
+	if(IsHappyHour)
+	{
+		mObj->Money += ((mObj->Money/ 100) * HappyHour.HappyStruct[IsHappyHour].P_Zen);
+	}
 
 	// Drop System
 	if(DropSystem.DropItem(mObj,pObj))

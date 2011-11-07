@@ -24,6 +24,7 @@
 #include "Monster.h"  
 #include "Query.h"
 #include "Vip.h"
+#include "HappyHour.h"
 
 DWORD MainTick()  	
 {
@@ -61,6 +62,7 @@ DWORD MainTick()
 		}										
 
 		Security.Tick();
+		HappyHour.TickTimerHappyHour();
 #ifdef _GS
 		Moss.CheckTime();	 	
 #endif	

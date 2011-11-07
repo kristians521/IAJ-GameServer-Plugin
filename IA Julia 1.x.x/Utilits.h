@@ -27,6 +27,10 @@ public:
 	int GenExcOpt(int amount);	   
 	int gObjZenSingle(LPOBJ gObj,LPOBJ tObj, int dmg, int tot_dmg);
 	int GetNumberByPercent(int Proc, int Min, int Max);
+
+	char* GetMapName(int MapId);
+
+	bool IsBadFileLine(char *FileLine, int *Flag);
 };
 extern cUtilits Utilits;
 #endif

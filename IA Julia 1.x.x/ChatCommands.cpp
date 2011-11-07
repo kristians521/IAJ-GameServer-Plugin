@@ -1121,7 +1121,7 @@ bool cChat::StatusCommand(LPOBJ gObj, char *Msg)
 	MessageLog(0, c_Green, t_GM, gObj, "IP Address: %s",tObj->Ip_addr);
 	MessageLog(0,c_Green, t_GM, gObj,"Account: %s | Character: %s",tObj->AccountID,tObj->Name);
 	MessageLog(0, c_Green, t_GM, gObj, "Level: %d | Zen: %d | Resets: %d",tObj->Level,tObj->Money, AddTab[Index].Resets);
-	MessageLog(0, c_Green, t_GM, gObj, "Map: %s (%d)(%d,%d)",MoveReq.GetMapName(tObj->MapNumber),tObj->MapNumber,tObj->X,tObj->Y); 
+	MessageLog(0, c_Green, t_GM, gObj, "Map: %s (%d)(%d,%d)",Utilits.GetMapName(tObj->MapNumber),tObj->MapNumber,tObj->X,tObj->Y); 
 
 	MessageLog(1, c_Green, t_GM, gObj, "[Status][GM] %s get your status!", gObj->Name);	  
 	return true;
