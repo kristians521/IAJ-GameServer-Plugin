@@ -13,3 +13,27 @@ Items Exc Options :
 		8. Damage +2%
 		16. Damage +Level/20
 		32. Exc Damage Rate +10%
+
+Character classes :
+gObj->	Class	DbClass	ChaneUp	ChangeUp2	[Short Name]	[Full Name]
+	0	0	0	0		DW		Dark	Wizard
+	0	1	1	0		SM		Soul	Master
+	0	3	1	1		GM		Grand	Master
+
+	1	16	0	0		DK		Dark	Knight
+	1	17	1	0		BK		Blade	Knight
+	1	19	1	1		BM		Blade	Master
+
+	2	32	0	0		FE		Fairy	Elf
+	2	33	1	0		ME		Muse	Elf
+	2	35	1	1		HE		High	Elf
+
+	3	48	0	0		MG		Magic	Gladiator
+	3	50	0	1		DM		Duel	Master
+
+	4	64	0	0		DL		Dark	Lord
+	4	66	0	1		LE		Lord	Emperor
+
+	5	80	0	0		SU		Summoner
+	5	81	1	0		BS		Bloody	Summoner
+	5	83	1	1		DM		Dimension Master
