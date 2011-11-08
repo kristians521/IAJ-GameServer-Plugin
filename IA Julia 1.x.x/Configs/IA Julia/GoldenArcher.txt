@@ -13,6 +13,7 @@ RenasCount		= 7
 WCoinsReward		= 10
 PCPointsReward		= 10
 ZenReward		= 10000000
+ResetLimit		= 5
 
 //----------------------------------------------------------------------------------------------//
 //      Index   ItemID	%Rate	MaxLvl	%Skill	%Luck   MaxOpt	%Exc	MaxExcOpt	Name	//

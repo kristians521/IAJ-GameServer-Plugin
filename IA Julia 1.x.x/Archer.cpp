@@ -28,10 +28,11 @@ void cGoldenArcher::Load()
 	if(!Config.Enabled)
 		return;
 		
-	Config.NeedRenaAmount	= Configs.GetInt(0, 250,								7,		"GoldenArcher", "RenasCount",		IAJuliaArcher); 	   
+	Config.NeedRenaAmount	= Configs.GetInt(0, 250,							7,		"GoldenArcher", "RenasCount",		IAJuliaArcher); 	   
 	Config.WCoinsReward		= Configs.GetInt(0, PCPoint.Config.MaximumWCPoints,	1,		"GoldenArcher", "WCoinsReward",		IAJuliaArcher);
 	Config.PCPointsReward	= Configs.GetInt(0, PCPoint.Config.MaximumPCPoints,	1,		"GoldenArcher", "PCPointsReward",	IAJuliaArcher);	   
-	Config.ZenReward		= Configs.GetInt(0, 2000000000,							100000, "GoldenArcher", "ZenReward",		IAJuliaArcher);
+	Config.ZenReward		= Configs.GetInt(0, 2000000000,						100000, "GoldenArcher", "ZenReward",		IAJuliaArcher);
+	Config.ResetLimit		= Configs.GetInt(0, 32767,							5,		"GoldenArcher",	"ResetLimit",		IAJuliaArcher);
 
 	FILE *file;
 	file = fopen(IAJuliaArcher,"r");
@@ -71,6 +72,12 @@ void cGoldenArcher::Load()
 
 void cGoldenArcher::GoldenArcherClick(LPOBJ gObj)
 {
+	if(AddTab[gObj->m_Index].Resets > Config.ResetLimit)
+	{
+		Chat.Message(gObj->m_Index,"[Golden Archer] You are strong now and don't need my help.");
+		return;
+	}
+
 	unsigned short *CurrentRena;
 	CurrentRena = (unsigned short*)&gObj->m_Quest[29];
 

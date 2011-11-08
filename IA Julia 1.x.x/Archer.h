@@ -28,6 +28,7 @@ public:
 		int WCoinsReward;
 		int PCPointsReward;
 		int NeedRenaAmount; 
+		int ResetLimit;
 	}Config;
 
 private:
