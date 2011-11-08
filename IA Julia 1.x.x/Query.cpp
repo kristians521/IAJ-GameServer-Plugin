@@ -86,7 +86,10 @@ void CQuery::CheckColumns(int MeMu)
 		,"Items05","warehouse"},	
 
 		{"ALTER TABLE Character ADD [test_pcpoint][int] DEFAULT (0) NOT NULL"
-		,"test_pcpoint","Character"},														   																   
+		,"test_pcpoint","Character"},	
+
+		{"ALTER TABLE Character ADD [PCPoint][int] DEFAULT (0) NOT NULL"
+		,"PCPoint","Character"},														   																   
 	};
 
 	Temp QueryMeMuOnline[] = {												   																   

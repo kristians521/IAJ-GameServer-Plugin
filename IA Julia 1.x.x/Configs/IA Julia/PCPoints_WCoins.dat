@@ -14,7 +14,7 @@ AddPCPointsSec		= 3600	// For Online System
 AddPCPointsCount	= 10	// For Online System
 
 [WCoins]
-MaximumWCPoints = 10000
+MaximumWCPoints		= 10000
 
 //==================================================================================================================================
 //PCPoints Cafe Shop 

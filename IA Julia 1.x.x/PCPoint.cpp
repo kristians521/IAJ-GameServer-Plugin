@@ -27,8 +27,9 @@ void cPCPoint::LoadIniConfigs()
 	if (!Config.Enabled) return;
 
 	Config.MaximumPCPoints		= Configs.GetInt(0, 32000,					10000,	"PCPoints",		"MaximumPCPoints",			IAJuliaPcPoints);
-	Config.AddPCPointsSec		= Configs.GetInt(0, 6000000,					3600,	"PCPoints",		"AddPCPointsSec",			IAJuliaPcPoints);
-	Config.AddPCPointsCount	= Configs.GetInt(0, Config.MaximumPCPoints,	10,		"PCPoints",		"AddPCPointsCount",			IAJuliaPcPoints);	
+	Config.AddPCPointsSec		= Configs.GetInt(0, 6000000,				3600,	"PCPoints",		"AddPCPointsSec",			IAJuliaPcPoints);
+	Config.AddPCPointsCount		= Configs.GetInt(0, Config.MaximumPCPoints,	10,		"PCPoints",		"AddPCPointsCount",			IAJuliaPcPoints);	
+
 	this->LoadConfigs();
 }
 
