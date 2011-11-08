@@ -156,6 +156,9 @@ void cHappyHour::CheckNeedMessage(int i)
 
 	for (int l = 0; l < MessageTimeAfterCount; l++)
 	{
+		if(HappyStruct[i].Started == false)
+			continue;
+
 		int TempMin = HappyStruct[i].C_Min - MessageTimeBefore[l];
 		int TempHour = HappyStruct[i].C_Hour;
 		int TempWeekday = HappyStruct[i].C_WeekDay;
