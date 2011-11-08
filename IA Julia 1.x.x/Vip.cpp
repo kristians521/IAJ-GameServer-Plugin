@@ -29,7 +29,8 @@ void cVip::Load()
 	MuOnlineQuery.CheckColumn(Config.Column,	 "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", Config.Column);
 	MuOnlineQuery.CheckColumn(Config.ColumnDate, "Character", "ALTER TABLE Character ADD [%s][int] DEFAULT (0) NOT NULL", Config.ColumnDate);
 
-	Config.NumStates = Configs.GetInt(0, 10, 3, "VipSystem", "NumStates", IAJuliaVIP);	
+	Config.NumStates		= Configs.GetInt(0, 10, 3, "VipSystem", "NumStates", IAJuliaVIP);	
+	Config.AllowRebuying	= Configs.GetInt(0, 1, 0, "VipSystem", "AllowRebuying", IAJuliaVIP);
 
 	char PState[10]; 
 	for(int i = 1; i <= Config.NumStates; i++)

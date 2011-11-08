@@ -1664,13 +1664,7 @@ bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 		int Hours = 1;
 		char State[255];
 		sscanf(Msg, "%s %d", &State, &Hours);
-
-		if(AddTab[gObj->m_Index].VIP_Type > 0 || AddTab[gObj->m_Index].VIP_Min > 0)
-		{
-			MessageLog(1, c_Red, t_VIP, gObj, "[VIPBuy] You have already bought VIP.");		
-			return true;
-		}
-
+		
 		int RealState = -1;
 		for(int i = 1; i<= Vip.Config.NumStates; i++)
 		{
@@ -1678,6 +1672,23 @@ bool cChat::BuyVIPCommand(LPOBJ gObj, char *Msg)
 			{
 				RealState = i;
 				break;
+			}
+		}
+
+		if(AddTab[gObj->m_Index].VIP_Type > 0 || AddTab[gObj->m_Index].VIP_Min > 0)
+		{
+			if(Vip.Config.AllowRebuying)
+			{
+				if(AddTab[gObj->m_Index].VIP_Type != RealState)
+				{
+					MessageLog(1, c_Red, t_VIP, gObj, "[VIPBuy] You can't buy another type of vip.");		
+					return true;
+				}
+			}
+			else
+			{
+				MessageLog(1, c_Red, t_VIP, gObj, "[VIPBuy] You have already bought VIP.");		
+				return true;
 			}
 		}
 

@@ -26,6 +26,7 @@ public:
 		int Enabled;
 		char Column[25];
 		char ColumnDate[25];
+		int AllowRebuying;
 
 		struct cVIPState
 		{ 
