@@ -22,6 +22,7 @@
 #include "Archer.h"
 #include "Vip.h"
 #include "HappyHour.h"
+#include "PlayerSystem.h"
 
 cMonster Monster;
 
@@ -47,23 +48,29 @@ void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
 {
 	PCPoint.RewardsPointsKillMob(lpTargetObj,lpObj,PCPOINT);
 	PCPoint.RewardsPointsKillMob(lpTargetObj,lpObj,WCOIN);
-	// Original function
-	gObjMonsterDieGiveItem(lpObj, lpTargetObj);
-
+	int Proc = 0;
 	//MapSystem  Drop
 	if(MapSystem.Maps[lpTargetObj->MapNumber].Drop != 0)
 	{
-		lpObj->m_wItemDropRate += MapSystem.Maps[lpObj->MapNumber].Drop;
+		Proc += MapSystem.Maps[lpObj->MapNumber].Drop;
 	}
 
 	//HappyHour Drop
 	int IsHappyHour = HappyHour.IsHappyHour(lpTargetObj->MapNumber);
 	if(IsHappyHour)
 	{
-		lpObj->m_wItemDropRate += HappyHour.HappyStruct[IsHappyHour].P_Drop;
+		Proc += HappyHour.HappyStruct[IsHappyHour].P_Drop;
 	}
 
+	//Player System
+	Proc += PlayerSystem.GetBonus(lpTargetObj, PlayerSystem.Drop);
+
 	//TODO: VIP DROP
+
+	// Original function
+
+	lpObj->m_wItemDropRate += (lpObj->m_wItemDropRate*Proc)/100;
+	gObjMonsterDieGiveItem(lpObj, lpTargetObj);
 }
 
 #ifdef _GS
@@ -238,26 +245,32 @@ int MygEventMonsterItemDrop(BYTE *b_MonsterDataAddr,BYTE *a_gObjAddr)
 			}
 	}
 	
+	int Proc = 0;
+
 	//MapSystem Module Zen
 	if(MapSystem.Enabled && MapSystem.Maps[pObj->MapNumber].Zen != 0)
 	{
-		mObj->Money += ((mObj->Money/ 100) * MapSystem.Maps[mObj->MapNumber].Zen);
+		Proc += MapSystem.Maps[mObj->MapNumber].Zen;
 	} 
 
 	//VIP System 
 	if(Vip.Config.Enabled && AddTab[pObj->m_Index].VIP_Type > 0)
 	{
 		int VIPInfo = AddTab[pObj->m_Index].VIP_Type;
-		mObj->Money += ((mObj->Money/ 100) * Vip.Config.VIPState[VIPInfo].BonusZen);
+		Proc += Vip.Config.VIPState[VIPInfo].BonusZen;
 	} 
 
 	//HappyHour
 	int IsHappyHour = HappyHour.IsHappyHour(mObj->MapNumber);
 	if(IsHappyHour)
 	{
-		mObj->Money += ((mObj->Money/ 100) * HappyHour.HappyStruct[IsHappyHour].P_Zen);
+		Proc += HappyHour.HappyStruct[IsHappyHour].P_Zen;
 	}
 
+	//Player System
+	Proc += PlayerSystem.GetBonus(pObj, PlayerSystem.Zen);
+
+	mObj->Money += (mObj->Money*Proc)/100;
 	// Drop System
 	if(DropSystem.DropItem(mObj,pObj))
 	{

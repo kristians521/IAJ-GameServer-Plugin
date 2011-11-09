@@ -25,6 +25,7 @@
 #include "Vip.h"
 #include "Monster.h"
 #include "HappyHour.h"
+#include "PlayerSystem.h"
 
 cConfigs Configs;	  
 
@@ -47,6 +48,7 @@ void cConfigs::LoadAll()
 	LoadCommands();
 	Misc();
 	HappyHour.LoadConfig();
+	PlayerSystem.Load();
 #ifdef _GS
 	DuelSystem.Load();
 	Moss.Load();

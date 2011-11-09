@@ -20,6 +20,7 @@
 #include "DuelManager.h"
 #include "Vip.h"
 #include "HappyHour.h"
+#include "PlayerSystem.h"
 sAddTab AddTab[OBJECT_MAX]; 
 cUser User;
 
@@ -162,77 +163,64 @@ void GCKillPlayerExpSendHook(int aIndex, int TargetIndex, int exp, int AttackDam
 {   
 	// -----
 	// -----
-     OBJECTSTRUCT * lpObj = (OBJECTSTRUCT*) OBJECT_POINTER (aIndex);
-     unsigned int pNewExperience = exp;
-     unsigned int pBonusExp = 0;
-     unsigned int pNewExperenceML = exp;
-     unsigned int pBonusExpML = 0;
-     // ----
-     if(lpObj->pInventory[8].m_Type == 0x1A50) // Panda
-     {          
-          pBonusExp               = ((exp * Configs.Panda.PetPandaExpirence) / 100);
-          pBonusExpML               = ((exp * Configs.Panda.PetPandaMLExpirence) / 100);
-          // ----
-          pNewExperience          += pBonusExp;
-          pNewExperenceML          += pBonusExpML;
-          // ----
-          lpObj->Experience     += pBonusExp;
-          lpObj->MLExp          += pBonusExpML;
-     }
+    OBJECTSTRUCT * lpObj = (OBJECTSTRUCT*) OBJECT_POINTER (aIndex);
+	unsigned int Proc = 0;
+	unsigned int ProcML = 0;
+	// ----
+	if(lpObj->pInventory[8].m_Type == 0x1A50) // Panda
+	{          
+		Proc	+= Configs.Panda.PetPandaExpirence;
+		ProcML	+= Configs.Panda.PetPandaMLExpirence;
+	}
 
 	if(lpObj->pInventory[10].m_Type == 0x1A4C || lpObj->pInventory[11].m_Type == 0x1A4C) // Panda Ring
-     {          
-          pBonusExp               = ((exp * Configs.Panda.PandaRingExpirence) / 100);
-          pBonusExpML               = ((exp * Configs.Panda.PandaRingMLExpirence) / 100);
-          // ----
-          pNewExperience          += pBonusExp;
-          pNewExperenceML          += pBonusExpML;
-          // ----
-          lpObj->Experience     += pBonusExp;
-          lpObj->MLExp          += pBonusExpML;
-     }
+	{          
+		Proc	+= Configs.Panda.PandaRingExpirence;
+		ProcML	+= Configs.Panda.PandaRingMLExpirence;
+    }
 
 	//VIPSystem	Exp
 	if(Vip.Config.Enabled && AddTab[lpObj->m_Index].VIP_Type > 0)
 	{
-		  int VIPInfo = AddTab[lpObj->m_Index].VIP_Type;
-		  pBonusExp               = ((exp * Vip.Config.VIPState[VIPInfo].BonusExp) / 100);
-          pBonusExpML               = ((exp * Vip.Config.VIPState[VIPInfo].BonusExp) / 100);
-          // ----
-          pNewExperience          += pBonusExp;
-          pNewExperenceML          += pBonusExpML;
-          // ----
-          lpObj->Experience     += pBonusExp;
-          lpObj->MLExp          += pBonusExpML;
+		int VIPInfo = AddTab[lpObj->m_Index].VIP_Type;
+		Proc	+= Vip.Config.VIPState[VIPInfo].BonusExp;
+		ProcML	+= Vip.Config.VIPState[VIPInfo].BonusExp;
 	}
 
 	//MapSystem Exp
 	if(MapSystem.Enabled && MapSystem.Maps[lpObj->MapNumber].Exp != 0)
 	{
-		  pBonusExp               = ((exp * MapSystem.Maps[lpObj->MapNumber].Exp) / 100);
-          pBonusExpML               = ((exp * MapSystem.Maps[lpObj->MapNumber].Exp) / 100);
-          // ----
-          pNewExperience          += pBonusExp;
-          pNewExperenceML          += pBonusExpML;
-          // ----
-          lpObj->Experience     += pBonusExp;
-          lpObj->MLExp          += pBonusExpML;
+		Proc	+= MapSystem.Maps[lpObj->MapNumber].Exp;
+		ProcML	+= MapSystem.Maps[lpObj->MapNumber].Exp;
 	}
 
 	//HappyHour Exp
 	int IsHappyHour = HappyHour.IsHappyHour(lpObj->MapNumber);
 	if(IsHappyHour)
 	{
-		pBonusExp               = ((exp * HappyHour.HappyStruct[IsHappyHour].P_Exp) / 100);
-		pBonusExpML               = ((exp * HappyHour.HappyStruct[IsHappyHour].P_Exp) / 100);
-		// ----
-		pNewExperience          += pBonusExp;
-		pNewExperenceML          += pBonusExpML;
-		// ----
-		lpObj->Experience     += pBonusExp;
-		lpObj->MLExp          += pBonusExpML;
+		Proc	+= HappyHour.HappyStruct[IsHappyHour].P_Exp;
+		ProcML	+= HappyHour.HappyStruct[IsHappyHour].P_Exp;
 	}
-    GCKillPlayerExpSend(aIndex , TargetIndex , pNewExperience , AttackDamage , MSBFlag);
+	
+	//Player System
+	if(PlayerSystem.Enabled)
+	{
+		int bonus = PlayerSystem.GetBonus(lpObj, PlayerSystem.Exp);
+		Proc	+= bonus;
+		ProcML	+= bonus;
+	}
+	// ----
+	unsigned int NewExp		= exp + ((exp * Proc) / 100);
+	unsigned int NewExpML	= exp + ((exp * ProcML) / 100);
+	lpObj->Experience		+= NewExp;
+	lpObj->MLExp			+= NewExpML;
+
+	while(NewExp > 65535)
+	{
+		GCKillPlayerExpSend(aIndex , TargetIndex , 65535 , AttackDamage , MSBFlag);
+		NewExp -= 65535;
+	}
+    GCKillPlayerExpSend(aIndex , TargetIndex , NewExp , AttackDamage , MSBFlag);
 }
 
 void MyObjCalCharacter(int aIndex)

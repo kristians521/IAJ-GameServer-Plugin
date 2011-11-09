@@ -11,6 +11,7 @@
 #include "Utilits.h"
 #include "User.h"
 #include "GMSystem.h"
+#include "Logger.h"
 cUtilits Utilits;
 
 void cUtilits::HookThis(DWORD dwMyFuncOffset, DWORD dwJmpOffset)
@@ -245,6 +246,11 @@ bool cUtilits::IsBadFileLine(char *FileLine, int *Flag)
 			return true;
 		}
 	}
+	else if(*Flag < 0 || *Flag > 9)
+	{
+		*Flag = 0;
+	}
+
 	if(!strncmp(FileLine, "end", 3))
 	{
 		*Flag = 0;

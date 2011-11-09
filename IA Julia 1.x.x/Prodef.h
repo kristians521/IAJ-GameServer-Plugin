@@ -298,6 +298,7 @@ struct PMSG_GUILDCREATED_RESULT
 #define IAJuliaConsoleLogs		"..\\IA Julia\\ConsoleLogs" 
 #define IAJuliaLog				".\\Log" 
 #define IAJuliaHappyHour		"..\\IA Julia\\HappyHour.ini"
+#define IAJuliaPlayerSystem		"..\\IA Julia\\PlayerSystem.ini"
 
 #define GS_CONFIG_FILE			".\\Data\\ServerInfo.dat" 
 

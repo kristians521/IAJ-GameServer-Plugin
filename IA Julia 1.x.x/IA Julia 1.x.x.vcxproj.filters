@@ -138,6 +138,9 @@
     <ClCompile Include="HappyHour.cpp">
       <Filter>Source\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerSystem.cpp">
+      <Filter>Source\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -222,6 +225,9 @@
       <Filter>Source\Systems</Filter>
     </ClInclude>
     <ClInclude Include="HappyHour.h">
+      <Filter>Source\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSystem.h">
       <Filter>Source\Systems</Filter>
     </ClInclude>
   </ItemGroup>
@@ -322,6 +328,9 @@
       <Filter>Configs\IA Julia\WzEvents</Filter>
     </None>
     <None Include="Notes.txt" />
+    <None Include="Configs\IA Julia\PlayerSystem.ini">
+      <Filter>Configs\IA Julia</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
