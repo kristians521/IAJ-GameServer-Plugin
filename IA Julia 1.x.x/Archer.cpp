@@ -98,35 +98,38 @@ void cGoldenArcher::GoldenArcherClick(LPOBJ gObj)
 
 	if (*CurrentRena == Config.NeedRenaAmount)
 	{
-		int ArrayItemsIndex[MAX_ITEM_PRIZE];
-		int g = -1;
+		if(counter > 0)
+		{
+			int ArrayItemsIndex[MAX_ITEM_PRIZE];
+			int g = -1;
 
-		short RandValue = rand()%100 + 1;
-		if (RandValue > MaxRateItem) RandValue = MaxRateItem;
+			short RandValue = rand()%100 + 1;
+			if (RandValue > MaxRateItem) RandValue = MaxRateItem;
 
-		for (int i = 0; i < counter; i++)
-			if (RandValue <= ItemsPrize[i].RateItem)
-				ArrayItemsIndex[++g] = i;
+			for (int i = 0; i < counter; i++)
+				if (RandValue <= ItemsPrize[i].RateItem)
+					ArrayItemsIndex[++g] = i;
 
-		RandValue = rand()% (g + 1);
-		int PrizeIndex = ArrayItemsIndex[RandValue];
+			RandValue = rand()% (g + 1);
+			int PrizeIndex = ArrayItemsIndex[RandValue];
 
-		int Level,Skill,Luck,Opt,Exc;
+			int Level,Skill,Luck,Opt,Exc;
 
-		Level = rand()%(ItemsPrize[PrizeIndex].MaxLvl + 1);
-		Opt   = rand()%(ItemsPrize[PrizeIndex].MaxOpt + 1);
+			Level = rand()%(ItemsPrize[PrizeIndex].MaxLvl + 1);
+			Opt   = rand()%(ItemsPrize[PrizeIndex].MaxOpt + 1);
 
-		Skill = rand() % 100 + 1 < ItemsPrize[PrizeIndex].RateSkill ? Skill = 1 : Skill = 0;
-		Luck  = rand() % 100 + 1 < ItemsPrize[PrizeIndex].RateLuck  ? Luck = 1  : Luck = 0;
-		Exc   = rand() % 100 + 1 < ItemsPrize[PrizeIndex].RateExc   ? Exc = Utilits.GenExcOpt(rand()%(ItemsPrize[PrizeIndex].MaxExcOpt + 1)) : Exc = 0;
+			Skill = rand() % 100 + 1 < ItemsPrize[PrizeIndex].RateSkill ? Skill = 1 : Skill = 0;
+			Luck  = rand() % 100 + 1 < ItemsPrize[PrizeIndex].RateLuck  ? Luck = 1  : Luck = 0;
+			Exc   = rand() % 100 + 1 < ItemsPrize[PrizeIndex].RateExc   ? Exc = Utilits.GenExcOpt(rand()%(ItemsPrize[PrizeIndex].MaxExcOpt + 1)) : Exc = 0;
 		
-		*CurrentRena = 0;
-		Chat.Message(gObj->m_Index,"[Golden Archer] Thank you for renas! Take my rewards for you.");
-		Log.ConsoleOutPut(1,c_Magenta,t_DROP,"[Golden Archer] Golden Archer drop %d %d %d %d %d %d %d 0",ItemsPrize[PrizeIndex].Index,
-			ItemsPrize[PrizeIndex].ItemID,Level,Skill,Luck,Opt,Exc);
+			*CurrentRena = 0;
+			Chat.Message(gObj->m_Index,"[Golden Archer] Thank you for renas! Take my rewards for you.");
+			Log.ConsoleOutPut(1,c_Magenta,t_DROP,"[Golden Archer] Golden Archer drop %d %d %d %d %d %d %d 0",ItemsPrize[PrizeIndex].Index,
+				ItemsPrize[PrizeIndex].ItemID,Level,Skill,Luck,Opt,Exc);
 
-		int Item = ITEMGET(ItemsPrize[PrizeIndex].Index,ItemsPrize[PrizeIndex].ItemID);
-		ItemSerialCreateSend (gObj->m_Index,gObj->MapNumber,(BYTE)gObj->X,(BYTE)gObj->Y,Item,Level,0,Skill,Luck,Opt,gObj->m_Index,Exc,0);
+			int Item = ITEMGET(ItemsPrize[PrizeIndex].Index,ItemsPrize[PrizeIndex].ItemID);
+			ItemSerialCreateSend (gObj->m_Index,gObj->MapNumber,(BYTE)gObj->X,(BYTE)gObj->Y,Item,Level,0,Skill,Luck,Opt,gObj->m_Index,Exc,0);
+		}
 
 		if (Config.ZenReward > 0)
 		{
