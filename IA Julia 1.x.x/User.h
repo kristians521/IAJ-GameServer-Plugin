@@ -18,6 +18,10 @@
 
 typedef	struct sAddTab 
 {			
+	//Add Stats
+	int		ADD_Type;
+	DWORD	ADD_Value;
+
 	//Post Delay
 	int		POST_Delay; 
 

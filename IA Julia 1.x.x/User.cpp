@@ -429,6 +429,8 @@ void cUser::PlayerConnect(LPOBJ gObj)
 	AddTab[gObj->m_Index].ON_Sek			= 0;
 	AddTab[gObj->m_Index].ON_Hour			= 0;
 	AddTab[gObj->m_Index].PC_OnlineTimer	= 0;
+	AddTab[gObj->m_Index].ADD_Type			= -1;
+	AddTab[gObj->m_Index].ADD_Value			= 0;
 
 #ifdef _GS 
 	if(DuelSystem.Config.Enabled)

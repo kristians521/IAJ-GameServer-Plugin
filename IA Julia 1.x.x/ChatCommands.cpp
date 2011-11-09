@@ -23,9 +23,12 @@
 #include "Vip.h"
 
 cChat Chat;
-						 
+
+CRITICAL_SECTION Chat_Crit;
+
 cChat::cChat()
 {
+	InitializeCriticalSection(&Chat_Crit); 
 }
 
 cChat::~cChat()
@@ -1337,9 +1340,49 @@ bool cChat::PKClearCommand(LPOBJ gObj, char *Msg)
 	return true;				
 }
 
+unsigned long __stdcall AddTimer(int Index)
+{
+	int Type = AddTab[Index].ADD_Type;
+	BYTE lpMsg[5] = {0xC1, 0x05, 0xF3, 0x06, Type};	
+	int Sec = 0;					
+	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(Index);
+
+	if(AddTab[Index].ADD_Value > 500)
+	{
+		float temp = AddTab[Index].ADD_Value / 200.0f;
+		int Time = (int)ceil(temp);
+		Chat.MessageLog(1, c_Blue, t_COMMANDS, gObj, "[AddStats] Adding stats started. Please wait %d sec until it ends.", Time);
+	}
+	while(AddTab[Index].ADD_Value > 0)
+	{
+		for(int i = 0; i<200; i++)
+		{
+			if(AddTab[Index].ADD_Value <= 0 || gObj->LevelUpPoint <= 0) continue;
+			if(gObj->CloseCount >= 0) 
+			{
+				Chat.MessageLog(1, c_Red, t_COMMANDS, gObj, "[AddStats] Adding stats canceled.");
+				return 1;
+			}
+			CGLevelUpPointAdd(lpMsg, Index);
+			AddTab[Index].ADD_Value--;
+		}
+		Sleep(1000);		
+	}			  
+	GCLevelUpMsgSend(Index, 0);	   
+	Chat.MessageLog(1, c_Blue, t_COMMANDS, gObj, "[AddStats] Your stats successfully added!");	 
+	AddTab[Index].ADD_Value = 0;
+	AddTab[Index].ADD_Type = -1;
+
+	return 1;
+}
 
 bool cChat::AddCommands(LPOBJ gObj, char *Msg, int Type)
 {	 
+	if(AddTab[gObj->m_Index].ADD_Type != -1)
+	{
+		MessageLog(1, c_Red, t_COMMANDS, gObj, "[AddStats] You can't use this command twice at the time!");
+		return true;
+	}
 	switch(Type)
 	{
 	case 0:		  
@@ -1430,27 +1473,20 @@ bool cChat::AddCommands(LPOBJ gObj, char *Msg, int Type)
 	TakeCommand(gObj, Configs.Commands.AddPriceZen, Configs.Commands.AddPricePCPoint, Configs.Commands.AddPriceWCoin, "AddStats");
 	if(Points > 200)
 	{
-		switch (Type)
+EnterCriticalSection(&Chat_Crit);
+		AddTab[gObj->m_Index].ADD_Type = Type;
+		AddTab[gObj->m_Index].ADD_Value = Points;
+		DWORD ThreadID;
+		HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)AddTimer, (void*)gObj->m_Index, 0, &ThreadID);
+
+		if ( hThread == 0 )
 		{
-		case 0x00:
-			gObj->Strength += Points;
-			break;
-		case 0x01:
-			gObj->Dexterity += Points;  
-			break;
-		case 0x02:	  
-			gObj->Vitality += Points; 
-			break;	  
-		case 0x03:
-			gObj->Energy += Points;	 			 
-			break;
-		case 0x04:
-			gObj->Leadership += Points;	  
-			break;
+			Log.ConsoleOutPut(0, c_Red, t_Error,"CreateThread() failed with error %d", GetLastError());
+			return true;
 		}
-		gObj->LevelUpPoint -= Points;
-		GCLevelUpMsgSend(gObj->m_Index, 0);
-		Chat.MessageLog(1, c_Blue, t_COMMANDS, gObj, "[AddStats] Your %d stats added, please relogin!", Points);
+
+		CloseHandle(hThread);	
+LeaveCriticalSection(&Chat_Crit);
 	}
 	else
 	{
