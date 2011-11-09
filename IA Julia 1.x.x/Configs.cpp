@@ -354,8 +354,8 @@ void cConfigs::LoadConfigsInGS()
 	*(unsigned int*) GSCS_LOT_MAXPRICE = GetInt(0,1000000000,300000,"CastleSiege","CSLandOfTrialMaxPayment",IAJuliaEvents);
 	*(unsigned char*) GSCS_LORDMIX_MAXUSE  = GetChar(0,5000,0,"CastleSiege","CSLordMixMaxUsePerDay",IAJuliaEvents);
 
-	*(unsigned char*) GSCS_CRYWOLF_REWARD_ELF = GetChar(0,15,14,"CryWolf","CrywolfAltarElfRewardIndexID",IAJuliaEvents) * 512 + GetChar(0,255,13,"CryWolf","CrywolfAltarElfRewardGroupID",IAJuliaEvents);
-	*(unsigned char*) GSCS_CRYWOLF_REWARD_TOP5 = GetChar(0,15,14,"CryWolf","CrywolfTop5RewardIndexID",IAJuliaEvents) * 512 + GetChar(0,255,13,"CryWolf","CrywolfTop5RewardGroupID",IAJuliaEvents);
+	*(unsigned char*) GSCS_CRYWOLF_REWARD_ELF = GetChar(0,15,14,"CryWolf","CrywolfAltarElfRewardGroupID",IAJuliaEvents) * 512 + GetChar(0,255,13,"CryWolf","CrywolfAltarElfRewardIndexID",IAJuliaEvents);
+	*(unsigned char*) GSCS_CRYWOLF_REWARD_TOP5 = GetChar(0,15,14,"CryWolf","CrywolfTop5RewardGroupID",IAJuliaEvents) * 512 + GetChar(0,255,13,"CryWolf","CrywolfTop5RewardIndexID",IAJuliaEvents);
 	
 	dword = GetInt(0,1000000000,200000000,"CastleSiege","CSSeniorMaxCash",IAJuliaEvents);
 	*(unsigned int*) GSCS_SENIOR_MAXZEN1 = dword;
