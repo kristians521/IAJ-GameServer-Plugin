@@ -70,6 +70,13 @@ void __cdecl MonsterDie(LPOBJ lpObj, LPOBJ lpTargetObj)
 	// Original function
 
 	lpObj->m_wItemDropRate += (lpObj->m_wItemDropRate*Proc)/100;
+
+	if(lpObj->m_wItemDropRate > 100)
+		lpObj->m_wItemDropRate = 100;
+
+	if(lpObj->m_wItemDropRate < 0)
+		lpObj->m_wItemDropRate = 0;
+
 	gObjMonsterDieGiveItem(lpObj, lpTargetObj);
 }
 
