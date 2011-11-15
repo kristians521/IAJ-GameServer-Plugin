@@ -16,6 +16,7 @@
 #include "MossGambler.h"
 #include "Monster.h"
 #include "MapSystem.h"
+#include "TradeSystem.h"
 
 BYTE RecvTable[256] = {
 
@@ -36,6 +37,46 @@ BYTE RecvTable[256] = {
 		0xE0,0xE1,0xE2,0xE3,0xE4,0xE5,0xE6,0xE7,0xE8,0xE9,0xEA,0xEB,0xEC,0xED,0xEE,0xEF,
 		0xF0,0xF1,0xF2,0xF3,0xF4,0xF5,0xF6,0xF7,0xF8,0xF9,0xFA,0xFB,0xFC,0xFD,0xFE,0xFF 
 };	
+
+void gObjTradeOkButton(int aIndex)
+{
+	BYTE result = 1;
+	OBJECTSTRUCT *gObj = (OBJECTSTRUCT*)OBJECT_POINTER(aIndex);
+	int number = gObj->TargetNumber;
+
+	if(number < 0)
+	{
+		return;
+	}
+	OBJECTSTRUCT *gObj2 = (OBJECTSTRUCT*)OBJECT_POINTER(number);
+
+	if(gObj2->Connected < PLAYER_PLAYING)
+	{
+		return;
+	}
+
+	if(gObj2->TargetNumber != aIndex)
+	{
+		Log.ConsoleOutPut(0, c_Red, t_Default, "Error: The opposite to trade is not me. (%s)(%s) Target:(%d) (%d)", gObj->AccountID, gObj->Name, gObj->TargetNumber, gObj2->TargetNumber);
+		return;
+	}
+
+	if(gObj->TradeOk != 1 || gObj2->TradeOk != 1)
+	{
+		return;
+	}
+	
+	if(TradeSystem.CheckTradeItem(gObj) || TradeSystem.CheckTradeItem(gObj2))
+	{
+		result = 3;
+		gObjTradeCancel(aIndex);
+		gObjTradeCancel(number);
+		CGTradeResult(aIndex,result);
+		CGTradeResult(number,result);
+		return;
+	}
+	GSgObjTradeOkButton(aIndex);
+}
 
 void gObjPlayerKiller(LPOBJ lpObj, LPOBJ lpTargetObj)
 {												

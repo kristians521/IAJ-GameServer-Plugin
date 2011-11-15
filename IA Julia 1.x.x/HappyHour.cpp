@@ -15,7 +15,9 @@
 #include "Prodef.h"
 #include "Utilits.h"
 
-void cHappyHour::LoadConfig()
+cHappyHour HappyHour;
+
+void cHappyHour::Load()
 {
 	HappyHourEnabled = Configs.GetInt(0,1,1,"HappyHour","HappyHour",IAJuliaHappyHour);
 	if (HappyHourEnabled == 0) return;
@@ -194,5 +196,3 @@ int cHappyHour::IsHappyHour(int Map)
 	}
 	return -1;
 }
-
-cHappyHour HappyHour;

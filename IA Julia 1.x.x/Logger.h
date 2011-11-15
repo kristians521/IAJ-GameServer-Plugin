@@ -38,7 +38,8 @@ enum sLogType
 	t_IPBLOCK,
 	t_Duel,
 	t_SQL,
-	t_VIP
+	t_VIP,
+	t_TRADE
 };
 
 class Logger

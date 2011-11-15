@@ -15,7 +15,7 @@
 class cHappyHour
 {
 public:
-	void LoadConfig();
+	void Load();
 	void TickTimerHappyHour();
 	int IsHappyHour(int Map);
 	void CheckNeedMessage(int i);

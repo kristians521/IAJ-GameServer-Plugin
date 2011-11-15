@@ -1035,7 +1035,7 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 		case 0:
 			{
 				Configs.LoadAll();
-				MoveReq.MoveReqLoad();
+				MoveReq.Load();
 				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] Data & MoveReq Reloaded.");
 				break;
 			}
@@ -1051,7 +1051,7 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 		case 2:
 			{
 				pShopDataLoad();
-				PCPoint.LoadIniConfigs();		
+				PCPoint.Load();		
 				MessageLog(1, c_Blue, t_COMMANDS, gObj, "[Reload] Shops & PCPoints Reloaded.");
 				break;
 			}
@@ -1068,7 +1068,7 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 			}
 		case 4:
 			{
-				DropSystem.LoadDropItems();
+				DropSystem.Load();
 				#ifdef _GS
 				DropEvent.updateBC();	// reload BC drop config
 		 		DropEvent.updateIT();	// reload IT drop config
@@ -1090,7 +1090,7 @@ bool cChat::ReloadCommand(LPOBJ gObj, char *Msg)
 				GameMonsterAllCloseAndReload();
 				pShopDataLoad();
 				Security.Load();
-				DropSystem.LoadDropItems();
+				DropSystem.Load();
 				#ifdef _GS
 				Monster.ReadMonsterAdd();
 		 		DropEvent.updateBC();	// reload BC drop config

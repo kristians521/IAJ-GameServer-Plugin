@@ -171,6 +171,9 @@ struct PMSG_GUILDCREATED_RESULT
 #define MonsterCount 0x7D95B94
 #define MonsterReads 0x7D800B6
 
+#define CGTradeResult ((void(*)(int aIndex , BYTE result)) 0x0044A240)
+#define gObjTradeCancel ((void(*)(int aIndex)) 0x00524AC0)
+#define GSgObjTradeOkButton ((void(*)(int aIndex)) 0x00525910)
 #define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD)) 0x00439260)
 #define GSCheckInventoryEmptySpace ((int(*) (LPOBJ lpObj, int iItemHeight, int iItemWidth)) 0x0051C770 ) 
 #define GSItemGetSize		((void(*) (int index, int & width, int & height)) 0x00558AE0 )
@@ -231,6 +234,10 @@ struct PMSG_GUILDCREATED_RESULT
 #define ShopExcellentMod_Exit1						0x0056F6FF
 #define ShopExcellentMod_Hook2						0x0056EC25
 #define ShopExcellentMod_Exit2						0x0056EC2A
+
+#define CGTradeResult ((void(*)(int aIndex , BYTE result)) 0x0044D1B0)
+#define gObjTradeCancel ((void(*)(int aIndex)) 0x005370A0)
+#define GSgObjTradeOkButton ((void(*)(int aIndex)) 0x00537EF0)
 #define gObjGameClose ((BOOL(*)(int)) 0x0051B3E0)  	
 #define ChatTargetSend ((void(*)(OBJECTSTRUCT *lpObj, char*, DWORD))0x0043C2A0);
 #define gObjMoveGate ((int(*)(int aIndex, int Gate)) 0x00545170) //duel
@@ -299,6 +306,7 @@ struct PMSG_GUILDCREATED_RESULT
 #define IAJuliaLog				".\\Log" 
 #define IAJuliaHappyHour		"..\\IA Julia\\HappyHour.ini"
 #define IAJuliaPlayerSystem		"..\\IA Julia\\PlayerSystem.ini"
+#define IAJuliaTradeSystem		"..\\IA Julia\\TradeSystem.ini"
 
 #define GS_CONFIG_FILE			".\\Data\\ServerInfo.dat" 
 

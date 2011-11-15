@@ -26,6 +26,7 @@
 #include "Monster.h"
 #include "HappyHour.h"
 #include "PlayerSystem.h"
+#include "TradeSystem.h"
 
 cConfigs Configs;	  
 
@@ -33,22 +34,23 @@ cConfigs Configs;
 void cConfigs::LoadAll()
 {
 	LoadConfigsInGS();
-	PCPoint.LoadIniConfigs();
+	PCPoint.Load();
 	GmSystem.Load();
 	News.Load();
 	AntiAFK.Load();
 	GoldenArcher.Load();
 	Vip.Load();
 	Monster.LoadPkClear();
-	DropSystem.LoadDropItems();
+	DropSystem.Load();
 	MapSystem.Load();
-	MoveReq.MoveReqLoad();
+	MoveReq.Load();
 	ZenFixes();
 	LoadNotice();
 	LoadCommands();
 	Misc();
-	HappyHour.LoadConfig();
+	HappyHour.Load();
 	PlayerSystem.Load();
+	TradeSystem.Load();
 #ifdef _GS
 	DuelSystem.Load();
 	Moss.Load();

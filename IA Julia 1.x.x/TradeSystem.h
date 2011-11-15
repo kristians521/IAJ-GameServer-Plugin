@@ -7,24 +7,33 @@
 // #	http://auroraplay.ru/						# //
 // ================================================== //
 
-#ifndef MoveReq_H
-#define MoveReq_H
+#ifndef TradeSystem_h
+#define TradeSystem_h
 
-class cMoveReq
+#include "User.h"
+
+class cTradeSystem
 {
 public:
-	cMoveReq();
-	~cMoveReq(); 
-
 	void Load();
+	bool CheckTradeItem(LPOBJ gObj);
 
-	int n[5];
-	struct sMoveReq
+	int Enabled;
+	int TradeItemsCount;
+
+	struct sTradeItems
 	{
-		int Index, Zen, Level, Gate, VIP;
-		char MapName1[50], MapName2[50];
-	}MoveReqInfo[255];
-	int Count;
+		int Group;
+		int Index;
+		int Level;
+		int Skill;
+		int Luck;
+		int Opt;
+		int Exc;
+		int Anc;
+	}TradeItems[256];
 };
-extern cMoveReq MoveReq;
+
+extern cTradeSystem TradeSystem;
+
 #endif

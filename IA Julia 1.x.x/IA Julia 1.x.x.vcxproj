@@ -107,6 +107,7 @@
     <ClCompile Include="Prodef.cpp" />
     <ClCompile Include="Protocol.cpp" />
     <ClCompile Include="Query.cpp" />
+    <ClCompile Include="TradeSystem.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Utilits.cpp" />
     <ClCompile Include="Vip.cpp" />
@@ -138,6 +139,7 @@
     <ClInclude Include="Query.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="TradeSystem.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="Utilits.h" />
     <ClInclude Include="Vip.h" />
@@ -146,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Configs\IA Julia\PlayerSystem.ini" />
+    <None Include="Configs\IA Julia\TradeSystem.ini" />
     <None Include="Configs\IA Julia\WzEvents\EventDropBC.txt" />
     <None Include="Configs\IA Julia\WzEvents\EventDropCC.txt" />
     <None Include="Configs\IA Julia\WzEvents\EventDropIT.txt" />

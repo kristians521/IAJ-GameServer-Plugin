@@ -141,6 +141,9 @@
     <ClCompile Include="PlayerSystem.cpp">
       <Filter>Source\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="TradeSystem.cpp">
+      <Filter>Source\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -228,6 +231,9 @@
       <Filter>Source\Systems</Filter>
     </ClInclude>
     <ClInclude Include="PlayerSystem.h">
+      <Filter>Source\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="TradeSystem.h">
       <Filter>Source\Systems</Filter>
     </ClInclude>
   </ItemGroup>
@@ -329,6 +335,9 @@
     </None>
     <None Include="Notes.txt" />
     <None Include="Configs\IA Julia\PlayerSystem.ini">
+      <Filter>Configs\IA Julia</Filter>
+    </None>
+    <None Include="Configs\IA Julia\TradeSystem.ini">
       <Filter>Configs\IA Julia</Filter>
     </None>
   </ItemGroup>

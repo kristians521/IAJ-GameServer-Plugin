@@ -20,7 +20,7 @@ class cDropSystem
 public:
 	cDropSystem();
 	~cDropSystem();
-	void LoadDropItems();
+	void Load();
 	bool DropItem(LPOBJ mObj,LPOBJ pObj);
 
 private:

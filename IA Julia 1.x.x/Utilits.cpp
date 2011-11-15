@@ -85,6 +85,17 @@ int cUtilits::GetNumberByPercent(int Proc, int Min, int Max)
 	return Number;
 }
 
+int cUtilits::TakeExcNum(int Exc)
+{
+	int Count = 0;
+	for(int j = 0; j < 6; j++)
+	{
+		if((Exc>>j)&1)
+			Count++;
+	}
+	return Count;
+}
+
 int cUtilits::GenExcOpt(int amount)
 {
 	// User input errors

@@ -20,7 +20,7 @@ cDropSystem DropSystem;
 cDropSystem::cDropSystem() {};
 cDropSystem::~cDropSystem() {};
 
-void cDropSystem::LoadDropItems()
+void cDropSystem::Load()
 {
 	FILE *file;
 	file = fopen(IAJuliaDropSystem,"r");

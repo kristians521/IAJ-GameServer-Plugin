@@ -148,6 +148,7 @@ void Logger::CreateLog(sLogType Type,const char* Format, ...)
 	char Date[55];
 	char SqlLog[55];
 	char VipLog[55];
+	char TradeLog[55];
 	sprintf(Date, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\", now.wDay, now.wMonth, now.wYear); 
 	CreateDirectory(Date,NULL);
 																													  
@@ -164,6 +165,7 @@ void Logger::CreateLog(sLogType Type,const char* Format, ...)
 	sprintf(ErrorLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\Error.log", now.wDay, now.wMonth, now.wYear);
 	sprintf(SqlLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\Sql.log", now.wDay, now.wMonth, now.wYear);
 	sprintf(VipLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\Vip.log", now.wDay, now.wMonth, now.wYear);
+	sprintf(TradeLog, "..\\IA Julia\\ConsoleLogs\\%02d-%02d-%02d\\Trade.log", now.wDay, now.wMonth, now.wYear);
 
 	va_list pArguments1;
 	va_start(pArguments1, Format);
@@ -258,6 +260,11 @@ void Logger::CreateLog(sLogType Type,const char* Format, ...)
 			SaveFile(VipLog,Message);
 		}
 		break;
+		case t_TRADE:
+		{
+			SaveFile(ConsoleLog,Message);
+			SaveFile(TradeLog,Message);
+		}
 	}
 }
 

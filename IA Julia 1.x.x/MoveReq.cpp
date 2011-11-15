@@ -22,7 +22,7 @@ cMoveReq::~cMoveReq()
 
 }
 
-void cMoveReq::MoveReqLoad()
+void cMoveReq::Load()
 {
 	FILE *fp;
 	BOOL bRead = FALSE;

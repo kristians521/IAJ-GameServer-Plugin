@@ -24,7 +24,7 @@ public:
 	cPCPoint();
 	~cPCPoint();
 	/*For PCShop*/
-	void LoadIniConfigs();
+	void Load();
 	void LoadConfigs();
 	void InitItemShop();
 	void CreatePacketShop();

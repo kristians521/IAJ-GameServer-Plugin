@@ -116,6 +116,7 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 			Utilits.HookThis((DWORD)&gObjLevelUpPointAddEx,0x00406D7F);
 			Utilits.HookThis((DWORD)&gObjPlayerKiller, 0x0040655F); 
 			Utilits.HookThis((DWORD)&gObjAttack, 0x00403CA6);
+			Utilits.HookThis((DWORD)&gObjTradeOkButton, 0x00404A93);
 		#endif
 
 		#ifdef _GS_CS
@@ -131,6 +132,7 @@ extern "C" __declspec (dllexport) void __cdecl RMST()
 			Utilits.HookThis((DWORD)&gObjLevelUpPointAddEx,0x004075B3);
 			Utilits.HookThis((DWORD)&gObjPlayerKiller, 0x00406C8A);
 			Utilits.HookThis((DWORD)&gObjAttack, 0x00403E72);
+			Utilits.HookThis((DWORD)&gObjTradeOkButton, 0x00404E08);
 		#endif
 
 		DWORD ThreadID;

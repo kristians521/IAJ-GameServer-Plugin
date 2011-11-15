@@ -19,7 +19,7 @@ cPCPoint PCPoint;
 cPCPoint::cPCPoint() {}
 cPCPoint::~cPCPoint() {}
 
-void cPCPoint::LoadIniConfigs()
+void cPCPoint::Load()
 {
 	Config.MaximumWCPoints		= Configs.GetInt(0, 32000,					10000,	"WCoins",		"MaximumWCPoints",			IAJuliaPcPoints);
 

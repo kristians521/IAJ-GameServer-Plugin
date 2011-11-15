@@ -37,3 +37,13 @@ gObj->	Class	DbClass	ChaneUp	ChangeUp2	[Short Name]	[Full Name]
 	5	80	0	0		SU		Summoner
 	5	81	1	0		BS		Bloody	Summoner
 	5	83	1	1		DM		Dimension Master
+
+Item Type: 
+	Group * 512 + Index
+
+Item Group:
+	Type / 512
+
+Item Index
+	Type - 512 * Group
+	Type - 512 * (Type / 512)
