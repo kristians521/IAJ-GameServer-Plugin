@@ -19,7 +19,7 @@ cHappyHour HappyHour;
 
 void cHappyHour::Load()
 {
-	HappyHourEnabled = Configs.GetInt(0,1,1,"HappyHour","HappyHour",IAJuliaHappyHour);
+	HappyHourEnabled = Configs.GetInt(0,1,1,"HappyHour","EnableHappyHour",IAJuliaHappyHour);
 	if (HappyHourEnabled == 0) return;
 
 	char Buff[256];
@@ -186,7 +186,7 @@ void cHappyHour::CheckNeedMessage(int i)
 
 int cHappyHour::IsHappyHour(int Map)
 {
-	if (HappyHourEnabled == 0) -1;
+	if (HappyHourEnabled == 0) return -1;
 
 	for (int i = 0; i < HappyHoursNumber; i++)
 	{
