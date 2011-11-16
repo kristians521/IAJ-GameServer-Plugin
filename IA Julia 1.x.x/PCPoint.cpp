@@ -22,8 +22,16 @@ cPCPoint::~cPCPoint() {}
 void cPCPoint::Load()
 {
 	Config.MaximumWCPoints		= Configs.GetInt(0, 32000,					10000,	"WCoins",		"MaximumWCPoints",			IAJuliaPcPoints);
+	
+	Config.WebEnabled			= Configs.GetInt(0, 1,						0,		"WebPoints",	"Enabled",					IAJuliaPcPoints);
+	if(Config.WebEnabled)
+	{
+		GetPrivateProfileString("WebPoints","WebTable","web_table",Config.WebTable,sizeof(Config.WebTable),IAJuliaPcPoints); 
+		GetPrivateProfileString("WebPoints","WebColumn","web_column",Config.WebColumn,sizeof(Config.WebColumn),IAJuliaPcPoints); 
+		Config.MaximumWebPoints	= Configs.GetInt(0, 32000,					10000,	"WebPoints",	"MaximumWebPoints",			IAJuliaPcPoints);
+	}
 
-	Config.Enabled				= Configs.GetInt(0, 1	,					1,		"PCPoints",		"Enabled",					IAJuliaPcPoints);
+	Config.Enabled				= Configs.GetInt(0, 1,						1,		"PCPoints",		"Enabled",					IAJuliaPcPoints);
 	if (!Config.Enabled) return;
 
 	Config.MaximumPCPoints		= Configs.GetInt(0, 32000,					10000,	"PCPoints",		"MaximumPCPoints",			IAJuliaPcPoints);
@@ -262,6 +270,22 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 {
 	char ModeType;
 
+	if (Type == WEBPOINTS)
+	{
+		if(!Config.WebEnabled)
+			return;
+		if(gObj->Connected < PLAYER_PLAYING)
+		{
+			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] WebPoints UPDATE Error (Player not playing!)");
+			return;
+		}
+		if (Mode == PLUS && (AddTab[gObj->m_Index].WEB_Points + CountPoints > PCPoint.Config.MaximumPCPoints || 
+			AddTab[gObj->m_Index].WEB_Points + CountPoints <= 0 ))
+		{
+			Chat.Message(gObj->m_Index,"[WebPoints] You have maximum WebPoints");
+			return;
+		}
+	}
 	if (Type == PCPOINT)		
 	{
 		if(gObj->Connected < PLAYER_PLAYING)
@@ -280,7 +304,7 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 	{
 		if(gObj->Connected < PLAYER_LOGGED)
 		{
-			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] PcPoint UPDATE Error (Player not logged!)");
+			Log.ConsoleOutPut(0, c_Yellow, t_SQL, "[SQL] WCoin UPDATE Error (Player not logged!)");
 			return;
 		}
 		if (Mode == PLUS && (gObj->m_wCashPoint + CountPoints > PCPoint.Config.MaximumWCPoints || 
@@ -331,6 +355,17 @@ void cPCPoint::UpdatePoints(LPOBJ gObj,int CountPoints,eModeUpdate Mode,eTypePoi
 		Me_MuOnlineQuery.ExecQuery("SELECT cspoints FROM MEMB_INFO WHERE memb___id = '%s'", gObj->AccountID);
 		Me_MuOnlineQuery.Fetch();
 		gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger("cspoints");
+		Me_MuOnlineQuery.Close();
+	}
+	if (Type == WEBPOINTS)
+	{
+		Me_MuOnlineQuery.ExecQuery("UPDATE %s SET %s = (%s %c %d) WHERE memb___id = '%s'", Config.WebColumn, Config.WebTable, Config.WebTable, ModeType, CountPoints, gObj->AccountID);
+		Me_MuOnlineQuery.Fetch();
+		Me_MuOnlineQuery.Close();
+
+		Me_MuOnlineQuery.ExecQuery("SELECT %s FROM %s WHERE memb___id = '%s'", Config.WebTable, Config.WebColumn, gObj->AccountID);
+		Me_MuOnlineQuery.Fetch();
+		gObj->m_wCashPoint = Me_MuOnlineQuery.GetAsInteger(Config.WebTable);
 		Me_MuOnlineQuery.Close();
 	}
 #pragma warning(default: 4244)

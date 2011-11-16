@@ -16,7 +16,7 @@
 #define MAX_PCMOB		100
 
 enum eModeUpdate {PLUS,MINUS};
-enum eTypePoint  {PCPOINT,WCOIN};
+enum eTypePoint  {PCPOINT,WCOIN,WEBPOINTS};
 
 class cPCPoint
 {
@@ -44,6 +44,10 @@ public:
 		int AddPCPointsSec;
 		int AddPCPointsCount;
 		int MaximumWCPoints;
+		int WebEnabled;
+		char WebTable[20];
+		char WebColumn[20];
+		int MaximumWebPoints;
 	}Config;
 private:
 	struct

@@ -53,6 +53,9 @@ typedef	struct sAddTab
 	int		PC_OnlineTimer;
 	int		PC_POINT_TEST;
 
+	//Web Points
+	int		WEB_Points;
+
 	//Online
 	int		ON_Min;   
 	int		ON_Sek;
