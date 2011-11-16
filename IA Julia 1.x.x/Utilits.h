@@ -32,6 +32,7 @@ public:
 	char* GetMapName(int MapId);
 
 	bool IsBadFileLine(char *FileLine, int *Flag);
+	void SendEffect(LPOBJ gObj, BYTE btType);
 };
 extern cUtilits Utilits;
 #endif

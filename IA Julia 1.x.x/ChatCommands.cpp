@@ -1368,7 +1368,7 @@ unsigned long __stdcall AddTimer(int Index)
 		}
 		Sleep(1000);		
 	}			  
-	GCLevelUpMsgSend(Index, 0);	   
+	Utilits.SendEffect(gObj, 2);
 	Chat.MessageLog(1, c_Blue, t_COMMANDS, gObj, "[AddStats] Your stats successfully added!");	 
 	AddTab[Index].ADD_Value = 0;
 	AddTab[Index].ADD_Type = -1;
@@ -1493,7 +1493,7 @@ LeaveCriticalSection(&Chat_Crit);
 		BYTE lpMsg[5] = {0xC1,0x05,0xF3,0x06,Type};
 		for(int i = 0; i < Points; i++)
 			CGLevelUpPointAdd(lpMsg, gObj->m_Index); 
-		GCLevelUpMsgSend(gObj->m_Index, 0);	  
+		Utilits.SendEffect(gObj, 2);
 		Chat.MessageLog(1, c_Blue, t_COMMANDS, gObj, "[AddStats] Your %d stats added, %d points left!", Points, gObj->LevelUpPoint);
 	} 
 	return true;

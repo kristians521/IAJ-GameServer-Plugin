@@ -12,6 +12,7 @@
 #include "User.h"
 #include "GMSystem.h"
 #include "Logger.h"
+#include "Prodef.h"
 cUtilits Utilits;
 
 void cUtilits::HookThis(DWORD dwMyFuncOffset, DWORD dwJmpOffset)
@@ -277,4 +278,32 @@ bool cUtilits::IsBadFileLine(char *FileLine, int *Flag)
 			return false;
 	}
 	return true;
+}
+
+void cUtilits::SendEffect(LPOBJ gObj, BYTE btType)
+{ 
+	PMSG_EFFECTINFO pMsg;
+
+	switch (btType)
+	{
+	case 1:
+		btType = 3;		// don' know, but it n1ce
+		break;
+	case 2:
+		btType = 16;	// level up effect
+		break;
+	case 3:
+		btType = 17;	// cool die effect
+		break;
+	}
+
+	pMsg.h.c = 0xC1;
+	pMsg.h.headcode = 0x48;
+	pMsg.h.size = sizeof(pMsg);
+	pMsg.NumberH = SET_NUMBERH(gObj->m_Index);
+	pMsg.NumberL = SET_NUMBERL(gObj->m_Index);
+	pMsg.btType = btType;
+
+	DataSend(gObj->m_Index, (LPBYTE)&pMsg, pMsg.h.size);
+	MsgSendV2(gObj, (LPBYTE)&pMsg, pMsg.h.size);
 }

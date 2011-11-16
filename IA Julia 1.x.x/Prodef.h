@@ -157,6 +157,13 @@ struct PMSG_GUILDCREATED_RESULT
 	BYTE btGuildType;	// 4
 };
 
+struct PMSG_EFFECTINFO
+{
+	PBMSG_HEAD h;	// C1:48
+	BYTE NumberH;	// 3
+	BYTE NumberL;	// 4
+	BYTE btType;	// 5
+};
 
 //Function Defines //
 #ifdef _GS
