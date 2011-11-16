@@ -242,6 +242,7 @@ struct PMSG_EFFECTINFO
 #define ShopExcellentMod_Hook2						0x0056EC25
 #define ShopExcellentMod_Exit2						0x0056EC2A
 
+#define MsgSendV2 ((void(*)(LPOBJ lpObj, unsigned char* Msg, int size))0x0043B580)	 
 #define CGTradeResult ((void(*)(int aIndex , BYTE result)) 0x0044D1B0)
 #define gObjTradeCancel ((void(*)(int aIndex)) 0x005370A0)
 #define GSgObjTradeOkButton ((void(*)(int aIndex)) 0x00537EF0)
