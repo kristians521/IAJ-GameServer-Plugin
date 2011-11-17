@@ -1661,8 +1661,11 @@ bool cChat::SetDropCommand(LPOBJ gObj, char *Msg)
 
 bool cChat::CheckCommand(LPOBJ gObj, char *Msg)
 {
-	MessageLog(1, c_Red, t_GM, gObj, "[Check] PCPoints: %d, WCoins %d ", AddTab[gObj->m_Index].PC_PlayerPoints, gObj->m_wCashPoint);
-		return true;
+	if(PCPoint.Config.WebEnabled)
+		MessageLog(1, c_Red, t_GM, gObj, "[Check] PCPoints: %d, WCoins %d, WebPoints %d ", AddTab[gObj->m_Index].PC_PlayerPoints, gObj->m_wCashPoint, AddTab[gObj->m_Index].WEB_Points);
+	else
+		MessageLog(1, c_Red, t_GM, gObj, "[Check] PCPoints: %d, WCoins %d", AddTab[gObj->m_Index].PC_PlayerPoints, gObj->m_wCashPoint);
+	return true;
 }
 
 bool cChat::CheckVIPCommand(LPOBJ gObj, char *Msg)

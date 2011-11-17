@@ -408,6 +408,15 @@ void cUser::PlayerConnect(LPOBJ gObj)
 	Me_MuOnlineQuery.Close();
 #pragma warning(default: 4244)
 
+	if(PCPoint.Config.WebEnabled)
+	{
+		MuOnlineQuery.ExecQuery("SELECT %s FROM %s WHERE memb___id = '%s'",PCPoint.Config.WebTable ,PCPoint.Config.WebColumn , gObj->AccountID);
+		MuOnlineQuery.Fetch();
+		AddTab[gObj->m_Index].WEB_Points = MuOnlineQuery.GetAsInteger(PCPoint.Config.WebTable);
+		MuOnlineQuery.Close();
+		AddTab[gObj->m_Index].WEB_Points;
+	}
+
 	MuOnlineQuery.ExecQuery("SELECT %s FROM Character WHERE Name = '%s'", Configs.ResetColumn, gObj->Name);
 	MuOnlineQuery.Fetch();
 	AddTab[gObj->m_Index].Resets = MuOnlineQuery.GetAsInteger(Configs.ResetColumn);
